@@ -1,0 +1,819 @@
+{
+  "status": "RELEASE_READY_WITH_EXTERNAL_BLOCKERS",
+  "generated_utc": "2026-10-22T06:48:04.309304+00:00",
+  "local_source_checkpoint": "cbe15bb9dc5fcb4d1de1f3949ee4855159699b9c",
+  "gates": [
+    {
+      "gate": "WL01",
+      "label": "Root cause reproduced",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_windows_long_path.ps1 -Output docs/release/evidence/20261022-longpath-03",
+      "timestamp_utc": "2026-10-22T06:22:24.704204+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-longpath-baseline/cache-reproduction.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "WL02",
+      "label": "Safe shared filesystem path handling",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_windows_long_path.ps1 -Output docs/release/evidence/20261022-longpath-03",
+      "timestamp_utc": "2026-10-22T06:22:24.704204+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-longpath-03/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "WL03",
+      "label": "Deep Unicode native file I/O",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_windows_long_path.ps1 -Output docs/release/evidence/20261022-longpath-03",
+      "timestamp_utc": "2026-10-22T06:22:24.704204+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-longpath-03/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "WL04",
+      "label": "Atomic no-overwrite cache publication",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_windows_long_path.ps1 -Output docs/release/evidence/20261022-longpath-03",
+      "timestamp_utc": "2026-10-22T06:22:24.704204+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-longpath-03/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "WL05",
+      "label": "Concurrent cache access",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_windows_long_path.ps1 -Output docs/release/evidence/20261022-longpath-03",
+      "timestamp_utc": "2026-10-22T06:22:24.704204+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-longpath-03/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "WL06",
+      "label": "Spawned worker/subprocess paths",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_windows_long_path.ps1 -Output docs/release/evidence/20261022-longpath-03",
+      "timestamp_utc": "2026-10-22T06:22:24.704204+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-longpath-03/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "WL07",
+      "label": "Long-path regression cases",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_windows_long_path.ps1 -Output docs/release/evidence/20261022-longpath-03",
+      "timestamp_utc": "2026-10-22T06:22:24.704204+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-longpath-03/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "WL08",
+      "label": "Full backend long and short",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_windows_long_path.ps1 -Output docs/release/evidence/20261022-longpath-03",
+      "timestamp_utc": "2026-10-22T06:22:24.704204+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-longpath-03/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "DC01",
+      "label": "Compose config validation",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_mongodb_compose.ps1 -Output docs/release/evidence/20261022-compose-06",
+      "timestamp_utc": "2026-10-22T06:43:27.810300+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-compose-06/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "DC02",
+      "label": "Real backend/frontend image builds",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_mongodb_compose.ps1 -Output docs/release/evidence/20261022-compose-06",
+      "timestamp_utc": "2026-10-22T06:43:27.810300+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-compose-06/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "DC03",
+      "label": "Isolated authenticated MongoDB startup",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_mongodb_compose.ps1 -Output docs/release/evidence/20261022-compose-06",
+      "timestamp_utc": "2026-10-22T06:43:27.810300+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-compose-06/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "DC04",
+      "label": "Unauthenticated access rejected",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_mongodb_compose.ps1 -Output docs/release/evidence/20261022-compose-06",
+      "timestamp_utc": "2026-10-22T06:43:27.810300+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-compose-06/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "DC05",
+      "label": "API and worker indexes/integration",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_mongodb_compose.ps1 -Output docs/release/evidence/20261022-compose-06",
+      "timestamp_utc": "2026-10-22T06:43:27.810300+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-compose-06/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "DC06",
+      "label": "Data persistence across restart",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_mongodb_compose.ps1 -Output docs/release/evidence/20261022-compose-06",
+      "timestamp_utc": "2026-10-22T06:43:27.810300+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-compose-06/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "DC07",
+      "label": "Real seven-input T1-T4/result/report/checksum + cancellation/recovery",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_mongodb_compose.ps1 -Output docs/release/evidence/20261022-compose-06",
+      "timestamp_utc": "2026-10-22T06:43:27.810300+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-compose-06/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "DC08",
+      "label": "Actual volume/network/port isolation",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_mongodb_compose.ps1 -Output docs/release/evidence/20261022-compose-06",
+      "timestamp_utc": "2026-10-22T06:43:27.810300+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/compose-isolation.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "AT01",
+      "label": "Atlas SRV/TLS live configuration",
+      "status": "BLOCKED",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_atlas_connection.ps1 -Output docs/release/evidence/20261022-atlas-01",
+      "timestamp_utc": "2026-10-22T06:20:26.753090+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 2,
+      "evidence_path": "docs/release/evidence/20261022-atlas-01/verification.json",
+      "failure_reason": "No authorized MONGODB_ATLAS_URI supplied; static code readiness does not prove live operation",
+      "remaining_blocker": "BLOCKED_ATLAS_CREDENTIALS"
+    },
+    {
+      "gate": "AT02",
+      "label": "Atlas authentication",
+      "status": "BLOCKED",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_atlas_connection.ps1 -Output docs/release/evidence/20261022-atlas-01",
+      "timestamp_utc": "2026-10-22T06:20:26.753090+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 2,
+      "evidence_path": "docs/release/evidence/20261022-atlas-01/verification.json",
+      "failure_reason": "No authorized MONGODB_ATLAS_URI supplied; static code readiness does not prove live operation",
+      "remaining_blocker": "BLOCKED_ATLAS_CREDENTIALS"
+    },
+    {
+      "gate": "AT03",
+      "label": "Isolated Atlas database access",
+      "status": "BLOCKED",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_atlas_connection.ps1 -Output docs/release/evidence/20261022-atlas-01",
+      "timestamp_utc": "2026-10-22T06:20:26.753090+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 2,
+      "evidence_path": "docs/release/evidence/20261022-atlas-01/verification.json",
+      "failure_reason": "No authorized MONGODB_ATLAS_URI supplied; static code readiness does not prove live operation",
+      "remaining_blocker": "BLOCKED_ATLAS_CREDENTIALS"
+    },
+    {
+      "gate": "AT04",
+      "label": "Atlas CRUD",
+      "status": "BLOCKED",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_atlas_connection.ps1 -Output docs/release/evidence/20261022-atlas-01",
+      "timestamp_utc": "2026-10-22T06:20:26.753090+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 2,
+      "evidence_path": "docs/release/evidence/20261022-atlas-01/verification.json",
+      "failure_reason": "No authorized MONGODB_ATLAS_URI supplied; static code readiness does not prove live operation",
+      "remaining_blocker": "BLOCKED_ATLAS_CREDENTIALS"
+    },
+    {
+      "gate": "AT05",
+      "label": "Atlas atomic queue",
+      "status": "BLOCKED",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_atlas_connection.ps1 -Output docs/release/evidence/20261022-atlas-01",
+      "timestamp_utc": "2026-10-22T06:20:26.753090+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 2,
+      "evidence_path": "docs/release/evidence/20261022-atlas-01/verification.json",
+      "failure_reason": "No authorized MONGODB_ATLAS_URI supplied; static code readiness does not prove live operation",
+      "remaining_blocker": "BLOCKED_ATLAS_CREDENTIALS"
+    },
+    {
+      "gate": "AT06",
+      "label": "No credential disclosure in staged blobs",
+      "status": "PASS",
+      "command": "scan git staged blob bytes against private local URI/test passwords, key/token signatures",
+      "timestamp_utc": "2026-10-22T06:46:19.883010+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/git-audit-01/staged-audit.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT01",
+      "label": "Full source inventory",
+      "status": "PASS",
+      "command": "git ls-files; git ls-files --others --exclude-standard; git check-ignore -v --no-index; staged SHA/secret audit",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/GIT_SOURCE_INVENTORY.md",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT02",
+      "label": "Required source tracked",
+      "status": "PASS",
+      "command": "git ls-files; git ls-files --others --exclude-standard; git check-ignore -v --no-index; staged SHA/secret audit",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/GIT_SOURCE_INVENTORY.md",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT03",
+      "label": "Generated output retention/ignore policy",
+      "status": "PASS",
+      "command": "git ls-files; git ls-files --others --exclude-standard; git check-ignore -v --no-index; staged SHA/secret audit",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/GIT_SOURCE_INVENTORY.md",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT04",
+      "label": "Secrets excluded",
+      "status": "PASS",
+      "command": "git ls-files; git ls-files --others --exclude-standard; git check-ignore -v --no-index; staged SHA/secret audit",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/GIT_SOURCE_INVENTORY.md",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT05",
+      "label": "Concrete git check-ignore assertions",
+      "status": "PASS",
+      "command": "git ls-files; git ls-files --others --exclude-standard; git check-ignore -v --no-index; staged SHA/secret audit",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/GIT_SOURCE_INVENTORY.md",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT06",
+      "label": "Staged diff/blob audit",
+      "status": "PASS",
+      "command": "git ls-files; git ls-files --others --exclude-standard; git check-ignore -v --no-index; staged SHA/secret audit",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/GIT_SOURCE_INVENTORY.md",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT07",
+      "label": "Authorized local checkpoint committed",
+      "status": "PASS",
+      "command": "git status --porcelain; git log -1 --format=%H",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/git-audit-01/local-checkpoint.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT08",
+      "label": "Clean tracked/untracked release status",
+      "status": "PASS",
+      "command": "git status --porcelain; git log -1 --format=%H",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/git-audit-01/local-checkpoint.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT09",
+      "label": "Clean-environment setup documented",
+      "status": "PASS",
+      "command": "git ls-files; git ls-files --others --exclude-standard; git check-ignore -v --no-index; staged SHA/secret audit",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/GIT_SOURCE_INVENTORY.md",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "GT10",
+      "label": "Scientific artifacts preserved externally",
+      "status": "PASS",
+      "command": "git ls-files; git ls-files --others --exclude-standard; git check-ignore -v --no-index; staged SHA/secret audit",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/research-preservation.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA01",
+      "label": "Ruff",
+      "status": "PASS",
+      "command": "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe -m ruff check backend",
+      "timestamp_utc": "2026-10-22T06:24:36.001197+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-release-quality-01/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA02",
+      "label": "mypy",
+      "status": "PASS",
+      "command": "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe -m mypy --config-file backend/pyproject.toml backend/src/smart_retail",
+      "timestamp_utc": "2026-10-22T06:24:37.681530+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-release-quality-01/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA03",
+      "label": "Backend pytest 171 pass / 0 failures / 0 skips",
+      "status": "PASS",
+      "command": "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe -m pytest backend/tests -q --basetemp D:\\Smart_Retail_Floor_Allocation\\var\\pytest-release-8a3ea7cee044 --junitxml D:\\Smart_Retail_Floor_Allocation\\docs\\release\\evidence\\20261022-release-quality-01\\pytest.xml",
+      "timestamp_utc": "2026-10-22T06:24:35.900520+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-release-quality-01/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA04",
+      "label": "Vitest 4 pass",
+      "status": "PASS",
+      "command": "powershell -NoProfile -Command npm --prefix frontend test",
+      "timestamp_utc": "2026-10-22T06:24:55.267915+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-release-quality-01/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA05",
+      "label": "ESLint",
+      "status": "PASS",
+      "command": "powershell -NoProfile -Command npm --prefix frontend run lint",
+      "timestamp_utc": "2026-10-22T06:24:51.673794+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-release-quality-01/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA06",
+      "label": "Frontend build",
+      "status": "PASS",
+      "command": "powershell -NoProfile -Command npm --prefix frontend run build",
+      "timestamp_utc": "2026-10-22T06:25:07.470085+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-release-quality-01/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA07",
+      "label": "Playwright 9 pass",
+      "status": "PASS",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_e2e.ps1",
+      "timestamp_utc": "2026-10-22T06:26:23.334978+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-release-quality-01/verification.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA08",
+      "label": "MongoDB health / worker online",
+      "status": "PASS",
+      "command": "GET http://127.0.0.1:8010/api/health",
+      "timestamp_utc": "2026-10-22T06:30:09.828651+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/local-data-and-science.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA09",
+      "label": "New sequential/feedback/exact campaign and independent proof",
+      "status": "PASS",
+      "command": "experiments.cli run --config var/release-joint-smoke.json; experiments.cli analyze; application.feedback.cli --input --certificate --output",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "docs/release/evidence/20261022-proof-command.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    },
+    {
+      "gate": "QA10",
+      "label": "New scientific replay 3/3 input/result SHA and numeric equivalence",
+      "status": "PASS",
+      "command": "experiments.cli replay; experiments.cli compare",
+      "timestamp_utc": "2026-10-22T06:48:04.309304+00:00",
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.12.10",
+        "mongodb": "8.0.16 native + authenticated mongo:8.0 isolated container",
+        "docker": "29.9.2",
+        "compose": "v5.6.0",
+        "wsl": "2.7.13.0"
+      },
+      "exit_code": 0,
+      "evidence_path": "experiments/reports/20261022-release-joint-comparison-01.json",
+      "failure_reason": "",
+      "remaining_blocker": ""
+    }
+  ],
+  "unc_live": {
+    "status": "NOT_APPLICABLE",
+    "reason": "No accessible test UNC share supplied; syntax conversion tested"
+  },
+  "remote_ci": {
+    "status": "NOT_APPLICABLE",
+    "reason": "No remote push or remote Actions execution requested/permitted"
+  },
+  "counts": {
+    "PASS": 37,
+    "FAIL": 0,
+    "BLOCKED": 5,
+    "NOT_APPLICABLE": 0
+  }
+}

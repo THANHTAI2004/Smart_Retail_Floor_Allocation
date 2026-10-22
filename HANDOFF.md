@@ -1,5 +1,13 @@
 # Current handoff - Windows long paths and release verification, 2026-10-22
 
+Final status: **RELEASE_READY_WITH_EXTERNAL_BLOCKERS**. Acceptance matrix has
+37 PASS / 0 FAIL / 5 BLOCKED (Atlas live access only). Local source checkpoint
+cbe15bb9dc5fcb4d1de1f3949ee4855159699b9c includes all authorized source changes
+and reviewed evidence. Final acceptance/report receipts follow in a local docs
+checkpoint. No GitHub push. Clean tracked-source archive smoke also PASS with
+the pinned existing Python environment and a fresh isolated MongoDB namespace;
+this is not a second clean dependency-install claim.
+
 Windows filesystem fix verified: only os.link had extended paths previously.
 Replayed old cache source from verified backup: root 244 characters, temporary
 write at 286 characters fails FileNotFoundError. New infrastructure/filesystem.py

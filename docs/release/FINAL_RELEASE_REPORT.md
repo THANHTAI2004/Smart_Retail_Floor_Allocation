@@ -129,6 +129,13 @@ Docker setup now also has an exercised isolated verification script. Raw scienti
 artifacts have explicit external retention and checksums. Final matrix and full
 machine-readable gate fields: [acceptance](FINAL_RELEASE_ACCEPTANCE.md).
 
+Source checkpoint: `cbe15bb9dc5fcb4d1de1f3949ee4855159699b9c`. A git archive of
+that tracked source was extracted to a new local directory; API startup, project
+creation and MongoDB health passed in a fresh isolated namespace using the pinned
+existing Python environment. [Clean-source receipt](evidence/clean-source-checkout.json).
+This validates source completeness, not a separate fresh dependency installation.
+Final matrix totals: **37 PASS, 0 FAIL, 5 BLOCKED**, all five live Atlas gates.
+
 Remaining required external work: provide Atlas test access, then run its live
 verifier. Optional additional validation: remote CI and a real UNC share. Current
 application is running at http://127.0.0.1:5173/#research with MongoDB worker online.
