@@ -1,0 +1,1 @@
+{"command": ["D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe", "-m", "pytest", "backend/tests/unit/test_joint_optimization.py", "-q", "--basetemp", "var/pytest-joint-final-controls", "--junitxml", "docs\\research\\evidence\\20261022-joint-controls-01\\pytest.xml"], "exit_code": 0}

@@ -1,3 +1,5 @@
+> Historical checkpoint: 2026-10-21. For the current 2026-10-22 implementation, use [model scope](MODEL_SCOPE_20261022.md), [ER readiness](EXPERIMENT_READINESS_MATRIX.md), and [actual results](RESULTS_20261022.md). The historical gates and limits below are not the current synthetic-readiness assessment.
+
 # E01-E08 experiment protocol
 
 Executed 2026-10-21 on Windows; exact Python/packages in configuration.json. Seeds: 11,23,37,53,71. Each of 16 arms runs five seeds: 80 durable queue jobs with killable child processes, a dedicated SQLite database and artifacts. Each job has a 15 s wall budget and 50,000 grid-candidate ceiling; multiple integrated candidates share that budget. T3 option ceiling is 20,000. Termination is candidate exhaustion, wall deadline, cancellation or structured error.

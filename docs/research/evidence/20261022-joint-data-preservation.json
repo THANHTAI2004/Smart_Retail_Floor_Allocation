@@ -1,0 +1,26 @@
+{
+  "tables": {
+    "projects": {
+      "rows": 16,
+      "unchanged": true
+    },
+    "product_keys": {
+      "rows": 24,
+      "unchanged": true
+    },
+    "orders": {
+      "rows": 12,
+      "unchanged": true
+    },
+    "order_lines": {
+      "rows": 24,
+      "unchanged": true
+    },
+    "optimization_runs": {
+      "rows": 8,
+      "unchanged": true
+    }
+  },
+  "backup": "C:\\Users\\admin\\Documents\\SmartRetailBackups\\20261022-joint-01\\pre-joint-restart.db",
+  "sha256": "a503a6ccb26213328271612f1c17c8703f0f1267391350a14b2edb83e6d66bf0"
+}

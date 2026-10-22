@@ -2,6 +2,7 @@ import time
 from dataclasses import replace
 
 import pytest
+
 from smart_retail.contracts.inputs import to_domain
 from smart_retail.engines.t1_layout.engine import solve as layout
 from smart_retail.engines.t1_layout.engine import violations

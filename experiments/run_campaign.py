@@ -22,7 +22,7 @@ from smart_retail.application.projects import (
 )
 from smart_retail.application.workflow import canonical_hash
 from smart_retail.contracts.inputs import SECTIONS
-from smart_retail.infrastructure.database import Base, connect
+from smart_retail.infrastructure.database import connect
 from smart_retail.infrastructure.provenance import runtime_identity
 from smart_retail.workers.runner import work_once
 
@@ -245,8 +245,8 @@ def main():
         "scope": "Small synthetic smoke campaign; insufficient for general scalability or field validity",
     }
     write(output / "configuration.json", configuration)
-    engine, factory = connect(f"sqlite:///{(output / 'campaign.db').as_posix()}")
-    Base.metadata.create_all(engine)
+    engine, factory = connect(database="sr_legacy_campaign_" + hashlib.sha256(str(output.resolve()).encode()).hexdigest()[:24])
+    engine.ready()
     rows = []
     scenarios = list(cases(sample))
     if args.replay:

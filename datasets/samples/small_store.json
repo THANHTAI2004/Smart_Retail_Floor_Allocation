@@ -1,58 +1,66 @@
 {
   "floorplan": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
     "units": "m",
     "boundary": [
       [
-        0,
-        0
+        0.0,
+        0.0
       ],
       [
-        12,
-        0
+        12.0,
+        0.0
       ],
       [
-        12,
-        9
+        12.0,
+        9.0
       ],
       [
-        0,
-        9
+        0.0,
+        9.0
       ]
     ],
     "entrance": [
-      0,
+      0.0,
       4.5
     ],
     "obstacles": [
       [
         [
-          9,
-          6
+          9.0,
+          6.0
         ],
         [
-          10,
-          6
+          10.0,
+          6.0
         ],
         [
-          10,
-          7
+          10.0,
+          7.0
         ],
         [
-          9,
-          7
+          9.0,
+          7.0
         ]
       ]
     ],
     "min_aisle_m": 0.8,
-    "grid_m": 0.5
+    "grid_m": 0.5,
+    "exits": [],
+    "pickup_points": [],
+    "zones": [],
+    "require_connected_aisles": false
   },
   "shelves": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
     "layout_mode": "optimizable",
     "items": [
       {
         "id": "S01",
         "kind": "gondola",
-        "width_m": 2,
+        "width_m": 2.0,
         "depth_m": 0.6,
         "height_m": 1.8,
         "levels": [
@@ -61,14 +69,14 @@
             "width_m": 1.9,
             "depth_m": 0.55,
             "height_m": 0.5,
-            "max_load_kg": 80
+            "max_load_kg": 80.0
           },
           {
             "id": "L2",
             "width_m": 1.9,
             "depth_m": 0.55,
             "height_m": 0.5,
-            "max_load_kg": 80
+            "max_load_kg": 80.0
           }
         ],
         "x": null,
@@ -80,7 +88,7 @@
       {
         "id": "S02",
         "kind": "gondola",
-        "width_m": 2,
+        "width_m": 2.0,
         "depth_m": 0.6,
         "height_m": 1.8,
         "levels": [
@@ -89,14 +97,14 @@
             "width_m": 1.9,
             "depth_m": 0.55,
             "height_m": 0.5,
-            "max_load_kg": 80
+            "max_load_kg": 80.0
           },
           {
             "id": "L2",
             "width_m": 1.9,
             "depth_m": 0.55,
             "height_m": 0.5,
-            "max_load_kg": 80
+            "max_load_kg": 80.0
           }
         ],
         "x": null,
@@ -108,24 +116,38 @@
     ]
   },
   "categories": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
     "items": [
       {
         "id": "DRINK",
         "name": "Đồ uống",
-        "demand": 80,
-        "priority": 1,
-        "required_width_m": 2
+        "priority": 1.0,
+        "demand": 80.0,
+        "required_width_m": 2.0,
+        "fixed_shelf_id": null,
+        "near": [],
+        "separate": [],
+        "distance_m": 3.0,
+        "affinity": {}
       },
       {
         "id": "FOOD",
         "name": "Thực phẩm",
-        "demand": 60,
-        "priority": 1,
-        "required_width_m": 2
+        "priority": 1.0,
+        "demand": 60.0,
+        "required_width_m": 2.0,
+        "fixed_shelf_id": null,
+        "near": [],
+        "separate": [],
+        "distance_m": 3.0,
+        "affinity": {}
       }
     ]
   },
   "products": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
     "items": [
       {
         "sku": "WATER",
@@ -135,14 +157,17 @@
         "depth_m": 0.08,
         "height_m": 0.22,
         "weight_kg": 0.5,
-        "demand": 80,
+        "demand": 80.0,
         "facings": 4,
         "orientations": [
           0,
           90
         ],
         "stack_layers": 1,
-        "clearance_m": 0.01
+        "clearance_m": 0.01,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
       },
       {
         "sku": "RICE",
@@ -151,20 +176,25 @@
         "width_m": 0.18,
         "depth_m": 0.12,
         "height_m": 0.25,
-        "weight_kg": 1,
-        "demand": 60,
+        "weight_kg": 1.0,
+        "demand": 60.0,
         "facings": 3,
         "orientations": [
           0
         ],
         "stack_layers": 1,
-        "clearance_m": 0.01
+        "clearance_m": 0.01,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
       }
     ]
   },
   "demand": {
-    "arrivals_per_hour": 30,
-    "horizon_s": 1800,
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
+    "arrivals_per_hour": 30.0,
+    "horizon_s": 1800.0,
     "customers": 15,
     "baskets": [
       [
@@ -178,16 +208,21 @@
     "behavior": {
       "model": "synthetic_basket",
       "speed_m_s": 1.2,
-      "dwell_s": 4
-    }
+      "dwell_s": 4.0
+    },
+    "periods": [],
+    "picker_count": 1,
+    "routing_policy": "nearest"
   },
   "orders": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
     "orders": [
       {
         "id": "O001",
         "placed_at": "2026-10-21T09:00:00+07:00",
         "kind": "online",
-        "due_s": 120
+        "due_s": 120.0
       }
     ],
     "order_lines": [
@@ -204,16 +239,23 @@
     ]
   },
   "optimization": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
+    "joint": null,
     "seed": 42,
-    "time_limit_s": 30,
+    "time_limit_s": 30.0,
     "max_iterations": 10000,
     "algorithm": "milp",
-    "distance_weight": 1,
+    "distance_weight": 1.0,
+    "affinity_weight": 1.0,
     "capacity_weight": 0,
     "slotting_algorithm": "first_fit",
     "candidate_count": 1,
-    "travel_weight": 1,
-    "wait_weight": 0,
-    "stock_weight": 0
+    "travel_weight": 1.0,
+    "wait_weight": 0.0,
+    "stock_weight": 0.0,
+    "layout_algorithm": "grid",
+    "stop_after_stage": "T4",
+    "memory_limit_mb": 2048
   }
 }

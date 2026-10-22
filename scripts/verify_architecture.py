@@ -44,9 +44,9 @@ def audit():
                 imports = [a.name for a in node.names]
             for dependency in imports:
                 if name.startswith("smart_retail.domain"):
-                    assert not dependency.startswith(("fastapi", "sqlalchemy", "pydantic", "smart_retail.api", "smart_retail.application", "smart_retail.infrastructure"))
+                    assert not dependency.startswith(("fastapi", "sqlalchemy", "pymongo", "gridfs", "pydantic", "smart_retail.api", "smart_retail.application", "smart_retail.infrastructure"))
                 if name.startswith("smart_retail.engines"):
-                    assert not dependency.startswith(("fastapi", "sqlalchemy", "smart_retail.api", "smart_retail.application", "smart_retail.infrastructure"))
+                    assert not dependency.startswith(("fastapi", "sqlalchemy", "pymongo", "gridfs", "smart_retail.api", "smart_retail.application", "smart_retail.infrastructure"))
                 if dependency in modules and dependency != name:
                     python_graph[name].add(dependency)
     frontend = ROOT / "frontend/src"

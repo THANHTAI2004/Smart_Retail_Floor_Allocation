@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "scope": "Files enumerated in initial external manifest; excludes later additions",
+  "checked_files": 50628,
+  "changed": [],
+  "groups": {
+    "backend/src/smart_retail/domain/": 20,
+    "backend/src/smart_retail/engines/": 20,
+    "backend/src/smart_retail/application/feedback/": 8,
+    "experiments/results/": 50116,
+    "experiments/reports/": 464
+  }
+}

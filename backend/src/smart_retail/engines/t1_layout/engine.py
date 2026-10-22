@@ -6,42 +6,10 @@ import time
 from collections.abc import Callable
 from dataclasses import replace
 
-from shapely.geometry import Point, Polygon, box
+from shapely.geometry import Point, Polygon
 
 from smart_retail.domain.models import EngineError, Floorplan, LayoutSolution, Shelf
-
-
-def footprint(shelf: Shelf) -> Polygon:
-    if shelf.x is None or shelf.y is None:
-        raise EngineError("MISSING_POSITION", f"Shelf {shelf.id} has no coordinates")
-    width, depth = shelf.width_m, shelf.depth_m
-    if shelf.rotation == 90:
-        width, depth = depth, width
-    return box(shelf.x, shelf.y, shelf.x + width, shelf.y + depth)
-
-
-def violations(floor: Floorplan, shelves: tuple[Shelf, ...]) -> list[str]:
-    boundary = Polygon(floor.boundary)
-    obstacles = [Polygon(p) for p in floor.obstacles]
-    errors = []
-    shapes: list[tuple[str, Polygon]] = []
-    for shelf in shelves:
-        shape = footprint(shelf)
-        if not boundary.covers(shape):
-            errors.append(f"Shelf {shelf.id} is outside boundary")
-        if shape.distance(boundary.boundary) < floor.min_aisle_m - 1e-8:
-            errors.append(f"Shelf {shelf.id}: perimeter aisle is too narrow")
-        if shape.distance(Point(floor.entrance)) < floor.min_aisle_m - 1e-8:
-            errors.append(f"Shelf {shelf.id} obstructs entrance")
-        if any(
-            shape.intersects(o) or shape.distance(o) < floor.min_aisle_m - 1e-8 for o in obstacles
-        ):
-            errors.append(f"Shelf {shelf.id}: obstacle clearance is too narrow")
-        for previous, other in shapes:
-            if shape.intersects(other) or shape.distance(other) < floor.min_aisle_m - 1e-8:
-                errors.append(f"Shelves {previous} and {shelf.id}: overlap or aisle violation")
-        shapes.append((shelf.id, shape))
-    return errors
+from smart_retail.engines.t1_layout.geometry import footprint, violations
 
 
 def solve(
@@ -53,12 +21,20 @@ def solve(
     max_iterations: int = 10000,
     cancelled: Callable[[], bool] = lambda: False,
     variant: int = 0,
+    algorithm: str = "grid",
 ) -> LayoutSolution:
+    if algorithm not in ("grid", "local_search"):
+        raise EngineError("INVALID_INPUT", "Unknown layout algorithm")
     if mode == "fixed":
         errors = violations(floor, shelves)
         if errors:
             raise EngineError("INVALID_LAYOUT", "; ".join(errors))
-        return LayoutSolution(shelves, "VALID_FIXED")
+        from smart_retail.engines.navigation import validate_topology
+
+        validate_topology(floor, shelves, deadline)
+        from smart_retail.engines.t1_layout.search import objective
+
+        return LayoutSolution(shelves, "VALID_FIXED", "fixed", objective(floor, shelves))
     placed = tuple(s for s in shelves if s.locked)
     errors = violations(floor, placed)
     if errors:
@@ -66,7 +42,9 @@ def solve(
     boundary = Polygon(floor.boundary)
     minx, miny, maxx, maxy = boundary.bounds
     boundary_line = boundary.boundary
-    obstacle_shapes = [Polygon(p) for p in floor.obstacles]
+    obstacle_shapes = [Polygon(p) for p in floor.obstacles] + [
+        Polygon(z.boundary) for z in floor.zones
+    ]
     placed_shapes = [footprint(s) for s in placed]
     entrance = Point(floor.entrance)
     clearance = floor.min_aisle_m - 1e-8
@@ -136,4 +114,13 @@ def solve(
     errors = violations(floor, solution)
     if errors:
         raise EngineError("INVALID_SOLUTION", "; ".join(errors))
-    return LayoutSolution(solution, "FEASIBLE_GRID_BASELINE")
+    from smart_retail.engines.navigation import validate_topology
+
+    validate_topology(floor, solution, deadline)
+    if algorithm == "local_search":
+        from smart_retail.engines.t1_layout.search import improve
+
+        return improve(floor, solution, deadline, max(0, max_iterations - iterations), cancelled)
+    from smart_retail.engines.t1_layout.search import objective
+
+    return LayoutSolution(solution, "FEASIBLE_GRID_BASELINE", "grid", objective(floor, solution))

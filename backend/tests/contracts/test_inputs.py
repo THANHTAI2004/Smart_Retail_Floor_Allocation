@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 from pydantic import ValidationError
+
 from smart_retail.contracts.inputs import SECTIONS, FloorplanInput, OrdersInput, to_domain
 
 

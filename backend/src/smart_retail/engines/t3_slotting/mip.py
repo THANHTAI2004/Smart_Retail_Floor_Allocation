@@ -31,49 +31,55 @@ def solve(
     product_index = {p.sku: i for i, p in enumerate(products)}
     for p in products:
         for sid, face, level in slots:
+            shelf = next(s for s in shelves if s.id == sid)
+            if p.allowed_shelf_kinds and shelf.kind not in p.allowed_shelf_kinds:
+                continue
             if sid != assignment.get(p.category_id):
                 continue
             for angle in sorted(set(p.orientations)):
                 width, depth = (p.width_m, p.depth_m) if angle == 0 else (p.depth_m, p.width_m)
-                block_width = p.facings * (width + p.clearance_m)
-                if block_width > level.width_m + 1e-9:
-                    continue
-                max_layers = min(
-                    p.stack_layers,
-                    math.floor((level.height_m + 1e-9) / (p.height_m + p.clearance_m)),
-                )
-                max_deep = math.floor((level.depth_m + 1e-9) / (depth + p.clearance_m))
-                for layers in range(1, max_layers + 1):
-                    for deep in range(1, max_deep + 1):
-                        if cancelled():
-                            raise EngineError("CANCELLED", "T3 cancelled")
-                        if time.monotonic() >= deadline:
-                            raise EngineError("TIMEOUT", "T3 candidate generation budget exhausted")
-                        capacity = p.facings * layers * deep
-                        load = capacity * p.weight_kg
-                        if level.max_load_kg is not None and load > level.max_load_kg + 1e-9:
-                            continue
-                        options.append(
-                            dict(
-                                sku=p.sku,
-                                shelf_id=sid,
-                                face=face,
-                                level_id=level.id,
-                                x_m=0.0,
-                                width_m=block_width,
-                                orientation=angle,
-                                facings=p.facings,
-                                layers=layers,
-                                depth_units=deep,
-                                capacity_units=capacity,
-                                load_kg=load,
+                for facings in range(p.min_facings or p.facings, (p.max_facings or p.facings) + 1):
+                    block_width = facings * (width + p.clearance_m)
+                    if block_width > level.width_m + 1e-9:
+                        continue
+                    max_layers = min(
+                        p.stack_layers,
+                        math.floor((level.height_m + 1e-9) / (p.height_m + p.clearance_m)),
+                    )
+                    max_deep = math.floor((level.depth_m + 1e-9) / (depth + p.clearance_m))
+                    for layers in range(1, max_layers + 1):
+                        for deep in range(1, max_deep + 1):
+                            if cancelled():
+                                raise EngineError("CANCELLED", "T3 cancelled")
+                            if time.monotonic() >= deadline:
+                                raise EngineError(
+                                    "TIMEOUT", "T3 candidate generation budget exhausted"
+                                )
+                            capacity = facings * layers * deep
+                            load = capacity * p.weight_kg
+                            if level.max_load_kg is not None and load > level.max_load_kg + 1e-9:
+                                continue
+                            options.append(
+                                dict(
+                                    sku=p.sku,
+                                    shelf_id=sid,
+                                    face=face,
+                                    level_id=level.id,
+                                    x_m=0.0,
+                                    width_m=block_width,
+                                    orientation=angle,
+                                    facings=facings,
+                                    layers=layers,
+                                    depth_units=deep,
+                                    capacity_units=capacity,
+                                    load_kg=load,
+                                )
                             )
-                        )
-                        if len(options) > max_options:
-                            raise EngineError(
-                                "PROBLEM_LIMIT",
-                                "T3 exceeds finite candidate budget; no infeasibility claim",
-                            )
+                            if len(options) > max_options:
+                                raise EngineError(
+                                    "PROBLEM_LIMIT",
+                                    "T3 exceeds finite candidate budget; no infeasibility claim",
+                                )
     if any(not any(o["sku"] == p.sku for o in options) for p in products):
         raise EngineError(
             "INFEASIBLE", "No physical candidate for a SKU in fixed-facing strip model"

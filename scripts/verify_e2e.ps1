@@ -7,19 +7,20 @@ foreach ($port in 8011,5174) {
     if (Get-NetTCPConnection -State Listen -LocalPort $port -ErrorAction SilentlyContinue) { throw "Verification port $port is occupied" }
 }
 New-Item -ItemType Directory -Path $runRoot | Out-Null
-$envNames = @('SMART_RETAIL_DATABASE_URL','SMART_RETAIL_ARTIFACTS','SMART_RETAIL_API_URL','SMART_RETAIL_E2E_URL','SMART_RETAIL_E2E_OUTPUT')
+$envNames = @('MONGODB_DATABASE','SMART_RETAIL_ARTIFACTS','SMART_RETAIL_API_URL','SMART_RETAIL_E2E_URL','SMART_RETAIL_E2E_OUTPUT','SMART_RETAIL_RESEARCH_HOME')
 $savedEnvironment = @{}
 foreach ($envName in $envNames) { $savedEnvironment[$envName] = [Environment]::GetEnvironmentVariable($envName,'Process') }
 $processes = @()
 try {
-    $env:SMART_RETAIL_DATABASE_URL = 'sqlite:///' + (Join-Path $runRoot 'e2e.db').Replace('\','/')
+    $env:MONGODB_DATABASE = 'sr_e2e_' + [guid]::NewGuid().ToString('N')
     $env:SMART_RETAIL_ARTIFACTS = Join-Path $runRoot 'artifacts'
+    $env:SMART_RETAIL_RESEARCH_HOME = Join-Path $runRoot 'research'
     $env:SMART_RETAIL_API_URL = 'http://127.0.0.1:8011'
     $env:SMART_RETAIL_E2E_URL = 'http://127.0.0.1:5174'
     $env:SMART_RETAIL_E2E_OUTPUT = (Join-Path $runRoot 'browser').Replace('\','/')
     $pythonPath = Join-Path $projectRoot '.venv/Scripts/python.exe'
-    & $pythonPath -m alembic -c backend/alembic.ini upgrade head
-    if ($LASTEXITCODE -ne 0) { throw 'Migration failed' }
+    & $pythonPath -m smart_retail.infrastructure.mongodb.health
+    if ($LASTEXITCODE -ne 0) { throw 'BLOCKED_MONGODB_RUNTIME' }
     $processes += Start-Process $pythonPath -ArgumentList @('-m','uvicorn','smart_retail.api.main:app','--host','127.0.0.1','--port','8011') -WindowStyle Hidden -WorkingDirectory $projectRoot -RedirectStandardOutput (Join-Path $runRoot 'api.out.log') -RedirectStandardError (Join-Path $runRoot 'api.err.log') -PassThru
     $processes += Start-Process $pythonPath -ArgumentList @('-m','smart_retail.workers.runner') -WindowStyle Hidden -WorkingDirectory $projectRoot -RedirectStandardOutput (Join-Path $runRoot 'worker.out.log') -RedirectStandardError (Join-Path $runRoot 'worker.err.log') -PassThru
     $vitePath = Join-Path $projectRoot 'frontend/node_modules/vite/bin/vite.js'

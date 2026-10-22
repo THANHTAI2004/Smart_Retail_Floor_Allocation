@@ -1,3 +1,5 @@
+> Historical checkpoint: 2026-10-21. For the current 2026-10-22 implementation, use [model scope](MODEL_SCOPE_20261022.md), [ER readiness](EXPERIMENT_READINESS_MATRIX.md), and [actual results](RESULTS_20261022.md). The historical gates and limits below are not the current synthetic-readiness assessment.
+
 # Baseline comparison
 
 T1 baseline is constructive sweep candidate 0. Bounded multistart changes scan direction, shelf order and orientation priority. T2 greedy and HiGHS optimize the same normalized centroid-distance objective. Independent exhaustive tests verify the small MILP optimum. T3 compares demand-descending first-fit against complete finite strip-option MIP under the same dimensions and fixed facings. T4 remains nearest-next routing; E04 compares layouts, not routing policies.

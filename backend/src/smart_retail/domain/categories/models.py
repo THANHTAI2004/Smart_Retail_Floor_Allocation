@@ -14,3 +14,4 @@ class Category:
     near: tuple[str, ...] = ()
     separate: tuple[str, ...] = ()
     distance_m: float = 3
+    affinity: tuple[tuple[str, float], ...] = ()

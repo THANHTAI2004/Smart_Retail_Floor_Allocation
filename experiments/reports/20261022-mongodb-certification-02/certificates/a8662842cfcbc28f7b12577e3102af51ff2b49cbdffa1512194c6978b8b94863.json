@@ -1,0 +1,288 @@
+{
+  "absolute_gap": 0.0,
+  "arithmetic_scope": "Exact rational comparison of serialized deterministic IEEE-754 simulator observations; not exact real arithmetic",
+  "artifact_sha256": "4d430dcb99129647aba702cedca238720ff6b1f93ab6f8e1b891279a475249f0",
+  "bound_justification": "Every weighted normalized component is nonnegative; complete enumeration attains minimum",
+  "complete": true,
+  "evaluated_states": 4,
+  "feasibility_validation": "official validators + independent application replay",
+  "finite_space": {
+    "assignments": {
+      "A": [
+        "S1"
+      ]
+    },
+    "max_states": 256,
+    "model_version": "joint-finite-1",
+    "placements": {
+      "P1": [
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 0,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S1",
+          "sku": "P1",
+          "width_m": 0.2,
+          "x_m": 0.0
+        },
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 1,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S1",
+          "sku": "P1",
+          "width_m": 0.2,
+          "x_m": 0.0
+        }
+      ],
+      "P2": [
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 0,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S1",
+          "sku": "P2",
+          "width_m": 0.2,
+          "x_m": 0.2
+        },
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 1,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S1",
+          "sku": "P2",
+          "width_m": 0.2,
+          "x_m": 0.2
+        }
+      ]
+    },
+    "poses": {
+      "S1": [
+        [
+          2.0,
+          3.0,
+          0
+        ]
+      ]
+    },
+    "routing_policies": [
+      "nearest"
+    ]
+  },
+  "identity": {
+    "finite_space_sha256": "97657b958dfb38d1d12f09bd7faf14823caa9c8ac85f86ad5cebb23956bfc928",
+    "model_version": "joint-finite-1",
+    "objective": {
+      "scales": [
+        100.0,
+        100.0,
+        1.0,
+        1.0
+      ],
+      "weights": [
+        1.0,
+        0.2,
+        0.1,
+        0.1
+      ]
+    },
+    "problem_id": "63107bcaa86fce513da1b46bffa64701045f3caa42472757cc266490d3a56327",
+    "runtime": {
+      "model_versions": {
+        "input_contract": "1.1",
+        "joint": "finite-saa-feedback-1",
+        "t1": "grid-local-search-1.1",
+        "t2": "allocation-affinity-milp-1.1",
+        "t3": "facing-strip-milp-1.1",
+        "t4": "picker-grid-queue-1.1",
+        "workflow": "bounded-candidates-1.1"
+      },
+      "packages": {
+        "alembic": "1.20.0",
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "certifi": "2026.10.19",
+        "click": "8.5.0",
+        "colorama": "0.4.6",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "dnspython": "2.9.0",
+        "fastapi": "0.157.0",
+        "fonttools": "4.67.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.170.5",
+        "idna": "3.20",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "mako": "1.4.3",
+        "markupsafe": "3.0.4",
+        "matplotlib": "3.11.2",
+        "mypy": "1.20.2",
+        "mypy_extensions": "1.1.0",
+        "networkx": "3.7",
+        "numpy": "2.5.4",
+        "opentelemetry-api": "1.45.1",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "13.0.0",
+        "pip": "25.0.1",
+        "pluggy": "1.7.0",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "pydantic": "2.14.1",
+        "pydantic_core": "2.50.1",
+        "pygments": "2.21.0",
+        "pymongo": "4.18.2",
+        "pyparsing": "3.3.3",
+        "pytest": "9.1.1",
+        "python-dateutil": "3.0.0",
+        "ruff": "0.17.1",
+        "scipy": "1.18.1",
+        "shapely": "2.2.0",
+        "simpy": "4.1.2",
+        "six": "1.17.0",
+        "smart-retail": "0.1.0",
+        "sortedcontainers": "2.4.0",
+        "sqlalchemy": "2.1.5",
+        "starlette": "1.9.0",
+        "types-networkx": "3.6.1.20261021",
+        "typing-inspection": "0.4.4",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.5",
+        "uvicorn": "0.54.0"
+      },
+      "python": "3.12.10",
+      "solver": {
+        "name": "HiGHS",
+        "version": "1.12.0"
+      },
+      "source_sha256": "086d643db8a5a6fa7142c6206cb0446ff9f18fd4f3af8e885f4a7e2c59cd1a96"
+    },
+    "scenario_sha256": "4a0ea3d4a338327dcae6cf2b8bbcb7923a5adc728f6578c88f9963cc4ab01e8a"
+  },
+  "incumbent": {
+    "assignment": {
+      "A": "S1"
+    },
+    "placements": [
+      {
+        "capacity_units": 1,
+        "depth_units": 1,
+        "face": 1,
+        "facings": 1,
+        "layers": 1,
+        "level_id": "L1",
+        "load_kg": 1,
+        "orientation": 0,
+        "shelf_id": "S1",
+        "sku": "P1",
+        "width_m": 0.2,
+        "x_m": 0.0
+      },
+      {
+        "capacity_units": 1,
+        "depth_units": 1,
+        "face": 1,
+        "facings": 1,
+        "layers": 1,
+        "level_id": "L1",
+        "load_kg": 1,
+        "orientation": 0,
+        "shelf_id": "S1",
+        "sku": "P2",
+        "width_m": 0.2,
+        "x_m": 0.2
+      }
+    ],
+    "poses": {
+      "S1": [
+        2.0,
+        3.0,
+        0
+      ]
+    },
+    "routing_policy": "nearest"
+  },
+  "leaves": [
+    {
+      "decision_sha256": "5a6b4d9b4bde63ce1957708cc451708883758d5519d252baf03e9049cee483d8",
+      "error": null,
+      "score_fraction": [
+        16030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "af13ea7436de4e21f9ca8c6a5b727ef376e4abfc877f4b75ba40d924600cd3f1"
+    },
+    {
+      "decision_sha256": "fa0071e4c479242fefaa3037a1d1c27c9d95e343d60c9f8ab5fb06e386e1bcd1",
+      "error": null,
+      "score_fraction": [
+        16030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "9cb91d0a3fe31190c4bdbe09747822c2edee780228e4adbfbf81c43bfe30768c"
+    },
+    {
+      "decision_sha256": "06b8c0b2a8417d3ab973ce0beef811bfb6a2d688df6f59f66e81886c03a46a1e",
+      "error": null,
+      "score_fraction": [
+        16030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "514af4cd72af2b58ccb2031f1f7e79d5838f85d3131485e116130771154098d9"
+    },
+    {
+      "decision_sha256": "0252652b52b007efe81163fd09f2302f00085fcd8a90c3f91b684ba27fd56f19",
+      "error": null,
+      "score_fraction": [
+        10780330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "721e56a4aad10df8412f15bf5f46505e2689f7b1a3e735000eaa1c7f164d46a0"
+    }
+  ],
+  "lower_bound_fraction": [
+    10780330085889911,
+    105000000000000000
+  ],
+  "model_version": "joint-finite-1",
+  "pruned_states": 0,
+  "relative_gap": 0.0,
+  "scope": "Only the declared finite Cartesian domain and fixed scenario sample-average objective",
+  "solver": "exhaustive-cartesian-v1",
+  "status": "GLOBAL_OPTIMAL_CERTIFIED",
+  "termination": "COMPLETED",
+  "total_states": 4,
+  "upper_bound_fraction": [
+    10780330085889911,
+    105000000000000000
+  ]
+}

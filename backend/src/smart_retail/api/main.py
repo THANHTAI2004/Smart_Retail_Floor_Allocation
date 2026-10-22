@@ -10,14 +10,15 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
-from sqlalchemy import select, text
-from sqlalchemy.orm import Session
 
+from smart_retail.api.research import router as research_router
 from smart_retail.application import projects
 from smart_retail.application.workflow import canonical_hash
 from smart_retail.contracts.inputs import SECTIONS
 from smart_retail.contracts.outputs import ProjectOutput, RunOutput, ValidationOutput
-from smart_retail.infrastructure.database import ProjectRecord, RunRecord, WorkerHeartbeat, connect
+from smart_retail.contracts.tabular import export_csv, import_csv
+from smart_retail.infrastructure.database import RunRecord, connect
+from smart_retail.infrastructure.mongodb.client import MongoStore
 from smart_retail.infrastructure.provenance import runtime_identity
 from smart_retail.reporting.export import planogram_csv, report_json
 
@@ -29,16 +30,24 @@ class NewProject(BaseModel):
     name: str = Field(min_length=1, max_length=200)
 
 
-def create_app(url: str | None = None) -> FastAPI:
-    engine, factory = connect(url)
+class TableImport(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    text: str = Field(max_length=10_000_000)
+    expected_revision: int = Field(ge=0)
+
+
+def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
+    engine, factory = connect(url, database=database)
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
+        engine.ready()
         yield
         engine.dispose()
 
     app = FastAPI(title="Smart Retail Floor Allocation", version="0.1.0", lifespan=lifespan)
     app.state.session_factory = factory
+    app.include_router(research_router)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
@@ -50,7 +59,7 @@ def create_app(url: str | None = None) -> FastAPI:
         with factory() as value:
             yield value
 
-    DB = Annotated[Session, Depends(session)]
+    DB = Annotated[MongoStore, Depends(session)]
 
     @app.exception_handler(projects.ServiceError)
     async def service_error(_: Request, exc: projects.ServiceError):
@@ -78,12 +87,11 @@ def create_app(url: str | None = None) -> FastAPI:
 
     @app.get("/api/health")
     def health(db: DB):
-        db.execute(text("SELECT 1"))
-        heartbeats = db.scalars(select(WorkerHeartbeat)).all()
+        db.database.command("ping")
         return {
             "status": "ok",
-            "database": engine.dialect.name,
-            "worker_online": any(time.time() - w.epoch < 10 for w in heartbeats),
+            "database": "mongodb",
+            "worker_online": db.worker_online(),
             "runtime": runtime_identity(),
         }
 
@@ -91,11 +99,36 @@ def create_app(url: str | None = None) -> FastAPI:
     def schemas():
         return {key: value.model_json_schema() for key, value in SECTIONS.items()}
 
+    @app.get("/api/projects/{identifier}/inputs/{section}/export")
+    def export_input(identifier: str, section: str, db: DB, format: str = "json"):
+        project = projects.get_project(db, identifier)
+        if section not in SECTIONS or section not in project.sections:
+            raise projects.ServiceError(404, "Unknown or unsaved input section")
+        payload = (
+            SECTIONS[section].model_validate(project.sections[section]).model_dump(mode="json")
+        )
+        if format == "json":
+            return payload
+        if format != "csv":
+            raise projects.ServiceError(422, "Format must be json or csv")
+        try:
+            return Response(export_csv(section, payload), media_type="text/csv")
+        except ValueError as exc:
+            raise projects.ServiceError(422, str(exc)) from exc
+
+    @app.post("/api/projects/{identifier}/inputs/{section}/import-csv")
+    def import_table(identifier: str, section: str, payload: TableImport, db: DB):
+        try:
+            data = import_csv(section, payload.text)
+        except ValueError as exc:
+            raise projects.ServiceError(422, str(exc)) from exc
+        return projects.save_section(db, identifier, section, data, payload.expected_revision)
+
     @app.get("/api/projects", response_model=list[ProjectOutput])
     def list_projects(db: DB):
         return [
             projects.project_dict(p)
-            for p in db.scalars(select(ProjectRecord).order_by(ProjectRecord.created_at.desc()))
+            for p in db.list_projects()
         ]
 
     @app.post("/api/projects", status_code=201, response_model=ProjectOutput)
@@ -149,8 +182,7 @@ def create_app(url: str | None = None) -> FastAPI:
             stage="PENDING",
             created_at=projects.now(),
         )
-        db.add(new)
-        db.commit()
+        db.insert_run(new)
         return projects.run_dict(new)
 
     @app.get("/api/runs/{identifier}/report")

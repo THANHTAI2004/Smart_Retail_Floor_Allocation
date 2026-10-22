@@ -29,6 +29,8 @@ def violations(
             level = next(x for x in shelf.levels if x.id == row["level_id"])
             if assignment.get(p.category_id) != sid:
                 errors.append(f"{sku}: category assignment mismatch")
+            if p.allowed_shelf_kinds and shelf.kind not in p.allowed_shelf_kinds:
+                errors.append(f"{sku}: incompatible shelf kind")
             for field in (
                 "face",
                 "facings",
@@ -45,11 +47,11 @@ def violations(
             width, depth = (
                 (p.width_m, p.depth_m) if row["orientation"] == 0 else (p.depth_m, p.width_m)
             )
-            expected_width = p.facings * (width + p.clearance_m)
-            capacity = p.facings * layers * deep
+            expected_width = row["facings"] * (width + p.clearance_m)
+            capacity = row["facings"] * layers * deep
             load = capacity * p.weight_kg
             if (
-                row["facings"] != p.facings
+                not (p.min_facings or p.facings) <= row["facings"] <= (p.max_facings or p.facings)
                 or not 1 <= layers <= p.stack_layers
                 or deep < 1
                 or layers * (p.height_m + p.clearance_m) > level.height_m + 1e-8

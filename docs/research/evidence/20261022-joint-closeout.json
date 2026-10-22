@@ -1,0 +1,133 @@
+{
+  "closed_utc": "2026-10-22T04:30:31.038237+00:00",
+  "statuses": {
+    "CLOSED_LOOP_FEEDBACK_READY": true,
+    "JOINT_EXACT_SMALL_INSTANCE_CERTIFIED": true,
+    "JOINT_GENERAL_OPTIMALITY_NOT_PROVEN": true
+  },
+  "all_JO_gates_pass": true,
+  "verification": {
+    "pytest_passed": 155,
+    "vitest_passed": 4,
+    "playwright_passed": 9,
+    "main_jobs": 69,
+    "main_independent_validations": 69,
+    "main_certified_jobs": 12,
+    "separate_failure_controls": {
+      "FAILED_SEARCH_EXHAUSTED": 1,
+      "INFEASIBLE_PROVEN": 1
+    },
+    "separate_python_replay_hash_matches": {
+      "E13": 15,
+      "E11": 9
+    },
+    "offline_proof_replay_states": [
+      4,
+      128
+    ],
+    "vietnamese_suspect_marker_scan": "PASS",
+    "current_doc_links": "PASS",
+    "git_diff_check": "PASS",
+    "visual_review": [
+      "release-03/browser/ui/joint-exact.png",
+      "release-01/browser/ui/joint-feedback.png"
+    ]
+  },
+  "live_health": {
+    "status": "ok",
+    "database": "sqlite",
+    "worker_online": true,
+    "runtime": {
+      "source_sha256": "afeebca6e2722f30fb13d0d81a8f1423b3e6982683f54a5d80043ce0acab0887",
+      "python": "3.12.10",
+      "solver": {
+        "name": "HiGHS",
+        "version": "1.12.0"
+      },
+      "model_versions": {
+        "input_contract": "1.1",
+        "t1": "grid-local-search-1.1",
+        "t2": "allocation-affinity-milp-1.1",
+        "t3": "facing-strip-milp-1.1",
+        "t4": "picker-grid-queue-1.1",
+        "workflow": "bounded-candidates-1.1",
+        "joint": "finite-saa-feedback-1"
+      },
+      "packages": {
+        "alembic": "1.20.0",
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "certifi": "2026.10.19",
+        "click": "8.5.0",
+        "colorama": "0.4.6",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "fastapi": "0.157.0",
+        "fonttools": "4.67.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.170.5",
+        "idna": "3.20",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "mako": "1.4.3",
+        "markupsafe": "3.0.4",
+        "matplotlib": "3.11.2",
+        "mypy": "1.20.2",
+        "mypy_extensions": "1.1.0",
+        "networkx": "3.7",
+        "numpy": "2.5.4",
+        "opentelemetry-api": "1.45.1",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "13.0.0",
+        "pip": "25.0.1",
+        "pluggy": "1.7.0",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "pydantic": "2.14.1",
+        "pydantic_core": "2.50.1",
+        "pygments": "2.21.0",
+        "pyparsing": "3.3.3",
+        "pytest": "9.1.1",
+        "python-dateutil": "3.0.0",
+        "ruff": "0.17.1",
+        "scipy": "1.18.1",
+        "shapely": "2.2.0",
+        "simpy": "4.1.2",
+        "six": "1.17.0",
+        "smart-retail": "0.1.0",
+        "sortedcontainers": "2.4.0",
+        "sqlalchemy": "2.1.5",
+        "starlette": "1.9.0",
+        "types-networkx": "3.6.1.20261021",
+        "typing-inspection": "0.4.4",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.5",
+        "uvicorn": "0.54.0"
+      }
+    }
+  },
+  "git_head": "3a53f0ea12318fd939d68bece92ee71ada97074f",
+  "staged_diff_empty": true,
+  "files": {
+    "README.md": "8e0ceaa6c5a3bfbeeda4b43bd4e87c002737476c1d7c2d6a00e7f0f1ec910f68",
+    "HANDOFF.md": "d34f6e398df7a5d9b58f45474148adc27ce8e73fbeb13e9cbbc617a4d86fd796",
+    "docs/research/JOINT_OPTIMIZATION_FORMULATION.md": "f8cf1a27eeaefa5b05700f1bb3ff61a9682e5cf34abcd52c2302343fc3205ec4",
+    "docs/research/HOW_TO_RUN_JOINT_OPTIMIZATION.md": "cd0710ec30c8624ed6f54f50b67e053313356b09f8291f09d9b85ca12d7fdeef",
+    "docs/research/JOINT_OPTIMIZATION_ACCEPTANCE.md": "caded20702d355be5ca1d8cdfad0728cd8c98a5a83795b6b9062390c20df6448",
+    "docs/research/JOINT_OPTIMIZATION_RESULTS_20261022.md": "098b6573bde2c753a270f48627f68dcc1db7e131e8b1b8036769ba9d253f8e34",
+    "docs/research/evidence/20261022-joint-readiness-02.json": "699ba46e4257af91a8aa77d655173a10fa7d387ca737630dfa253be9fc19b095",
+    "docs/research/evidence/20261022-joint-release-03/verification.json": "eddb1c3876d9ad7aa3e4b9bfb769ef182ceda43ae41883e213a2645b7c098b9c",
+    "docs/research/evidence/20261022-joint-proof-cli-02.json": "5a42f3ebc3ddb318c2bbfc680aa52032dd41c33352c332e6b0caab06816b5149",
+    "docs/research/evidence/20261022-joint-proof-cli-128-02.json": "453d5993b2698ac006453c2e699c69fe37bef262aaa705e67c29e1b84a9b5ab9",
+    "docs/research/evidence/20261022-joint-live-service-02.json": "089f4a69edafe3fbeb830dc6c6ef073a90bb29dbb301a17b810c5a8d95b5038d",
+    "datasets/manifest-joint-v3.json": "23ad02e2b902a2de847abf02da8708fbfdd35ff39793cf737d0a56b33e8fc699",
+    "scripts/check_joint_readiness.py": "6b79a0f3b812424ba5d0d7f6f78b8d42ff9e9d82e7d803e6e0cc863a7f4d1e63",
+    "experiments/reports/20261022-joint-clean-comparison-02.json": "f33524380861237a60390d6dabeca0c0b5c708ef371290a2ab5fa59c3cb45a1f",
+    "experiments/reports/20261022-joint-feedback-clean-comparison-02.json": "30ca852b78e376678f0667376668b4bb59e63ccfc62cd904de83d4ad20cfa4c8"
+  }
+}

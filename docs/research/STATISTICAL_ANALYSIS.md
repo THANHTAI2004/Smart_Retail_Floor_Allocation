@@ -1,3 +1,5 @@
+> Historical checkpoint: 2026-10-21. For the current 2026-10-22 implementation, use [model scope](MODEL_SCOPE_20261022.md), [ER readiness](EXPERIMENT_READINESS_MATRIX.md), and [actual results](RESULTS_20261022.md). The historical gates and limits below are not the current synthetic-readiness assessment.
+
 # Statistical analysis
 
 summary.json reports actual n, mean, sample standard deviation and two-sided 95% Student-t intervals. A singleton has no SD/CI. Failed arms have no solution metrics; all failures remain in runs.json.

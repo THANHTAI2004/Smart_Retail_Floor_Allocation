@@ -1,0 +1,82 @@
+{
+  "poses": {
+    "S1": [
+      [
+        2,
+        3,
+        0
+      ]
+    ]
+  },
+  "assignments": {
+    "A": [
+      "S1"
+    ]
+  },
+  "placements": {
+    "P1": [
+      {
+        "sku": "P1",
+        "shelf_id": "S1",
+        "level_id": "L1",
+        "face": 0,
+        "x_m": 0.0,
+        "width_m": 0.2,
+        "orientation": 0,
+        "facings": 1,
+        "layers": 1,
+        "depth_units": 1,
+        "capacity_units": 1,
+        "load_kg": 1
+      },
+      {
+        "sku": "P1",
+        "shelf_id": "S1",
+        "level_id": "L1",
+        "face": 1,
+        "x_m": 0.0,
+        "width_m": 0.2,
+        "orientation": 0,
+        "facings": 1,
+        "layers": 1,
+        "depth_units": 1,
+        "capacity_units": 1,
+        "load_kg": 1
+      }
+    ],
+    "P2": [
+      {
+        "sku": "P2",
+        "shelf_id": "S1",
+        "level_id": "L1",
+        "face": 0,
+        "x_m": 0.2,
+        "width_m": 0.2,
+        "orientation": 0,
+        "facings": 1,
+        "layers": 1,
+        "depth_units": 1,
+        "capacity_units": 1,
+        "load_kg": 1
+      },
+      {
+        "sku": "P2",
+        "shelf_id": "S1",
+        "level_id": "L1",
+        "face": 1,
+        "x_m": 0.2,
+        "width_m": 0.2,
+        "orientation": 0,
+        "facings": 1,
+        "layers": 1,
+        "depth_units": 1,
+        "capacity_units": 1,
+        "load_kg": 1
+      }
+    ]
+  },
+  "routing_policies": [
+    "nearest"
+  ],
+  "max_states": 256
+}

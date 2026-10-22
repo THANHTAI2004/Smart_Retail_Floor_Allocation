@@ -1,0 +1,1 @@
+{"command": ["D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe", "-m", "pytest", "backend/tests", "-q", "--basetemp", "var/pytest-joint-final-154", "--junitxml", "docs\\research\\evidence\\20261022-joint-final-regression\\pytest.xml"], "exit_code": 0, "started_utc": "2026-10-22T04:15:38.898505+00:00", "ended_utc": "2026-10-22T04:16:28.714105+00:00"}

@@ -1,0 +1,341 @@
+{
+  "campaign": "D:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261022-joint-scalability-01",
+  "configuration": {
+    "cache_policy": "isolated",
+    "data_origin": "SYNTHETIC",
+    "datasets": [
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "local_trap",
+        "input_file_sha256": "180f37faff85472d6a485fc91b688156885ce2417c7971f08eece5c9df01fd51",
+        "input_path": "datasets/joint/local-trap.json",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "two_shelves",
+        "input_file_sha256": "3b9e4ec6926b6716a918f5ddca246654262584a17261df3dc277aca70f4b3638",
+        "input_path": "datasets/joint/two-shelves.json",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "small",
+        "input_file_sha256": null,
+        "input_path": null,
+        "levels": 2,
+        "scale": "small",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      }
+    ],
+    "experiments": [
+      {
+        "acceptance": "Zero independent constraint violations; preserve nonimprovements, bounds, failed and unverified outcomes.",
+        "datasets": [
+          "local_trap",
+          "two_shelves",
+          "small"
+        ],
+        "hypothesis": "Feedback may improve objective; certification requires complete verified finite enumeration.",
+        "id": "E14",
+        "metrics": [
+          "joint_objective",
+          "joint_evaluations",
+          "joint_iterations_to_best",
+          "holdout_objective",
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "How do decision counts and measured resources grow under fixed safe evaluation budgets?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 1,
+                "joint": {
+                  "max_actions": 24,
+                  "max_evaluations": 80,
+                  "max_iterations": 3,
+                  "mode": "sequential",
+                  "objective": {
+                    "scales": [
+                      100,
+                      100,
+                      1,
+                      1
+                    ],
+                    "weights": [
+                      1,
+                      0.2,
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "scenario_seed_policy": "job_seed_offsets",
+                  "scenario_seeds": [
+                    0,
+                    101
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": "feedback",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 1,
+                "joint": {
+                  "max_actions": 24,
+                  "max_evaluations": 80,
+                  "max_iterations": 3,
+                  "mode": "feedback",
+                  "objective": {
+                    "scales": [
+                      100,
+                      100,
+                      1,
+                      1
+                    ],
+                    "weights": [
+                      1,
+                      0.2,
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "scenario_seed_policy": "job_seed_offsets",
+                  "scenario_seeds": [
+                    0,
+                    101
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "job_time_limit_s": 60.0,
+    "max_jobs": 128,
+    "max_retries": 1,
+    "max_wall_s": 1200.0,
+    "memory_limit_mb": 1024,
+    "name": "joint_scalability",
+    "repetitions": 1,
+    "schema_version": "1.0",
+    "seeds": [
+      11,
+      23,
+      37
+    ],
+    "workers": 1
+  },
+  "datasets": [
+    {
+      "counts": {
+        "categories": 1,
+        "orders": 1,
+        "products": 2,
+        "shelves": 1
+      },
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "local_trap",
+      "generator": "imported-seven-section-bundle",
+      "input_file_sha256": "180f37faff85472d6a485fc91b688156885ce2417c7971f08eece5c9df01fd51",
+      "migrations": [],
+      "rights": "User-supplied synthetic bundle; no field validation or external licensing assertion",
+      "sha256": "adc0632d3afdea9ba5edb852cf072a1c2ddd71dfcb000e5e8c5acd6cdd5ea948",
+      "source": "D:\\Smart_Retail_Floor_Allocation\\datasets\\joint\\local-trap.json",
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    },
+    {
+      "counts": {
+        "categories": 6,
+        "orders": 100,
+        "products": 48,
+        "shelves": 12
+      },
+      "created_on": "2026-10-22",
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "small",
+      "generator": "structured_store_v1",
+      "limitations": [
+        "Not representative of a real store",
+        "Feasibility subject to solver model and budget",
+        "Category assignment mode: free"
+      ],
+      "rights": "Locally generated synthetic research data",
+      "sha256": "2aa1147d7a566f37489689d9ec450bd3f73c8d81b6fd06903820b239a859c85a",
+      "source": "Deterministic Python random generator, no field observations",
+      "spec": {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "small",
+        "input_file_sha256": null,
+        "input_path": null,
+        "levels": 2,
+        "scale": "small",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    },
+    {
+      "counts": {
+        "categories": 2,
+        "orders": 1,
+        "products": 2,
+        "shelves": 2
+      },
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "two_shelves",
+      "generator": "imported-seven-section-bundle",
+      "input_file_sha256": "3b9e4ec6926b6716a918f5ddca246654262584a17261df3dc277aca70f4b3638",
+      "migrations": [],
+      "rights": "User-supplied synthetic bundle; no field validation or external licensing assertion",
+      "sha256": "b63a23f4533b5908a04ba8f0c57ed2560e6351208b87ffece93f9bb93034d2d0",
+      "source": "D:\\Smart_Retail_Floor_Allocation\\datasets\\joint\\two-shelves.json",
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    }
+  ],
+  "files": {
+    "comparisons.csv": "479ba7657876e78672ff6f651fb73bff05af700043a9480d110df04a2fe29a63",
+    "failures.csv": "5f7a302cd4f5237891b7dddd7aae85f79bf60b684986736dc690f32dafd8f6a5",
+    "figures/joint-convergence.png": "f4838c070581809cf4b463cf392f85750580b30613d576478166004161dff57b",
+    "figures/joint-convergence.svg": "867b9ba5e7d9b042e70c3f8d1aac9d420a9fbb49b8d1266f06433206b6056909",
+    "figures/mean_distance_m.png": "84b61665c3fbfaf039ab2c62c504f0e2eba855fa5b934fc464574595585149d7",
+    "figures/mean_distance_m.svg": "d439c8a4738e756ff651adbe8b5bb46a320723a59526084b60843f16eecafa1b",
+    "figures/mean_wait_s.png": "e25a3c479e625498489046a544d03530a311e478b454517071852dcd5efee71e",
+    "figures/mean_wait_s.svg": "170a296b8258bf540d7bbd856dcec8c4e7b94ae55eb486b27afebaca415c8b5f",
+    "figures/outcomes.png": "1d4d413f3132139eda97e7b124b076e0bb0cf1307d2a8a580c6e488af1195b2c",
+    "figures/outcomes.svg": "5ef7fa18f08081f678b84ccd33409ca28b389a075aa318f290427daf720285cc",
+    "figures/peak_child_rss_bytes.png": "dbfd643461277f628fad00f710e0434a11edcaee60ced3c568afd3461091a01c",
+    "figures/peak_child_rss_bytes.svg": "58d133808195ee75a48266d7157d6598a566a9aca4bbac90cbdc9bb2ea07b164",
+    "figures/wall_s.png": "e165a4b1863b3b9649024b827bb9ddb2f09ea31cecb7725f23533f197d2c8c14",
+    "figures/wall_s.svg": "9719b32f119f1c4c45f32a1c4ab3ed278f0cb5d40eba8f5e9f81650d9a136ab1",
+    "joint-comparison.csv": "32e9e44ddc5623c5ae14f21c055e16008a41de7ebd1038c1c2fa8a84737458d0",
+    "joint-examples.json": "8c6436e9e16edf989138a5e8692098b75a7c8f74d29592b3f396b91d59bfe4ea",
+    "joint-trace.csv": "904a1d1b6f277b65b7ea1ee9911d92974c6494d337b2dbfe0f2bd4dee3429fe0",
+    "results.csv": "fb86f5596e3ae5ab9efd9b1cd5326b8d39f4e99e9f3cf3650a91ff49e9da5899",
+    "results.json": "d981a3af6ffc4c9d575e6ded1ddf7c9a768a8e8f90ddf411dd3ac85f016118ff",
+    "statistics.json": "7670074e18193f607fde950aa6bc860c6ae5df1fcfbc999e38a1918c63642ef6",
+    "summary.csv": "0073acd6a0aaa5aadb7ea2093758c0ddf3c365053d4b6014868f8da6d19532dc",
+    "summary.md": "bb9920db0181a75617f2ef33f944d9b286f5d6fafa654f841aebde577c837d1a"
+  },
+  "identity": {
+    "config_sha256": "d1effec026a7b18af5d20317ea25754a5e792ddf57f41e61139f3db5179d2ea2",
+    "created_utc": "2026-10-22T04:09:22.257567+00:00",
+    "free_disk_bytes": 75140935680,
+    "runtime": {
+      "model_versions": {
+        "input_contract": "1.1",
+        "joint": "finite-saa-feedback-1",
+        "t1": "grid-local-search-1.1",
+        "t2": "allocation-affinity-milp-1.1",
+        "t3": "facing-strip-milp-1.1",
+        "t4": "picker-grid-queue-1.1",
+        "workflow": "bounded-candidates-1.1"
+      },
+      "packages": {
+        "alembic": "1.20.0",
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "certifi": "2026.10.19",
+        "click": "8.5.0",
+        "colorama": "0.4.6",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "fastapi": "0.157.0",
+        "fonttools": "4.67.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.170.5",
+        "idna": "3.20",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "mako": "1.4.3",
+        "markupsafe": "3.0.4",
+        "matplotlib": "3.11.2",
+        "mypy": "1.20.2",
+        "mypy_extensions": "1.1.0",
+        "networkx": "3.7",
+        "numpy": "2.5.4",
+        "opentelemetry-api": "1.45.1",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "13.0.0",
+        "pip": "25.0.1",
+        "pluggy": "1.7.0",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "pydantic": "2.14.1",
+        "pydantic_core": "2.50.1",
+        "pygments": "2.21.0",
+        "pyparsing": "3.3.3",
+        "pytest": "9.1.1",
+        "python-dateutil": "3.0.0",
+        "ruff": "0.17.1",
+        "scipy": "1.18.1",
+        "shapely": "2.2.0",
+        "simpy": "4.1.2",
+        "six": "1.17.0",
+        "smart-retail": "0.1.0",
+        "sortedcontainers": "2.4.0",
+        "sqlalchemy": "2.1.5",
+        "starlette": "1.9.0",
+        "types-networkx": "3.6.1.20261021",
+        "typing-inspection": "0.4.4",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.5",
+        "uvicorn": "0.54.0"
+      },
+      "python": "3.12.10",
+      "solver": {
+        "name": "HiGHS",
+        "version": "1.12.0"
+      },
+      "source_sha256": "1530dc2f0dac05656d19894bf597349970a2c9e540ed0806cdc1b05aa69e6568"
+    },
+    "worker_limit": 1
+  },
+  "validation": {
+    "files": 2235,
+    "status": "PASS"
+  }
+}

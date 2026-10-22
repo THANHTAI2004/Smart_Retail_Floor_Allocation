@@ -4,6 +4,7 @@ from dataclasses import replace
 
 import pytest
 from shapely.geometry import LineString, Polygon
+
 from smart_retail.application.workflow import execute
 from smart_retail.contracts.inputs import to_domain
 from smart_retail.engines.t1_layout.engine import footprint

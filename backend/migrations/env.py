@@ -1,6 +1,7 @@
 from alembic import context
-from smart_retail.infrastructure.database import Base, database_url
 from sqlalchemy import create_engine
+
+from smart_retail.infrastructure.database import Base, database_url
 
 config = context.config
 url = database_url()

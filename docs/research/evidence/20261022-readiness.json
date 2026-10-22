@@ -1,0 +1,178 @@
+{
+  "status": "EXPERIMENT_READY_SYNTHETIC",
+  "scope": "Declared controlled local Windows/SQLite synthetic experiments; not production or real-world validation",
+  "gates": [
+    {
+      "gate": "ER01",
+      "status": "PASS",
+      "evidence": "Fresh Ruff/mypy/import audit; modular backend and React shell/pages/hooks",
+      "limitation": ""
+    },
+    {
+      "gate": "ER02",
+      "status": "PASS",
+      "evidence": "Versioned 1.1 contracts, CSV/JSON, immutable migration and reference/units tests",
+      "limitation": ""
+    },
+    {
+      "gate": "ER03",
+      "status": "PASS",
+      "evidence": "E01 witnesses plus geometry/topology/local-search reference regressions",
+      "limitation": ""
+    },
+    {
+      "gate": "ER04",
+      "status": "PASS",
+      "evidence": "Greedy/MILP E02 and independently enumerated allocation/affinity objectives",
+      "limitation": ""
+    },
+    {
+      "gate": "ER05",
+      "status": "PASS",
+      "evidence": "First-fit/MIP E03; independent physical replay, exact optimum and facing/compatibility tests",
+      "limitation": ""
+    },
+    {
+      "gate": "ER06",
+      "status": "PASS",
+      "evidence": "Nearest/return/exact E04, route/quantity/time replay and finite picker/period/exit regressions",
+      "limitation": ""
+    },
+    {
+      "gate": "ER07",
+      "status": "PASS",
+      "evidence": "Bounded integrated candidates, stage artifacts, content cache, dependency rerun, cancellation and bounded retry",
+      "limitation": ""
+    },
+    {
+      "gate": "ER08",
+      "status": "PASS",
+      "evidence": "Tiny/Small/Medium/Large manifest fingerprints and all five scenario generators",
+      "limitation": ""
+    },
+    {
+      "gate": "ER09",
+      "status": "PASS",
+      "evidence": "Real durable worker campaign, resume without rewriting completed jobs, process fault/retry receipts",
+      "limitation": ""
+    },
+    {
+      "gate": "ER10",
+      "status": "PASS",
+      "evidence": "Mean/median/SD/CI, selected-metric seed pairing, effect sizes/Holm where valid, failure retention",
+      "limitation": "Exploratory synthetic analysis, not population efficacy certification"
+    },
+    {
+      "gate": "ER11",
+      "status": "PASS",
+      "evidence": "Clean Python environment replay; exact result hashes distinguished from numeric tolerance; current source/dependency identity",
+      "limitation": ""
+    },
+    {
+      "gate": "ER12",
+      "status": "PASS",
+      "evidence": "Fresh automated release checks: 133 backend cases plus Vitest/E2E",
+      "limitation": ""
+    },
+    {
+      "gate": "ER13",
+      "status": "PASS",
+      "evidence": "Verified CSV/JSON/Markdown/report manifest and Matplotlib PNG/SVG from actual rows",
+      "limitation": ""
+    },
+    {
+      "gate": "ER14",
+      "status": "PASS",
+      "evidence": "Published model scope, limits, protocol, installation/replay/report commands, current state and dependency map",
+      "limitation": ""
+    },
+    {
+      "gate": "ER15",
+      "status": "PASS",
+      "evidence": "CLI pilot/main plus actual dashboard campaign/download/figure/replay and input CSV browser demonstration",
+      "limitation": ""
+    }
+  ],
+  "runtime": {
+    "model_versions": {
+      "input_contract": "1.1",
+      "t1": "grid-local-search-1.1",
+      "t2": "allocation-affinity-milp-1.1",
+      "t3": "facing-strip-milp-1.1",
+      "t4": "picker-grid-queue-1.1",
+      "workflow": "bounded-candidates-1.1"
+    },
+    "packages": {
+      "alembic": "1.20.0",
+      "annotated-doc": "0.0.5",
+      "annotated-types": "0.8.0",
+      "anyio": "4.15.1",
+      "certifi": "2026.10.19",
+      "click": "8.5.0",
+      "colorama": "0.4.6",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "fastapi": "0.157.0",
+      "fonttools": "4.67.0",
+      "h11": "0.16.0",
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "hypothesis": "6.170.5",
+      "idna": "3.20",
+      "iniconfig": "2.3.1",
+      "kiwisolver": "1.5.1",
+      "librt": "0.16.0",
+      "mako": "1.4.3",
+      "markupsafe": "3.0.4",
+      "matplotlib": "3.11.2",
+      "mypy": "1.20.2",
+      "mypy_extensions": "1.1.0",
+      "networkx": "3.7",
+      "numpy": "2.5.4",
+      "opentelemetry-api": "1.45.1",
+      "packaging": "26.3",
+      "pathspec": "1.1.1",
+      "pillow": "13.0.0",
+      "pip": "25.0.1",
+      "pluggy": "1.7.0",
+      "psycopg": "3.3.6",
+      "psycopg-binary": "3.3.6",
+      "pydantic": "2.14.1",
+      "pydantic_core": "2.50.1",
+      "pygments": "2.21.0",
+      "pyparsing": "3.3.3",
+      "pytest": "9.1.1",
+      "python-dateutil": "3.0.0",
+      "ruff": "0.17.1",
+      "scipy": "1.18.1",
+      "shapely": "2.2.0",
+      "simpy": "4.1.2",
+      "six": "1.17.0",
+      "smart-retail": "0.1.0",
+      "sortedcontainers": "2.4.0",
+      "sqlalchemy": "2.1.5",
+      "starlette": "1.9.0",
+      "types-networkx": "3.6.1.20261021",
+      "typing-inspection": "0.4.4",
+      "typing_extensions": "4.16.0",
+      "tzdata": "2026.5",
+      "uvicorn": "0.54.0"
+    },
+    "python": "3.12.10",
+    "solver": {
+      "name": "HiGHS",
+      "version": "1.12.0"
+    },
+    "source_sha256": "9c3dcaa7a38021736727fe62dacf158fdd19ae0d70a04dfe69b419c22c7a0c42"
+  },
+  "tolerances": {
+    "absolute": 1e-08,
+    "relative": 1e-09
+  },
+  "claims_excluded": [
+    "REAL_WORLD_VALIDATED",
+    "PostgreSQL/Compose runtime verified",
+    "Large full T1-T4 scalability established",
+    "Global integrated optimality"
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "floorplan": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
+    "units": "m",
+    "boundary": [
+      [
+        0,
+        0
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        8,
+        8
+      ],
+      [
+        0,
+        8
+      ]
+    ],
+    "entrance": [
+      0,
+      4
+    ],
+    "grid_m": 0.5,
+    "min_aisle_m": 0.5
+  },
+  "shelves": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
+    "layout_mode": "fixed",
+    "items": [
+      {
+        "id": "S1",
+        "width_m": 2,
+        "depth_m": 1,
+        "height_m": 1,
+        "x": 2,
+        "y": 3,
+        "rotation": 0,
+        "faces": 2,
+        "locked": false,
+        "levels": [
+          {
+            "id": "L1",
+            "width_m": 2,
+            "depth_m": 0.2,
+            "height_m": 0.5,
+            "max_load_kg": 10
+          }
+        ]
+      },
+      {
+        "id": "S2",
+        "width_m": 2,
+        "depth_m": 1,
+        "height_m": 1,
+        "x": 5,
+        "y": 3,
+        "rotation": 0,
+        "faces": 2,
+        "locked": true,
+        "levels": [
+          {
+            "id": "L1",
+            "width_m": 2,
+            "depth_m": 0.2,
+            "height_m": 0.5,
+            "max_load_kg": 10
+          }
+        ]
+      }
+    ]
+  },
+  "categories": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
+    "items": [
+      {
+        "id": "A",
+        "name": "A",
+        "required_width_m": 0.4
+      },
+      {
+        "id": "B",
+        "name": "B",
+        "required_width_m": 0.4
+      }
+    ]
+  },
+  "products": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
+    "items": [
+      {
+        "sku": "P1",
+        "name": "P1",
+        "category_id": "A",
+        "width_m": 0.2,
+        "depth_m": 0.2,
+        "height_m": 0.2,
+        "weight_kg": 1,
+        "demand": 3,
+        "facings": 1,
+        "min_facings": 1,
+        "max_facings": 1,
+        "clearance_m": 0,
+        "orientations": [
+          0
+        ]
+      },
+      {
+        "sku": "P2",
+        "name": "P2",
+        "category_id": "B",
+        "width_m": 0.2,
+        "depth_m": 0.2,
+        "height_m": 0.2,
+        "weight_kg": 1,
+        "demand": 3,
+        "facings": 1,
+        "min_facings": 1,
+        "max_facings": 1,
+        "clearance_m": 0,
+        "orientations": [
+          0
+        ]
+      }
+    ]
+  },
+  "demand": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
+    "customers": 4,
+    "horizon_s": 600,
+    "arrivals_per_hour": 100,
+    "baskets": [
+      [
+        "P1",
+        "P2"
+      ]
+    ],
+    "behavior": {
+      "speed_m_s": 1,
+      "dwell_s": 1
+    },
+    "picker_count": 1
+  },
+  "orders": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
+    "orders": [
+      {
+        "id": "O1",
+        "placed_at": "2026-10-22T00:00:00+00:00",
+        "due_s": 100
+      }
+    ],
+    "order_lines": [
+      {
+        "order_id": "O1",
+        "sku": "P1",
+        "quantity": 1
+      },
+      {
+        "order_id": "O1",
+        "sku": "P2",
+        "quantity": 1
+      }
+    ]
+  },
+  "optimization": {
+    "schema_version": "1.1",
+    "data_origin": "SYNTHETIC",
+    "seed": 11,
+    "time_limit_s": 60,
+    "algorithm": "greedy",
+    "candidate_count": 1
+  }
+}

@@ -1,0 +1,32 @@
+import { expect, test } from "@playwright/test";
+import fs from "node:fs/promises";
+import path from "node:path";
+
+test("research dashboard runs real campaign, reports, figures and replay", async ({ page }) => {
+  test.setTimeout(120000);
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto("/#research");
+  await expect(page.getByRole("heading", { name: "Dataset nghiên cứu" })).toBeVisible();
+  await page.getByLabel("Thí nghiệm", { exact: true }).selectOption("E02");
+  await page.getByLabel("Số seed độc lập", { exact: true }).fill("1");
+  await page.getByRole("button", { name: "Bắt đầu campaign", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("COMPLETED", { timeout: 60000 });
+  await expect(page.getByRole("cell", { name: "SUCCEEDED", exact: true })).toHaveCount(2);
+  await expect(page.getByRole("link", { name: "results.csv", exact: true })).toBeVisible({ timeout: 15000 });
+  await expect(page.getByAltText("Thời gian trung bình của các nhánh từ kết quả campaign đã chạy")).toBeVisible();
+  const download = page.waitForEvent("download");
+  await page.getByRole("link", { name: "manifest.json", exact: true }).click();
+  const result = await download;
+  const saved = await result.path();
+  expect(saved).not.toBeNull();
+  const manifest = JSON.parse(await fs.readFile(saved!, "utf-8"));
+  expect(manifest.validation.status).toBe("PASS");
+  expect(manifest.files["results.csv"]).toHaveLength(64);
+  const output = process.env.SMART_RETAIL_E2E_OUTPUT || "../var/playwright";
+  await fs.mkdir(path.join(output, "ui"), { recursive: true });
+  await page.screenshot({ path: path.join(output, "ui/research-dashboard.png"), fullPage: true });
+  await page.getByRole("button", { name: "Replay campaign", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("COMPLETED", { timeout: 60000 });
+  expect(errors).toEqual([]);
+});

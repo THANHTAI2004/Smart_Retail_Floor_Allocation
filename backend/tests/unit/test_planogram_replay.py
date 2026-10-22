@@ -3,6 +3,7 @@ import time
 from dataclasses import replace
 
 import pytest
+
 from smart_retail.domain.models import EngineError, Product, Shelf, ShelfLevel
 from smart_retail.engines.t3_slotting.engine import solve
 from smart_retail.engines.t3_slotting.validation import violations

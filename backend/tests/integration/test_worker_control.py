@@ -2,9 +2,7 @@ import json
 import time
 from concurrent.futures import ThreadPoolExecutor
 
-from smart_retail.infrastructure.database import RunRecord
-from smart_retail.workers.runner import work_once
-from sqlalchemy import select
+from smart_retail.workers.runner import read_progress, work_once
 
 
 def test_cancellation_kills_a_real_running_t4_child(
@@ -25,7 +23,7 @@ def test_cancellation_kills_a_real_running_t4_child(
         future = executor.submit(work_once, database[1], root)
         end = time.monotonic() + 15
         while time.monotonic() < end:
-            if progress.exists() and json.loads(progress.read_text())["stage"] == "T4":
+            if read_progress(progress) == "T4":
                 break
             assert not future.done(), "Worker finished before the cancellation checkpoint"
             time.sleep(0.02)
@@ -44,11 +42,10 @@ def test_cancellation_kills_a_real_running_t4_child(
 def test_snapshot_corruption_fails_before_execution(client, saved_project, database, tmp_path):
     run = client.post(f"/api/projects/{saved_project['id']}/runs").json()
     with database[1]() as db:
-        stored = db.scalar(select(RunRecord).where(RunRecord.id == run["id"]))
+        stored = db.get_run(run["id"])
         snapshot = dict(stored.snapshot)
         snapshot["optimization"] = {**snapshot["optimization"], "seed": 999}
-        stored.snapshot = snapshot
-        db.commit()
+        db.database.optimization_runs.update_one({"_id":run["id"]},{"$set":{"snapshot":snapshot}})
     assert work_once(database[1], tmp_path / "artifacts")
     final = client.get(f"/api/runs/{run['id']}").json()
     assert final["error"]["code"] == "INPUT_CORRUPT"

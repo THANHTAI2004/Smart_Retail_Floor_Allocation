@@ -1,0 +1,522 @@
+{
+  "assumptions": [
+    "Exploratory Student-t intervals and paired tests; no population-level efficacy claim",
+    "Repeated identical seeds are averaged before pairing, not counted as independent replications",
+    "Failure rates include all attempted jobs; solution metrics only exist for valid results",
+    "Completion rate is not a proof of feasibility/infeasibility for unsolved cases",
+    "Holm adjustment covers every reported nondegenerate paired metric comparison"
+  ],
+  "comparisons": [
+    {
+      "baseline": "exact",
+      "dataset": "two_shelves",
+      "difference": {
+        "ci95": [
+          1.8177530491617582,
+          4.4109136175005625
+        ],
+        "maximum": 3.469000000040978,
+        "mean": 3.1143333333311602,
+        "median": 3.3589999999967404,
+        "minimum": 2.514999999955762,
+        "n": 3,
+        "sd": 0.5219438028883786
+      },
+      "experiment": "E13",
+      "exploratory_p": 0.009233122461957555,
+      "holm_p": 0.009233122461957555,
+      "metric": "wall_s",
+      "paired_effect_dz": 5.9667981803726535,
+      "seeds": [
+        11,
+        23,
+        37
+      ],
+      "treatment": "hybrid"
+    },
+    {
+      "baseline": "exact",
+      "dataset": "two_shelves",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 3,
+        "sd": 0.0
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "mean_distance_m",
+      "paired_effect_dz": null,
+      "seeds": [
+        11,
+        23,
+        37
+      ],
+      "treatment": "hybrid"
+    },
+    {
+      "baseline": "exact",
+      "dataset": "two_shelves",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 3,
+        "sd": 0.0
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "mean_wait_s",
+      "paired_effect_dz": null,
+      "seeds": [
+        11,
+        23,
+        37
+      ],
+      "treatment": "hybrid"
+    },
+    {
+      "baseline": "exact",
+      "dataset": "two_shelves",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 3,
+        "sd": 0.0
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "joint_objective",
+      "paired_effect_dz": null,
+      "seeds": [
+        11,
+        23,
+        37
+      ],
+      "treatment": "hybrid"
+    },
+    {
+      "baseline": "exact",
+      "dataset": "two_shelves",
+      "difference": {
+        "ci95": [
+          41.0,
+          41.0
+        ],
+        "maximum": 41,
+        "mean": 41,
+        "median": 41,
+        "minimum": 41,
+        "n": 3,
+        "sd": 0.0
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "joint_evaluations",
+      "paired_effect_dz": null,
+      "seeds": [
+        11,
+        23,
+        37
+      ],
+      "treatment": "hybrid"
+    },
+    {
+      "baseline": "exact",
+      "dataset": "two_shelves",
+      "difference": {
+        "ci95": [
+          3.0,
+          3.0
+        ],
+        "maximum": 3,
+        "mean": 3,
+        "median": 3,
+        "minimum": 3,
+        "n": 3,
+        "sd": 0.0
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "joint_iterations_to_best",
+      "paired_effect_dz": null,
+      "seeds": [
+        11,
+        23,
+        37
+      ],
+      "treatment": "hybrid"
+    },
+    {
+      "baseline": "exact",
+      "dataset": "two_shelves",
+      "difference": {
+        "ci95": null,
+        "mean": null,
+        "median": null,
+        "n": 0,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "holdout_objective",
+      "paired_effect_dz": null,
+      "seeds": [],
+      "treatment": "hybrid"
+    }
+  ],
+  "selected_metrics": {
+    "E13": [
+      "joint_objective",
+      "joint_evaluations",
+      "joint_iterations_to_best",
+      "holdout_objective",
+      "wall_s",
+      "mean_distance_m",
+      "mean_wait_s"
+    ]
+  },
+  "summary": [
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.4385029682449546,
+        1.0
+      ],
+      "dataset": "two_shelves",
+      "experiment": "E13",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            128.0,
+            128.0
+          ],
+          "maximum": 128,
+          "mean": 128,
+          "median": 128,
+          "minimum": 128,
+          "n": 3,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 3,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.09552695319895153,
+            0.09552695319895153
+          ],
+          "maximum": 0.09552695319895153,
+          "mean": 0.09552695319895153,
+          "median": 0.09552695319895153,
+          "minimum": 0.09552695319895153,
+          "n": 3,
+          "sd": 0.0
+        },
+        "mean_distance_m": {
+          "ci95": [
+            6.707106781186548,
+            6.707106781186548
+          ],
+          "maximum": 6.707106781186548,
+          "mean": 6.707106781186548,
+          "median": 6.707106781186548,
+          "minimum": 6.707106781186548,
+          "n": 3,
+          "sd": 0.0
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "n": 3,
+          "sd": 0.0
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            144402944.94910353,
+            146410324.38422978
+          ],
+          "maximum": 145858560,
+          "mean": 145406634.66666666,
+          "median": 145281024,
+          "minimum": 145080320,
+          "n": 3,
+          "sd": 404039.48332475295
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            7.2880356918199185,
+            9.586964308180082
+          ],
+          "maximum": 8.921875,
+          "mean": 8.4375,
+          "median": 8.390625,
+          "minimum": 8.0,
+          "n": 3,
+          "sd": 0.4627216529675265
+        },
+        "t1_objective": {
+          "ci95": [
+            9.062178554545257,
+            9.062178554545257
+          ],
+          "maximum": 9.062178554545257,
+          "mean": 9.062178554545257,
+          "median": 9.062178554545257,
+          "minimum": 9.062178554545257,
+          "n": 3,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.26882266459508203,
+            0.26882266459508203
+          ],
+          "maximum": 0.26882266459508203,
+          "mean": 0.26882266459508203,
+          "median": 0.26882266459508203,
+          "minimum": 0.26882266459508203,
+          "n": 3,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            6.0,
+            6.0
+          ],
+          "maximum": 6.0,
+          "mean": 6.0,
+          "median": 6.0,
+          "minimum": 6.0,
+          "n": 3,
+          "sd": 0.0
+        },
+        "wall_s": {
+          "ci95": [
+            8.560446217195135,
+            10.783553782807036
+          ],
+          "maximum": 10.188000000023749,
+          "mean": 9.672000000001086,
+          "median": 9.436999999976251,
+          "minimum": 9.39100000000326,
+          "n": 3,
+          "sd": 0.4474606128106912
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 3,
+      "succeeded": 3,
+      "total": 3,
+      "treatment": "exact"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.4385029682449546,
+        1.0
+      ],
+      "dataset": "two_shelves",
+      "experiment": "E13",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            169.0,
+            169.0
+          ],
+          "maximum": 169,
+          "mean": 169,
+          "median": 169,
+          "minimum": 169,
+          "n": 3,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            3.0,
+            3.0
+          ],
+          "maximum": 3,
+          "mean": 3,
+          "median": 3,
+          "minimum": 3,
+          "n": 3,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.09552695319895153,
+            0.09552695319895153
+          ],
+          "maximum": 0.09552695319895153,
+          "mean": 0.09552695319895153,
+          "median": 0.09552695319895153,
+          "minimum": 0.09552695319895153,
+          "n": 3,
+          "sd": 0.0
+        },
+        "mean_distance_m": {
+          "ci95": [
+            6.707106781186548,
+            6.707106781186548
+          ],
+          "maximum": 6.707106781186548,
+          "mean": 6.707106781186548,
+          "median": 6.707106781186548,
+          "minimum": 6.707106781186548,
+          "n": 3,
+          "sd": 0.0
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "n": 3,
+          "sd": 0.0
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            154937443.6707043,
+            159498822.99596238
+          ],
+          "maximum": 158261248,
+          "mean": 157218133.33333334,
+          "median": 156860416,
+          "minimum": 156532736,
+          "n": 3,
+          "sd": 918101.1390153774
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            10.429060078164381,
+            11.59177325516895
+          ],
+          "maximum": 11.203125,
+          "mean": 11.010416666666666,
+          "median": 11.078125,
+          "minimum": 10.75,
+          "n": 3,
+          "sd": 0.2340275201943851
+        },
+        "t1_objective": {
+          "ci95": [
+            9.062178554545257,
+            9.062178554545257
+          ],
+          "maximum": 9.062178554545257,
+          "mean": 9.062178554545257,
+          "median": 9.062178554545257,
+          "minimum": 9.062178554545257,
+          "n": 3,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.26882266459508203,
+            0.26882266459508203
+          ],
+          "maximum": 0.26882266459508203,
+          "mean": 0.26882266459508203,
+          "median": 0.26882266459508203,
+          "minimum": 0.26882266459508203,
+          "n": 3,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            6.0,
+            6.0
+          ],
+          "maximum": 6.0,
+          "mean": 6.0,
+          "median": 6.0,
+          "minimum": 6.0,
+          "n": 3,
+          "sd": 0.0
+        },
+        "wall_s": {
+          "ci95": [
+            12.59022276208635,
+            12.982443904578142
+          ],
+          "maximum": 12.860000000044238,
+          "mean": 12.786333333332246,
+          "median": 12.795999999972992,
+          "minimum": 12.702999999979511,
+          "n": 3,
+          "sd": 0.07894512865299878
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 3,
+      "succeeded": 3,
+      "total": 3,
+      "treatment": "hybrid"
+    }
+  ]
+}

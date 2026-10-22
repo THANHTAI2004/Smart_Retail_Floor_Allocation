@@ -1,0 +1,198 @@
+{
+  "campaign": "D:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261022-reproducibility-01",
+  "configuration": {
+    "cache_policy": "isolated",
+    "data_origin": "SYNTHETIC",
+    "datasets": [
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "tiny",
+        "input_file_sha256": null,
+        "input_path": null,
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      }
+    ],
+    "experiments": [
+      {
+        "acceptance": "Compare scientific input/result hashes; report telemetry differences separately.",
+        "datasets": [
+          "tiny"
+        ],
+        "hypothesis": "Identical input and pinned source/dependencies yield the same scientific result bytes on this compatible platform.",
+        "id": "E10",
+        "metrics": [
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "Are repeated seeded independent worker results identical before comparing separate environments?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {}
+          }
+        ]
+      }
+    ],
+    "job_time_limit_s": 15.0,
+    "max_jobs": 128,
+    "max_retries": 1,
+    "max_wall_s": 600.0,
+    "memory_limit_mb": 1024,
+    "name": "reproducibility",
+    "repetitions": 2,
+    "schema_version": "1.0",
+    "seeds": [
+      11,
+      23
+    ],
+    "workers": 1
+  },
+  "datasets": [
+    {
+      "counts": {
+        "categories": 3,
+        "orders": 20,
+        "products": 12,
+        "shelves": 4
+      },
+      "created_on": "2026-10-22",
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "tiny",
+      "generator": "structured_store_v1",
+      "limitations": [
+        "Not representative of a real store",
+        "Feasibility subject to solver model and budget",
+        "Category assignment mode: free"
+      ],
+      "rights": "Locally generated synthetic research data",
+      "sha256": "2c56ca13bcdf166b21ad570d8ba51ead8d18d1ac4e616470419470256cff6ce2",
+      "source": "Deterministic Python random generator, no field observations",
+      "spec": {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "tiny",
+        "input_file_sha256": null,
+        "input_path": null,
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    }
+  ],
+  "files": {
+    "comparisons.csv": "5f7a302cd4f5237891b7dddd7aae85f79bf60b684986736dc690f32dafd8f6a5",
+    "failures.csv": "5f7a302cd4f5237891b7dddd7aae85f79bf60b684986736dc690f32dafd8f6a5",
+    "figures/mean_distance_m.png": "e3e764a7e2073d3f3380757a199ab07ca9be37d9d05a90001a6ce2083fecabf6",
+    "figures/mean_distance_m.svg": "cf20238ecb233508c03fd72da04b223f3c7830eb21c617e4285492752c5c1cf9",
+    "figures/mean_wait_s.png": "0ed97874104ea97180305d09f21124eeeb0777d83920932245467cc8437e09f2",
+    "figures/mean_wait_s.svg": "5a3f86dc7c5cc6a93eccb9ce0f7de7363fbf2190e5589e2e20f5616d54e58b3f",
+    "figures/outcomes.png": "5feefae9d6d294f5571a4d29dcccdcfdbd688f5d662777bd634ec8dd2e5293ad",
+    "figures/outcomes.svg": "633c40f7c6456e8f6c762083aeaa6ee58ed77b4c5ec498e49be4dd58d4d09c39",
+    "figures/peak_child_rss_bytes.png": "7cd24fe4f5b6c92f1f5fbf8dc79a05a304fd21585192d5ed967c00a81f31e820",
+    "figures/peak_child_rss_bytes.svg": "02478093d17268e1311e273b2fa669cb5cee1c11ec0a6bebfe21c33e809723f2",
+    "figures/wall_s.png": "3176c8d48725375a3b92634fdbc918a58107c810f434195c8a111b5614e71713",
+    "figures/wall_s.svg": "cc49ff70835231d419826cf3f244536b5b0e647e2fccfb08fd9d2875fa28e2a5",
+    "results.csv": "d779a37febd6056e2f7d7f9cef2d6391ccaeadd85f200dcf90dbf41632919b34",
+    "results.json": "343ca4e58f305fbc41809267e59e202ad84c3a08fa3de70a1f3c6fc2584f3202",
+    "statistics.json": "1512873333ef2a5b135e9c853ea044ad882612d148626a59c454257df60aee2d",
+    "summary.csv": "2c0b3215677b34d446e7202012098e98a16429e0fd43634ad6d272ee11c4442b",
+    "summary.md": "142cac9129f4c52ce6cdce430bb077b84002267a41f84bb5b246f2053b8523dc"
+  },
+  "identity": {
+    "config_sha256": "9339bddd6bf061a2150a836e6a74455ab0d521de5773ba1407f50a5d5dbf3fe7",
+    "created_utc": "2026-10-22T01:53:58.318746+00:00",
+    "free_disk_bytes": 75359326208,
+    "runtime": {
+      "model_versions": {
+        "input_contract": "1.1",
+        "t1": "grid-local-search-1.1",
+        "t2": "allocation-affinity-milp-1.1",
+        "t3": "facing-strip-milp-1.1",
+        "t4": "picker-grid-queue-1.1",
+        "workflow": "bounded-candidates-1.1"
+      },
+      "packages": {
+        "alembic": "1.20.0",
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "certifi": "2026.10.19",
+        "click": "8.5.0",
+        "colorama": "0.4.6",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "fastapi": "0.157.0",
+        "fonttools": "4.67.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.170.5",
+        "idna": "3.20",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "mako": "1.4.3",
+        "markupsafe": "3.0.4",
+        "matplotlib": "3.11.2",
+        "mypy": "1.20.2",
+        "mypy_extensions": "1.1.0",
+        "networkx": "3.7",
+        "numpy": "2.5.4",
+        "opentelemetry-api": "1.45.1",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "13.0.0",
+        "pip": "25.0.1",
+        "pluggy": "1.7.0",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "pydantic": "2.14.1",
+        "pydantic_core": "2.50.1",
+        "pygments": "2.21.0",
+        "pyparsing": "3.3.3",
+        "pytest": "9.1.1",
+        "python-dateutil": "3.0.0",
+        "ruff": "0.17.1",
+        "scipy": "1.18.1",
+        "shapely": "2.2.0",
+        "simpy": "4.1.2",
+        "six": "1.17.0",
+        "smart-retail": "0.1.0",
+        "sortedcontainers": "2.4.0",
+        "sqlalchemy": "2.1.5",
+        "starlette": "1.9.0",
+        "types-networkx": "3.6.1.20261021",
+        "typing-inspection": "0.4.4",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.5",
+        "uvicorn": "0.54.0"
+      },
+      "python": "3.12.10",
+      "solver": {
+        "name": "HiGHS",
+        "version": "1.12.0"
+      },
+      "source_sha256": "9c3dcaa7a38021736727fe62dacf158fdd19ae0d70a04dfe69b419c22c7a0c42"
+    },
+    "worker_limit": 1
+  },
+  "validation": {
+    "files": 49,
+    "status": "PASS"
+  }
+}

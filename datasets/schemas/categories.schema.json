@@ -73,6 +73,21 @@
           "exclusiveMinimum": 0,
           "title": "Distance M",
           "type": "number"
+        },
+        "affinity": {
+          "maxProperties": 200,
+          "patternProperties": {
+            "^[A-Za-z0-9_.-]+$": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "propertyNames": {
+            "maxLength": 120,
+            "minLength": 1
+          },
+          "title": "Affinity",
+          "type": "object"
         }
       },
       "required": [
@@ -86,6 +101,25 @@
   },
   "additionalProperties": false,
   "properties": {
+    "schema_version": {
+      "const": "1.1",
+      "default": "1.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "data_origin": {
+      "default": "UNSPECIFIED",
+      "enum": [
+        "SYNTHETIC",
+        "REAL_VERIFIED",
+        "REAL_UNVERIFIED",
+        "ASSUMED",
+        "DERIVED",
+        "UNSPECIFIED"
+      ],
+      "title": "Data Origin",
+      "type": "string"
+    },
     "items": {
       "items": {
         "$ref": "#/$defs/CategoryInput"

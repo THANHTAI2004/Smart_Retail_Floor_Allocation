@@ -12,7 +12,7 @@ test("dashboard and editor accessibility checks", async ({ page }) => {
     page.getByText("Đã tạo dự án với 7 nhóm dữ liệu tổng hợp."),
   ).toBeVisible();
   const results: Record<string, unknown> = {};
-  for (const route of ["dashboard", "floorplan"]) {
+  for (const route of ["dashboard", "floorplan", "research"]) {
     await page.goto(`/#${route}`);
     await expect(page.locator("h1")).toBeVisible();
     const result = await new AxeBuilder({ page })

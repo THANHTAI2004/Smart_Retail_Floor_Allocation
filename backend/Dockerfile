@@ -4,6 +4,8 @@ COPY backend/requirements-lock.txt /app/backend/requirements-lock.txt
 RUN pip install --no-cache-dir -r backend/requirements-lock.txt
 COPY backend /app/backend
 RUN pip install --no-cache-dir --no-deps ./backend
+COPY datasets /app/datasets
+COPY experiments/configs /app/experiments/configs
 RUN mkdir -p /app/var
 ENV PYTHONUNBUFFERED=1
 EXPOSE 8000

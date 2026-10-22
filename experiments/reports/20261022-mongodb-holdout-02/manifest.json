@@ -1,0 +1,349 @@
+{
+  "campaign": "D:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261022-mongodb-holdout-02",
+  "configuration": {
+    "cache_policy": "isolated",
+    "data_origin": "SYNTHETIC",
+    "datasets": [
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "local_trap",
+        "input_file_sha256": "180f37faff85472d6a485fc91b688156885ce2417c7971f08eece5c9df01fd51",
+        "input_path": "datasets/joint/local-trap.json",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "two_shelves",
+        "input_file_sha256": "3b9e4ec6926b6716a918f5ddca246654262584a17261df3dc277aca70f4b3638",
+        "input_path": "datasets/joint/two-shelves.json",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "small",
+        "input_file_sha256": null,
+        "input_path": null,
+        "levels": 2,
+        "scale": "small",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      }
+    ],
+    "experiments": [
+      {
+        "acceptance": "Zero independent constraint violations; preserve nonimprovements, bounds, failed and unverified outcomes.",
+        "datasets": [
+          "two_shelves"
+        ],
+        "hypothesis": "Feedback may improve objective; certification requires complete verified finite enumeration.",
+        "id": "E15",
+        "metrics": [
+          "joint_objective",
+          "joint_evaluations",
+          "joint_iterations_to_best",
+          "holdout_objective",
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "Does the selected fixed-training-scenario solution retain its objective on disjoint synthetic holdout seeds?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 1,
+                "joint": {
+                  "holdout_seeds": [
+                    10001,
+                    20003
+                  ],
+                  "max_actions": 24,
+                  "max_evaluations": 80,
+                  "max_iterations": 3,
+                  "mode": "sequential",
+                  "objective": {
+                    "scales": [
+                      100,
+                      100,
+                      1,
+                      1
+                    ],
+                    "weights": [
+                      1,
+                      0.2,
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "scenario_seed_policy": "job_seed_offsets",
+                  "scenario_seeds": [
+                    0,
+                    101
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": "feedback",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 1,
+                "joint": {
+                  "holdout_seeds": [
+                    10001,
+                    20003
+                  ],
+                  "max_actions": 24,
+                  "max_evaluations": 80,
+                  "max_iterations": 3,
+                  "mode": "feedback",
+                  "objective": {
+                    "scales": [
+                      100,
+                      100,
+                      1,
+                      1
+                    ],
+                    "weights": [
+                      1,
+                      0.2,
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "scenario_seed_policy": "job_seed_offsets",
+                  "scenario_seeds": [
+                    0,
+                    101
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "job_time_limit_s": 60.0,
+    "max_jobs": 128,
+    "max_retries": 1,
+    "max_wall_s": 1200.0,
+    "memory_limit_mb": 1024,
+    "name": "joint_holdout",
+    "repetitions": 1,
+    "schema_version": "1.0",
+    "seeds": [
+      11,
+      23,
+      37
+    ],
+    "workers": 1
+  },
+  "datasets": [
+    {
+      "counts": {
+        "categories": 1,
+        "orders": 1,
+        "products": 2,
+        "shelves": 1
+      },
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "local_trap",
+      "generator": "imported-seven-section-bundle",
+      "input_file_sha256": "180f37faff85472d6a485fc91b688156885ce2417c7971f08eece5c9df01fd51",
+      "migrations": [],
+      "rights": "User-supplied synthetic bundle; no field validation or external licensing assertion",
+      "sha256": "adc0632d3afdea9ba5edb852cf072a1c2ddd71dfcb000e5e8c5acd6cdd5ea948",
+      "source": "D:\\Smart_Retail_Floor_Allocation\\datasets\\joint\\local-trap.json",
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    },
+    {
+      "counts": {
+        "categories": 6,
+        "orders": 100,
+        "products": 48,
+        "shelves": 12
+      },
+      "created_on": "2026-10-22",
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "small",
+      "generator": "structured_store_v1",
+      "limitations": [
+        "Not representative of a real store",
+        "Feasibility subject to solver model and budget",
+        "Category assignment mode: free"
+      ],
+      "rights": "Locally generated synthetic research data",
+      "sha256": "2aa1147d7a566f37489689d9ec450bd3f73c8d81b6fd06903820b239a859c85a",
+      "source": "Deterministic Python random generator, no field observations",
+      "spec": {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "small",
+        "input_file_sha256": null,
+        "input_path": null,
+        "levels": 2,
+        "scale": "small",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    },
+    {
+      "counts": {
+        "categories": 2,
+        "orders": 1,
+        "products": 2,
+        "shelves": 2
+      },
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "two_shelves",
+      "generator": "imported-seven-section-bundle",
+      "input_file_sha256": "3b9e4ec6926b6716a918f5ddca246654262584a17261df3dc277aca70f4b3638",
+      "migrations": [],
+      "rights": "User-supplied synthetic bundle; no field validation or external licensing assertion",
+      "sha256": "b63a23f4533b5908a04ba8f0c57ed2560e6351208b87ffece93f9bb93034d2d0",
+      "source": "D:\\Smart_Retail_Floor_Allocation\\datasets\\joint\\two-shelves.json",
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    }
+  ],
+  "files": {
+    "comparisons.csv": "4d26127885a7da6ea6347305162ee39c6a0b91d5119c99d5d90a527a8a1248de",
+    "failures.csv": "5f7a302cd4f5237891b7dddd7aae85f79bf60b684986736dc690f32dafd8f6a5",
+    "figures/joint-convergence.png": "d2d715c6f0dff50151abc5e757be9340f0c7dff55b74d5fcab2fd02dfee25155",
+    "figures/joint-convergence.svg": "063b13c25382a7dae177c9c967410919ed2cb9f687ed09f68f9e99a54339bfff",
+    "figures/mean_distance_m.png": "0e7733177a92cfe75c3287d4979a23bf317bb9e4e7242c03cbeb3f367eed6567",
+    "figures/mean_distance_m.svg": "1d4a9d9a2a2d4db458627ed959d9ca5b502f5a16e014d80d502ccffcdd98940e",
+    "figures/mean_wait_s.png": "b28a7805e688c7db4ef19158ff5f90b72b4dcd48f6faf10a84ad252129d99fac",
+    "figures/mean_wait_s.svg": "ab7728d83cd044a9ded38837aaeabdb1b114bfbd4d58a8ca233a8ad1d4a3ce55",
+    "figures/outcomes.png": "abf02ff064fddfd75186e39f529065da753a34d0bf3bfead9251c6307281b2a5",
+    "figures/outcomes.svg": "c8f026e15ba129c11df5a02bf5f2dbed73b2fc249a6e0a9a554710bb279440a5",
+    "figures/peak_child_rss_bytes.png": "9e8df35bad6bb0d3dd016f69d2a8b81b098e1113a00a03a28efa36ad28ab97f8",
+    "figures/peak_child_rss_bytes.svg": "27fe7167a94005b8efa46ddf6ac650cbd9d5074714d4b748cd064566f3a0626c",
+    "figures/wall_s.png": "dc1ad56613533723e6fe086650fbf6446498a3aae2624cb70d75edc069fd6177",
+    "figures/wall_s.svg": "0e3740093a1c280fc68f820f0a684eec1b9fb5ed0b93b01ac6297470cd8ff777",
+    "joint-comparison.csv": "ddb770270c4a99d4a1a217b03257fd3c653daf97ff1f20ce75add43a793b7fde",
+    "joint-examples.json": "b0af1c0c137c21400dcd785bdd69c8e18f7793c03c59c6ced8beeaffe2d02a7d",
+    "joint-trace.csv": "435c57ac44c5a6e75ff3b94bc43581e80a659b32cfd07cf9f98978c7b088a3e9",
+    "results.csv": "c819efa3c34737e95e404109a5d249626eaa5557c44f5a5340881959a74fb0bf",
+    "results.json": "b90a1d517530ded80a571df6624045eae856025e9e53ee7940b21117d53b2d44",
+    "statistics.json": "6c8125c49f8ac3e488fdb7c31475de3749c45a8eff84f61f2335ae1b1df4c8a6",
+    "summary.csv": "d755f7151b31cf45bfe199c58d550d7a20428ccc43df1fe79469c5344ee44599",
+    "summary.md": "42335b769ec087d4036a68fa529e582000f3ee89c0e57afc1f926e59d594b3d2"
+  },
+  "identity": {
+    "config_sha256": "d5af986721b17af0c875a1f77a094a025192989e1c3463595d48a67f02bdac43",
+    "created_utc": "2026-10-22T05:03:06.516403+00:00",
+    "free_disk_bytes": 70416568320,
+    "runtime": {
+      "model_versions": {
+        "input_contract": "1.1",
+        "joint": "finite-saa-feedback-1",
+        "t1": "grid-local-search-1.1",
+        "t2": "allocation-affinity-milp-1.1",
+        "t3": "facing-strip-milp-1.1",
+        "t4": "picker-grid-queue-1.1",
+        "workflow": "bounded-candidates-1.1"
+      },
+      "packages": {
+        "alembic": "1.20.0",
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "certifi": "2026.10.19",
+        "click": "8.5.0",
+        "colorama": "0.4.6",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "dnspython": "2.9.0",
+        "fastapi": "0.157.0",
+        "fonttools": "4.67.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.170.5",
+        "idna": "3.20",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "mako": "1.4.3",
+        "markupsafe": "3.0.4",
+        "matplotlib": "3.11.2",
+        "mypy": "1.20.2",
+        "mypy_extensions": "1.1.0",
+        "networkx": "3.7",
+        "numpy": "2.5.4",
+        "opentelemetry-api": "1.45.1",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "13.0.0",
+        "pip": "25.0.1",
+        "pluggy": "1.7.0",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "pydantic": "2.14.1",
+        "pydantic_core": "2.50.1",
+        "pygments": "2.21.0",
+        "pymongo": "4.18.2",
+        "pyparsing": "3.3.3",
+        "pytest": "9.1.1",
+        "python-dateutil": "3.0.0",
+        "ruff": "0.17.1",
+        "scipy": "1.18.1",
+        "shapely": "2.2.0",
+        "simpy": "4.1.2",
+        "six": "1.17.0",
+        "smart-retail": "0.1.0",
+        "sortedcontainers": "2.4.0",
+        "sqlalchemy": "2.1.5",
+        "starlette": "1.9.0",
+        "types-networkx": "3.6.1.20261021",
+        "typing-inspection": "0.4.4",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.5",
+        "uvicorn": "0.54.0"
+      },
+      "python": "3.12.10",
+      "solver": {
+        "name": "HiGHS",
+        "version": "1.12.0"
+      },
+      "source_sha256": "086d643db8a5a6fa7142c6206cb0446ff9f18fd4f3af8e885f4a7e2c59cd1a96"
+    },
+    "worker_limit": 1
+  },
+  "validation": {
+    "files": 1332,
+    "status": "PASS"
+  }
+}

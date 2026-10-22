@@ -1,0 +1,11 @@
+{
+  "version": "1",
+  "data_origin": "SYNTHETIC",
+  "description": "Manually declared finite domains, not solver-generated optima",
+  "files": {
+    "local-trap.json": "180f37faff85472d6a485fc91b688156885ce2417c7971f08eece5c9df01fd51",
+    "local-trap-space.json": "8e924ff7c7c9e61bab1924d5f448f9d9a6af1205f852cf0ccd9b5f027e1ce501",
+    "two-shelves.json": "3b9e4ec6926b6716a918f5ddca246654262584a17261df3dc277aca70f4b3638",
+    "two-shelves-space.json": "cfe4e3dc4293d782d33722763017cbbf824d8a35d286bd8bbe04e6f8c8944a6c"
+  }
+}

@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import pytest
+
 from smart_retail.workers.runner import read_progress
 
 

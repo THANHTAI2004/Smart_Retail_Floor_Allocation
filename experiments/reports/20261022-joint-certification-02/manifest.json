@@ -1,0 +1,608 @@
+{
+  "campaign": "D:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261022-joint-certification-02",
+  "configuration": {
+    "cache_policy": "isolated",
+    "data_origin": "SYNTHETIC",
+    "datasets": [
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "local_trap",
+        "input_file_sha256": "180f37faff85472d6a485fc91b688156885ce2417c7971f08eece5c9df01fd51",
+        "input_path": "datasets/joint/local-trap.json",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "two_shelves",
+        "input_file_sha256": "3b9e4ec6926b6716a918f5ddca246654262584a17261df3dc277aca70f4b3638",
+        "input_path": "datasets/joint/two-shelves.json",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "small",
+        "input_file_sha256": null,
+        "input_path": null,
+        "levels": 2,
+        "scale": "small",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      }
+    ],
+    "experiments": [
+      {
+        "acceptance": "Zero independent constraint violations; preserve nonimprovements, bounds, failed and unverified outcomes.",
+        "datasets": [
+          "local_trap"
+        ],
+        "hypothesis": "Feedback may improve objective; certification requires complete verified finite enumeration.",
+        "id": "E13",
+        "metrics": [
+          "joint_objective",
+          "joint_evaluations",
+          "joint_iterations_to_best",
+          "holdout_objective",
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "Can complete finite search certify and independently verify a better solution than a strict local plateau?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 1,
+                "joint": {
+                  "max_actions": 24,
+                  "max_evaluations": 80,
+                  "max_iterations": 3,
+                  "mode": "sequential",
+                  "objective": {
+                    "scales": [
+                      100,
+                      100,
+                      1,
+                      1
+                    ],
+                    "weights": [
+                      1,
+                      0.2,
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "scenario_seed_policy": "job_seed_offsets",
+                  "scenario_seeds": [
+                    0,
+                    101
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": "multistart",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 3,
+                "joint": {
+                  "max_actions": 24,
+                  "max_evaluations": 80,
+                  "max_iterations": 3,
+                  "mode": "multistart",
+                  "objective": {
+                    "scales": [
+                      100,
+                      100,
+                      1,
+                      1
+                    ],
+                    "weights": [
+                      1,
+                      0.2,
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "scenario_seed_policy": "job_seed_offsets",
+                  "scenario_seeds": [
+                    0,
+                    101
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": "feedback",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 1,
+                "joint": {
+                  "max_actions": 24,
+                  "max_evaluations": 80,
+                  "max_iterations": 3,
+                  "mode": "feedback",
+                  "objective": {
+                    "scales": [
+                      100,
+                      100,
+                      1,
+                      1
+                    ],
+                    "weights": [
+                      1,
+                      0.2,
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "scenario_seed_policy": "job_seed_offsets",
+                  "scenario_seeds": [
+                    0,
+                    101
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": "exact",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 1,
+                "joint": {
+                  "finite_space": {
+                    "assignments": {
+                      "A": [
+                        "S1"
+                      ]
+                    },
+                    "max_states": 256,
+                    "placements": {
+                      "P1": [
+                        {
+                          "capacity_units": 1,
+                          "depth_units": 1,
+                          "face": 0,
+                          "facings": 1,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 1,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P1",
+                          "width_m": 0.2,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 1,
+                          "depth_units": 1,
+                          "face": 1,
+                          "facings": 1,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 1,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P1",
+                          "width_m": 0.2,
+                          "x_m": 0.0
+                        }
+                      ],
+                      "P2": [
+                        {
+                          "capacity_units": 1,
+                          "depth_units": 1,
+                          "face": 0,
+                          "facings": 1,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 1,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P2",
+                          "width_m": 0.2,
+                          "x_m": 0.2
+                        },
+                        {
+                          "capacity_units": 1,
+                          "depth_units": 1,
+                          "face": 1,
+                          "facings": 1,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 1,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P2",
+                          "width_m": 0.2,
+                          "x_m": 0.2
+                        }
+                      ]
+                    },
+                    "poses": {
+                      "S1": [
+                        [
+                          2,
+                          3,
+                          0
+                        ]
+                      ]
+                    },
+                    "routing_policies": [
+                      "nearest"
+                    ]
+                  },
+                  "max_actions": 24,
+                  "max_evaluations": 80,
+                  "max_iterations": 3,
+                  "mode": "exact",
+                  "objective": {
+                    "scales": [
+                      100,
+                      100,
+                      1,
+                      1
+                    ],
+                    "weights": [
+                      1,
+                      0.2,
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "scenario_seed_policy": "job_seed_offsets",
+                  "scenario_seeds": [
+                    0,
+                    101
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": "hybrid",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 1,
+                "joint": {
+                  "finite_space": {
+                    "assignments": {
+                      "A": [
+                        "S1"
+                      ]
+                    },
+                    "max_states": 256,
+                    "placements": {
+                      "P1": [
+                        {
+                          "capacity_units": 1,
+                          "depth_units": 1,
+                          "face": 0,
+                          "facings": 1,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 1,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P1",
+                          "width_m": 0.2,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 1,
+                          "depth_units": 1,
+                          "face": 1,
+                          "facings": 1,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 1,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P1",
+                          "width_m": 0.2,
+                          "x_m": 0.0
+                        }
+                      ],
+                      "P2": [
+                        {
+                          "capacity_units": 1,
+                          "depth_units": 1,
+                          "face": 0,
+                          "facings": 1,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 1,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P2",
+                          "width_m": 0.2,
+                          "x_m": 0.2
+                        },
+                        {
+                          "capacity_units": 1,
+                          "depth_units": 1,
+                          "face": 1,
+                          "facings": 1,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 1,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P2",
+                          "width_m": 0.2,
+                          "x_m": 0.2
+                        }
+                      ]
+                    },
+                    "poses": {
+                      "S1": [
+                        [
+                          2,
+                          3,
+                          0
+                        ]
+                      ]
+                    },
+                    "routing_policies": [
+                      "nearest"
+                    ]
+                  },
+                  "max_actions": 24,
+                  "max_evaluations": 80,
+                  "max_iterations": 3,
+                  "mode": "hybrid",
+                  "objective": {
+                    "scales": [
+                      100,
+                      100,
+                      1,
+                      1
+                    ],
+                    "weights": [
+                      1,
+                      0.2,
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "scenario_seed_policy": "job_seed_offsets",
+                  "scenario_seeds": [
+                    0,
+                    101
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "job_time_limit_s": 60.0,
+    "max_jobs": 128,
+    "max_retries": 1,
+    "max_wall_s": 1200.0,
+    "memory_limit_mb": 1024,
+    "name": "joint_certification",
+    "repetitions": 1,
+    "schema_version": "1.0",
+    "seeds": [
+      11,
+      23,
+      37
+    ],
+    "workers": 1
+  },
+  "datasets": [
+    {
+      "counts": {
+        "categories": 1,
+        "orders": 1,
+        "products": 2,
+        "shelves": 1
+      },
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "local_trap",
+      "generator": "imported-seven-section-bundle",
+      "input_file_sha256": "180f37faff85472d6a485fc91b688156885ce2417c7971f08eece5c9df01fd51",
+      "migrations": [],
+      "rights": "User-supplied synthetic bundle; no field validation or external licensing assertion",
+      "sha256": "adc0632d3afdea9ba5edb852cf072a1c2ddd71dfcb000e5e8c5acd6cdd5ea948",
+      "source": "D:\\Smart_Retail_Floor_Allocation\\datasets\\joint\\local-trap.json",
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    },
+    {
+      "counts": {
+        "categories": 6,
+        "orders": 100,
+        "products": 48,
+        "shelves": 12
+      },
+      "created_on": "2026-10-22",
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "small",
+      "generator": "structured_store_v1",
+      "limitations": [
+        "Not representative of a real store",
+        "Feasibility subject to solver model and budget",
+        "Category assignment mode: free"
+      ],
+      "rights": "Locally generated synthetic research data",
+      "sha256": "2aa1147d7a566f37489689d9ec450bd3f73c8d81b6fd06903820b239a859c85a",
+      "source": "Deterministic Python random generator, no field observations",
+      "spec": {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "small",
+        "input_file_sha256": null,
+        "input_path": null,
+        "levels": 2,
+        "scale": "small",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    },
+    {
+      "counts": {
+        "categories": 2,
+        "orders": 1,
+        "products": 2,
+        "shelves": 2
+      },
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "two_shelves",
+      "generator": "imported-seven-section-bundle",
+      "input_file_sha256": "3b9e4ec6926b6716a918f5ddca246654262584a17261df3dc277aca70f4b3638",
+      "migrations": [],
+      "rights": "User-supplied synthetic bundle; no field validation or external licensing assertion",
+      "sha256": "b63a23f4533b5908a04ba8f0c57ed2560e6351208b87ffece93f9bb93034d2d0",
+      "source": "D:\\Smart_Retail_Floor_Allocation\\datasets\\joint\\two-shelves.json",
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    }
+  ],
+  "files": {
+    "certificates/10d3e863a9f559c7ab5d754bc77fcea13b6e4e3eda27b696506f373e1e57ce09.json": "4b6851910949c01219e529c08faffab29540f2ffa3855f69d8b15c47c9419865",
+    "certificates/4afe051af7953f16b99428f6147dd5a6c3c268a7d3191f3b20bdcfc38be6badc.json": "7a6b39ee4482acf32aac850e574bec03158090e50e0c16f38d2d2f833781d6cc",
+    "certificates/93a52e054a615f305a1b34124d3a76c6a9d3699d2418da792d936638e4d1534a.json": "7a6b39ee4482acf32aac850e574bec03158090e50e0c16f38d2d2f833781d6cc",
+    "certificates/a8662842cfcbc28f7b12577e3102af51ff2b49cbdffa1512194c6978b8b94863.json": "4b6851910949c01219e529c08faffab29540f2ffa3855f69d8b15c47c9419865",
+    "certificates/c7d290a6dfb6779e31e6d79d5680b6a3e28567d68c9d05d77a451d854fb3c350.json": "9619d72b9dabb75c8102db4d92ab67894e849f4b6a9d83eacb2e48bbc4dc0722",
+    "certificates/d8e3fa3c641f91dfd16efde002185539443e8e0db50aaba6d2e61a1d7cbaeb1d.json": "9619d72b9dabb75c8102db4d92ab67894e849f4b6a9d83eacb2e48bbc4dc0722",
+    "comparisons.csv": "064033b0bee926394fae7011f0cd6bc9031c183f3689dfe76b49c05278a1ed6e",
+    "failures.csv": "5f7a302cd4f5237891b7dddd7aae85f79bf60b684986736dc690f32dafd8f6a5",
+    "figures/joint-convergence.png": "cd343290ccc8b5a0aaff3fb6b030677fac0ea379edcc3786568f02e11136fe5b",
+    "figures/joint-convergence.svg": "082b6dba6c2a01821019c27038d43b624d70995432f6983f7f4b78d69cb7e2bb",
+    "figures/mean_distance_m.png": "aae875b6fe5c03b9b6db761a8b20b79bd675f6d068fb94b65623743631799da7",
+    "figures/mean_distance_m.svg": "691b2a5f7e21d711e59566f00325159fd7272e1bf24783a90e4f92cb98027063",
+    "figures/mean_wait_s.png": "33889e4d804f686725cd8d2d312997dd69e5214c1cee59694fb5b554bc23484d",
+    "figures/mean_wait_s.svg": "5fed8e550e70588f77573cf951edc172ac6a98e0472087f563906df9e7104ee1",
+    "figures/outcomes.png": "995fd47398e51e5dc8e4adbba3638994aecc84263131ed5f40759b1c56a5850d",
+    "figures/outcomes.svg": "addb21132fa1fbe600152d4a85513488d338845d71864d2717d965fe377546bc",
+    "figures/peak_child_rss_bytes.png": "b1898b8a299370b280c1af327fb50431efce6a3aebf94357c1ec14a173316aa4",
+    "figures/peak_child_rss_bytes.svg": "d4ad140f1faf10dddbdb56afb4ec2ebf1cad9f40ee7d309453794f41d41df0a2",
+    "figures/wall_s.png": "115d8eeeb886605459effcbc6849e492455389c8fc5fbf30565dee6ee6dc231b",
+    "figures/wall_s.svg": "be9460787ad9216857b21a9ae800c57ec08e1f0f11bd6df04ab53b9f4c67f3c4",
+    "joint-comparison.csv": "790a21e544f550f1b0b339ef809b020770bf01bb59397f6f7f08dce34446166b",
+    "joint-examples.json": "b91b51466ee635a4d534f577bcec1dab578e9132f1b22afbd4adacb0325f28fb",
+    "joint-trace.csv": "ea2246cdab9b649caf7178fa9bd137ff9c8e51417a293a821740506ad45df702",
+    "results.csv": "33da0772de6290b5b29a44ee3238bc5f33bf4e075cfd29bc8d4f33753c9c38a5",
+    "results.json": "45081d5c608a8ac575216dba9b15835bf08243143f4c861c05caf372c1f8501a",
+    "statistics.json": "75416e7bbda888553baa2fbe1a95ce5455564feef8122e1eff82da3736aee6f6",
+    "summary.csv": "2fa9a0ffab49f5c10745a214f425455a586ef75c57096b1aaed9fc1274309f50",
+    "summary.md": "0ebcfcfe93fea3a32d8d8bf9b2e8fe3d958604fc7bd959b25563f3f1f46473b6"
+  },
+  "identity": {
+    "config_sha256": "80890e4288898d344f99f12fcde1c92638ba26098acbfb8b4b30b4ef0cf0a1d2",
+    "created_utc": "2026-10-22T04:19:04.262431+00:00",
+    "free_disk_bytes": 74572689408,
+    "runtime": {
+      "model_versions": {
+        "input_contract": "1.1",
+        "joint": "finite-saa-feedback-1",
+        "t1": "grid-local-search-1.1",
+        "t2": "allocation-affinity-milp-1.1",
+        "t3": "facing-strip-milp-1.1",
+        "t4": "picker-grid-queue-1.1",
+        "workflow": "bounded-candidates-1.1"
+      },
+      "packages": {
+        "alembic": "1.20.0",
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "certifi": "2026.10.19",
+        "click": "8.5.0",
+        "colorama": "0.4.6",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "fastapi": "0.157.0",
+        "fonttools": "4.67.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.170.5",
+        "idna": "3.20",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "mako": "1.4.3",
+        "markupsafe": "3.0.4",
+        "matplotlib": "3.11.2",
+        "mypy": "1.20.2",
+        "mypy_extensions": "1.1.0",
+        "networkx": "3.7",
+        "numpy": "2.5.4",
+        "opentelemetry-api": "1.45.1",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "13.0.0",
+        "pip": "25.0.1",
+        "pluggy": "1.7.0",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "pydantic": "2.14.1",
+        "pydantic_core": "2.50.1",
+        "pygments": "2.21.0",
+        "pyparsing": "3.3.3",
+        "pytest": "9.1.1",
+        "python-dateutil": "3.0.0",
+        "ruff": "0.17.1",
+        "scipy": "1.18.1",
+        "shapely": "2.2.0",
+        "simpy": "4.1.2",
+        "six": "1.17.0",
+        "smart-retail": "0.1.0",
+        "sortedcontainers": "2.4.0",
+        "sqlalchemy": "2.1.5",
+        "starlette": "1.9.0",
+        "types-networkx": "3.6.1.20261021",
+        "typing-inspection": "0.4.4",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.5",
+        "uvicorn": "0.54.0"
+      },
+      "python": "3.12.10",
+      "solver": {
+        "name": "HiGHS",
+        "version": "1.12.0"
+      },
+      "source_sha256": "afeebca6e2722f30fb13d0d81a8f1423b3e6982683f54a5d80043ce0acab0887"
+    },
+    "worker_limit": 1
+  },
+  "validation": {
+    "files": 1110,
+    "status": "PASS"
+  }
+}

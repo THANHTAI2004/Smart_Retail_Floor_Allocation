@@ -1,6 +1,241 @@
 {
+  "$defs": {
+    "JointConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "default": "feedback",
+          "enum": [
+            "sequential",
+            "multistart",
+            "feedback",
+            "exact",
+            "hybrid"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "scenario_seeds": {
+          "default": [
+            11
+          ],
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Scenario Seeds",
+          "type": "array"
+        },
+        "scenario_seed_policy": {
+          "default": "fixed",
+          "enum": [
+            "fixed",
+            "job_seed_offsets"
+          ],
+          "title": "Scenario Seed Policy",
+          "type": "string"
+        },
+        "holdout_seeds": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 10,
+          "title": "Holdout Seeds",
+          "type": "array"
+        },
+        "objective": {
+          "$ref": "#/$defs/Objective"
+        },
+        "layers": {
+          "default": [
+            "T1",
+            "T2",
+            "T3"
+          ],
+          "items": {
+            "enum": [
+              "T1",
+              "T2",
+              "T3",
+              "T4"
+            ],
+            "type": "string"
+          },
+          "title": "Layers",
+          "type": "array"
+        },
+        "max_iterations": {
+          "default": 5,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Max Iterations",
+          "type": "integer"
+        },
+        "max_evaluations": {
+          "default": 100,
+          "maximum": 20000,
+          "minimum": 1,
+          "title": "Max Evaluations",
+          "type": "integer"
+        },
+        "max_actions": {
+          "default": 30,
+          "maximum": 1000,
+          "minimum": 1,
+          "title": "Max Actions",
+          "type": "integer"
+        },
+        "patience": {
+          "default": 1,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Patience",
+          "type": "integer"
+        },
+        "tolerance": {
+          "default": 1e-09,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Tolerance",
+          "type": "number"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target"
+        },
+        "policy": {
+          "default": "best_improvement",
+          "enum": [
+            "first_improvement",
+            "best_improvement"
+          ],
+          "title": "Policy",
+          "type": "string"
+        },
+        "finite_space": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Finite Space"
+        },
+        "verify_certificate": {
+          "default": true,
+          "title": "Verify Certificate",
+          "type": "boolean"
+        }
+      },
+      "title": "JointConfig",
+      "type": "object"
+    },
+    "Objective": {
+      "additionalProperties": false,
+      "properties": {
+        "weights": {
+          "default": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Weights",
+          "type": "array"
+        },
+        "scales": {
+          "default": [
+            100,
+            100,
+            1,
+            1
+          ],
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Scales",
+          "type": "array"
+        }
+      },
+      "title": "Objective",
+      "type": "object"
+    }
+  },
   "additionalProperties": false,
   "properties": {
+    "schema_version": {
+      "const": "1.1",
+      "default": "1.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "data_origin": {
+      "default": "UNSPECIFIED",
+      "enum": [
+        "SYNTHETIC",
+        "REAL_VERIFIED",
+        "REAL_UNVERIFIED",
+        "ASSUMED",
+        "DERIVED",
+        "UNSPECIFIED"
+      ],
+      "title": "Data Origin",
+      "type": "string"
+    },
+    "joint": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/JointConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "seed": {
       "default": 42,
       "maximum": 2147483647,
@@ -35,6 +270,12 @@
       "default": 1,
       "exclusiveMinimum": 0,
       "title": "Distance Weight",
+      "type": "number"
+    },
+    "affinity_weight": {
+      "default": 1,
+      "minimum": 0,
+      "title": "Affinity Weight",
       "type": "number"
     },
     "capacity_weight": {
@@ -76,6 +317,33 @@
       "minimum": 0,
       "title": "Stock Weight",
       "type": "number"
+    },
+    "layout_algorithm": {
+      "default": "grid",
+      "enum": [
+        "grid",
+        "local_search"
+      ],
+      "title": "Layout Algorithm",
+      "type": "string"
+    },
+    "stop_after_stage": {
+      "default": "T4",
+      "enum": [
+        "T1",
+        "T2",
+        "T3",
+        "T4"
+      ],
+      "title": "Stop After Stage",
+      "type": "string"
+    },
+    "memory_limit_mb": {
+      "default": 2048,
+      "maximum": 8192,
+      "minimum": 128,
+      "title": "Memory Limit Mb",
+      "type": "integer"
     }
   },
   "title": "OptimizationInput",

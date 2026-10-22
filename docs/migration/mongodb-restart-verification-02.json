@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "database": "sr_restart_probe_05da5bf37e484be7",
+  "run_id": "09c14713-d2c9-4570-b551-64e25d0aa0ab",
+  "large_result_sha256": "27cf1843eb974193681e041a0c6834ddd4034353123be35b2f2590248d6d4ccd",
+  "snapshot_sha256": "bfadd9ce324bdf523bd2c5ff0bb5bd3c69058d22c52cfde5dd2733de2130460a",
+  "main_data_sha256": "941c093b4513897064f78bfd056e415b15a3a009969c77ba77c51779e31ba299",
+  "main_projects": 16,
+  "main_runs": 8,
+  "old_mongod_pid": 22196,
+  "new_mongod_pid": 6492,
+  "actual_process_restart": true,
+  "main_data_unchanged": true,
+  "gridfs_payload_unchanged": true,
+  "mongo_version": "8.0.16"
+}

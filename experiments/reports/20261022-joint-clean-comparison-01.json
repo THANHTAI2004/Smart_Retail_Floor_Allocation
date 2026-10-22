@@ -1,0 +1,127 @@
+{
+  "atol": 1e-08,
+  "rows": [
+    {
+      "byte_identical_result": true,
+      "job_key": "10d3e863a9f559c7ab5d754bc77fcea13b6e4e3eda27b696506f373e1e57ce09",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "13612ee320f38579937fab9b4d0474889f05632076aba288df51ec1adca97711",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "20eb2b64835b4be7e240fb7e6086b46dff68973763ee5b85e1a9c3eb9fd5e50b",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "4afe051af7953f16b99428f6147dd5a6c3c268a7d3191f3b20bdcfc38be6badc",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "4c8677e191ada2408ccc6e868d2b700c4c4d12fb15343df276f05a96dcd8349a",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "791ee2fd4d9f8159a353d409c0b4d4737b0ba75e271ecf17bdbaaf97c7e68f3d",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "80e444255772d70b0879e1c2c9f5c968106e40b8663f582fa3571073512b3ace",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "913baab061f83f606d1cbe17b2c8966993b3fa3a752c2fd05125a2a7f63eaddd",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "93a52e054a615f305a1b34124d3a76c6a9d3699d2418da792d936638e4d1534a",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "a253a166c2c625d9f9a22e88a5d0683eb73cfb2c8c8d5e442e5731289066d4d9",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "a402449348b891aaad5b7bd0092eb1760804c7f6904944e13c5898d3f70947d6",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "a8662842cfcbc28f7b12577e3102af51ff2b49cbdffa1512194c6978b8b94863",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "bd95e8367b87e6f764cd8feb69033f0e31332861e80e736453c6612f79b9fab3",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "c7d290a6dfb6779e31e6d79d5680b6a3e28567d68c9d05d77a451d854fb3c350",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "d8e3fa3c641f91dfd16efde002185539443e8e0db50aaba6d2e61a1d7cbaeb1d",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    }
+  ],
+  "rtol": 1e-09,
+  "scope": "Scientific result JSON excludes wall/CPU/cache-hit telemetry, which remains in receipts/stage artifacts"
+}

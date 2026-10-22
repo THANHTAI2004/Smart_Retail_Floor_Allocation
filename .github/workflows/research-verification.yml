@@ -1,0 +1,50 @@
+name: Local synthetic experiment verification
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  windows-mongodb:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.3'
+      - name: Install pinned Python packages and real MongoDB runtime
+        shell: powershell
+        run: |
+          python -m venv .venv
+          .venv/Scripts/python.exe -m pip install -r backend/requirements-lock.txt
+          .venv/Scripts/python.exe -m pip install -e backend --no-deps
+          scripts/start_mongodb.ps1 -InstallPortable
+      - name: Install pinned environment
+        shell: powershell
+        run: scripts/setup.ps1
+      - name: Install browser for end-to-end verification
+        shell: powershell
+        run: npm --prefix frontend exec -- playwright install chromium
+      - name: Software and browser release checks
+        shell: powershell
+        run: .venv/Scripts/python.exe scripts/verify_experiment_release.py --output var/ci-evidence
+      - name: Pilot, replay and report from actual worker outcomes
+        shell: powershell
+        run: |
+          .venv/Scripts/python.exe -m smart_retail.application.experiments.cli run --config experiments/configs/pilot.json --output var/ci-pilot
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          .venv/Scripts/python.exe -m smart_retail.application.experiments.cli replay var/ci-pilot --output var/ci-replay
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          .venv/Scripts/python.exe -m smart_retail.application.experiments.cli compare var/ci-pilot var/ci-replay --output var/ci-comparison.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          .venv/Scripts/python.exe -m smart_retail.application.experiments.cli analyze var/ci-pilot --output var/ci-report
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-mongodb-research-evidence
+          path: |
+            var/ci-evidence/
+            var/ci-pilot/
+            var/ci-replay/
+            var/ci-report/
+            var/ci-comparison.json

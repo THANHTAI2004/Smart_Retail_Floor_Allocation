@@ -1,6 +1,73 @@
 {
+  "$defs": {
+    "ZoneInput": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "no_shelf",
+            "required_aisle"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "boundary": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 1000,
+          "minItems": 3,
+          "title": "Boundary",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "boundary"
+      ],
+      "title": "ZoneInput",
+      "type": "object"
+    }
+  },
   "additionalProperties": false,
   "properties": {
+    "schema_version": {
+      "const": "1.1",
+      "default": "1.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "data_origin": {
+      "default": "UNSPECIFIED",
+      "enum": [
+        "SYNTHETIC",
+        "REAL_VERIFIED",
+        "REAL_UNVERIFIED",
+        "ASSUMED",
+        "DERIVED",
+        "UNSPECIFIED"
+      ],
+      "title": "Data Origin",
+      "type": "string"
+    },
     "units": {
       "const": "m",
       "default": "m",
@@ -73,6 +140,55 @@
       "minimum": 0.1,
       "title": "Grid M",
       "type": "number"
+    },
+    "exits": {
+      "items": {
+        "maxItems": 2,
+        "minItems": 2,
+        "prefixItems": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "type": "array"
+      },
+      "maxItems": 20,
+      "title": "Exits",
+      "type": "array"
+    },
+    "pickup_points": {
+      "items": {
+        "maxItems": 2,
+        "minItems": 2,
+        "prefixItems": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "type": "array"
+      },
+      "maxItems": 500,
+      "title": "Pickup Points",
+      "type": "array"
+    },
+    "zones": {
+      "items": {
+        "$ref": "#/$defs/ZoneInput"
+      },
+      "maxItems": 100,
+      "title": "Zones",
+      "type": "array"
+    },
+    "require_connected_aisles": {
+      "default": false,
+      "title": "Require Connected Aisles",
+      "type": "boolean"
     }
   },
   "required": [

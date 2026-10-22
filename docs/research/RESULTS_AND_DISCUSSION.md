@@ -1,3 +1,5 @@
+> Historical checkpoint: 2026-10-21. For the current 2026-10-22 implementation, use [model scope](MODEL_SCOPE_20261022.md), [ER readiness](EXPERIMENT_READINESS_MATRIX.md), and [actual results](RESULTS_20261022.md). The historical gates and limits below are not the current synthetic-readiness assessment.
+
 # Actual results: 2026-10-21
 
 | Experiment | Arm | Succeeded | Mean route m | Mean wait s | T3 objective |

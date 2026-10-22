@@ -11,8 +11,11 @@ foreach ($port in 8010,5173) {
     if (Get-NetTCPConnection -State Listen -LocalPort $port -ErrorAction SilentlyContinue) { throw "Port $port is occupied" }
 }
 $pythonPath = Join-Path $projectRoot '.venv\Scripts\python.exe'
-& $pythonPath -m alembic -c backend/alembic.ini upgrade head
-if ($LASTEXITCODE -ne 0) { throw 'Migration failed' }
+if (-not $env:MONGODB_URI -and (Test-Path -LiteralPath 'var/mongodb/private.json')) {
+    & (Join-Path $PSScriptRoot 'start_mongodb.ps1')
+}
+& $pythonPath -m smart_retail.infrastructure.mongodb.health --cutover-check
+if ($LASTEXITCODE -ne 0) { throw 'MongoDB connection or migration cutover check failed' }
 $services = @()
 try {
     $apiProcess = Start-Process -FilePath $pythonPath -ArgumentList @('-m','uvicorn','smart_retail.api.main:app','--host','127.0.0.1','--port','8010') -WorkingDirectory $projectRoot -WindowStyle Hidden -RedirectStandardOutput 'var/logs/api.out.log' -RedirectStandardError 'var/logs/api.err.log' -PassThru

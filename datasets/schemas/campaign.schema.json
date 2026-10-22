@@ -1,0 +1,348 @@
+{
+  "$defs": {
+    "DatasetSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "scale": {
+          "default": "tiny",
+          "enum": [
+            "tiny",
+            "small",
+            "medium",
+            "large"
+          ],
+          "title": "Scale",
+          "type": "string"
+        },
+        "seed": {
+          "default": 101,
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        },
+        "scenario": {
+          "default": "feasible",
+          "enum": [
+            "feasible",
+            "infeasible",
+            "high_load",
+            "volatile",
+            "uneven"
+          ],
+          "title": "Scenario",
+          "type": "string"
+        },
+        "category_assignment": {
+          "default": "free",
+          "enum": [
+            "free",
+            "fixed"
+          ],
+          "title": "Category Assignment",
+          "type": "string"
+        },
+        "variable_facings": {
+          "default": false,
+          "title": "Variable Facings",
+          "type": "boolean"
+        },
+        "levels": {
+          "default": 2,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Levels",
+          "type": "integer"
+        },
+        "height_scale": {
+          "default": 1,
+          "maximum": 2,
+          "minimum": 0.5,
+          "title": "Height Scale",
+          "type": "number"
+        },
+        "input_path": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Input Path"
+        },
+        "input_file_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Input File Sha256"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "DatasetSpec",
+      "type": "object"
+    },
+    "ExperimentSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "enum": [
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E09",
+            "E10",
+            "E11",
+            "E12",
+            "E13",
+            "E14",
+            "E15"
+          ],
+          "title": "Id",
+          "type": "string"
+        },
+        "question": {
+          "minLength": 5,
+          "title": "Question",
+          "type": "string"
+        },
+        "hypothesis": {
+          "minLength": 5,
+          "title": "Hypothesis",
+          "type": "string"
+        },
+        "datasets": {
+          "items": {
+            "maxLength": 120,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Datasets",
+          "type": "array"
+        },
+        "treatments": {
+          "items": {
+            "$ref": "#/$defs/Treatment"
+          },
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Treatments",
+          "type": "array"
+        },
+        "metrics": {
+          "default": [
+            "wall_s",
+            "mean_distance_m",
+            "mean_wait_s"
+          ],
+          "items": {
+            "enum": [
+              "wall_s",
+              "peak_child_rss_bytes",
+              "mean_distance_m",
+              "mean_wait_s",
+              "t2_objective",
+              "t3_objective",
+              "t1_objective",
+              "joint_objective",
+              "joint_evaluations",
+              "joint_iterations_to_best",
+              "holdout_objective"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Metrics",
+          "type": "array"
+        },
+        "acceptance": {
+          "minLength": 5,
+          "title": "Acceptance",
+          "type": "string"
+        },
+        "statistical_method": {
+          "const": "descriptive_paired_exploratory",
+          "default": "descriptive_paired_exploratory",
+          "title": "Statistical Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "question",
+        "hypothesis",
+        "datasets",
+        "treatments",
+        "acceptance"
+      ],
+      "title": "ExperimentSpec",
+      "type": "object"
+    },
+    "Treatment": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "overrides": {
+          "additionalProperties": true,
+          "title": "Overrides",
+          "type": "object"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "Treatment",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "data_origin": {
+      "const": "SYNTHETIC",
+      "default": "SYNTHETIC",
+      "title": "Data Origin",
+      "type": "string"
+    },
+    "datasets": {
+      "items": {
+        "$ref": "#/$defs/DatasetSpec"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Datasets",
+      "type": "array"
+    },
+    "experiments": {
+      "items": {
+        "$ref": "#/$defs/ExperimentSpec"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Experiments",
+      "type": "array"
+    },
+    "seeds": {
+      "default": [
+        11,
+        23,
+        37
+      ],
+      "items": {
+        "type": "integer"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Seeds",
+      "type": "array"
+    },
+    "repetitions": {
+      "default": 1,
+      "maximum": 10,
+      "minimum": 1,
+      "title": "Repetitions",
+      "type": "integer"
+    },
+    "job_time_limit_s": {
+      "default": 15,
+      "exclusiveMinimum": 0,
+      "maximum": 300,
+      "title": "Job Time Limit S",
+      "type": "number"
+    },
+    "memory_limit_mb": {
+      "default": 1024,
+      "maximum": 8192,
+      "minimum": 128,
+      "title": "Memory Limit Mb",
+      "type": "integer"
+    },
+    "max_wall_s": {
+      "default": 600,
+      "exclusiveMinimum": 0,
+      "maximum": 14400,
+      "title": "Max Wall S",
+      "type": "number"
+    },
+    "max_jobs": {
+      "default": 128,
+      "maximum": 1000,
+      "minimum": 1,
+      "title": "Max Jobs",
+      "type": "integer"
+    },
+    "max_retries": {
+      "default": 1,
+      "maximum": 2,
+      "minimum": 0,
+      "title": "Max Retries",
+      "type": "integer"
+    },
+    "workers": {
+      "const": 1,
+      "default": 1,
+      "title": "Workers",
+      "type": "integer"
+    },
+    "cache_policy": {
+      "default": "isolated",
+      "enum": [
+        "isolated",
+        "reuse"
+      ],
+      "title": "Cache Policy",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "datasets",
+    "experiments"
+  ],
+  "title": "CampaignSpec",
+  "type": "object"
+}

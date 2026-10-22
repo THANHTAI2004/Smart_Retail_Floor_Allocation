@@ -1,0 +1,79 @@
+{
+  "atol": 1e-08,
+  "rows": [
+    {
+      "byte_identical_result": true,
+      "job_key": "03883a5a577b8cb7ae1fb761208bb09a47d26410df924462d2b00a08f0f080fa",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "152305e09deb52ac12fbe10e34927638add60caaffb9d81024e203bcd5645507",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "32ad35df7b82a911fd7ff4f7bdf867f30550811b75661c2dbf23c267bf7f45e8",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "4abbd53e126c685772fe6a9644553d2616528aeb05808a720ded80eaa7a8e989",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "5399c329120e5b0a52f519cf929d56189fe3b6949fb729dc851dc4158dbadc21",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "806bb2dbdf284127fa79ded8303954ec66c51bd88103d22a0dd0b777f7e225a0",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "a2e3876ae1b89f1a7431090af8f7cde873c4c297a7f94a8366784876b5878ad8",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "acccf6eea859efabe392f1f3f6d0913c84a77d57636cfc8905391c25277feb18",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "c0d865e5aaf9b5c7c559e00f390e802682f9070582fa9991aa32f70fc4a66b0e",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    }
+  ],
+  "rtol": 1e-09,
+  "scope": "Scientific result JSON excludes wall/CPU/cache-hit telemetry, which remains in receipts/stage artifacts"
+}

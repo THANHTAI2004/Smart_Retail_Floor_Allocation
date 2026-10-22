@@ -8,8 +8,7 @@ from typing import Any
 
 import networkx as nx
 import simpy
-from shapely.geometry import LineString, Point, Polygon
-from shapely.ops import unary_union
+from shapely.geometry import LineString, Polygon
 
 from smart_retail.domain.models import (
     EngineError,
@@ -18,7 +17,9 @@ from smart_retail.domain.models import (
     Shelf,
     SimulationResult,
 )
-from smart_retail.engines.t1_layout.engine import footprint
+from smart_retail.engines.navigation import navigation as walkability
+from smart_retail.engines.t1_layout.geometry import footprint
+from smart_retail.engines.t4_simulation.routing import order as route_order
 
 
 def navigation(
@@ -26,77 +27,8 @@ def navigation(
     shelves: tuple[Shelf, ...],
     deadline: float = math.inf,
     required_faces: dict[str, set[int]] | None = None,
-) -> tuple[nx.Graph, tuple[int, int], dict[str, tuple[int, int]]]:
-    floor = dataset.floorplan
-    boundary = Polygon(floor.boundary)
-    solids = unary_union([*(footprint(s) for s in shelves), *(Polygon(o) for o in floor.obstacles)])
-    minx, miny, maxx, maxy = boundary.bounds
-    step = floor.grid_m
-    nx_cells, ny_cells = math.ceil((maxx - minx) / step), math.ceil((maxy - miny) / step)
-    if nx_cells * ny_cells > 40000:
-        raise EngineError("PROBLEM_LIMIT", "T4 grid exceeds 40,000 cells; increase grid_m")
-    graph: nx.Graph = nx.Graph()
-    for i in range(nx_cells):
-        if time.monotonic() >= deadline:
-            raise EngineError("TIMEOUT", "T4 navigation time limit")
-        for j in range(ny_cells):
-            point = Point(minx + (i + 0.5) * step, miny + (j + 0.5) * step)
-            if boundary.covers(point) and not solids.intersects(point):
-                graph.add_node((i, j), point=(point.x, point.y))
-                for other in ((i - 1, j), (i, j - 1)):
-                    if other in graph:
-                        segment = LineString([graph.nodes[other]["point"], (point.x, point.y)])
-                        if boundary.covers(segment) and not solids.intersects(segment):
-                            graph.add_edge((i, j), other, weight=step)
-    if not graph:
-        raise EngineError("UNREACHABLE", "No walkable cells")
-    entrance = Point(floor.entrance)
-    candidates = [
-        node
-        for node in graph
-        if boundary.covers(LineString([floor.entrance, graph.nodes[node]["point"]]))
-        and not solids.intersects(LineString([floor.entrance, graph.nodes[node]["point"]]))
-    ]
-    if not candidates:
-        raise EngineError("UNREACHABLE", "Entrance has no walkable connection")
-    start = min(candidates, key=lambda node: entrance.distance(Point(graph.nodes[node]["point"])))
-    connected = nx.node_connected_component(graph, start)
-    targets = {}
-    for shelf in shelves:
-        shape = footprint(shelf)
-        # Service on a long face, never from the end of a gondola.
-        x, y, xx, yy = shape.bounds
-        if shelf.rotation == 0:
-            faces = [LineString([(x, y), (xx, y)])]
-            if shelf.faces == 2:
-                faces.append(LineString([(x, yy), (xx, yy)]))
-        else:
-            faces = [LineString([(x, y), (x, yy)])]
-            if shelf.faces == 2:
-                faces.append(LineString([(xx, y), (xx, yy)]))
-        requested = required_faces.get(shelf.id, set()) if required_faces is not None else {0}
-        for index in sorted(requested):
-            face = faces[index]
-            nodes = []
-            for node in connected:
-                px, py = graph.nodes[node]["point"]
-                on_service_side = (
-                    x <= px <= xx and (py <= y if index == 0 else py >= yy)
-                    if shelf.rotation == 0
-                    else y <= py <= yy and (px <= x if index == 0 else px >= xx)
-                )
-                if on_service_side and face.distance(Point(px, py)) <= step * 1.5:
-                    nodes.append(node)
-            if not nodes:
-                raise EngineError(
-                    "UNREACHABLE", f"Shelf {shelf.id} face {index} has no reachable pickup"
-                )
-            key = f"{shelf.id}:{index}" if required_faces is not None else shelf.id
-            targets[key] = min(
-                nodes,
-                key=lambda node: (shape.centroid.distance(Point(graph.nodes[node]["point"])), node),
-            )
-    return graph, start, targets
+):
+    return walkability(dataset.floorplan, shelves, deadline, required_faces)
 
 
 def solve(
@@ -118,6 +50,9 @@ def solve(
         sku_shelf = {p["sku"]: f"{p['shelf_id']}:{p['face']}" for p in planogram.placements}
     env = simpy.Environment()
     resources = {s.id: simpy.Resource(env, capacity=1) for s in shelves}
+    pickers = simpy.Resource(env, capacity=dataset.demand.picker_count)
+    picker_busy = [0.0]
+    max_queue = {s.id: 0 for s in shelves}
     distances: dict[tuple, float] = {}
 
     def distance(a: tuple, b: tuple) -> float:
@@ -128,14 +63,31 @@ def solve(
     journeys: list[dict[str, Any]] = []
     routes: list[dict[str, Any]] = []
     connector = math.dist(dataset.floorplan.entrance, graph.nodes[start]["point"])
+    exits = []
+    if dataset.floorplan.exits:
+        boundary = Polygon(dataset.floorplan.boundary)
+        solids = [footprint(s) for s in shelves] + [Polygon(o) for o in dataset.floorplan.obstacles]
+        connected = nx.node_connected_component(graph, start)
+        for point in dataset.floorplan.exits:
+            eligible = [
+                n
+                for n in connected
+                if boundary.covers(LineString([point, graph.nodes[n]["point"]]))
+                and not any(
+                    s.intersects(LineString([point, graph.nodes[n]["point"]])) for s in solids
+                )
+            ]
+            node = min(eligible, key=lambda n: (math.dist(point, graph.nodes[n]["point"]), n))
+            exits.append((node, point, math.dist(point, graph.nodes[node]["point"])))
 
-    def journey(
+    def travel_journey(
         kind: str, identifier: str, arrival: float, items: list[tuple[str, int]], due_s: float
     ):
-        yield env.timeout(arrival)
-        begin = env.now
+        begin = arrival
+        picker_wait = env.now - arrival
+        service_start = env.now
         node = start
-        route_distance, wait = connector, 0.0
+        route_distance, wait = connector, picker_wait
         points = [dataset.floorplan.entrance, graph.nodes[start]["point"]]
         yield env.timeout(connector / dataset.demand.behavior.speed_m_s)
         remaining: dict[str, int] = {}
@@ -143,10 +95,13 @@ def solve(
             sid = sku_shelf[sku]
             remaining[sid] = remaining.get(sid, 0) + qty
         visited = []
+        sequence = route_order(
+            dataset.demand.routing_policy, {sid: targets[sid] for sid in remaining}, start, distance
+        )
         while remaining:
             if time.monotonic() >= deadline:
                 raise EngineError("TIMEOUT", "T4 simulation time limit")
-            sid = min(remaining, key=lambda sid: (distance(node, targets[sid]), sid))
+            sid = sequence.pop(0)
             qty = remaining.pop(sid)
             target = targets[sid]
             walk = distance(node, target)
@@ -159,19 +114,36 @@ def solve(
             queued_at = env.now
             resource_id = sid.rsplit(":", 1)[0] if planogram is not None else sid
             with resources[resource_id].request() as request:
+                max_queue[resource_id] = max(
+                    max_queue[resource_id], len(resources[resource_id].queue)
+                )
                 yield request
                 wait += env.now - queued_at
                 yield env.timeout(dataset.demand.behavior.dwell_s * qty)
             visited.append(sid)
             node = target
-        back = distance(node, start)
+            if dataset.demand.routing_policy == "return":
+                back_step = distance(node, start)
+                points.extend(
+                    graph.nodes[n]["point"]
+                    for n in nx.shortest_path(graph, node, start, weight="weight")[1:]
+                )
+                route_distance += back_step
+                yield env.timeout(back_step / dataset.demand.behavior.speed_m_s)
+                node = start
+        end_node, end_point, end_connector = start, dataset.floorplan.entrance, connector
+        if kind == "customer" and exits:
+            end_node, end_point, end_connector = min(
+                exits, key=lambda item: (distance(node, item[0]) + item[2], item[1])
+            )
+        back = distance(node, end_node)
         points.extend(
             graph.nodes[n]["point"]
-            for n in nx.shortest_path(graph, node, start, weight="weight")[1:]
+            for n in nx.shortest_path(graph, node, end_node, weight="weight")[1:]
         )
-        points.append(dataset.floorplan.entrance)
-        route_distance += back + connector
-        yield env.timeout((back + connector) / dataset.demand.behavior.speed_m_s)
+        points.append(end_point)
+        route_distance += back + end_connector
+        yield env.timeout((back + end_connector) / dataset.demand.behavior.speed_m_s)
         journeys.append(
             {
                 "kind": kind,
@@ -181,19 +153,48 @@ def solve(
                 "elapsed_s": env.now - begin,
                 "distance_m": route_distance,
                 "wait_s": wait,
+                "picker_wait_s": picker_wait,
+                "shelf_wait_s": wait - picker_wait,
+                "travel_s": route_distance / dataset.demand.behavior.speed_m_s,
+                "picking_s": sum(qty for _, qty in items) * dataset.demand.behavior.dwell_s,
                 "late": env.now - begin > due_s,
                 "picks": [{"sku": sku, "quantity": qty} for sku, qty in items],
             }
         )
         routes.append({"id": identifier, "kind": kind, "shelves": visited, "points_m": points})
+        if kind == "picker":
+            picker_busy[0] += env.now - service_start
+
+    def journey(kind, identifier, arrival, items, due_s):
+        yield env.timeout(arrival)
+        if kind == "picker":
+            with pickers.request() as request:
+                yield request
+                yield from travel_journey(kind, identifier, arrival, items, due_s)
+        else:
+            yield from travel_journey(kind, identifier, arrival, items, due_s)
 
     arrival = 0.0
     skus = [p.sku for p in dataset.products]
     weights = [p.demand for p in dataset.products]
-    for i in range(dataset.demand.customers):
-        arrival += rng.expovariate(dataset.demand.arrivals_per_hour / 3600)
-        if arrival > dataset.demand.horizon_s:
-            break
+    arrivals: list[float] = []
+    if dataset.demand.periods:
+        for period in dataset.demand.periods:
+            arrival = period.start_s
+            if period.arrivals_per_hour == 0:
+                continue
+            while len(arrivals) < dataset.demand.customers:
+                arrival += rng.expovariate(period.arrivals_per_hour / 3600)
+                if arrival >= period.end_s:
+                    break
+                arrivals.append(arrival)
+    else:
+        for _ in range(dataset.demand.customers):
+            arrival += rng.expovariate(dataset.demand.arrivals_per_hour / 3600)
+            if arrival > dataset.demand.horizon_s:
+                break
+            arrivals.append(arrival)
+    for i, arrival in enumerate(arrivals):
         basket = (
             list(rng.choice(dataset.demand.baskets))
             if dataset.demand.baskets
@@ -233,10 +234,21 @@ def solve(
             "late_orders": sum(bool(x["late"]) for x in journeys if x["kind"] == "picker"),
             "walkable_cells": len(graph),
             "simulation_end_s": env.now,
+            "total_distance_m": sum(float(x["distance_m"]) for x in journeys),
+            "total_travel_s": sum(float(x["travel_s"]) for x in journeys),
+            "total_picking_s": sum(float(x["picking_s"]) for x in journeys),
+            "mean_completion_s": sum(float(x["elapsed_s"]) for x in journeys) / max(1, count),
+            "max_shelf_queue": max(max_queue.values(), default=0),
+            "picker_utilization": picker_busy[0] / max(1e-9, env.now * dataset.demand.picker_count),
+            "throughput_per_hour": count * 3600 / max(1e-9, env.now),
+            "routing_policy": dataset.demand.routing_policy,
         },
         assumptions=(
             "Synthetic baskets and Poisson customer arrivals; no observed trajectories",
-            "Customers and pickers use nearest-next-shelf routes on a four-neighbor grid",
+            f"Routing policy {dataset.demand.routing_policy} uses four-neighbor shortest paths; exact policy proves only a closed tour over <=10 service locations",
+            f"Finite picker pool: {dataset.demand.picker_count}; order elapsed includes pool wait",
+            "Piecewise demand periods override the global customer arrival rate; gaps have zero arrivals",
+            "Customers finish at the least-cost declared exit connector; pickers return to entrance. Exact tour policy optimizes a closed start tour before exit evaluation, not a multi-exit open TSP",
             "Congestion is a one-server shelf service queue, not corridor pedestrian dynamics",
             "Arrivals are truncated at horizon_s; admitted journeys drain to completion",
             "Order arrivals use seconds since earliest supplied order timestamp",

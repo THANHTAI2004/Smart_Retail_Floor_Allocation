@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from shapely.geometry import Point as ShapePoint
 from shapely.geometry import Polygon
 
+from smart_retail.contracts.feedback import JointConfig
 from smart_retail.domain import models as d
 
 Positive = Annotated[float, Field(gt=0, allow_inf_nan=False)]
@@ -21,13 +22,30 @@ class Contract(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
 
 
-class FloorplanInput(Contract):
+class SectionContract(Contract):
+    schema_version: Literal["1.1"] = "1.1"
+    data_origin: Literal[
+        "SYNTHETIC", "REAL_VERIFIED", "REAL_UNVERIFIED", "ASSUMED", "DERIVED", "UNSPECIFIED"
+    ] = "UNSPECIFIED"
+
+
+class ZoneInput(Contract):
+    id: Identifier
+    kind: Literal["no_shelf", "required_aisle"]
+    boundary: list[Coordinate] = Field(min_length=3, max_length=1000)
+
+
+class FloorplanInput(SectionContract):
     units: Literal["m"] = "m"
     boundary: list[Coordinate] = Field(min_length=3, max_length=1000)
     entrance: Coordinate
     obstacles: list[list[Coordinate]] = Field(default_factory=list, max_length=100)
     min_aisle_m: Positive = 0.8
     grid_m: Annotated[float, Field(ge=0.1, le=2)] = 0.25
+    exits: list[Coordinate] = Field(default_factory=list, max_length=20)
+    pickup_points: list[Coordinate] = Field(default_factory=list, max_length=500)
+    zones: list[ZoneInput] = Field(default_factory=list, max_length=100)
+    require_connected_aisles: bool = False
 
     @model_validator(mode="after")
     def geometry(self) -> Self:
@@ -38,12 +56,27 @@ class FloorplanInput(Contract):
             raise ValueError("Baseline supports display areas up to 10,000 m²")
         if not polygon.covers(ShapePoint(self.entrance)):
             raise ValueError("Entrance must be on or inside the display area")
+        unique_ids(self.zones)
+        for point in self.exits + self.pickup_points:
+            if not polygon.covers(ShapePoint(point)):
+                raise ValueError("Exit/pickup point must be inside boundary")
+        for zone in self.zones:
+            shape = Polygon(zone.boundary)
+            if not shape.is_valid or shape.area <= 0 or not polygon.covers(shape):
+                raise ValueError("Functional zone must be a valid polygon inside boundary")
         for points in self.obstacles:
             obstacle = Polygon(points)
             if not obstacle.is_valid or obstacle.area <= 0 or not polygon.covers(obstacle):
                 raise ValueError("Each obstacle must be a valid polygon inside the display area")
             if obstacle.covers(ShapePoint(self.entrance)):
                 raise ValueError("Entrance cannot be inside an obstacle")
+            if any(obstacle.covers(ShapePoint(p)) for p in self.exits + self.pickup_points):
+                raise ValueError("Exit/pickup cannot be inside an obstacle")
+            if any(
+                z.kind == "required_aisle" and obstacle.intersects(Polygon(z.boundary))
+                for z in self.zones
+            ):
+                raise ValueError("Required aisle cannot intersect an obstacle")
         return self
 
 
@@ -84,7 +117,7 @@ class ShelfInput(Contract):
         return self
 
 
-class ShelvesInput(Contract):
+class ShelvesInput(SectionContract):
     layout_mode: Literal["fixed", "optimizable"] = "optimizable"
     items: list[ShelfInput] = Field(default_factory=list, max_length=100)
 
@@ -106,9 +139,10 @@ class CategoryInput(Contract):
     near: list[Identifier] = Field(default_factory=list)
     separate: list[Identifier] = Field(default_factory=list)
     distance_m: Positive = 3
+    affinity: dict[Identifier, Positive] = Field(default_factory=dict, max_length=200)
 
 
-class CategoriesInput(Contract):
+class CategoriesInput(SectionContract):
     items: list[CategoryInput] = Field(default_factory=list, max_length=200)
 
     @model_validator(mode="after")
@@ -116,6 +150,8 @@ class CategoriesInput(Contract):
         unique_ids(self.items)
         ids = {c.id for c in self.items}
         for c in self.items:
+            if c.id in c.affinity or not c.affinity.keys() <= ids:
+                raise ValueError("Affinity references unknown category or itself")
             if set(c.near) & set(c.separate) or c.id in c.near + c.separate:
                 raise ValueError("Category proximity constraints contradict each other")
             if not set(c.near + c.separate) <= ids:
@@ -136,9 +172,20 @@ class ProductInput(Contract):
     orientations: list[Literal[0, 90]] = Field(default=[0], min_length=1)
     stack_layers: Annotated[int, Field(ge=1, le=100)] = 1
     clearance_m: NonNegative = 0.01
+    min_facings: Annotated[int, Field(ge=1, le=1000)] | None = None
+    max_facings: Annotated[int, Field(ge=1, le=1000)] | None = None
+    allowed_shelf_kinds: list[str] = Field(default_factory=list, max_length=50)
+
+    @model_validator(mode="after")
+    def facing_bounds(self) -> Self:
+        lo = self.min_facings if self.min_facings is not None else self.facings
+        hi = self.max_facings if self.max_facings is not None else self.facings
+        if not lo <= self.facings <= hi:
+            raise ValueError("Require min_facings <= facings <= max_facings")
+        return self
 
 
-class ProductsInput(Contract):
+class ProductsInput(SectionContract):
     items: list[ProductInput] = Field(default_factory=list, max_length=10000)
 
     @model_validator(mode="after")
@@ -153,12 +200,32 @@ class BehaviorInput(Contract):
     dwell_s: NonNegative = 5
 
 
-class DemandInput(Contract):
+class ArrivalPeriodInput(Contract):
+    start_s: NonNegative
+    end_s: Positive
+    arrivals_per_hour: NonNegative
+
+
+class DemandInput(SectionContract):
     arrivals_per_hour: Positive = 20
     horizon_s: Annotated[float, Field(gt=0, le=86400)] = 3600
     customers: Annotated[int, Field(ge=0, le=10000)] = 20
     baskets: list[list[Identifier]] = Field(default_factory=list)
     behavior: BehaviorInput = Field(default_factory=BehaviorInput)
+    periods: list[ArrivalPeriodInput] = Field(default_factory=list, max_length=168)
+    picker_count: Annotated[int, Field(ge=1, le=100)] = 1
+    routing_policy: Literal["nearest", "return", "exact"] = "nearest"
+
+    @model_validator(mode="after")
+    def intervals(self) -> Self:
+        previous = 0.0
+        for p in self.periods:
+            if p.start_s < previous or not p.start_s < p.end_s <= self.horizon_s:
+                raise ValueError(
+                    "Demand periods must be ordered, non-overlapping and within horizon"
+                )
+            previous = p.end_s
+        return self
 
 
 class OrderInput(Contract):
@@ -180,7 +247,7 @@ class OrderLineInput(Contract):
     quantity: Annotated[int, Field(gt=0, le=100000)]
 
 
-class OrdersInput(Contract):
+class OrdersInput(SectionContract):
     orders: list[OrderInput] = Field(default_factory=list, max_length=10000)
     order_lines: list[OrderLineInput] = Field(default_factory=list, max_length=100000)
 
@@ -193,23 +260,29 @@ class OrdersInput(Contract):
             raise ValueError("Duplicate (order_id, sku) order line")
         if any(x.order_id not in ids for x in self.order_lines):
             raise ValueError("Order line references an unknown order")
-        if any(not any(x.order_id == o.id for x in self.order_lines) for o in self.orders):
+        covered_orders = {line.order_id for line in self.order_lines}
+        if ids - covered_orders:
             raise ValueError("Each order must have at least one order line")
         return self
 
 
-class OptimizationInput(Contract):
+class OptimizationInput(SectionContract):
+    joint: JointConfig | None = None
     seed: Annotated[int, Field(ge=0, le=2147483647)] = 42
     time_limit_s: Annotated[float, Field(gt=0, le=300)] = 30
     max_iterations: Annotated[int, Field(ge=1, le=1000000)] = 10000
     algorithm: Literal["milp", "greedy"] = "milp"
     distance_weight: Positive = 1
+    affinity_weight: NonNegative = 1
     capacity_weight: Literal[0] = 0
     slotting_algorithm: Literal["first_fit", "milp"] = "first_fit"
     candidate_count: Annotated[int, Field(ge=1, le=8)] = 1
     travel_weight: NonNegative = 1
     wait_weight: NonNegative = 0
     stock_weight: NonNegative = 0
+    layout_algorithm: Literal["grid", "local_search"] = "grid"
+    stop_after_stage: Literal["T1", "T2", "T3", "T4"] = "T4"
+    memory_limit_mb: Annotated[int, Field(ge=128, le=8192)] = 2048
 
     @model_validator(mode="after")
     def objective_weights(self) -> Self:
@@ -263,11 +336,21 @@ def to_domain(sections: dict) -> d.RetailDataset:
     errors = validate_references(values)
     if errors:
         raise ValueError("; ".join(errors))
+    for value in values.values():
+        value.pop("schema_version")
+        value.pop("data_origin")
     floor = values["floorplan"]
     floor.pop("units")
     floor["boundary"] = tuple(map(tuple, floor["boundary"]))
     floor["entrance"] = tuple(floor["entrance"])
     floor["obstacles"] = tuple(tuple(map(tuple, p)) for p in floor["obstacles"])
+    floor["exits"] = tuple(map(tuple, floor["exits"]))
+    floor["pickup_points"] = tuple(map(tuple, floor["pickup_points"]))
+    from smart_retail.domain.floorplan.models import FunctionalZone
+
+    floor["zones"] = tuple(
+        FunctionalZone(z["id"], z["kind"], tuple(map(tuple, z["boundary"]))) for z in floor["zones"]
+    )
     shelves = []
     for shelf in values["shelves"]["items"]:
         shelf["levels"] = tuple(d.ShelfLevel(**level) for level in shelf["levels"])
@@ -276,16 +359,25 @@ def to_domain(sections: dict) -> d.RetailDataset:
     for category in values["categories"]["items"]:
         category["near"] = tuple(category["near"])
         category["separate"] = tuple(category["separate"])
+        category["affinity"] = tuple(sorted(category["affinity"].items()))
         categories.append(d.Category(**category))
     products = []
     for product in values["products"]["items"]:
         product["orientations"] = tuple(product["orientations"])
+        product["allowed_shelf_kinds"] = tuple(product["allowed_shelf_kinds"])
         products.append(d.Product(**product))
     demand = values["demand"]
     demand["behavior"] = d.CustomerBehavior(**demand["behavior"])
     demand["baskets"] = tuple(map(tuple, demand["baskets"]))
+    from smart_retail.domain.demand.models import ArrivalPeriod
+
+    demand["periods"] = tuple(ArrivalPeriod(**p) for p in demand["periods"])
     if not shelves or not categories or not products:
         raise ValueError("A run requires at least one shelf, category and product")
+    if values["optimization"]["joint"] is not None:
+        import json
+
+        values["optimization"]["joint"] = json.dumps(values["optimization"]["joint"], sort_keys=True)
     return d.RetailDataset(
         floorplan=d.Floorplan(**floor),
         shelves=tuple(shelves),

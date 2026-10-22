@@ -1,0 +1,8 @@
+baseline,dataset,difference,experiment,exploratory_p,holm_p,limitation,metric,paired_effect_dz,seeds,treatment
+partial_no_incumbent,local_trap,"{""n"": 0, ""mean"": null, ""median"": null, ""sd"": null, ""ci95"": null}",E13,,,Insufficient independent seeds or constant differences; no test inference,wall_s,,[],proven_empty
+partial_no_incumbent,local_trap,"{""n"": 0, ""mean"": null, ""median"": null, ""sd"": null, ""ci95"": null}",E13,,,Insufficient independent seeds or constant differences; no test inference,mean_distance_m,,[],proven_empty
+partial_no_incumbent,local_trap,"{""n"": 0, ""mean"": null, ""median"": null, ""sd"": null, ""ci95"": null}",E13,,,Insufficient independent seeds or constant differences; no test inference,mean_wait_s,,[],proven_empty
+partial_no_incumbent,local_trap,"{""n"": 0, ""mean"": null, ""median"": null, ""sd"": null, ""ci95"": null}",E13,,,Insufficient independent seeds or constant differences; no test inference,joint_objective,,[],proven_empty
+partial_no_incumbent,local_trap,"{""n"": 0, ""mean"": null, ""median"": null, ""sd"": null, ""ci95"": null}",E13,,,Insufficient independent seeds or constant differences; no test inference,joint_evaluations,,[],proven_empty
+partial_no_incumbent,local_trap,"{""n"": 0, ""mean"": null, ""median"": null, ""sd"": null, ""ci95"": null}",E13,,,Insufficient independent seeds or constant differences; no test inference,joint_iterations_to_best,,[],proven_empty
+partial_no_incumbent,local_trap,"{""n"": 0, ""mean"": null, ""median"": null, ""sd"": null, ""ci95"": null}",E13,,,Insufficient independent seeds or constant differences; no test inference,holdout_objective,,[],proven_empty

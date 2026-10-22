@@ -1,17 +1,7 @@
-from pathlib import Path
+import copy
 
-import pytest
-from alembic import command
-from alembic.config import Config
-from smart_retail.infrastructure.database import (
-    OrderLineRecord,
-    OrderRecord,
-    ProductKey,
-    connect,
-)
+from smart_retail.infrastructure.database import connect
 from smart_retail.workers.runner import work_once
-from sqlalchemy import inspect, select
-from sqlalchemy.exc import IntegrityError
 
 
 def test_crud_revision_and_partial_updates(client, saved_project, sample):
@@ -42,19 +32,22 @@ def test_bad_input_leaves_database_unchanged(client, saved_project, sample):
     assert response.status_code == 422
 
 
-def test_orders_have_relational_foreign_keys(database, saved_project):
+def test_orders_references_are_checked_atomically_in_project_aggregate(
+    client, database, saved_project
+):
     _, factory = database
     with factory() as db:
-        assert len(list(db.scalars(select(OrderRecord)))) == 1
-        assert len(list(db.scalars(select(OrderLineRecord)))) == 2
-        assert len(list(db.scalars(select(ProductKey)))) == 2
-        db.add(
-            OrderLineRecord(
-                project_id=saved_project["id"], order_id="missing", sku="WATER", quantity=1
-            )
-        )
-        with pytest.raises(IntegrityError):
-            db.commit()
+        stored = db.get_project(saved_project["id"])
+        assert len(stored.sections["orders"]["orders"]) == 1
+        assert len(stored.sections["orders"]["order_lines"]) == 2
+        assert len(stored.sections["products"]["items"]) == 2
+    bad = copy.deepcopy(saved_project["sections"]["orders"])
+    bad["order_lines"][0]["order_id"] = "missing"
+    response = client.put(
+        f"/api/projects/{saved_project['id']}/inputs/orders?expected_revision=7", json=bad
+    )
+    assert response.status_code == 422
+    assert client.get(f"/api/projects/{saved_project['id']}").json() == saved_project
 
 
 def test_queue_snapshot_worker_replay_and_report(client, saved_project, database, tmp_path):
@@ -99,23 +92,17 @@ def test_worker_time_budget(client, saved_project, sample, database, tmp_path):
     assert client.get(f"/api/runs/{run['id']}").json()["status"] == "TIMED_OUT"
 
 
-def test_migration_roundtrip(tmp_path, monkeypatch):
-    url = f"sqlite:///{(tmp_path / 'migrated.db').as_posix()}"
-    monkeypatch.setenv("SMART_RETAIL_DATABASE_URL", url)
-    config = Config(str(Path(__file__).resolve().parents[2] / "alembic.ini"))
-    command.upgrade(config, "head")
-    engine, _ = connect(url)
-    assert set(inspect(engine).get_table_names()) >= {
-        "projects",
-        "orders",
-        "order_lines",
-        "optimization_runs",
-    }
-    engine.dispose()
-    command.downgrade(config, "base")
-    engine, _ = connect(url)
-    assert inspect(engine).get_table_names() == ["alembic_version"]
-    engine.dispose()
+def test_mongo_reconnect_preserves_project_and_indexes(database, saved_project):
+    name, _ = database
+    owner, _ = connect(database=name)
+    owner.ready()
+    assert owner.get_project(saved_project["id"]).revision == 7
+    assert "queue_status_created" in owner.database.optimization_runs.index_information()
+    owner.dispose()
+    reopened, _ = connect(database=name)
+    reopened.ready()
+    assert reopened.get_project(saved_project["id"]).sections == saved_project["sections"]
+    reopened.dispose()
 
 
 def test_missing_project_and_blank_name(client):

@@ -1,3 +1,5 @@
+> Historical checkpoint: 2026-10-21. For the current 2026-10-22 implementation, use [model scope](MODEL_SCOPE_20261022.md), [ER readiness](EXPERIMENT_READINESS_MATRIX.md), and [actual results](RESULTS_20261022.md). The historical gates and limits below are not the current synthetic-readiness assessment.
+
 # Algorithm design
 
 1. Parse seven input sections to frozen domain models. Enqueue a snapshot with runtime/source identity.

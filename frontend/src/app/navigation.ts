@@ -8,6 +8,7 @@ export const navigation = [
     group: "WORKSPACE",
   },
   { id: "projects", title: "Dự án", icon: FolderOpen },
+  { id: "research", title: "Thực nghiệm nghiên cứu", icon: ChartNoAxesCombined },
   {
     id: "floorplan",
     title: "Mặt bằng",
@@ -39,6 +40,7 @@ export const navigation = [
 export const descriptions: Record<string, string> = {
   dashboard: "Từ dữ liệu cửa hàng đến phương án có thể kiểm chứng.",
   projects: "Lưu riêng dữ liệu, cấu hình và kết quả của từng nghiên cứu.",
+  research: "Dataset tổng hợp, campaign thực, checkpoint, replay và báo cáo có kiểm chứng.",
   floorplan:
     "Vẽ theo kích thước thực. Đặt kệ, lối đi và vùng cấm trong cùng hệ tọa độ.",
   shelves:

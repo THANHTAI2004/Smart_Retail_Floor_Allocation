@@ -1,25 +1,26 @@
 services:
   database:
-    image: postgres:17-alpine
+    image: mongo:8.0
+    command: ["mongod", "--auth", "--bind_ip_all"]
     environment:
-      POSTGRES_USER: retail
-      POSTGRES_DB: retail
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USER:?Set private MONGODB_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD:?Set private MONGODB_ROOT_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mongodb_data:/data/db
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U retail -d retail"]
+      test: ["CMD-SHELL", "mongosh --quiet --username $$MONGO_INITDB_ROOT_USERNAME --password $$MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --eval 'quit(db.adminCommand({ping:1}).ok ? 0 : 1)'"]
       interval: 3s
-      timeout: 3s
+      timeout: 5s
       retries: 30
-  migrate:
+  initialize:
     build:
       context: .
       dockerfile: backend/Dockerfile
     environment: &backend-env
-      SMART_RETAIL_DATABASE_URL: postgresql+psycopg://retail:${POSTGRES_PASSWORD}@database/retail
+      MONGODB_URI: ${MONGODB_URI:?Set private authenticated MONGODB_URI using database hostname and authSource=admin}
+      MONGODB_DATABASE: ${MONGODB_DATABASE:-smart_retail}
       SMART_RETAIL_ARTIFACTS: /app/var/artifacts
-    command: ["alembic", "-c", "backend/alembic.ini", "upgrade", "head"]
+    command: ["python", "-m", "smart_retail.infrastructure.mongodb.health"]
     depends_on:
       database:
         condition: service_healthy
@@ -29,8 +30,9 @@ services:
       dockerfile: backend/Dockerfile
     environment: *backend-env
     ports: ["127.0.0.1:8010:8000"]
+    volumes: ["run_artifacts:/app/var/artifacts", "research_campaigns:/app/var/research"]
     depends_on:
-      migrate:
+      initialize:
         condition: service_completed_successfully
   worker:
     build:
@@ -40,7 +42,7 @@ services:
     command: ["python", "-m", "smart_retail.workers.runner"]
     volumes: ["run_artifacts:/app/var/artifacts"]
     depends_on:
-      migrate:
+      initialize:
         condition: service_completed_successfully
   frontend:
     build:
@@ -49,5 +51,6 @@ services:
     ports: ["127.0.0.1:5173:80"]
     depends_on: [backend]
 volumes:
-  postgres_data:
+  mongodb_data:
   run_artifacts:
+  research_campaigns:

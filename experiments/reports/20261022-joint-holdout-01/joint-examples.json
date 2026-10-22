@@ -1,0 +1,4235 @@
+[
+  {
+    "joint": {
+      "best": {
+        "components": [
+          0.017071067811865476,
+          0.0,
+          0.6666666666666666,
+          0.0
+        ],
+        "decisions": {
+          "assignment": {
+            "A": "S1",
+            "B": "S1"
+          },
+          "placements": [
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 0,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1.0,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P1",
+              "width_m": 0.2,
+              "x_m": 0.0
+            },
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 0,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1.0,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P2",
+              "width_m": 0.2,
+              "x_m": 0.2
+            }
+          ],
+          "poses": {
+            "S1": [
+              1.0,
+              3.0,
+              90
+            ],
+            "S2": [
+              5.0,
+              3.0,
+              0
+            ]
+          },
+          "routing_policy": "nearest"
+        },
+        "id": "46fd263bc66f3dda701181969c4bc3546363c460e0228394359285276acbe3b1",
+        "scenario_seeds": [
+          37,
+          138
+        ],
+        "score": 0.059812667484665814,
+        "score_fraction": [
+          10048528137423857,
+          168000000000000000
+        ]
+      },
+      "certificate": null,
+      "evaluations": 41,
+      "general_optimality": "JOINT_GENERAL_OPTIMALITY_NOT_PROVEN",
+      "holdout": {
+        "components": [
+          0.017071067811865476,
+          0.0,
+          0.6666666666666666,
+          0.0
+        ],
+        "scenario_seeds": [
+          10038,
+          20040
+        ],
+        "score": 0.059812667484665814
+      },
+      "initial_score": 0.10266981034180868,
+      "mode": "feedback",
+      "normalization": {
+        "scales": [
+          100.0,
+          100.0,
+          1.0,
+          1.0
+        ],
+        "weights": [
+          1.0,
+          0.2,
+          0.1,
+          0.1
+        ]
+      },
+      "pareto_scope": "Evaluated candidates only",
+      "proof_status": "FEASIBLE_NOT_PROVEN",
+      "state_snapshots": [
+        {
+          "candidate_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "sha256": "b1638c8a6ad158204784779885ee8a98d0c2822e87c9f76250fc6ca095c416e9"
+        },
+        {
+          "candidate_id": "b979405365c2f9ebc3258694937ca274dc827e4676febf5e5f29d10d8e593cec",
+          "sha256": "709b987a23a3819a1491b317e7ad98b598f74de24128948c0acaf6afbf748110"
+        },
+        {
+          "candidate_id": "76c63b01f9c0080a2d20aa89e5ddd997cb7bcdecf0728bd18f89c4c149031b82",
+          "sha256": "741f9d003f6570d027d2d2c87eba1613babafd5a1cce7be58ca4a03947ee9340"
+        },
+        {
+          "candidate_id": "f347e92b885863109fb261b69d7df883884cc09f2426eb6dda3eee522c51a460",
+          "sha256": "40d916685a781bae676671ab555e01f37418099f9736f4c73b6a5dd6f5db0676"
+        },
+        {
+          "candidate_id": "a16a16097b8e132570e1821395b07502e22c57936df4bad2e82adef66cf125bd",
+          "sha256": "39eb4a66da6dfb06db3d04baba3d8d470e3ecc7aa3775500bfea5ba5c247889d"
+        },
+        {
+          "candidate_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "sha256": "df3202b94a3385253e1b0ba77ebef836bc673dd2af094a8b05a8412c1c3c4d93"
+        },
+        {
+          "candidate_id": "20908fdd11b5d0ccd469ba0b68cd51e265d4bde09c0906586758a699f4556dbe",
+          "sha256": "55f9aa1ae3dabe3d4b2acf02e55cff075625e63a2e34496381f3593d3ad6d812"
+        },
+        {
+          "candidate_id": "75ddacc038759579581277cb269120b816e3e1e1ed361adab31bb3dead5272df",
+          "sha256": "72752f9801973fb5394c1b18b04e41228dde0d020191544bceb51d8d72d56da8"
+        },
+        {
+          "candidate_id": "354879fb137738975eb3cf1c4e7079d178da3e77f613065314bbcf8d827bf6ef",
+          "sha256": "87c29ea0bfb327af24d77b4c65654363f1426b3b8353bb1ea3c5ce50d2723f04"
+        },
+        {
+          "candidate_id": "8490f26aac87eb3fba60867dcf0ccd3ef99a98c3c50cd376f6f6d71398f95599",
+          "sha256": "b0f6a4f6031f4f9f9d06d40f6a277d64f54084362c4257737cd34cfcf99310c5"
+        },
+        {
+          "candidate_id": "cfe5f7985a375c39341bbc57ecfc0590dbfa795b837c33a597d0c111c0f41877",
+          "sha256": "7a2d740b722696bd5ae61151d5a0f75a05c7093bb44733fd71b573dc9e30bf2d"
+        },
+        {
+          "candidate_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "sha256": "bda10305c16a87498443079911b80cdbc7aaa2c9b158dc37ec7d8fdbccbb9a3e"
+        },
+        {
+          "candidate_id": "760423d174a8bd1297fcb8e3145224e5611c4c894c79e03d501ec928a9a253ec",
+          "sha256": "8362d2b3822481f076b32bc95b3710ad64dba77a7beb3ccb8e22883f4fd5ceb6"
+        },
+        {
+          "candidate_id": "1282ceefac2272f056fb38ed368210fa8f0c055596973586b73f805a9c343f32",
+          "sha256": "76980b2483cc573d656a40811cae961215bc3157b3fcb8b65b38dcf1854ce24a"
+        },
+        {
+          "candidate_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "sha256": "c6eb7f860e37c500a115fcb8300c04adf7eb6cf4b07b105ff02f3bbd08393cb9"
+        },
+        {
+          "candidate_id": "c3a8eeb07e6fefb36f8ff171f8c77c2a8887a39697fd537e5ccdf1e5dff4891d",
+          "sha256": "2a97d9b794cb0541f4e8eace93ab45b176fa440e07e358bb6ee53c06518ff252"
+        },
+        {
+          "candidate_id": "bed38c8e9ea49dfc8a1b381546132c84a64fe88628ff999c1ca059bf9ff26f8f",
+          "sha256": "359b96aa87a41820dfa8a8adebb47b8dff328b80dca8be1454626a416c07a6d6"
+        },
+        {
+          "candidate_id": "be310c1587008beae2b64620b0331b2e8697422d2a867e90afbb41585e4b496f",
+          "sha256": "17c560db1815b44932338aae618b97c43ebcdd7763e635e70e6e758348094566"
+        },
+        {
+          "candidate_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "sha256": "bda10305c16a87498443079911b80cdbc7aaa2c9b158dc37ec7d8fdbccbb9a3e"
+        },
+        {
+          "candidate_id": "5fe4c99c6f025ffe342afe165952ec35bf71a9e4cd6e645636fad573a91811b4",
+          "sha256": "7af002cb37cd59b7a4d6602565af74d63fab3ca19d0b40068b986ec1f9ce2ada"
+        },
+        {
+          "candidate_id": "eea040768cd599ca9c02d08ed58178a4f29363d48a815ebd96152926e49c9f32",
+          "sha256": "473fb46f062017d062883ed215c7722dac78638b27ff8c839a94ab117ca27e85"
+        },
+        {
+          "candidate_id": "6af53c1bfdec08621ead93885a27eb446c71a001f39060c9659d7e3f2c1a5aa9",
+          "sha256": "9b250c09e49b85cd6e630dfc64838539132793ad5e917ed3f676407d48a1b35e"
+        },
+        {
+          "candidate_id": "4758120eadf4aec869a56c8388193850e3511d9c633367068018f866ef63813f",
+          "sha256": "fe329a31516151914b891119ed0b8738a60dd86571a84bf9f91cf7c2db3b5e3c"
+        },
+        {
+          "candidate_id": "4f326f1762eb198be0f168779a5d2a7b11bcf7dba2a55aaf9826ad524e6fb993",
+          "sha256": "5d5654d48fedc40ae128c817dc20c086ffa4d482b104974d93fcba1029bcdb7c"
+        },
+        {
+          "candidate_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "sha256": "df3202b94a3385253e1b0ba77ebef836bc673dd2af094a8b05a8412c1c3c4d93"
+        },
+        {
+          "candidate_id": "88912764a0a1271b8aba937d5febd36522667b74e9dc865b3ab642b5c6b66cf5",
+          "sha256": "1e1cde249551de8c27f82551786b13b61087f001dda8166e214b565776a33e77"
+        },
+        {
+          "candidate_id": "cfba29c05ec74337942e87420fabdecf218c6b22a85d6ada3a91223f72545da3",
+          "sha256": "8e561b01a82f598e0bd293a412a6691b329690ed0402998247d3b3a8ebbb9f84"
+        },
+        {
+          "candidate_id": "46fd263bc66f3dda701181969c4bc3546363c460e0228394359285276acbe3b1",
+          "sha256": "cdb4a5aae8a7bb6043f7a16cb1e36775bf6b808013c4aea72c58ba785d5a385f"
+        },
+        {
+          "candidate_id": "04d322a7d566296f9302cb609699e04720ed34141a35081d32966f70ac73a2cd",
+          "sha256": "fe938d2eb1da922cb42eeedd04edd0d8e5c940fad264d805a4fed1564bf21b7f"
+        },
+        {
+          "candidate_id": "c808846569c5b646d5568d1b8169b9c728fff0a34f5da9db77f3a6145069274b",
+          "sha256": "8f18c8340c487f44c2f7f76ac3a7a5c780d45af171a7bf108b250c4245b2f126"
+        },
+        {
+          "candidate_id": "4e3adb82353367c4bc485aaea6a503cbd60e1995471e00707fab03000f6415cc",
+          "sha256": "cc01632f1aac884225f1bea8f4a9cbec6aeac29dd3e006ad508137447e5947fc"
+        },
+        {
+          "candidate_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "sha256": "c6eb7f860e37c500a115fcb8300c04adf7eb6cf4b07b105ff02f3bbd08393cb9"
+        },
+        {
+          "candidate_id": "9d220ef169a115669c41edb94dfdf7003de32cd3007f30589315d831dfa546ec",
+          "sha256": "e836b8f0dc70e2bb7bd9aca734556eceb2f9e4e539aa5a079a63b070efe9a44c"
+        },
+        {
+          "candidate_id": "267368fbb2d50eda8f4a15988ffcd2ad54907981e13e81409e5d6830f3d58044",
+          "sha256": "acf3c8c9c77acb90299df80755162d1279ff105ae54a47fc315d3f23c64c4b09"
+        },
+        {
+          "candidate_id": "e96d860135b39635456fc18c8bddef6718075824aa7d32dd3428be31c9d9a957",
+          "sha256": "8e1b76ec7f4779667e061d98bb07a823803c0449ab64b6afacf16e6f10af9384"
+        },
+        {
+          "candidate_id": "5afdc6768c5c5923f59eb8614b37a66bb122b947cd07a5ff37712dad9f703f61",
+          "sha256": "e6fef4850ca8606a73894f4fd5b6ae284222db4487560eb18d9a68fa0df8a5a7"
+        },
+        {
+          "candidate_id": "60e91582dea24778218a46a9b751a23bee6f1161558e89192231ec66d696d245",
+          "sha256": "ff2acc573c5db8d077d07bd6ae3a52f1e93a86a68de9b64e755040779f4b5685"
+        },
+        {
+          "candidate_id": "8336af1d7900470c1fe2162b41a995037310ea6c39a7c2dc00fb3802b56e6886",
+          "sha256": "c1e2d1c80bf1a34db281d433839419eeaa351fa706188f4506a13e9bca734ac4"
+        }
+      ],
+      "status": "ITERATION_LIMIT",
+      "trace": [
+        {
+          "evaluation_budget": 80,
+          "event": 0,
+          "mode": "feedback",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "INITIALIZED"
+        },
+        {
+          "candidate_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "event": 1,
+          "iteration": 0,
+          "score": 0.10266981034180868,
+          "status": "EVALUATING"
+        },
+        {
+          "action_count": 14,
+          "candidate_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "event": 2,
+          "feedback": {
+            "candidate_bottlenecks": [
+              "S1:0"
+            ],
+            "diagnostic_evidence": {
+              "scenario_kpis": [
+                {
+                  "completed": 5,
+                  "late_orders": 0,
+                  "mean_completion_s": 9.707106781186551,
+                  "mean_distance_m": 7.707106781186548,
+                  "mean_wait_s": 0.0,
+                  "picker_utilization": 0.06244686099902931
+                },
+                {
+                  "completed": 5,
+                  "late_orders": 0,
+                  "mean_completion_s": 9.70710678118655,
+                  "mean_distance_m": 7.707106781186548,
+                  "mean_wait_s": 0.0,
+                  "picker_utilization": 0.10725494439859926
+                }
+              ],
+              "scope": "Simulated shelf queues and finite picker pool; no corridor congestion inference",
+              "totals": {
+                "customer_distance_m": 61.656854249492376,
+                "picker_distance_m": 15.414213562373096,
+                "picker_wait_s": 0.0,
+                "shelf_wait_s": 0.0
+              },
+              "travel_attribution": "Journey distance divided across picked SKU types; diagnostic proxy only",
+              "wait_attribution": "Journey shelf wait divided across visited shelves; diagnostic proxy only"
+            },
+            "frequently_co_picked_categories": [
+              [
+                "A/B",
+                10
+              ]
+            ],
+            "high_travel_skus": [
+              [
+                "P1",
+                38.53553390593274
+              ],
+              [
+                "P2",
+                38.53553390593274
+              ]
+            ],
+            "high_wait_locations": [
+              [
+                "S1:0",
+                0.0
+              ]
+            ],
+            "hot_shelves": [
+              [
+                "S1:0",
+                10
+              ]
+            ],
+            "objective_components": [
+              0.07707106781186548,
+              0.0,
+              0.6666666666666666,
+              0.0
+            ],
+            "recommended_action_types": [
+              "T1_MOVE",
+              "T2_REASSIGN",
+              "T3_FACE"
+            ],
+            "sku_pick_counts": {
+              "P1": 10,
+              "P2": 10
+            }
+          },
+          "iteration": 1,
+          "status": "IMPROVING"
+        },
+        {
+          "accepted": true,
+          "action": "T1_MOVE",
+          "after": 0.09552695319895153,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "4669c66334554d931c4cb2958c4246ae4504dfb39af1001e6d7481e05d89b15b"
+            },
+            "T2": {
+              "key": "5b691918fa2dbf88b27939bb66e81592600d3280edc4bc9347f0539084436d80"
+            },
+            "T3": {
+              "key": "7d43ae339b9b239029fe9d5865c0219fc8c77a6ea2358e80a5dd43dfab0f2f41"
+            },
+            "T4": {
+              "key": "6e8de4763e52f5c3a2808309056a702e8c0257a41d83cbe25cb27d92979703ea"
+            }
+          },
+          "candidate_id": "b979405365c2f9ebc3258694937ca274dc827e4676febf5e5f29d10d8e593cec",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.06707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 3,
+          "iteration": 1,
+          "layer": "T1",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "STRICT_DESCENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T2_REASSIGN",
+          "after": 0.14552695319895154,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "a542068746926eabbd1dcf621d891e3cced41d12a7752c240cebbdb610f21c2f"
+            },
+            "T2": {
+              "key": "e36f66ffa8ec04dee3e863c9797bb95dab08034130a2f1e9d94614d58db4e7c0"
+            },
+            "T3": {
+              "key": "5d777f4a9d920bc9a00735cdcf1b35261a6304491d112d7ffd7de9749d941eab"
+            },
+            "T4": {
+              "key": "11fc27a828f1de6dfed6dd86cc1656becd92581383b6b7841eac6b4a63e902cf"
+            }
+          },
+          "candidate_id": "76c63b01f9c0080a2d20aa89e5ddd997cb7bcdecf0728bd18f89c4c149031b82",
+          "changed": [
+            "A"
+          ],
+          "components": [
+            0.13707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S2",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S2",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 4,
+          "iteration": 1,
+          "layer": "T2",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_FACE",
+          "after": 0.1240983817703801,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "a542068746926eabbd1dcf621d891e3cced41d12a7752c240cebbdb610f21c2f"
+            },
+            "T2": {
+              "key": "911334963b4183760ede31377ea1a8cda2f8740d9b9566855618c467f5ab1f25"
+            },
+            "T3": {
+              "key": "668cce4cef55b3da7673cf8b677cd62c43b5c9bdc18dce5bb159a50e58e56d97"
+            },
+            "T4": {
+              "key": "e4fc8e8ee2705db565e09436f6c466d9707ba10096e59ee6fcef230376475792"
+            }
+          },
+          "candidate_id": "f347e92b885863109fb261b69d7df883884cc09f2426eb6dda3eee522c51a460",
+          "changed": [
+            "P1"
+          ],
+          "components": [
+            0.10707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 5,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T1_MOVE",
+          "after": 0.10981266748466582,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "7806bf7de0912544ada304d6960402f26fb138a41091f8c6b8baa91bf8737813"
+            },
+            "T2": {
+              "key": "c16b1880d31756c348c80bdbef1723cd449a04cf93d1777b451002c46f4c685a"
+            },
+            "T3": {
+              "key": "ec94bdff106c0b6a4c2b36c039c0210c6fc4867632fb6e847d99c0451c17ebd4"
+            },
+            "T4": {
+              "key": "6696a08147e16b7d9bd3f57133721f31067e1a89d86916b6f574497552a4f801"
+            }
+          },
+          "candidate_id": "a16a16097b8e132570e1821395b07502e22c57936df4bad2e82adef66cf125bd",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.08707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                2.5,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 6,
+          "iteration": 1,
+          "layer": "T1",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T2_SWAP",
+          "after": 0.10266981034180868,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "a542068746926eabbd1dcf621d891e3cced41d12a7752c240cebbdb610f21c2f"
+            },
+            "T2": {
+              "key": "911334963b4183760ede31377ea1a8cda2f8740d9b9566855618c467f5ab1f25"
+            },
+            "T3": {
+              "key": "b368d931af31a6f45c2ef9bf8fd19bf1e38e7a826875a9d9dd425412ae561b7f"
+            },
+            "T4": {
+              "key": "63ece7af8f5587e1f4867af272def888075f07f2e76acb8e02254bfbe78152fb"
+            }
+          },
+          "candidate_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "changed": [
+            "A",
+            "B"
+          ],
+          "components": [
+            0.07707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 7,
+          "iteration": 1,
+          "layer": "T2",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "after": 0.10266981034180868,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "a542068746926eabbd1dcf621d891e3cced41d12a7752c240cebbdb610f21c2f"
+            },
+            "T2": {
+              "key": "911334963b4183760ede31377ea1a8cda2f8740d9b9566855618c467f5ab1f25"
+            },
+            "T3": {
+              "key": "19d78c36690d6c41da89257b2e36c455dbb1a0ac1ab5e6c7d01cce20464ec065"
+            },
+            "T4": {
+              "key": "70ea0c6353207ab2ef3f4f41fc44c9c760ea4953979bb9e156d8b7b124fcc459"
+            }
+          },
+          "candidate_id": "20908fdd11b5d0ccd469ba0b68cd51e265d4bde09c0906586758a699f4556dbe",
+          "changed": [
+            "P1"
+          ],
+          "components": [
+            0.07707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 1.8
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 8,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T1_MOVE",
+          "after": 0.10981266748466582,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "569673f8e5e6eea293b245072b5c2dc953653c74689b1310f5db0a33a6151df5"
+            },
+            "T2": {
+              "key": "68b1d33ba37d7860975e084c4099fa0d8578cf7c7a2954d9c495b15d3960b50d"
+            },
+            "T3": {
+              "key": "fb45deac32ccd443f65f4a642dd7c1ff4c896485a93ce12da25c519587314015"
+            },
+            "T4": {
+              "key": "2db2e9ff0b2907ae9862fa18123a71dc69adbe57a9b4225b5aef738f0b96471a"
+            }
+          },
+          "candidate_id": "75ddacc038759579581277cb269120b816e3e1e1ed361adab31bb3dead5272df",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.08707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.5,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 9,
+          "iteration": 1,
+          "layer": "T1",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T2_REASSIGN",
+          "after": 0.14552695319895154,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "a542068746926eabbd1dcf621d891e3cced41d12a7752c240cebbdb610f21c2f"
+            },
+            "T2": {
+              "key": "23b6f7232e5ce7dbce03548b364f45903c96224a124c54e5b433a79d017ddd40"
+            },
+            "T3": {
+              "key": "c88282a60df16e13be1428709744ee0db16284e053f132d2fc52ebc7aadd7e9f"
+            },
+            "T4": {
+              "key": "d692159b422394914d8361e89ee48be93dc57cee1bacf43d4a76f42361f2edcc"
+            }
+          },
+          "candidate_id": "354879fb137738975eb3cf1c4e7079d178da3e77f613065314bbcf8d827bf6ef",
+          "changed": [
+            "B"
+          ],
+          "components": [
+            0.13707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S2"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S2",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 10,
+          "iteration": 1,
+          "layer": "T2",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_FACE",
+          "after": 0.1240983817703801,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "a542068746926eabbd1dcf621d891e3cced41d12a7752c240cebbdb610f21c2f"
+            },
+            "T2": {
+              "key": "911334963b4183760ede31377ea1a8cda2f8740d9b9566855618c467f5ab1f25"
+            },
+            "T3": {
+              "key": "f2235def151e280236e56c17cc73e162af7ef9ea0122819ff959088cb2c441cb"
+            },
+            "T4": {
+              "key": "0fa4446fe949f27bc7a12131b12692ce639a7df16620a95e7741e5ce18db2f4d"
+            }
+          },
+          "candidate_id": "8490f26aac87eb3fba60867dcf0ccd3ef99a98c3c50cd376f6f6d71398f95599",
+          "changed": [
+            "P2"
+          ],
+          "components": [
+            0.10707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 11,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T1_MOVE",
+          "after": 0.09552695319895153,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "62ab341fb722b1b9621c2944aa621b41e0f44012024ee5f27d25f357039cfab2"
+            },
+            "T2": {
+              "key": "da819396c9f39a15d4fe25953ae8f232f4ac063259c8673948354a252b76dea1"
+            },
+            "T3": {
+              "key": "cc36fc3d96aacfad5b36737507562c5a25d4f40255744b1f84a210334ab79a76"
+            },
+            "T4": {
+              "key": "4a24ad8cebe310aad74ca3f2e782177bfe88e454f99fac424ecde12023166503"
+            }
+          },
+          "candidate_id": "cfe5f7985a375c39341bbc57ecfc0590dbfa795b837c33a597d0c111c0f41877",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.06707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.5,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 12,
+          "iteration": 1,
+          "layer": "T1",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "before": 0.10266981034180868,
+          "event": 13,
+          "iteration": 1,
+          "layer": "T3",
+          "reason": "INVALID_DECISION",
+          "status": "FAILED"
+        },
+        {
+          "accepted": true,
+          "action": "T1_ROTATE",
+          "after": 0.0740983817703801,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "b3e33bf4d7b23c5738a742c6a88c512ea759fb7d4766fa98da200218bffeb1ff"
+            },
+            "T2": {
+              "key": "202f5a124d4aa68d7b454bca4766b4e9958a8ccf4c68110398d750e221ed56a4"
+            },
+            "T3": {
+              "key": "3ab342816b994b4ef72ce92cb24a66a56f1a5f428b27b6ddb50e258dee5f295c"
+            },
+            "T4": {
+              "key": "54107707829b6d18970f1daf0275a245684ddbdc230a9ecb4f8bce527898ed14"
+            }
+          },
+          "candidate_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.03707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 14,
+          "iteration": 1,
+          "layer": "T1",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "STRICT_DESCENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "after": 0.10266981034180868,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "a542068746926eabbd1dcf621d891e3cced41d12a7752c240cebbdb610f21c2f"
+            },
+            "T2": {
+              "key": "911334963b4183760ede31377ea1a8cda2f8740d9b9566855618c467f5ab1f25"
+            },
+            "T3": {
+              "key": "6631c48ff73416100ca55a20f6af6aceb194daa3444cd82c3dcf797e9d7d267f"
+            },
+            "T4": {
+              "key": "17feab168b0356e760c4a0dc35a3b3e77f167ffe1b8e7dc7b1711dbd382c670d"
+            }
+          },
+          "candidate_id": "760423d174a8bd1297fcb8e3145224e5611c4c894c79e03d501ec928a9a253ec",
+          "changed": [
+            "P2"
+          ],
+          "components": [
+            0.07707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 1.8
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 15,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_SWAP",
+          "after": 0.10266981034180868,
+          "before": 0.10266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "a542068746926eabbd1dcf621d891e3cced41d12a7752c240cebbdb610f21c2f"
+            },
+            "T2": {
+              "key": "911334963b4183760ede31377ea1a8cda2f8740d9b9566855618c467f5ab1f25"
+            },
+            "T3": {
+              "key": "9887f8a6110c14e0067e35ebe640707509d965a7ce6cde1587312a89fa9063ec"
+            },
+            "T4": {
+              "key": "7c0ee4a9d121f5f46590a3108e5627be045da947c34f05fbd6ff9e9821aadb0a"
+            }
+          },
+          "candidate_id": "1282ceefac2272f056fb38ed368210fa8f0c055596973586b73f805a9c343f32",
+          "changed": [
+            "P1",
+            "P2"
+          ],
+          "components": [
+            0.07707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.2
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 16,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "best_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "best_score": 0.0740983817703801,
+          "event": 17,
+          "iteration": 1,
+          "status": "IMPROVING"
+        },
+        {
+          "action_count": 14,
+          "candidate_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "event": 18,
+          "feedback": {
+            "candidate_bottlenecks": [
+              "S1:0"
+            ],
+            "diagnostic_evidence": {
+              "scenario_kpis": [
+                {
+                  "completed": 5,
+                  "late_orders": 0,
+                  "mean_completion_s": 5.7071067811865515,
+                  "mean_distance_m": 3.7071067811865475,
+                  "mean_wait_s": 0.0,
+                  "picker_utilization": 0.037684135553072075
+                },
+                {
+                  "completed": 5,
+                  "late_orders": 0,
+                  "mean_completion_s": 5.707106781186551,
+                  "mean_distance_m": 3.7071067811865475,
+                  "mean_wait_s": 0.0,
+                  "picker_utilization": 0.06597431348251448
+                }
+              ],
+              "scope": "Simulated shelf queues and finite picker pool; no corridor congestion inference",
+              "totals": {
+                "customer_distance_m": 29.656854249492376,
+                "picker_distance_m": 7.414213562373095,
+                "picker_wait_s": 0.0,
+                "shelf_wait_s": 0.0
+              },
+              "travel_attribution": "Journey distance divided across picked SKU types; diagnostic proxy only",
+              "wait_attribution": "Journey shelf wait divided across visited shelves; diagnostic proxy only"
+            },
+            "frequently_co_picked_categories": [
+              [
+                "A/B",
+                10
+              ]
+            ],
+            "high_travel_skus": [
+              [
+                "P1",
+                18.535533905932734
+              ],
+              [
+                "P2",
+                18.535533905932734
+              ]
+            ],
+            "high_wait_locations": [
+              [
+                "S1:0",
+                0.0
+              ]
+            ],
+            "hot_shelves": [
+              [
+                "S1:0",
+                10
+              ]
+            ],
+            "objective_components": [
+              0.03707106781186548,
+              0.0,
+              0.6666666666666666,
+              0.0
+            ],
+            "recommended_action_types": [
+              "T1_MOVE",
+              "T2_REASSIGN",
+              "T3_FACE"
+            ],
+            "sku_pick_counts": {
+              "P1": 10,
+              "P2": 10
+            }
+          },
+          "iteration": 2,
+          "status": "IMPROVING"
+        },
+        {
+          "accepted": true,
+          "action": "T1_MOVE",
+          "after": 0.06695552462752295,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "786211b8a4768ec726252b7aa98fc2d80dec909c1c26df9fb5c270810e94724d"
+            },
+            "T2": {
+              "key": "9b6892631fb5e2202391df585acca9691191aab9c7ece726f6f53aa3e18ffe7a"
+            },
+            "T3": {
+              "key": "8305cdf6af3b986947aad611ce7913b4cf0e233cf6ad71fb0e0e212958e99744"
+            },
+            "T4": {
+              "key": "7e72f8d01beaf2c55732286b66f9c511dc5abcc7aca9ea538f033c29a2323a4d"
+            }
+          },
+          "candidate_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.027071067811865475,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 19,
+          "iteration": 2,
+          "layer": "T1",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "STRICT_DESCENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T2_REASSIGN",
+          "after": 0.14552695319895154,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "b3e33bf4d7b23c5738a742c6a88c512ea759fb7d4766fa98da200218bffeb1ff"
+            },
+            "T2": {
+              "key": "6ddb466f7b3d4b3b13a6ecf2126e62efdf62f4f8ee02afa229caa3b5f2d36da8"
+            },
+            "T3": {
+              "key": "178d4123a8751f71f7da407889254ad48368b3c37e76c5bbdbc98f4374d704a8"
+            },
+            "T4": {
+              "key": "9757a01745db3edc32516e5947445d3a6663d3e42e8d7cd59955da82ba086498"
+            }
+          },
+          "candidate_id": "c3a8eeb07e6fefb36f8ff171f8c77c2a8887a39697fd537e5ccdf1e5dff4891d",
+          "changed": [
+            "A"
+          ],
+          "components": [
+            0.13707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S2",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S2",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 20,
+          "iteration": 2,
+          "layer": "T2",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_FACE",
+          "after": 0.1240983817703801,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "b3e33bf4d7b23c5738a742c6a88c512ea759fb7d4766fa98da200218bffeb1ff"
+            },
+            "T2": {
+              "key": "202f5a124d4aa68d7b454bca4766b4e9958a8ccf4c68110398d750e221ed56a4"
+            },
+            "T3": {
+              "key": "bb65c560170884ab8e13bd77da27c82598686590e681f8c191d008646b2b37e1"
+            },
+            "T4": {
+              "key": "65e73a2cc92f97d4b8cc2d14845bf131bfbf6eff2aed1f60f4bf703e5399f894"
+            }
+          },
+          "candidate_id": "bed38c8e9ea49dfc8a1b381546132c84a64fe88628ff999c1ca059bf9ff26f8f",
+          "changed": [
+            "P1"
+          ],
+          "components": [
+            0.10707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 21,
+          "iteration": 2,
+          "layer": "T3",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T1_MOVE",
+          "after": 0.08124123891323724,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "55ee889619922c8f653e23b2f905842c456aa954270e794ac0f8ec7da4a5b95a"
+            },
+            "T2": {
+              "key": "ee866b4c61de358b72f00ec2b929483eca7eb5836e7263b6b20ee9abaf2cb2d9"
+            },
+            "T3": {
+              "key": "e1f539a85791087c3b1664f57f5401749750adf68200fe60c2ddefd6768fb113"
+            },
+            "T4": {
+              "key": "847219339712dee0c1e5daa544f08f99e9b114486a7ba365e3a3760dda2c653b"
+            }
+          },
+          "candidate_id": "be310c1587008beae2b64620b0331b2e8697422d2a867e90afbb41585e4b496f",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.04707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                2.5,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 22,
+          "iteration": 2,
+          "layer": "T1",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T2_SWAP",
+          "after": 0.0740983817703801,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "b3e33bf4d7b23c5738a742c6a88c512ea759fb7d4766fa98da200218bffeb1ff"
+            },
+            "T2": {
+              "key": "202f5a124d4aa68d7b454bca4766b4e9958a8ccf4c68110398d750e221ed56a4"
+            },
+            "T3": {
+              "key": "3ab342816b994b4ef72ce92cb24a66a56f1a5f428b27b6ddb50e258dee5f295c"
+            },
+            "T4": {
+              "key": "54107707829b6d18970f1daf0275a245684ddbdc230a9ecb4f8bce527898ed14"
+            }
+          },
+          "candidate_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "changed": [
+            "A",
+            "B"
+          ],
+          "components": [
+            0.03707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 23,
+          "iteration": 2,
+          "layer": "T2",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "after": 0.0740983817703801,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "b3e33bf4d7b23c5738a742c6a88c512ea759fb7d4766fa98da200218bffeb1ff"
+            },
+            "T2": {
+              "key": "202f5a124d4aa68d7b454bca4766b4e9958a8ccf4c68110398d750e221ed56a4"
+            },
+            "T3": {
+              "key": "4d0c6ff4e3946e254803fce9831cebea2770818f80e2878b4c6f1ef81ecbc2e8"
+            },
+            "T4": {
+              "key": "5c5a42daf29ae721f129098b09f3f69f97d3b16806fa4b63b839e514b9132385"
+            }
+          },
+          "candidate_id": "5fe4c99c6f025ffe342afe165952ec35bf71a9e4cd6e645636fad573a91811b4",
+          "changed": [
+            "P1"
+          ],
+          "components": [
+            0.03707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 1.8
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 24,
+          "iteration": 2,
+          "layer": "T3",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T1_MOVE",
+          "after": 0.08124123891323724,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "644ba70c6b4030024c6e91c2ebb902d28e039f68e0066c0015f54cb7e43c30f8"
+            },
+            "T2": {
+              "key": "98c6fbdf0ea97c6a1c9b51a5892fdcc746ef154d66b755dfda367d16b0331eb4"
+            },
+            "T3": {
+              "key": "421672d0cffd6eaceefc7357f91c6f3f0a6ff53e48ec9a736ba49f65ce8e3db3"
+            },
+            "T4": {
+              "key": "854151c94a3c8001b7f4d151998cc1434fd239fb152777fb68255d40a6bff260"
+            }
+          },
+          "candidate_id": "eea040768cd599ca9c02d08ed58178a4f29363d48a815ebd96152926e49c9f32",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.04707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 25,
+          "iteration": 2,
+          "layer": "T1",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T2_REASSIGN",
+          "after": 0.14552695319895154,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "b3e33bf4d7b23c5738a742c6a88c512ea759fb7d4766fa98da200218bffeb1ff"
+            },
+            "T2": {
+              "key": "4c8a4cc01d17684b3afcd9ce26e7a6d46be6b7ad25eb88b52a16d2f1b2adec40"
+            },
+            "T3": {
+              "key": "db98bec797cee04ff3425c9aca05dfbc2ce9ab464a990613c29b813753b572da"
+            },
+            "T4": {
+              "key": "6410b86587377cfbda76dbfa3dbe35098eff8c11f31e8d24e333f4cafde7209f"
+            }
+          },
+          "candidate_id": "6af53c1bfdec08621ead93885a27eb446c71a001f39060c9659d7e3f2c1a5aa9",
+          "changed": [
+            "B"
+          ],
+          "components": [
+            0.13707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S2"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S2",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 26,
+          "iteration": 2,
+          "layer": "T2",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_FACE",
+          "after": 0.1240983817703801,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "b3e33bf4d7b23c5738a742c6a88c512ea759fb7d4766fa98da200218bffeb1ff"
+            },
+            "T2": {
+              "key": "202f5a124d4aa68d7b454bca4766b4e9958a8ccf4c68110398d750e221ed56a4"
+            },
+            "T3": {
+              "key": "bfc9d528a45b84ce8d99433a6e9201a906d2951141ed4bfda3655da0640833dc"
+            },
+            "T4": {
+              "key": "9d68b98732f21b93b09ae415daff8fb8b9f4352f30e875ec5370d8d9e5f60c03"
+            }
+          },
+          "candidate_id": "4758120eadf4aec869a56c8388193850e3511d9c633367068018f866ef63813f",
+          "changed": [
+            "P2"
+          ],
+          "components": [
+            0.10707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 27,
+          "iteration": 2,
+          "layer": "T3",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T1_MOVE",
+          "after": 0.08124123891323724,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "101a5392430923afba808c8cdc29dc1d59fe6ac2754dc4ccfc7b8ce613cb1d58"
+            },
+            "T2": {
+              "key": "e7fc9260b4acedd918ad0e7d523bf8116d7e781739a6facf77f7e49535a65ffc"
+            },
+            "T3": {
+              "key": "fe405a7bd6aac6e6d73363f79fb7319205e8d7d7701db8a60d6d7a1f9b83b91d"
+            },
+            "T4": {
+              "key": "f71091a7f692abfeda8203a0c3281dcea2aa11b614747b7cef5521f4ad4fd9bf"
+            }
+          },
+          "candidate_id": "4f326f1762eb198be0f168779a5d2a7b11bcf7dba2a55aaf9826ad524e6fb993",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.04707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.5,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 28,
+          "iteration": 2,
+          "layer": "T1",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "before": 0.0740983817703801,
+          "event": 29,
+          "iteration": 2,
+          "layer": "T3",
+          "reason": "INVALID_DECISION",
+          "status": "FAILED"
+        },
+        {
+          "accepted": false,
+          "action": "T1_ROTATE",
+          "after": 0.10266981034180868,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "a542068746926eabbd1dcf621d891e3cced41d12a7752c240cebbdb610f21c2f"
+            },
+            "T2": {
+              "key": "911334963b4183760ede31377ea1a8cda2f8740d9b9566855618c467f5ab1f25"
+            },
+            "T3": {
+              "key": "b368d931af31a6f45c2ef9bf8fd19bf1e38e7a826875a9d9dd425412ae561b7f"
+            },
+            "T4": {
+              "key": "63ece7af8f5587e1f4867af272def888075f07f2e76acb8e02254bfbe78152fb"
+            }
+          },
+          "candidate_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.07707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 30,
+          "iteration": 2,
+          "layer": "T1",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "after": 0.0740983817703801,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "b3e33bf4d7b23c5738a742c6a88c512ea759fb7d4766fa98da200218bffeb1ff"
+            },
+            "T2": {
+              "key": "202f5a124d4aa68d7b454bca4766b4e9958a8ccf4c68110398d750e221ed56a4"
+            },
+            "T3": {
+              "key": "c197a52a609823cf0aa4837bc52b70fc16daa95569fa25f66c8bc1e26b957ee3"
+            },
+            "T4": {
+              "key": "fe35ef2ff7cd171575968428f2a8f4a04f14a609b8cdf177d9440a2924a5ab4e"
+            }
+          },
+          "candidate_id": "88912764a0a1271b8aba937d5febd36522667b74e9dc865b3ab642b5c6b66cf5",
+          "changed": [
+            "P2"
+          ],
+          "components": [
+            0.03707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 1.8
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 31,
+          "iteration": 2,
+          "layer": "T3",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_SWAP",
+          "after": 0.0740983817703801,
+          "before": 0.0740983817703801,
+          "cache_keys": {
+            "T1": {
+              "key": "b3e33bf4d7b23c5738a742c6a88c512ea759fb7d4766fa98da200218bffeb1ff"
+            },
+            "T2": {
+              "key": "202f5a124d4aa68d7b454bca4766b4e9958a8ccf4c68110398d750e221ed56a4"
+            },
+            "T3": {
+              "key": "a6b19bf18069ca13f2250c20fb8cd8d539991b76540193cbce3c7b93def68512"
+            },
+            "T4": {
+              "key": "9c284a142b40218fe8faff10d08602319e425415db373890e421213b23e601e5"
+            }
+          },
+          "candidate_id": "cfba29c05ec74337942e87420fabdecf218c6b22a85d6ada3a91223f72545da3",
+          "changed": [
+            "P1",
+            "P2"
+          ],
+          "components": [
+            0.03707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.2
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 32,
+          "iteration": 2,
+          "layer": "T3",
+          "parent_id": "96cfbdf5e17c64ee52ec396be9ca8b3652d77ae59ed0f4c1325e3d8fd41a8ae5",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "best_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "best_score": 0.06695552462752295,
+          "event": 33,
+          "iteration": 2,
+          "status": "IMPROVING"
+        },
+        {
+          "action_count": 14,
+          "candidate_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "event": 34,
+          "feedback": {
+            "candidate_bottlenecks": [
+              "S1:0"
+            ],
+            "diagnostic_evidence": {
+              "scenario_kpis": [
+                {
+                  "completed": 5,
+                  "late_orders": 0,
+                  "mean_completion_s": 4.7071067811865515,
+                  "mean_distance_m": 2.7071067811865475,
+                  "mean_wait_s": 0.0,
+                  "picker_utilization": 0.0312877097179617
+                },
+                {
+                  "completed": 5,
+                  "late_orders": 0,
+                  "mean_completion_s": 4.707106781186551,
+                  "mean_distance_m": 2.7071067811865475,
+                  "mean_wait_s": 0.0,
+                  "picker_utilization": 0.05505067291994749
+                }
+              ],
+              "scope": "Simulated shelf queues and finite picker pool; no corridor congestion inference",
+              "totals": {
+                "customer_distance_m": 21.656854249492376,
+                "picker_distance_m": 5.414213562373095,
+                "picker_wait_s": 0.0,
+                "shelf_wait_s": 0.0
+              },
+              "travel_attribution": "Journey distance divided across picked SKU types; diagnostic proxy only",
+              "wait_attribution": "Journey shelf wait divided across visited shelves; diagnostic proxy only"
+            },
+            "frequently_co_picked_categories": [
+              [
+                "A/B",
+                10
+              ]
+            ],
+            "high_travel_skus": [
+              [
+                "P1",
+                13.535533905932734
+              ],
+              [
+                "P2",
+                13.535533905932734
+              ]
+            ],
+            "high_wait_locations": [
+              [
+                "S1:0",
+                0.0
+              ]
+            ],
+            "hot_shelves": [
+              [
+                "S1:0",
+                10
+              ]
+            ],
+            "objective_components": [
+              0.027071067811865475,
+              0.0,
+              0.6666666666666666,
+              0.0
+            ],
+            "recommended_action_types": [
+              "T1_MOVE",
+              "T2_REASSIGN",
+              "T3_FACE"
+            ],
+            "sku_pick_counts": {
+              "P1": 10,
+              "P2": 10
+            }
+          },
+          "iteration": 3,
+          "status": "IMPROVING"
+        },
+        {
+          "accepted": true,
+          "action": "T1_MOVE",
+          "after": 0.059812667484665814,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "f876588b638bc5a907eb9053d5c1dc06640757f097781d24c7bd2283036b96c2"
+            },
+            "T2": {
+              "key": "222ccccea62ee587747d130dbe303d4613fc919a745b5cae832428314439a083"
+            },
+            "T3": {
+              "key": "1545c04bcf3094be975a4028dbdfb3f9ad5ce4da9adc914747c59b1b2ed651b0"
+            },
+            "T4": {
+              "key": "68aa8ae51a70a96675d72a66bfa569ccc85d5c1dff0644d6a4f190ac9acf05d4"
+            }
+          },
+          "candidate_id": "46fd263bc66f3dda701181969c4bc3546363c460e0228394359285276acbe3b1",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.017071067811865476,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.0,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 35,
+          "iteration": 3,
+          "layer": "T1",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "STRICT_DESCENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T2_REASSIGN",
+          "after": 0.14552695319895154,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "786211b8a4768ec726252b7aa98fc2d80dec909c1c26df9fb5c270810e94724d"
+            },
+            "T2": {
+              "key": "8505238d79b2b1474dbc0a7412a1c5070c5d1aa3aefeab0b1d4ee521d11ac775"
+            },
+            "T3": {
+              "key": "57e4ab7dd1d915081aa2a810f07a649344e6024a38e109b2b3f2d58ab4e59d36"
+            },
+            "T4": {
+              "key": "5ebe47cf4521b66dd9c0290e9cdcaec8ef114f25aafe349c24fb126be0f55517"
+            }
+          },
+          "candidate_id": "04d322a7d566296f9302cb609699e04720ed34141a35081d32966f70ac73a2cd",
+          "changed": [
+            "A"
+          ],
+          "components": [
+            0.13707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S2",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S2",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 36,
+          "iteration": 3,
+          "layer": "T2",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_FACE",
+          "after": 0.11695552462752296,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "786211b8a4768ec726252b7aa98fc2d80dec909c1c26df9fb5c270810e94724d"
+            },
+            "T2": {
+              "key": "9b6892631fb5e2202391df585acca9691191aab9c7ece726f6f53aa3e18ffe7a"
+            },
+            "T3": {
+              "key": "bd338f784ca532b0c826cefba0eb4ca1c823e00d257baaaa1269432e8d758020"
+            },
+            "T4": {
+              "key": "56acda2153ee5d20ecba2a4c4459bab3b68a6bcdbdfe3623ede789c8cd8f86f8"
+            }
+          },
+          "candidate_id": "c808846569c5b646d5568d1b8169b9c728fff0a34f5da9db77f3a6145069274b",
+          "changed": [
+            "P1"
+          ],
+          "components": [
+            0.09707106781186547,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 37,
+          "iteration": 3,
+          "layer": "T3",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T1_MOVE",
+          "after": 0.0740983817703801,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "e8964424690cad79558864f57a660d4cd2367072cd5e6fc48c1b0d822d0fff5e"
+            },
+            "T2": {
+              "key": "46f978f9d2e69e10d69c7655768757e9c7bf9db303a5a72b63a6c3caa4a93160"
+            },
+            "T3": {
+              "key": "7c7ca654fdd247120f71e05baa74888368b4179f13221c06a22275efd48877e9"
+            },
+            "T4": {
+              "key": "d138453078ac7c76061f2e258fb0443e2c9b1171f651f932a8627217036841a0"
+            }
+          },
+          "candidate_id": "4e3adb82353367c4bc485aaea6a503cbd60e1995471e00707fab03000f6415cc",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.03707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                2.5,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 38,
+          "iteration": 3,
+          "layer": "T1",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T2_SWAP",
+          "after": 0.06695552462752295,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "786211b8a4768ec726252b7aa98fc2d80dec909c1c26df9fb5c270810e94724d"
+            },
+            "T2": {
+              "key": "9b6892631fb5e2202391df585acca9691191aab9c7ece726f6f53aa3e18ffe7a"
+            },
+            "T3": {
+              "key": "8305cdf6af3b986947aad611ce7913b4cf0e233cf6ad71fb0e0e212958e99744"
+            },
+            "T4": {
+              "key": "7e72f8d01beaf2c55732286b66f9c511dc5abcc7aca9ea538f033c29a2323a4d"
+            }
+          },
+          "candidate_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "changed": [
+            "A",
+            "B"
+          ],
+          "components": [
+            0.027071067811865475,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 39,
+          "iteration": 3,
+          "layer": "T2",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "after": 0.06695552462752295,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "786211b8a4768ec726252b7aa98fc2d80dec909c1c26df9fb5c270810e94724d"
+            },
+            "T2": {
+              "key": "9b6892631fb5e2202391df585acca9691191aab9c7ece726f6f53aa3e18ffe7a"
+            },
+            "T3": {
+              "key": "3b372081c6428f37f46b91bb2d2c84bc60981c83b596c49179311c847438f5a7"
+            },
+            "T4": {
+              "key": "9a04bf05af4bb583cc60145467542a902d4091852ee642a790b865474f376041"
+            }
+          },
+          "candidate_id": "9d220ef169a115669c41edb94dfdf7003de32cd3007f30589315d831dfa546ec",
+          "changed": [
+            "P1"
+          ],
+          "components": [
+            0.027071067811865475,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 1.8
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 40,
+          "iteration": 3,
+          "layer": "T3",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T1_MOVE",
+          "event": 41,
+          "iteration": 3,
+          "layer": "T1",
+          "reason": "DUPLICATE",
+          "status": "NO_IMPROVEMENT"
+        },
+        {
+          "accepted": false,
+          "action": "T2_REASSIGN",
+          "after": 0.14552695319895154,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "786211b8a4768ec726252b7aa98fc2d80dec909c1c26df9fb5c270810e94724d"
+            },
+            "T2": {
+              "key": "1e4ea048ddc6ba18786a6e9f3def2d4f584e300dd158a881ee39ded5ffe2fb2e"
+            },
+            "T3": {
+              "key": "198cbe6b5220bdfca7ec59c5800e3e1c87fb61e3516a2f7faf13ca2ff6e4c2b4"
+            },
+            "T4": {
+              "key": "a47b657eaaeba447d760ee23a52871e2b018ce6a07512a0f095dd23caa8f5c6d"
+            }
+          },
+          "candidate_id": "267368fbb2d50eda8f4a15988ffcd2ad54907981e13e81409e5d6830f3d58044",
+          "changed": [
+            "B"
+          ],
+          "components": [
+            0.13707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S2"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S2",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 42,
+          "iteration": 3,
+          "layer": "T2",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_FACE",
+          "after": 0.11695552462752296,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "786211b8a4768ec726252b7aa98fc2d80dec909c1c26df9fb5c270810e94724d"
+            },
+            "T2": {
+              "key": "9b6892631fb5e2202391df585acca9691191aab9c7ece726f6f53aa3e18ffe7a"
+            },
+            "T3": {
+              "key": "b332cbfebb3edec1ae3999fffec7551d7bb7f834f5519d3be0fd8eccb84693c3"
+            },
+            "T4": {
+              "key": "b9cf5eacd4d6ed0e696c261b5819b1b3f45c2bbed2b21f4f7530462270d67f03"
+            }
+          },
+          "candidate_id": "e96d860135b39635456fc18c8bddef6718075824aa7d32dd3428be31c9d9a957",
+          "changed": [
+            "P2"
+          ],
+          "components": [
+            0.09707106781186547,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 43,
+          "iteration": 3,
+          "layer": "T3",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T1_MOVE",
+          "after": 0.0740983817703801,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "f1b27b8f50948b495aba21a5a1bf0a667cbab7367b6749b7ba8f1f4f59ca4a58"
+            },
+            "T2": {
+              "key": "bf5e7da0338ecbfb3804d8a7d0fa2dcf5e082f4b9581078926a3148e333b02cc"
+            },
+            "T3": {
+              "key": "30a009b7f8a8416811fd8047ab4e2ce75049988db52089eb187bea4d1032b0ea"
+            },
+            "T4": {
+              "key": "efc52a39d9ff4a83d82246636d8b72f7884b38e0e0fc0a6a02a6e4be40d193e5"
+            }
+          },
+          "candidate_id": "5afdc6768c5c5923f59eb8614b37a66bb122b947cd07a5ff37712dad9f703f61",
+          "changed": [
+            "S1"
+          ],
+          "components": [
+            0.03707106781186548,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.5,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 44,
+          "iteration": 3,
+          "layer": "T1",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "before": 0.06695552462752295,
+          "event": 45,
+          "iteration": 3,
+          "layer": "T3",
+          "reason": "INVALID_DECISION",
+          "status": "FAILED"
+        },
+        {
+          "accepted": false,
+          "action": "T1_ROTATE",
+          "event": 46,
+          "iteration": 3,
+          "layer": "T1",
+          "reason": "DUPLICATE",
+          "status": "NO_IMPROVEMENT"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "after": 0.06695552462752295,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "786211b8a4768ec726252b7aa98fc2d80dec909c1c26df9fb5c270810e94724d"
+            },
+            "T2": {
+              "key": "9b6892631fb5e2202391df585acca9691191aab9c7ece726f6f53aa3e18ffe7a"
+            },
+            "T3": {
+              "key": "77e33f2c010ae5ab021c36aff7499ee41bc544613ccdebcafb3dd6355a5df074"
+            },
+            "T4": {
+              "key": "09a653648c6d36cf65556c10dee238232d8f9b41d80f899a66df323331c679c3"
+            }
+          },
+          "candidate_id": "60e91582dea24778218a46a9b751a23bee6f1161558e89192231ec66d696d245",
+          "changed": [
+            "P2"
+          ],
+          "components": [
+            0.027071067811865475,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 1.8
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 47,
+          "iteration": 3,
+          "layer": "T3",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_SWAP",
+          "after": 0.06695552462752295,
+          "before": 0.06695552462752295,
+          "cache_keys": {
+            "T1": {
+              "key": "786211b8a4768ec726252b7aa98fc2d80dec909c1c26df9fb5c270810e94724d"
+            },
+            "T2": {
+              "key": "9b6892631fb5e2202391df585acca9691191aab9c7ece726f6f53aa3e18ffe7a"
+            },
+            "T3": {
+              "key": "696d3c822903796fad2f1f63852490d85fb64d779f8968f4da31aa03d2d9b471"
+            },
+            "T4": {
+              "key": "29c71d98244f12e996c9379051d551cd1631ce5c81c9a5fbf53f33ac8d1df714"
+            }
+          },
+          "candidate_id": "8336af1d7900470c1fe2162b41a995037310ea6c39a7c2dc00fb3802b56e6886",
+          "changed": [
+            "P1",
+            "P2"
+          ],
+          "components": [
+            0.027071067811865475,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1",
+              "B": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.2
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                1.5,
+                3.0,
+                90
+              ],
+              "S2": [
+                5.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 48,
+          "iteration": 3,
+          "layer": "T3",
+          "parent_id": "8be3504290f06a7624a5a319d6ed5a6719651c31dba8d0b68ebebd8a9fc29af8",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            37,
+            138
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "best_id": "46fd263bc66f3dda701181969c4bc3546363c460e0228394359285276acbe3b1",
+          "best_score": 0.059812667484665814,
+          "event": 49,
+          "iteration": 3,
+          "status": "IMPROVING"
+        },
+        {
+          "best_id": "46fd263bc66f3dda701181969c4bc3546363c460e0228394359285276acbe3b1",
+          "event": 50,
+          "status": "ITERATION_LIMIT"
+        }
+      ],
+      "verification": {}
+    },
+    "record": {
+      "attempts": [
+        "fe2d3836-6988-40cd-845d-fc1ef266e383"
+      ],
+      "certificate_verification": null,
+      "completed": 5,
+      "dataset": "two_shelves",
+      "ended_utc": "2026-10-22T04:13:11.886424+00:00",
+      "error": null,
+      "experiment": "E15",
+      "failed_stage": null,
+      "first_scenario_mean_distance_m": 1.7071067811865475,
+      "first_scenario_mean_wait_s": 0.0,
+      "holdout_objective": 0.059812667484665814,
+      "input_sha256": "d873dada7fad695978acf3b4b21465c1a6f6466100c8386392bdf7846689a9d2",
+      "job_key": "01f9af1bc94d4c1cfa73d104528a4dee6ca0f89d2f3448ed7d834664e1d6c870",
+      "joint_evaluated_states": null,
+      "joint_evaluations": 41,
+      "joint_gap": null,
+      "joint_iterations_to_best": 3,
+      "joint_objective": 0.059812667484665814,
+      "joint_pruned_states": null,
+      "joint_status": "ITERATION_LIMIT",
+      "late_orders": 0,
+      "max_shelf_queue": 0,
+      "mean_completion_s": 3.707106781186552,
+      "mean_distance_m": 1.7071067811865477,
+      "mean_wait_s": 0.0,
+      "mip_gap": null,
+      "peak_child_rss_bytes": 153718784,
+      "picker_utilization": 0.02480568197580468,
+      "proof_status": "FEASIBLE_NOT_PROVEN",
+      "repetition": 0,
+      "result_sha256": "3a60d65c153906a99d80a8fe26a0627824b671bba807eaee1c025aafd91ed339",
+      "routing_policy": "nearest",
+      "run_id": "fe2d3836-6988-40cd-845d-fc1ef266e383",
+      "sampled_child_cpu_s": 4.53125,
+      "seed": 37,
+      "simulation_end_s": 149.44587231274022,
+      "solution_feasible": true,
+      "started_utc": "2026-10-22T04:13:06.133428+00:00",
+      "status": "SUCCEEDED",
+      "t1_objective": 7.520797289396148,
+      "t2_objective": 0.13258252147247765,
+      "t3_objective": 6.0,
+      "throughput_per_hour": 120.44494586195074,
+      "total_distance_m": 8.535533905932738,
+      "total_picking_s": 10.0,
+      "total_travel_s": 8.535533905932738,
+      "training_scenario_seeds": [
+        37,
+        138
+      ],
+      "treatment": "feedback",
+      "validation": {
+        "candidates": 38,
+        "routes": 190,
+        "scope": "Independent geometry/topology, assignment/objective, physical packing, route/time/order replay",
+        "status": "PASS"
+      },
+      "walkable_cells": 240,
+      "wall_s": 5.75
+    }
+  },
+  {
+    "joint": {
+      "best": {
+        "components": [
+          0.07707106781186548,
+          0.0,
+          0.6666666666666666,
+          0.0
+        ],
+        "decisions": {
+          "assignment": {
+            "A": "S1",
+            "B": "S1"
+          },
+          "placements": [
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 0,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1.0,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P1",
+              "width_m": 0.2,
+              "x_m": 0.0
+            },
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 0,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1.0,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P2",
+              "width_m": 0.2,
+              "x_m": 0.2
+            }
+          ],
+          "poses": {
+            "S1": [
+              2.0,
+              3.0,
+              0
+            ],
+            "S2": [
+              5.0,
+              3.0,
+              0
+            ]
+          },
+          "routing_policy": "nearest"
+        },
+        "id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+        "scenario_seeds": [
+          11,
+          112
+        ],
+        "score": 0.10266981034180868,
+        "score_fraction": [
+          10780330085889911,
+          105000000000000000
+        ]
+      },
+      "certificate": null,
+      "evaluations": 1,
+      "general_optimality": "JOINT_GENERAL_OPTIMALITY_NOT_PROVEN",
+      "holdout": {
+        "components": [
+          0.07707106781186548,
+          0.0,
+          0.6666666666666666,
+          0.0
+        ],
+        "scenario_seeds": [
+          10012,
+          20014
+        ],
+        "score": 0.10266981034180868
+      },
+      "initial_score": 0.10266981034180868,
+      "mode": "sequential",
+      "normalization": {
+        "scales": [
+          100.0,
+          100.0,
+          1.0,
+          1.0
+        ],
+        "weights": [
+          1.0,
+          0.2,
+          0.1,
+          0.1
+        ]
+      },
+      "pareto_scope": "Evaluated candidates only",
+      "proof_status": "FEASIBLE_NOT_PROVEN",
+      "state_snapshots": [
+        {
+          "candidate_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "sha256": "7d796513a7660fc0aa8fe3ba75546b52d240580f116772a726455856903ab5c1"
+        }
+      ],
+      "status": "COMPLETED",
+      "trace": [
+        {
+          "evaluation_budget": 80,
+          "event": 0,
+          "mode": "sequential",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "INITIALIZED"
+        },
+        {
+          "candidate_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "event": 1,
+          "iteration": 0,
+          "score": 0.10266981034180868,
+          "status": "EVALUATING"
+        },
+        {
+          "best_id": "7a6b0438a8bf671f8829951816139e85dbd3f39d011139d1c742f33c989093bd",
+          "event": 2,
+          "status": "COMPLETED"
+        }
+      ],
+      "verification": {}
+    },
+    "record": {
+      "attempts": [
+        "86e15f4c-d5ba-4a44-9444-09d7d7186c1b"
+      ],
+      "certificate_verification": null,
+      "completed": 5,
+      "dataset": "two_shelves",
+      "ended_utc": "2026-10-22T04:12:41.888071+00:00",
+      "error": null,
+      "experiment": "E15",
+      "failed_stage": null,
+      "first_scenario_mean_distance_m": 7.707106781186548,
+      "first_scenario_mean_wait_s": 0.0,
+      "holdout_objective": 0.10266981034180868,
+      "input_sha256": "917cd74f2d4256609d7092876a435b65bbf4b8c9956361150dde59721fff6ac8",
+      "job_key": "186168c2ebb3f399fd24adab25aec9436e7efa5de96db4675d7d7f05032281ca",
+      "joint_evaluated_states": null,
+      "joint_evaluations": 1,
+      "joint_gap": null,
+      "joint_iterations_to_best": 0,
+      "joint_objective": 0.10266981034180868,
+      "joint_pruned_states": null,
+      "joint_status": "COMPLETED",
+      "late_orders": 0,
+      "max_shelf_queue": 0,
+      "mean_completion_s": 9.70710678118655,
+      "mean_distance_m": 7.707106781186549,
+      "mean_wait_s": 0.0,
+      "mip_gap": null,
+      "peak_child_rss_bytes": 142290944,
+      "picker_utilization": 0.055042664992117914,
+      "proof_status": "FEASIBLE_NOT_PROVEN",
+      "repetition": 0,
+      "result_sha256": "41397a09a296c139c1f0d0e580f273472d086455801b31a836ce702a9221ce98",
+      "routing_policy": "nearest",
+      "run_id": "86e15f4c-d5ba-4a44-9444-09d7d7186c1b",
+      "sampled_child_cpu_s": 1.640625,
+      "seed": 11,
+      "simulation_end_s": 176.35604639740103,
+      "solution_feasible": true,
+      "started_utc": "2026-10-22T04:12:39.755076+00:00",
+      "status": "SUCCEEDED",
+      "t1_objective": 9.062178554545257,
+      "t2_objective": 0.26882266459508203,
+      "t3_objective": 6.0,
+      "throughput_per_hour": 102.0662481820372,
+      "total_distance_m": 38.53553390593274,
+      "total_picking_s": 10.0,
+      "total_travel_s": 38.53553390593274,
+      "training_scenario_seeds": [
+        11,
+        112
+      ],
+      "treatment": "baseline",
+      "validation": {
+        "candidates": 1,
+        "routes": 5,
+        "scope": "Independent geometry/topology, assignment/objective, physical packing, route/time/order replay",
+        "status": "PASS"
+      },
+      "walkable_cells": 240,
+      "wall_s": 2.125
+    }
+  }
+]

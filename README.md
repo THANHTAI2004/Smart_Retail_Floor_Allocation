@@ -1,5 +1,106 @@
 # Smart Retail Floor Allocation
 
+**Database hiện tại: MongoDB (22/10/2026).** API, worker và experiment runner đã
+chuyển sang PyMongo đồng bộ. Đã chuyển và đối chiếu 16 project, 24 SKU, 12 đơn hàng,
+24 dòng đơn, 8 optimization run; giữ nguyên SQLite gốc và 32 artifact gốc.
+Heartbeat cũ được lưu offline. MongoDB thật đã restart và kiểm tra lại dữ liệu.
+
+- [Nghiệm thu migration và bằng chứng kiểm thử](docs/migration/MONGODB_MIGRATION_ACCEPTANCE.md)
+- [Khởi chạy, cấu hình, migration và vận hành MongoDB](docs/migration/MONGODB_OPERATIONS.md)
+- [Phục hồi ứng dụng SQL từ bản sao ngoài repository](docs/migration/SQLITE_ROLLBACK.md)
+- [Bàn giao mới nhất](HANDOFF.md)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/start.ps1
+# Dừng API/worker/frontend; MongoDB tiếp tục giữ dữ liệu.
+powershell -ExecutionPolicy Bypass -File scripts/stop.ps1
+# Khi bảo trì cần dừng cả MongoDB cục bộ do project quản lý:
+powershell -ExecutionPolicy Bypass -File scripts/stop.ps1 -StopMongoDB
+```
+
+Ứng dụng: http://127.0.0.1:5173/#research. Các số liệu SQLite/joint bên dưới là
+checkpoint trước migration; kết quả kiểm thử hiện tại nằm trong báo cáo MongoDB
+phía trên. Không cần Alembic cho runtime hiện tại. Docker/Compose và Atlas chưa
+được chạy kiểm chứng trên máy này. Không xóa `var/mongodb`: đây là database chính.
+
+## Checkpoint joint trước migration database
+
+**Mở rộng hiện tại — Joint T1–T4 (22/10/2026).** Đã triển khai vòng phản hồi thật
+từ T4 sang T1/T2/T3, strict descent nhiều vòng, snapshot/trace bất biến, tính lại
+theo phụ thuộc, exact oracle cho miền hữu hạn và verifier certificate độc lập.
+Không suy ra tối ưu toàn cục của bài toán tổng quát từ hội tụ feedback.
+
+Trạng thái cuối: **CLOSED_LOOP_FEEDBACK_READY**;
+**JOINT_EXACT_SMALL_INSTANCE_CERTIFIED** cho miền bốn/128 trạng thái công bố;
+**JOINT_GENERAL_OPTIMALITY_NOT_PROVEN**. JO01–JO18 PASS theo
+[receipt cuối](docs/research/evidence/20261022-joint-readiness-02.json).
+Kiểm chứng mới: **155 pytest, 4 Vitest, 9 Playwright PASS**; E11–E15 có 69/69
+job chính thành công, hai đối chứng no-incumbent giữ đúng FAILED/INFEASIBLE.
+
+- [Phát biểu mô hình và phạm vi chứng nhận](docs/research/JOINT_OPTIMIZATION_FORMULATION.md)
+- [Kết quả E11–E15](docs/research/JOINT_OPTIMIZATION_RESULTS_20261022.md)
+- [Hướng dẫn chạy joint/verify/replay](docs/research/HOW_TO_RUN_JOINT_OPTIMIZATION.md)
+- [Ma trận JO01–JO18](docs/research/JOINT_OPTIMIZATION_ACCEPTANCE.md)
+
+Dashboard hiện có thêm Sequential, Multistart, Closed-Loop Feedback, Exact Joint
+và Hybrid; chọn campaign `joint_*` để giữ thiết kế so sánh đầy đủ. Mở
+http://127.0.0.1:5173/#research. Các trạng thái feedback, chứng nhận finite-instance
+và chưa chứng minh bài toán tổng quát được hiển thị riêng.
+
+```powershell
+.venv\Scripts\python.exe -m smart_retail.application.experiments.cli run --config experiments/configs/joint_effectiveness.json --output experiments/results/my-joint
+.venv\Scripts\python.exe -m smart_retail.application.experiments.cli analyze experiments/results/my-joint --output experiments/reports/my-joint
+```
+
+Output phải là đường dẫn mới. Dữ liệu/kết quả bên dưới thuộc checkpoint trước
+phần mở rộng joint; bằng chứng mới theo các liên kết phía trên và HANDOFF.md.
+
+**Trạng thái hiện tại — 22/10/2026: `EXPERIMENT_READY_SYNTHETIC`, ER01–ER15 PASS.**
+Đã triển khai nền tảng thực nghiệm tổng hợp chạy thật trên Windows/SQLite:
+schema 1.1 và JSON/CSV; T1 local search và kiểm tra liên thông; T2 soft affinity;
+T3 facing range; T4 routing/picker hữu hạn/demand theo kỳ; workflow và cache bền
+vững; campaign/checkpoint/resume/replay; thống kê và Matplotlib PNG/SVG; dashboard
+điều khiển runner thật.
+
+Kiểm chứng mới: **133 pytest, 4 Vitest, 8 Playwright PASS**, kèm Ruff/mypy/ESLint,
+build, audit dependency và kiểm tra kiến trúc. Pilot 19/19, main 105/105, robustness
+20/20, reproducibility 4/4 thành công; replay pilot ở môi trường Python mới khớp
+input/result SHA-256 **19/19**. Đối chứng không khả thi giữ riêng failure/infeasible.
+
+- [Bàn giao hiện tại](HANDOFF.md)
+- [Ma trận ER01–ER15](docs/research/EXPERIMENT_READINESS_MATRIX.md)
+- [Kết quả và giới hạn diễn giải](docs/research/RESULTS_20261022.md)
+- [Hướng dẫn chạy đầy đủ](docs/research/HOW_TO_RUN_EXPERIMENTS.md)
+- [Mô hình hiện tại và giả định](docs/research/MODEL_SCOPE_20261022.md)
+- [Lệnh và kết quả kiểm chứng](docs/research/evidence/20261022-release-01/verification.json)
+
+```powershell
+cd D:\Smart_Retail_Floor_Allocation
+powershell -ExecutionPolicy Bypass -File scripts/setup.ps1
+Push-Location frontend
+npx playwright install chromium
+Pop-Location
+powershell -ExecutionPolicy Bypass -File scripts/start.ps1
+```
+
+Ứng dụng: **http://127.0.0.1:5173**; dashboard thực nghiệm:
+**http://127.0.0.1:5173/#research**; API: **http://127.0.0.1:8010/docs**.
+Dùng Python 3.12.10 và Node 22.22.3 đã kiểm chứng. PostgreSQL/Compose và remote
+GitHub Actions chưa chạy; kết quả tổng hợp chưa xác nhận hiệu quả cửa hàng thật.
+
+Chạy pilot độc lập (thư mục output phải mới):
+
+```powershell
+.venv\Scripts\python.exe -m smart_retail.application.experiments.cli run --config experiments/configs/pilot.json --output experiments/results/my-pilot
+.venv\Scripts\python.exe -m smart_retail.application.experiments.cli analyze experiments/results/my-pilot --output experiments/reports/my-pilot
+```
+
+## Checkpoint lịch sử — 21/10/2026
+
+Phần dưới giữ ngữ cảnh checkpoint cũ. Các test count, trạng thái acceptance,
+giới hạn mô hình và đường dẫn cũ trong phần này không đại diện cho bản 22/10;
+tài liệu hiện hành nằm trong các liên kết phía trên.
+
 Nền tảng nghiên cứu thiết kế mặt bằng bán lẻ, phân bổ ngành hàng, xếp SKU và mô
 phỏng hoạt động khách/picker. Mã ứng dụng nằm trực tiếp trong thư mục gốc:
 `frontend/` và `backend/`. Kiến trúc modular monolith tách domain, application,

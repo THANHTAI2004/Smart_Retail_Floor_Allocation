@@ -6,6 +6,7 @@ from dataclasses import replace
 import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
+
 from smart_retail.contracts.inputs import to_domain
 from smart_retail.domain.models import EngineError, Product, Shelf, ShelfLevel
 from smart_retail.engines.t1_layout.engine import footprint, violations

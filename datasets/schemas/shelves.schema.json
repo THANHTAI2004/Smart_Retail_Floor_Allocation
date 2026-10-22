@@ -150,6 +150,25 @@
   },
   "additionalProperties": false,
   "properties": {
+    "schema_version": {
+      "const": "1.1",
+      "default": "1.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "data_origin": {
+      "default": "UNSPECIFIED",
+      "enum": [
+        "SYNTHETIC",
+        "REAL_VERIFIED",
+        "REAL_UNVERIFIED",
+        "ASSUMED",
+        "DERIVED",
+        "UNSPECIFIED"
+      ],
+      "title": "Data Origin",
+      "type": "string"
+    },
     "layout_mode": {
       "default": "optimizable",
       "enum": [

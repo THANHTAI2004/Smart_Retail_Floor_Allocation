@@ -17,6 +17,9 @@ class Product:
     orientations: tuple[int, ...] = (0,)
     stack_layers: int = 1
     clearance_m: float = 0.01
+    min_facings: int | None = None
+    max_facings: int | None = None
+    allowed_shelf_kinds: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)

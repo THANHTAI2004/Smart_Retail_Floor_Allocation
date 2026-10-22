@@ -84,6 +84,42 @@
           "minimum": 0,
           "title": "Clearance M",
           "type": "number"
+        },
+        "min_facings": {
+          "anyOf": [
+            {
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Facings"
+        },
+        "max_facings": {
+          "anyOf": [
+            {
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Facings"
+        },
+        "allowed_shelf_kinds": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 50,
+          "title": "Allowed Shelf Kinds",
+          "type": "array"
         }
       },
       "required": [
@@ -100,6 +136,25 @@
   },
   "additionalProperties": false,
   "properties": {
+    "schema_version": {
+      "const": "1.1",
+      "default": "1.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "data_origin": {
+      "default": "UNSPECIFIED",
+      "enum": [
+        "SYNTHETIC",
+        "REAL_VERIFIED",
+        "REAL_UNVERIFIED",
+        "ASSUMED",
+        "DERIVED",
+        "UNSPECIFIED"
+      ],
+      "title": "Data Origin",
+      "type": "string"
+    },
     "items": {
       "items": {
         "$ref": "#/$defs/ProductInput"

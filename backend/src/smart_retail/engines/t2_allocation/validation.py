@@ -12,6 +12,7 @@ def replay(
     categories: tuple[Category, ...],
     assignment: dict[str, str],
     distance_weight: float = 1,
+    affinity_weight: float = 1,
 ) -> tuple[list[str], float]:
     errors = []
     by_id = {s.id: s for s in shelves}
@@ -48,6 +49,19 @@ def replay(
             * math.dist(floor.entrance, (point.x, point.y))
             / diagonal
         )
+    affinity_total = sum(weight for c in categories for _, weight in c.affinity) or 1
+    for c in categories:
+        for other, weight in c.affinity:
+            if other not in assignment:
+                errors.append("Unknown affinity reference")
+                continue
+            objective += (
+                affinity_weight
+                * weight
+                / affinity_total
+                * centers[assignment[c.id]].distance(centers[assignment[other]])
+                / diagonal
+            )
     for sid, amount in used.items():
         if amount > sum(level.width_m for level in by_id[sid].levels) * by_id[sid].faces + 1e-7:
             errors.append(f"{sid}: category width exceeds capacity")

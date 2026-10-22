@@ -1,0 +1,1109 @@
+[
+  {
+    "joint": {
+      "best": null,
+      "certificate": {
+        "absolute_gap": null,
+        "arithmetic_scope": "Exact rational comparison of serialized deterministic IEEE-754 simulator observations; not exact real arithmetic",
+        "artifact_sha256": "8711a3fc2709fc0cc2133805f94175756c3e305b356f00fb3c5480fa46a6e79b",
+        "bound_justification": "Every weighted normalized component is nonnegative; complete enumeration attains minimum",
+        "complete": false,
+        "evaluated_states": 1,
+        "feasibility_validation": "official validators + independent application replay",
+        "finite_space": {
+          "assignments": {
+            "A": [
+              "S1"
+            ]
+          },
+          "max_states": 256,
+          "model_version": "joint-finite-1",
+          "placements": {
+            "P1": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 100
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 100
+              }
+            ],
+            "P2": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 100
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 100
+              }
+            ]
+          },
+          "poses": {
+            "S1": [
+              [
+                2.0,
+                3.0,
+                0
+              ]
+            ]
+          },
+          "routing_policies": [
+            "nearest"
+          ]
+        },
+        "identity": {
+          "finite_space_sha256": "087bd321bf391d84f24d580d922f073d69370baf73ebe2b521d9dd1cfcfa4324",
+          "model_version": "joint-finite-1",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "problem_id": "042c14519e990988ad53b6a6cac47fe91f70c5729744b357df814113132eb78d",
+          "runtime": {
+            "model_versions": {
+              "input_contract": "1.1",
+              "joint": "finite-saa-feedback-1",
+              "t1": "grid-local-search-1.1",
+              "t2": "allocation-affinity-milp-1.1",
+              "t3": "facing-strip-milp-1.1",
+              "t4": "picker-grid-queue-1.1",
+              "workflow": "bounded-candidates-1.1"
+            },
+            "packages": {
+              "alembic": "1.20.0",
+              "annotated-doc": "0.0.5",
+              "annotated-types": "0.8.0",
+              "anyio": "4.15.1",
+              "certifi": "2026.10.19",
+              "click": "8.5.0",
+              "colorama": "0.4.6",
+              "contourpy": "1.4.0",
+              "cycler": "0.12.1",
+              "fastapi": "0.157.0",
+              "fonttools": "4.67.0",
+              "h11": "0.16.0",
+              "httpcore": "1.0.9",
+              "httpx": "0.28.1",
+              "hypothesis": "6.170.5",
+              "idna": "3.20",
+              "iniconfig": "2.3.1",
+              "kiwisolver": "1.5.1",
+              "librt": "0.16.0",
+              "mako": "1.4.3",
+              "markupsafe": "3.0.4",
+              "matplotlib": "3.11.2",
+              "mypy": "1.20.2",
+              "mypy_extensions": "1.1.0",
+              "networkx": "3.7",
+              "numpy": "2.5.4",
+              "opentelemetry-api": "1.45.1",
+              "packaging": "26.3",
+              "pathspec": "1.1.1",
+              "pillow": "13.0.0",
+              "pip": "25.0.1",
+              "pluggy": "1.7.0",
+              "psycopg": "3.3.6",
+              "psycopg-binary": "3.3.6",
+              "pydantic": "2.14.1",
+              "pydantic_core": "2.50.1",
+              "pygments": "2.21.0",
+              "pyparsing": "3.3.3",
+              "pytest": "9.1.1",
+              "python-dateutil": "3.0.0",
+              "ruff": "0.17.1",
+              "scipy": "1.18.1",
+              "shapely": "2.2.0",
+              "simpy": "4.1.2",
+              "six": "1.17.0",
+              "smart-retail": "0.1.0",
+              "sortedcontainers": "2.4.0",
+              "sqlalchemy": "2.1.5",
+              "starlette": "1.9.0",
+              "types-networkx": "3.6.1.20261021",
+              "typing-inspection": "0.4.4",
+              "typing_extensions": "4.16.0",
+              "tzdata": "2026.5",
+              "uvicorn": "0.54.0"
+            },
+            "python": "3.12.10",
+            "solver": {
+              "name": "HiGHS",
+              "version": "1.12.0"
+            },
+            "source_sha256": "afeebca6e2722f30fb13d0d81a8f1423b3e6982683f54a5d80043ce0acab0887"
+          },
+          "scenario_sha256": "6d4b78b159d9df046178cd894b28cda9d3bff016d325b11e4434c185fd576ef3"
+        },
+        "incumbent": null,
+        "leaves": [
+          {
+            "decision_sha256": "6bf12a2e8f8a991d55226bf735fa43bdd6f8c88918a4920ebb108b432d924c79",
+            "error": "INVALID_DECISION",
+            "score_fraction": null,
+            "status": "INVALID_DECISION",
+            "witness_sha256": null
+          }
+        ],
+        "lower_bound_fraction": [
+          0,
+          1
+        ],
+        "model_version": "joint-finite-1",
+        "pruned_states": 0,
+        "relative_gap": null,
+        "scope": "Only the declared finite Cartesian domain and fixed scenario sample-average objective",
+        "solver": "exhaustive-cartesian-v1",
+        "status": "SEARCH_EXHAUSTED",
+        "termination": "EVALUATION_LIMIT",
+        "total_states": 4,
+        "upper_bound_fraction": null
+      },
+      "evaluations": 1,
+      "general_optimality": "JOINT_GENERAL_OPTIMALITY_NOT_PROVEN",
+      "initial_score": null,
+      "mode": "exact",
+      "normalization": {
+        "scales": [
+          100.0,
+          100.0,
+          1.0,
+          1.0
+        ],
+        "weights": [
+          1.0,
+          0.2,
+          0.1,
+          0.1
+        ]
+      },
+      "pareto_scope": "Evaluated candidates only",
+      "proof_status": "SEARCH_EXHAUSTED",
+      "state_snapshots": [],
+      "status": "EVALUATION_LIMIT",
+      "trace": [
+        {
+          "evaluation_budget": 1,
+          "event": 0,
+          "mode": "exact",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "INITIALIZED"
+        },
+        {
+          "certificate": {
+            "absolute_gap": null,
+            "arithmetic_scope": "Exact rational comparison of serialized deterministic IEEE-754 simulator observations; not exact real arithmetic",
+            "artifact_sha256": "8711a3fc2709fc0cc2133805f94175756c3e305b356f00fb3c5480fa46a6e79b",
+            "bound_justification": "Every weighted normalized component is nonnegative; complete enumeration attains minimum",
+            "complete": false,
+            "evaluated_states": 1,
+            "feasibility_validation": "official validators + independent application replay",
+            "finite_space": {
+              "assignments": {
+                "A": [
+                  "S1"
+                ]
+              },
+              "max_states": 256,
+              "model_version": "joint-finite-1",
+              "placements": {
+                "P1": [
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 0,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P1",
+                    "width_m": 0.2,
+                    "x_m": 100
+                  },
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 1,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P1",
+                    "width_m": 0.2,
+                    "x_m": 100
+                  }
+                ],
+                "P2": [
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 0,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P2",
+                    "width_m": 0.2,
+                    "x_m": 100
+                  },
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 1,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P2",
+                    "width_m": 0.2,
+                    "x_m": 100
+                  }
+                ]
+              },
+              "poses": {
+                "S1": [
+                  [
+                    2.0,
+                    3.0,
+                    0
+                  ]
+                ]
+              },
+              "routing_policies": [
+                "nearest"
+              ]
+            },
+            "identity": {
+              "finite_space_sha256": "087bd321bf391d84f24d580d922f073d69370baf73ebe2b521d9dd1cfcfa4324",
+              "model_version": "joint-finite-1",
+              "objective": {
+                "scales": [
+                  100.0,
+                  100.0,
+                  1.0,
+                  1.0
+                ],
+                "weights": [
+                  1.0,
+                  0.2,
+                  0.1,
+                  0.1
+                ]
+              },
+              "problem_id": "042c14519e990988ad53b6a6cac47fe91f70c5729744b357df814113132eb78d",
+              "runtime": {
+                "model_versions": {
+                  "input_contract": "1.1",
+                  "joint": "finite-saa-feedback-1",
+                  "t1": "grid-local-search-1.1",
+                  "t2": "allocation-affinity-milp-1.1",
+                  "t3": "facing-strip-milp-1.1",
+                  "t4": "picker-grid-queue-1.1",
+                  "workflow": "bounded-candidates-1.1"
+                },
+                "packages": {
+                  "alembic": "1.20.0",
+                  "annotated-doc": "0.0.5",
+                  "annotated-types": "0.8.0",
+                  "anyio": "4.15.1",
+                  "certifi": "2026.10.19",
+                  "click": "8.5.0",
+                  "colorama": "0.4.6",
+                  "contourpy": "1.4.0",
+                  "cycler": "0.12.1",
+                  "fastapi": "0.157.0",
+                  "fonttools": "4.67.0",
+                  "h11": "0.16.0",
+                  "httpcore": "1.0.9",
+                  "httpx": "0.28.1",
+                  "hypothesis": "6.170.5",
+                  "idna": "3.20",
+                  "iniconfig": "2.3.1",
+                  "kiwisolver": "1.5.1",
+                  "librt": "0.16.0",
+                  "mako": "1.4.3",
+                  "markupsafe": "3.0.4",
+                  "matplotlib": "3.11.2",
+                  "mypy": "1.20.2",
+                  "mypy_extensions": "1.1.0",
+                  "networkx": "3.7",
+                  "numpy": "2.5.4",
+                  "opentelemetry-api": "1.45.1",
+                  "packaging": "26.3",
+                  "pathspec": "1.1.1",
+                  "pillow": "13.0.0",
+                  "pip": "25.0.1",
+                  "pluggy": "1.7.0",
+                  "psycopg": "3.3.6",
+                  "psycopg-binary": "3.3.6",
+                  "pydantic": "2.14.1",
+                  "pydantic_core": "2.50.1",
+                  "pygments": "2.21.0",
+                  "pyparsing": "3.3.3",
+                  "pytest": "9.1.1",
+                  "python-dateutil": "3.0.0",
+                  "ruff": "0.17.1",
+                  "scipy": "1.18.1",
+                  "shapely": "2.2.0",
+                  "simpy": "4.1.2",
+                  "six": "1.17.0",
+                  "smart-retail": "0.1.0",
+                  "sortedcontainers": "2.4.0",
+                  "sqlalchemy": "2.1.5",
+                  "starlette": "1.9.0",
+                  "types-networkx": "3.6.1.20261021",
+                  "typing-inspection": "0.4.4",
+                  "typing_extensions": "4.16.0",
+                  "tzdata": "2026.5",
+                  "uvicorn": "0.54.0"
+                },
+                "python": "3.12.10",
+                "solver": {
+                  "name": "HiGHS",
+                  "version": "1.12.0"
+                },
+                "source_sha256": "afeebca6e2722f30fb13d0d81a8f1423b3e6982683f54a5d80043ce0acab0887"
+              },
+              "scenario_sha256": "6d4b78b159d9df046178cd894b28cda9d3bff016d325b11e4434c185fd576ef3"
+            },
+            "incumbent": null,
+            "leaves": [
+              {
+                "decision_sha256": "6bf12a2e8f8a991d55226bf735fa43bdd6f8c88918a4920ebb108b432d924c79",
+                "error": "INVALID_DECISION",
+                "score_fraction": null,
+                "status": "INVALID_DECISION",
+                "witness_sha256": null
+              }
+            ],
+            "lower_bound_fraction": [
+              0,
+              1
+            ],
+            "model_version": "joint-finite-1",
+            "pruned_states": 0,
+            "relative_gap": null,
+            "scope": "Only the declared finite Cartesian domain and fixed scenario sample-average objective",
+            "solver": "exhaustive-cartesian-v1",
+            "status": "SEARCH_EXHAUSTED",
+            "termination": "EVALUATION_LIMIT",
+            "total_states": 4,
+            "upper_bound_fraction": null
+          },
+          "event": 1,
+          "status": "SEARCH_EXHAUSTED",
+          "verification": {
+            "checked": 1,
+            "status": "PASS",
+            "trust": "Independent exhaustive re-evaluation using official model/validators; no solver-reported MIP proof"
+          }
+        },
+        {
+          "best_id": null,
+          "event": 2,
+          "status": "EVALUATION_LIMIT"
+        }
+      ],
+      "verification": {
+        "checked": 1,
+        "status": "PASS",
+        "trust": "Independent exhaustive re-evaluation using official model/validators; no solver-reported MIP proof"
+      }
+    },
+    "record": {
+      "attempts": [
+        "db57739e-1f5b-43cb-aa35-eaad06be9a32"
+      ],
+      "certificate_verification": "PASS",
+      "dataset": "local_trap",
+      "ended_utc": "2026-10-22T04:19:42.996141+00:00",
+      "error": {
+        "code": "SEARCH_EXHAUSTED",
+        "message": "Joint search has no feasible incumbent; proof artifacts retained",
+        "stage": "JOINT"
+      },
+      "experiment": "E13",
+      "failed_stage": "JOINT",
+      "holdout_objective": null,
+      "input_sha256": "8c5920f72fbdaf2605fa3d33250621cce69d5d982bddf2cbc9d50664c8cc97de",
+      "job_key": "2ec50b09c3e57a94ecf91049b9bafb5f4aa846139e106b700f0dc6f2eb7e4f9c",
+      "joint_evaluated_states": 1,
+      "joint_evaluations": 1,
+      "joint_gap": null,
+      "joint_iterations_to_best": 0,
+      "joint_objective": null,
+      "joint_pruned_states": 0,
+      "joint_status": "EVALUATION_LIMIT",
+      "mip_gap": null,
+      "peak_child_rss_bytes": 142196736,
+      "proof_status": "SEARCH_EXHAUSTED",
+      "repetition": 0,
+      "result_sha256": "9c750cea9467962d863921f8150fc6ec24f2872e085aa92675aab6542c71a320",
+      "run_id": "db57739e-1f5b-43cb-aa35-eaad06be9a32",
+      "sampled_child_cpu_s": 1.78125,
+      "seed": 11,
+      "solution_feasible": false,
+      "started_utc": "2026-10-22T04:19:40.536373+00:00",
+      "status": "FAILED",
+      "treatment": "partial_no_incumbent",
+      "validation": {
+        "candidates": 0,
+        "reason": "EVALUATION_LIMIT",
+        "routes": 0,
+        "scope": "No incumbent; no infeasibility proof inferred",
+        "status": "NO_SOLUTION"
+      },
+      "wall_s": 2.452999999979511
+    }
+  },
+  {
+    "joint": {
+      "best": null,
+      "certificate": {
+        "absolute_gap": null,
+        "arithmetic_scope": "Exact rational comparison of serialized deterministic IEEE-754 simulator observations; not exact real arithmetic",
+        "artifact_sha256": "f3d7351161c8bbc5206d70b93c0dfb7989dba51749cc9bd4f5ddebb8a140f3b2",
+        "bound_justification": "Every weighted normalized component is nonnegative; complete enumeration attains minimum",
+        "complete": true,
+        "evaluated_states": 4,
+        "feasibility_validation": "official validators + independent application replay",
+        "finite_space": {
+          "assignments": {
+            "A": [
+              "S1"
+            ]
+          },
+          "max_states": 256,
+          "model_version": "joint-finite-1",
+          "placements": {
+            "P1": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 100
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 100
+              }
+            ],
+            "P2": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 100
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 100
+              }
+            ]
+          },
+          "poses": {
+            "S1": [
+              [
+                2.0,
+                3.0,
+                0
+              ]
+            ]
+          },
+          "routing_policies": [
+            "nearest"
+          ]
+        },
+        "identity": {
+          "finite_space_sha256": "087bd321bf391d84f24d580d922f073d69370baf73ebe2b521d9dd1cfcfa4324",
+          "model_version": "joint-finite-1",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "problem_id": "042c14519e990988ad53b6a6cac47fe91f70c5729744b357df814113132eb78d",
+          "runtime": {
+            "model_versions": {
+              "input_contract": "1.1",
+              "joint": "finite-saa-feedback-1",
+              "t1": "grid-local-search-1.1",
+              "t2": "allocation-affinity-milp-1.1",
+              "t3": "facing-strip-milp-1.1",
+              "t4": "picker-grid-queue-1.1",
+              "workflow": "bounded-candidates-1.1"
+            },
+            "packages": {
+              "alembic": "1.20.0",
+              "annotated-doc": "0.0.5",
+              "annotated-types": "0.8.0",
+              "anyio": "4.15.1",
+              "certifi": "2026.10.19",
+              "click": "8.5.0",
+              "colorama": "0.4.6",
+              "contourpy": "1.4.0",
+              "cycler": "0.12.1",
+              "fastapi": "0.157.0",
+              "fonttools": "4.67.0",
+              "h11": "0.16.0",
+              "httpcore": "1.0.9",
+              "httpx": "0.28.1",
+              "hypothesis": "6.170.5",
+              "idna": "3.20",
+              "iniconfig": "2.3.1",
+              "kiwisolver": "1.5.1",
+              "librt": "0.16.0",
+              "mako": "1.4.3",
+              "markupsafe": "3.0.4",
+              "matplotlib": "3.11.2",
+              "mypy": "1.20.2",
+              "mypy_extensions": "1.1.0",
+              "networkx": "3.7",
+              "numpy": "2.5.4",
+              "opentelemetry-api": "1.45.1",
+              "packaging": "26.3",
+              "pathspec": "1.1.1",
+              "pillow": "13.0.0",
+              "pip": "25.0.1",
+              "pluggy": "1.7.0",
+              "psycopg": "3.3.6",
+              "psycopg-binary": "3.3.6",
+              "pydantic": "2.14.1",
+              "pydantic_core": "2.50.1",
+              "pygments": "2.21.0",
+              "pyparsing": "3.3.3",
+              "pytest": "9.1.1",
+              "python-dateutil": "3.0.0",
+              "ruff": "0.17.1",
+              "scipy": "1.18.1",
+              "shapely": "2.2.0",
+              "simpy": "4.1.2",
+              "six": "1.17.0",
+              "smart-retail": "0.1.0",
+              "sortedcontainers": "2.4.0",
+              "sqlalchemy": "2.1.5",
+              "starlette": "1.9.0",
+              "types-networkx": "3.6.1.20261021",
+              "typing-inspection": "0.4.4",
+              "typing_extensions": "4.16.0",
+              "tzdata": "2026.5",
+              "uvicorn": "0.54.0"
+            },
+            "python": "3.12.10",
+            "solver": {
+              "name": "HiGHS",
+              "version": "1.12.0"
+            },
+            "source_sha256": "afeebca6e2722f30fb13d0d81a8f1423b3e6982683f54a5d80043ce0acab0887"
+          },
+          "scenario_sha256": "6d4b78b159d9df046178cd894b28cda9d3bff016d325b11e4434c185fd576ef3"
+        },
+        "incumbent": null,
+        "leaves": [
+          {
+            "decision_sha256": "6bf12a2e8f8a991d55226bf735fa43bdd6f8c88918a4920ebb108b432d924c79",
+            "error": "INVALID_DECISION",
+            "score_fraction": null,
+            "status": "INVALID_DECISION",
+            "witness_sha256": null
+          },
+          {
+            "decision_sha256": "5b151a22533c1973b4b9f341a61a776f40b72f473b81a8564ed1f8c13d38a8c5",
+            "error": "INVALID_DECISION",
+            "score_fraction": null,
+            "status": "INVALID_DECISION",
+            "witness_sha256": null
+          },
+          {
+            "decision_sha256": "29132a60aff513e52d793d86e6018c32ffccd9358ff501e19ab114f2fc8f7e04",
+            "error": "INVALID_DECISION",
+            "score_fraction": null,
+            "status": "INVALID_DECISION",
+            "witness_sha256": null
+          },
+          {
+            "decision_sha256": "478de1b569efeb2e1235610a83561314f9a91ccd8d6e4ec132c6c58eaf273939",
+            "error": "INVALID_DECISION",
+            "score_fraction": null,
+            "status": "INVALID_DECISION",
+            "witness_sha256": null
+          }
+        ],
+        "lower_bound_fraction": [
+          0,
+          1
+        ],
+        "model_version": "joint-finite-1",
+        "pruned_states": 0,
+        "relative_gap": null,
+        "scope": "Only the declared finite Cartesian domain and fixed scenario sample-average objective",
+        "solver": "exhaustive-cartesian-v1",
+        "status": "INFEASIBLE_PROVEN",
+        "termination": "COMPLETED",
+        "total_states": 4,
+        "upper_bound_fraction": null
+      },
+      "evaluations": 4,
+      "general_optimality": "JOINT_GENERAL_OPTIMALITY_NOT_PROVEN",
+      "initial_score": null,
+      "mode": "exact",
+      "normalization": {
+        "scales": [
+          100.0,
+          100.0,
+          1.0,
+          1.0
+        ],
+        "weights": [
+          1.0,
+          0.2,
+          0.1,
+          0.1
+        ]
+      },
+      "pareto_scope": "Evaluated candidates only",
+      "proof_status": "INFEASIBLE_PROVEN",
+      "state_snapshots": [],
+      "status": "COMPLETED",
+      "trace": [
+        {
+          "evaluation_budget": 10,
+          "event": 0,
+          "mode": "exact",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "INITIALIZED"
+        },
+        {
+          "certificate": {
+            "absolute_gap": null,
+            "arithmetic_scope": "Exact rational comparison of serialized deterministic IEEE-754 simulator observations; not exact real arithmetic",
+            "artifact_sha256": "f3d7351161c8bbc5206d70b93c0dfb7989dba51749cc9bd4f5ddebb8a140f3b2",
+            "bound_justification": "Every weighted normalized component is nonnegative; complete enumeration attains minimum",
+            "complete": true,
+            "evaluated_states": 4,
+            "feasibility_validation": "official validators + independent application replay",
+            "finite_space": {
+              "assignments": {
+                "A": [
+                  "S1"
+                ]
+              },
+              "max_states": 256,
+              "model_version": "joint-finite-1",
+              "placements": {
+                "P1": [
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 0,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P1",
+                    "width_m": 0.2,
+                    "x_m": 100
+                  },
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 1,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P1",
+                    "width_m": 0.2,
+                    "x_m": 100
+                  }
+                ],
+                "P2": [
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 0,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P2",
+                    "width_m": 0.2,
+                    "x_m": 100
+                  },
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 1,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P2",
+                    "width_m": 0.2,
+                    "x_m": 100
+                  }
+                ]
+              },
+              "poses": {
+                "S1": [
+                  [
+                    2.0,
+                    3.0,
+                    0
+                  ]
+                ]
+              },
+              "routing_policies": [
+                "nearest"
+              ]
+            },
+            "identity": {
+              "finite_space_sha256": "087bd321bf391d84f24d580d922f073d69370baf73ebe2b521d9dd1cfcfa4324",
+              "model_version": "joint-finite-1",
+              "objective": {
+                "scales": [
+                  100.0,
+                  100.0,
+                  1.0,
+                  1.0
+                ],
+                "weights": [
+                  1.0,
+                  0.2,
+                  0.1,
+                  0.1
+                ]
+              },
+              "problem_id": "042c14519e990988ad53b6a6cac47fe91f70c5729744b357df814113132eb78d",
+              "runtime": {
+                "model_versions": {
+                  "input_contract": "1.1",
+                  "joint": "finite-saa-feedback-1",
+                  "t1": "grid-local-search-1.1",
+                  "t2": "allocation-affinity-milp-1.1",
+                  "t3": "facing-strip-milp-1.1",
+                  "t4": "picker-grid-queue-1.1",
+                  "workflow": "bounded-candidates-1.1"
+                },
+                "packages": {
+                  "alembic": "1.20.0",
+                  "annotated-doc": "0.0.5",
+                  "annotated-types": "0.8.0",
+                  "anyio": "4.15.1",
+                  "certifi": "2026.10.19",
+                  "click": "8.5.0",
+                  "colorama": "0.4.6",
+                  "contourpy": "1.4.0",
+                  "cycler": "0.12.1",
+                  "fastapi": "0.157.0",
+                  "fonttools": "4.67.0",
+                  "h11": "0.16.0",
+                  "httpcore": "1.0.9",
+                  "httpx": "0.28.1",
+                  "hypothesis": "6.170.5",
+                  "idna": "3.20",
+                  "iniconfig": "2.3.1",
+                  "kiwisolver": "1.5.1",
+                  "librt": "0.16.0",
+                  "mako": "1.4.3",
+                  "markupsafe": "3.0.4",
+                  "matplotlib": "3.11.2",
+                  "mypy": "1.20.2",
+                  "mypy_extensions": "1.1.0",
+                  "networkx": "3.7",
+                  "numpy": "2.5.4",
+                  "opentelemetry-api": "1.45.1",
+                  "packaging": "26.3",
+                  "pathspec": "1.1.1",
+                  "pillow": "13.0.0",
+                  "pip": "25.0.1",
+                  "pluggy": "1.7.0",
+                  "psycopg": "3.3.6",
+                  "psycopg-binary": "3.3.6",
+                  "pydantic": "2.14.1",
+                  "pydantic_core": "2.50.1",
+                  "pygments": "2.21.0",
+                  "pyparsing": "3.3.3",
+                  "pytest": "9.1.1",
+                  "python-dateutil": "3.0.0",
+                  "ruff": "0.17.1",
+                  "scipy": "1.18.1",
+                  "shapely": "2.2.0",
+                  "simpy": "4.1.2",
+                  "six": "1.17.0",
+                  "smart-retail": "0.1.0",
+                  "sortedcontainers": "2.4.0",
+                  "sqlalchemy": "2.1.5",
+                  "starlette": "1.9.0",
+                  "types-networkx": "3.6.1.20261021",
+                  "typing-inspection": "0.4.4",
+                  "typing_extensions": "4.16.0",
+                  "tzdata": "2026.5",
+                  "uvicorn": "0.54.0"
+                },
+                "python": "3.12.10",
+                "solver": {
+                  "name": "HiGHS",
+                  "version": "1.12.0"
+                },
+                "source_sha256": "afeebca6e2722f30fb13d0d81a8f1423b3e6982683f54a5d80043ce0acab0887"
+              },
+              "scenario_sha256": "6d4b78b159d9df046178cd894b28cda9d3bff016d325b11e4434c185fd576ef3"
+            },
+            "incumbent": null,
+            "leaves": [
+              {
+                "decision_sha256": "6bf12a2e8f8a991d55226bf735fa43bdd6f8c88918a4920ebb108b432d924c79",
+                "error": "INVALID_DECISION",
+                "score_fraction": null,
+                "status": "INVALID_DECISION",
+                "witness_sha256": null
+              },
+              {
+                "decision_sha256": "5b151a22533c1973b4b9f341a61a776f40b72f473b81a8564ed1f8c13d38a8c5",
+                "error": "INVALID_DECISION",
+                "score_fraction": null,
+                "status": "INVALID_DECISION",
+                "witness_sha256": null
+              },
+              {
+                "decision_sha256": "29132a60aff513e52d793d86e6018c32ffccd9358ff501e19ab114f2fc8f7e04",
+                "error": "INVALID_DECISION",
+                "score_fraction": null,
+                "status": "INVALID_DECISION",
+                "witness_sha256": null
+              },
+              {
+                "decision_sha256": "478de1b569efeb2e1235610a83561314f9a91ccd8d6e4ec132c6c58eaf273939",
+                "error": "INVALID_DECISION",
+                "score_fraction": null,
+                "status": "INVALID_DECISION",
+                "witness_sha256": null
+              }
+            ],
+            "lower_bound_fraction": [
+              0,
+              1
+            ],
+            "model_version": "joint-finite-1",
+            "pruned_states": 0,
+            "relative_gap": null,
+            "scope": "Only the declared finite Cartesian domain and fixed scenario sample-average objective",
+            "solver": "exhaustive-cartesian-v1",
+            "status": "INFEASIBLE_PROVEN",
+            "termination": "COMPLETED",
+            "total_states": 4,
+            "upper_bound_fraction": null
+          },
+          "event": 1,
+          "status": "INFEASIBLE_PROVEN",
+          "verification": {
+            "checked": 4,
+            "status": "PASS",
+            "trust": "Independent exhaustive re-evaluation using official model/validators; no solver-reported MIP proof"
+          }
+        },
+        {
+          "best_id": null,
+          "event": 2,
+          "status": "COMPLETED"
+        }
+      ],
+      "verification": {
+        "checked": 4,
+        "status": "PASS",
+        "trust": "Independent exhaustive re-evaluation using official model/validators; no solver-reported MIP proof"
+      }
+    },
+    "record": {
+      "attempts": [
+        "eb67354b-caa4-465a-97fd-f9bea8472b4f"
+      ],
+      "certificate_verification": "PASS",
+      "dataset": "local_trap",
+      "ended_utc": "2026-10-22T04:19:45.641406+00:00",
+      "error": {
+        "code": "INFEASIBLE",
+        "message": "Joint search has no feasible incumbent; proof artifacts retained",
+        "stage": "JOINT"
+      },
+      "experiment": "E13",
+      "failed_stage": "JOINT",
+      "holdout_objective": null,
+      "input_sha256": "39e741d24f09135de971a10b54cbdbcf9b4dfbcc7b5b7b1ee7168dcb6d0e7801",
+      "job_key": "60086925eb30bab9bd4c4bad2e1be260bd5bc2e681484bc184f8ee90b37091f6",
+      "joint_evaluated_states": 4,
+      "joint_evaluations": 4,
+      "joint_gap": null,
+      "joint_iterations_to_best": 0,
+      "joint_objective": null,
+      "joint_pruned_states": 0,
+      "joint_status": "COMPLETED",
+      "mip_gap": null,
+      "peak_child_rss_bytes": 141230080,
+      "proof_status": "INFEASIBLE_PROVEN",
+      "repetition": 0,
+      "result_sha256": "5a3310acf084fcc251c6ee52b7c1734e1d3483a3c63ba11e9a0be4268713af5d",
+      "run_id": "eb67354b-caa4-465a-97fd-f9bea8472b4f",
+      "sampled_child_cpu_s": 1.65625,
+      "seed": 11,
+      "solution_feasible": false,
+      "started_utc": "2026-10-22T04:19:43.299182+00:00",
+      "status": "INFEASIBLE",
+      "treatment": "proven_empty",
+      "validation": {
+        "candidates": 0,
+        "routes": 0,
+        "scope": "Child independently verified exhaustive infeasibility of the declared finite model",
+        "status": "PASS"
+      },
+      "wall_s": 2.3439999999827705
+    }
+  }
+]

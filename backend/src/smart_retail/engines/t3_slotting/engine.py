@@ -47,6 +47,9 @@ def solve(
         for (sid, face, lid), slot in slots.items():
             if sid != shelf_id:
                 continue
+            shelf = next(s for s in shelves if s.id == sid)
+            if product.allowed_shelf_kinds and shelf.kind not in product.allowed_shelf_kinds:
+                continue
             level = slot["level"]
             for angle in product.orientations:
                 width, depth = (

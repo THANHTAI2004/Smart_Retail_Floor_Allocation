@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "scope": "Recovered external SQL application reads copied backup only",
+  "projects": 16,
+  "runs": 8,
+  "original_sqlite_modified": false
+}

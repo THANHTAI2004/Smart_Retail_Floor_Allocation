@@ -1,0 +1,27 @@
+{
+  "dataset_id": "SMART-RETAIL-SYNTHETIC-20261022",
+  "version": "2.0",
+  "input_schema_version": "1.1",
+  "data_origin": "SYNTHETIC",
+  "created_on": "2026-10-22",
+  "units": {
+    "length": "m",
+    "mass": "kg",
+    "time": "s"
+  },
+  "source": "Current seven-group sample and versioned structured_store_v1 generator",
+  "rights": "Locally generated synthetic research fixtures; no real-world validation claimed",
+  "files": {
+    "datasets/samples/invalid_inputs.json": "5c14bc87f10ceb965e6830ad1ae0df40abe8acae397e9cac23622f1dcfc5ba5c",
+    "datasets/samples/small_store.json": "197cd28e3e6e3afcc1f98481d201c2629205b4818c050731d86e7630787c028a",
+    "datasets/schemas/categories.schema.json": "fe8c7cf18f7418d40a156dbe7fe5e27d148edc4e1b7e306e32fe11b0a13ff5d0",
+    "datasets/schemas/demand.schema.json": "7cac1f675c9d28a0e77dca67084942c1d5fc311d51f293a3220ec4bc3a6c52c5",
+    "datasets/schemas/floorplan.schema.json": "4b787ef7c9305bc3bafc11a0e0af2a73d610d497656ab4d3e02f233e86f1eb6e",
+    "datasets/schemas/optimization.schema.json": "b0f9b7de320725bb305fb3a62157721946bd6377b7d60350320271a193df698a",
+    "datasets/schemas/orders.schema.json": "9fc8a42dab455c949fafe32e6b198d26348cba792c88da88ff85c63fd2da7360",
+    "datasets/schemas/products.schema.json": "c16ff3d32b291eccb1d1dd392914756e3effa625d4eb05c574e1896ccc66a34d",
+    "datasets/schemas/shelves.schema.json": "15b742fdfcf20b005c7404d7ffe40cf633b63c3ed1ecd568231a9120a00b307d",
+    "datasets/schemas/campaign.schema.json": "84fbb36e6adc5fff8f00946e51689bb7c92b33880619852c8c08335c73369bc6"
+  },
+  "historical_manifest": "manifest-research-v1.json describes its original 2026-10-21 bytes, recoverable from the verified external snapshot; it was not rewritten to match newer inputs"
+}

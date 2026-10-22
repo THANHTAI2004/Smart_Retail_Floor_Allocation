@@ -7,15 +7,17 @@ import multiprocessing as mp
 import os
 import socket
 import time
+from dataclasses import asdict, is_dataclass
+from datetime import UTC, datetime
 from pathlib import Path
 from uuid import uuid4
 
-from sqlalchemy import select, update
-
 from smart_retail.application.workflow import canonical_hash, execute
 from smart_retail.domain.models import EngineError
-from smart_retail.infrastructure.database import ROOT, RunRecord, WorkerHeartbeat, connect
+from smart_retail.infrastructure.database import ROOT, connect
 from smart_retail.infrastructure.provenance import runtime_identity
+from smart_retail.infrastructure.stage_cache import StageCache
+from smart_retail.workers.resources import sample as sample_resources
 
 logger = logging.getLogger("smart_retail.worker")
 
@@ -45,78 +47,163 @@ def atomic_json(path: Path, value: dict) -> None:
             time.sleep(0.01)
 
 
-def child(snapshot: dict, directory: str) -> None:
+def child(snapshot: dict, directory: str, cache_directory: str | None = None) -> None:
     root = Path(directory)
     try:
         if snapshot.get("_runtime") != runtime_identity():
             raise EngineError(
                 "SOURCE_DRIFT", "Source or numerical dependency identity changed since enqueue"
             )
+        stages = root / "stages"
+        stages.mkdir()
+        events: list[str] = []
+
+        def observe(stage, key, inputs, value, hit, elapsed):
+            payload = (
+                asdict(value) if is_dataclass(value) and not isinstance(value, type) else value
+            )
+            event = {
+                "stage": stage,
+                "cache_key": key,
+                "inputs": inputs,
+                "output": payload,
+                "output_sha256": canonical_hash(payload),
+                "cache_hit": hit,
+                "elapsed_s": elapsed,
+                "recorded_utc": datetime.now(UTC).isoformat(),
+            }
+            path = stages / f"{len(events):04}-{stage}.json"
+            atomic_json(path, event)
+            events.append(path.name)
+
         result = execute(
-            snapshot, progress=lambda stage: atomic_json(root / "progress.json", {"stage": stage})
+            snapshot,
+            progress=lambda stage: atomic_json(root / "progress.json", {"stage": stage}),
+            stage_cache=StageCache(
+                Path(cache_directory) if cache_directory else root.parent / ".stage-cache"
+            ),
+            observer=observe,
         )
+
+        # Cache-hit and elapsed telemetry live in stage artifacts, outside scientific result bytes.
+        def scientific(value):
+            if isinstance(value, dict):
+                return {k: scientific(v) for k, v in value.items() if k not in ("hit", "telemetry")}
+            if isinstance(value, (tuple, list)):
+                return [scientific(v) for v in value]
+            return value
+
+        result = scientific(result)
         result["runtime"] = snapshot["_runtime"]
         atomic_json(root / "result.json", result)
     except Exception as exc:
         atomic_json(
             root / "error.json",
-            {"code": getattr(exc, "code", "EXECUTION_ERROR"), "message": str(exc)},
+            {
+                "code": getattr(exc, "code", "EXECUTION_ERROR"),
+                "message": str(exc),
+                "stage": getattr(exc, "stage", None),
+            },
         )
 
 
-def work_once(factory, artifact_root: Path, heartbeat_id: str = "test") -> bool:
+def work_once(
+    factory,
+    artifact_root: Path,
+    heartbeat_id: str = "test",
+    cancelled=lambda: False,
+    cache_root: Path | None = None,
+) -> bool:
     with factory() as db:
-        # A dead supervisor cannot retain a job indefinitely. The hard job limit is <=300s.
-        stale = list(
-            db.scalars(
-                select(RunRecord).where(
-                    RunRecord.status.in_(["RUNNING", "CANCEL_REQUESTED"]),
-                    RunRecord.started_epoch < time.time() - 360,
-                )
-            )
-        )
-        for run in stale:
-            run.status = "TIMED_OUT"
-            run.error = {"code": "WORKER_LOST", "message": "Worker lease expired"}
-        db.commit()
-        candidate = db.scalar(
-            select(RunRecord)
-            .where(RunRecord.status == "QUEUED")
-            .order_by(RunRecord.created_at)
-            .limit(1)
-        )
+        db.recover_expired(time.time())
+        candidate = db.claim(heartbeat_id, time.time())
         if candidate is None:
             return False
         identifier = candidate.id
-        changed = db.execute(
-            update(RunRecord)
-            .where(RunRecord.id == identifier, RunRecord.status == "QUEUED")
-            .values(status="RUNNING", started_epoch=time.time())
-        )
-        db.commit()
-        if changed.rowcount != 1:
-            return False
-        db.refresh(candidate)
         snapshot = candidate.snapshot
         if canonical_hash(snapshot) != candidate.input_sha256:
             candidate.status = "FAILED"
             candidate.error = {"code": "INPUT_CORRUPT", "message": "Snapshot checksum mismatch"}
-            db.commit()
+            db.publish(candidate)
             return True
     directory = artifact_root / identifier
     directory.mkdir(parents=True, exist_ok=False)
     atomic_json(directory / "input.json", snapshot)
     context = mp.get_context("spawn")
-    process = context.Process(target=child, args=(snapshot, str(directory)), daemon=True)
-    process.start()
+    process = context.Process(
+        target=child,
+        args=(snapshot, str(directory), str(cache_root) if cache_root else None),
+        daemon=True,
+    )
     began = time.monotonic()
+    started_utc = datetime.now(UTC).isoformat()
+    try:
+        process.start()
+    except Exception as exc:
+        error = {
+            "code": "WORKER_CRASH",
+            "message": f"Process creation failed: {type(exc).__name__}: {exc}",
+        }
+        with factory() as db:
+            failed = candidate
+            failed.status = "FAILED"
+            failed.error = error
+            db.publish(failed)
+        atomic_json(directory / "error.json", error)
+        atomic_json(
+            directory / "receipt.json",
+            {
+                "run_id": identifier,
+                "status": "FAILED",
+                "stage": "PENDING",
+                "input_sha256": canonical_hash(snapshot),
+                "result_sha256": None,
+                "error": error,
+                "child_exit": None,
+                "started_utc": started_utc,
+                "ended_utc": datetime.now(UTC).isoformat(),
+                "wall_s": time.monotonic() - began,
+                "peak_child_rss_bytes": None,
+                "sampled_child_cpu_s": None,
+                "resource_samples": 0,
+                "memory_limit_mb": snapshot["optimization"].get("memory_limit_mb", 2048),
+            },
+        )
+        return True
+    atomic_json(
+        directory / "supervisor.json",
+        {
+            "child_pid": process.pid,
+            "supervisor_pid": os.getpid(),
+            "started_utc": datetime.now(UTC).isoformat(),
+            "input_sha256": canonical_hash(snapshot),
+        },
+    )
+    peak_rss = cpu_s = 0.0
+    resource_samples = 0
     budget = snapshot["optimization"]["time_limit_s"] + 2  # child startup grace
     terminal = None
     try:
         while process.is_alive():
+            if cancelled():
+                terminal = "CANCELLED"
+            usage = sample_resources(process.pid or 0)
+            if usage["peak_rss_bytes"] is not None:
+                peak_rss = max(peak_rss, usage["peak_rss_bytes"])
+                resource_samples += 1
+            if usage["cpu_s"] is not None:
+                cpu_s = max(cpu_s, usage["cpu_s"])
+            if (
+                usage["rss_bytes"] is not None
+                and usage["rss_bytes"]
+                > snapshot["optimization"].get("memory_limit_mb", 2048) * 1024**2
+            ):
+                terminal = "RESOURCE_LIMIT"
             with factory() as db:
-                db.merge(WorkerHeartbeat(id=heartbeat_id, epoch=time.time()))
-                state = db.get(RunRecord, identifier)
+                db.heartbeat(heartbeat_id)
+                state = db.get_run(identifier)
+                if not db.renew(candidate):
+                    terminal = "LEASE_LOST"
                 if state.status == "CANCEL_REQUESTED":
                     terminal = "CANCELLED"
                 if time.monotonic() - began > budget and terminal is None:
@@ -125,7 +212,7 @@ def work_once(factory, artifact_root: Path, heartbeat_id: str = "test") -> bool:
                 stage = read_progress(progress)
                 if stage is not None:
                     state.stage = stage
-                db.commit()
+                db.renew(candidate, state.stage)
             if terminal:
                 process.terminate()
                 break
@@ -136,11 +223,11 @@ def work_once(factory, artifact_root: Path, heartbeat_id: str = "test") -> bool:
             process.kill()
             process.join()
     with factory() as db:
-        run = db.get(RunRecord, identifier)
+        run = db.get_run(identifier)
         if run.status == "CANCEL_REQUESTED":
             terminal = "CANCELLED"
         if terminal:
-            run.status = terminal
+            run.status = "FAILED" if terminal == "RESOURCE_LIMIT" else terminal
             run.error = {"code": terminal, "message": "Supervisor stopped the child process"}
         elif (directory / "result.json").exists() and process.exitcode == 0:
             result = json.loads((directory / "result.json").read_text(encoding="utf-8"))
@@ -150,6 +237,30 @@ def work_once(factory, artifact_root: Path, heartbeat_id: str = "test") -> bool:
             run.result_sha256 = canonical_hash(result)
             run.status = "SUCCEEDED"
             run.stage = "COMPLETE"
+            if result.get("joint") and result["joint"].get("best") is None:
+                joint = result["joint"]
+                code = (
+                    "INFEASIBLE"
+                    if joint.get("proof_status") == "INFEASIBLE_PROVEN"
+                    else (
+                        "TIMEOUT"
+                        if joint.get("status") == "TIMEOUT"
+                        else "CANCELLED"
+                        if joint.get("status") == "CANCELLED"
+                        else "SEARCH_EXHAUSTED"
+                    )
+                )
+                run.status = {
+                    "INFEASIBLE": "INFEASIBLE",
+                    "TIMEOUT": "TIMED_OUT",
+                    "CANCELLED": "CANCELLED",
+                }.get(code, "FAILED")
+                run.error = {
+                    "code": code,
+                    "message": "Joint search has no feasible incumbent; proof artifacts retained",
+                    "stage": "JOINT",
+                }
+                run.stage = "JOINT"
         else:
             error_path = directory / "error.json"
             error = (
@@ -158,12 +269,18 @@ def work_once(factory, artifact_root: Path, heartbeat_id: str = "test") -> bool:
                 else {"code": "WORKER_CRASH", "message": f"Child exited {process.exitcode}"}
             )
             run.error = error
+            run.stage = error.get("stage") or run.stage
             run.status = {
                 "TIMEOUT": "TIMED_OUT",
                 "INFEASIBLE": "INFEASIBLE",
                 "CANCELLED": "CANCELLED",
             }.get(error["code"], "FAILED")
-        db.commit()
+        published = db.publish(run, owner=candidate)
+        if published is None:
+            logger.warning("run=%s stale owner rejected", identifier)
+            run = db.get_run(identifier)
+        else:
+            run = published
         atomic_json(
             directory / "receipt.json",
             {
@@ -174,6 +291,13 @@ def work_once(factory, artifact_root: Path, heartbeat_id: str = "test") -> bool:
                 "result_sha256": run.result_sha256,
                 "error": run.error,
                 "child_exit": process.exitcode,
+                "started_utc": started_utc,
+                "ended_utc": datetime.now(UTC).isoformat(),
+                "wall_s": time.monotonic() - began,
+                "peak_child_rss_bytes": int(peak_rss) if resource_samples else None,
+                "sampled_child_cpu_s": cpu_s if resource_samples else None,
+                "resource_samples": resource_samples,
+                "memory_limit_mb": snapshot["optimization"].get("memory_limit_mb", 2048),
             },
         )
         logger.info("run=%s status=%s", identifier, run.status)
@@ -185,13 +309,13 @@ def main():
     parser.add_argument("--once", action="store_true")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO)
-    _, factory = connect()
+    owner, factory = connect()
+    owner.ready()
     artifact_root = Path(os.getenv("SMART_RETAIL_ARTIFACTS", str(ROOT / "var" / "artifacts")))
     worker_id = f"{socket.gethostname()}-{uuid4()}"
     while True:
         with factory() as db:
-            db.merge(WorkerHeartbeat(id=worker_id, epoch=time.time()))
-            db.commit()
+            db.heartbeat(worker_id)
         worked = work_once(factory, artifact_root, worker_id)
         if args.once:
             break

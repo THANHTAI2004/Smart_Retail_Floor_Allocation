@@ -1,0 +1,1317 @@
+{
+  "absolute_gap": 0.0,
+  "arithmetic_scope": "Exact rational comparison of serialized deterministic IEEE-754 simulator observations; not exact real arithmetic",
+  "artifact_sha256": "617fcce75c8f6ba8a36502b8512133b5e530120956df19b9f02b65a1e5ee09cc",
+  "bound_justification": "Every weighted normalized component is nonnegative; complete enumeration attains minimum",
+  "complete": true,
+  "evaluated_states": 128,
+  "feasibility_validation": "official validators + independent application replay",
+  "finite_space": {
+    "assignments": {
+      "A": [
+        "S1",
+        "S2"
+      ],
+      "B": [
+        "S1",
+        "S2"
+      ]
+    },
+    "max_states": 256,
+    "model_version": "joint-finite-1",
+    "placements": {
+      "P1": [
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 0,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S1",
+          "sku": "P1",
+          "width_m": 0.2,
+          "x_m": 0.0
+        },
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 1,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S1",
+          "sku": "P1",
+          "width_m": 0.2,
+          "x_m": 0.0
+        },
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 0,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S2",
+          "sku": "P1",
+          "width_m": 0.2,
+          "x_m": 0.0
+        },
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 1,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S2",
+          "sku": "P1",
+          "width_m": 0.2,
+          "x_m": 0.0
+        }
+      ],
+      "P2": [
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 0,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S1",
+          "sku": "P2",
+          "width_m": 0.2,
+          "x_m": 0.2
+        },
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 1,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S1",
+          "sku": "P2",
+          "width_m": 0.2,
+          "x_m": 0.2
+        },
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 0,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S2",
+          "sku": "P2",
+          "width_m": 0.2,
+          "x_m": 0.2
+        },
+        {
+          "capacity_units": 1,
+          "depth_units": 1,
+          "face": 1,
+          "facings": 1,
+          "layers": 1,
+          "level_id": "L1",
+          "load_kg": 1,
+          "orientation": 0,
+          "shelf_id": "S2",
+          "sku": "P2",
+          "width_m": 0.2,
+          "x_m": 0.2
+        }
+      ]
+    },
+    "poses": {
+      "S1": [
+        [
+          2.0,
+          3.0,
+          0
+        ],
+        [
+          2.0,
+          5.0,
+          0
+        ]
+      ],
+      "S2": [
+        [
+          5.0,
+          3.0,
+          0
+        ]
+      ]
+    },
+    "routing_policies": [
+      "nearest"
+    ]
+  },
+  "identity": {
+    "finite_space_sha256": "293f01bb80380b28153361cf1fce039c5a3d31cac240140f769e3c0ff266f848",
+    "model_version": "joint-finite-1",
+    "objective": {
+      "scales": [
+        100.0,
+        100.0,
+        1.0,
+        1.0
+      ],
+      "weights": [
+        1.0,
+        0.2,
+        0.1,
+        0.1
+      ]
+    },
+    "problem_id": "5b551d0aa40a74262e4787a925b66b9ccbec95f77e39e78e72a4443f7ce760a0",
+    "runtime": {
+      "model_versions": {
+        "input_contract": "1.1",
+        "joint": "finite-saa-feedback-1",
+        "t1": "grid-local-search-1.1",
+        "t2": "allocation-affinity-milp-1.1",
+        "t3": "facing-strip-milp-1.1",
+        "t4": "picker-grid-queue-1.1",
+        "workflow": "bounded-candidates-1.1"
+      },
+      "packages": {
+        "alembic": "1.20.0",
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "certifi": "2026.10.19",
+        "click": "8.5.0",
+        "colorama": "0.4.6",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "fastapi": "0.157.0",
+        "fonttools": "4.67.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.170.5",
+        "idna": "3.20",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "mako": "1.4.3",
+        "markupsafe": "3.0.4",
+        "matplotlib": "3.11.2",
+        "mypy": "1.20.2",
+        "mypy_extensions": "1.1.0",
+        "networkx": "3.7",
+        "numpy": "2.5.4",
+        "opentelemetry-api": "1.45.1",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "13.0.0",
+        "pip": "25.0.1",
+        "pluggy": "1.7.0",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "pydantic": "2.14.1",
+        "pydantic_core": "2.50.1",
+        "pygments": "2.21.0",
+        "pyparsing": "3.3.3",
+        "pytest": "9.1.1",
+        "python-dateutil": "3.0.0",
+        "ruff": "0.17.1",
+        "scipy": "1.18.1",
+        "shapely": "2.2.0",
+        "simpy": "4.1.2",
+        "six": "1.17.0",
+        "smart-retail": "0.1.0",
+        "sortedcontainers": "2.4.0",
+        "sqlalchemy": "2.1.5",
+        "starlette": "1.9.0",
+        "types-networkx": "3.6.1.20261021",
+        "typing-inspection": "0.4.4",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.5",
+        "uvicorn": "0.54.0"
+      },
+      "python": "3.12.10",
+      "solver": {
+        "name": "HiGHS",
+        "version": "1.12.0"
+      },
+      "source_sha256": "afeebca6e2722f30fb13d0d81a8f1423b3e6982683f54a5d80043ce0acab0887"
+    },
+    "scenario_sha256": "f161a9c14b1a4c0f0681e9c26631a72b5c42039f4a846429695b758ce8f13839"
+  },
+  "incumbent": {
+    "assignment": {
+      "A": "S1",
+      "B": "S1"
+    },
+    "placements": [
+      {
+        "capacity_units": 1,
+        "depth_units": 1,
+        "face": 1,
+        "facings": 1,
+        "layers": 1,
+        "level_id": "L1",
+        "load_kg": 1,
+        "orientation": 0,
+        "shelf_id": "S1",
+        "sku": "P1",
+        "width_m": 0.2,
+        "x_m": 0.0
+      },
+      {
+        "capacity_units": 1,
+        "depth_units": 1,
+        "face": 1,
+        "facings": 1,
+        "layers": 1,
+        "level_id": "L1",
+        "load_kg": 1,
+        "orientation": 0,
+        "shelf_id": "S1",
+        "sku": "P2",
+        "width_m": 0.2,
+        "x_m": 0.2
+      }
+    ],
+    "poses": {
+      "S1": [
+        2.0,
+        3.0,
+        0
+      ],
+      "S2": [
+        5.0,
+        3.0,
+        0
+      ]
+    },
+    "routing_policy": "nearest"
+  },
+  "leaves": [
+    {
+      "decision_sha256": "e8b063a00e8f7c2737674a7509ccaccf00d8eb14c50eb722196255d069c625db",
+      "error": null,
+      "score_fraction": [
+        10780330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "44087d5c0a989efe4eb1d4c08a0e4768c320fec9c7bbbc4e38ea77ee53864118"
+    },
+    {
+      "decision_sha256": "3f2f851ec169aff9526545ae0072b3036c981e8d09f5d48ede750edbb6acc876",
+      "error": null,
+      "score_fraction": [
+        13030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "9488ab6484505905b4be0304d0935de21276ac106c9eff42302e579e1c0860d3"
+    },
+    {
+      "decision_sha256": "4d79590462609f4caac30601ae44e26e91dc39762667107fa2061caeadc8ecb3",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "263df456ec5a68fe07c636133cce07040d04c5d085b04ef829c6d36ea92302fb",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "e93738c696972d0462a6067d9afba1cced258bc0e89256cabf963386e36b81b1",
+      "error": null,
+      "score_fraction": [
+        13030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "815f598b73b064cf76323400da48ec2207786cc7d37d3a08edb251e1fc8de601"
+    },
+    {
+      "decision_sha256": "87b00443074c8e72bfff44fbd994a9a27b155119c6fcf202f8fc5b699662786b",
+      "error": null,
+      "score_fraction": [
+        1432904297984273,
+        15000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "933b3b82306df46e0b777bef79abee4a737bc915792da297d9cc7dda6a299bda"
+    },
+    {
+      "decision_sha256": "2d1b388f134ced14b20c9221b98b42be23eb4680e1d6a29d685e35d10f436c84",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "38571f8c27a9e71a9ab8eb2ae1b5c4aa435c931e2b3bfd03e0bb8b712e17de1c",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "b8a35ee0619eb9b14f4010b516f54a400e4ffdf1387de602d4c3bc7e9846bdd0",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "0e4abcab733a9de94988e5c3aa00483eb211c690adefb3e6af4fdb6972968495",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "0a1b4e57857b62d6183a13c6fa2eea32c95cd2a14aa59406e9cc2e116696cb96",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "4d9b03a54bedcb2b8e3867bae844a387d638365946add42218481fe60fd2383a",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "c760b6c124427a37dda4a69709579c7c362a8a317c265d952ad350f0737728c1",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "849e4cb16b17064630ebd92e28737ffe8d8d8c9477b309f741c65c4fa7a142a8",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "c1988f3cbcd872bb7587549f6a94dfd440bf866911a45263bf8e893c0d37fce8",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "86353c88a43e9e5e05f390f8452d8a2d7a65667b469b98a7b66f8f2fe8956f22",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "8109d769d3106b9977d71e464b09cbb8c087b38fee583832ee257a4fe3775406",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "adaa01a1ca8d1f9cb1f693cf285ddd496d37fd36060133a0473d74029e1cdb53",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "b8375e42dc0eed81299a724b78df2db7f13555a40470ac5e4e4a61e53dbec687",
+      "error": null,
+      "score_fraction": [
+        2182904297984273,
+        15000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "e725b1a313b97101e3a1cb0e831808199b53bb414dad10fe61426cc5226c37eb"
+    },
+    {
+      "decision_sha256": "151a15dac0385ddb6c5b88f54bb5b6bea207a1c13c15338329d5b4b3b14933b3",
+      "error": null,
+      "score_fraction": [
+        16030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "a40baf45b43f2d53d1119149982ec2d643f333adb3376ff87404398f2adcab1f"
+    },
+    {
+      "decision_sha256": "64850d7e744767f39636de4a19303fd1bfb2befadbb56035e7d31f5e2b1fe6e9",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "c03ebdf6b9a9ce560efdb21e72aeac28e9428267b5f4a654e7bfd56251e2e082",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "8da6326dd45612e3d34b585c3bce1bbe047c6f1102c5dd49c2e7c933706d6788",
+      "error": null,
+      "score_fraction": [
+        16030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "3f1ae28cc63d017514c010314c0ce29901dc6f25c26b9b033e6b8a0a8d9439cd"
+    },
+    {
+      "decision_sha256": "4599b7681b9f571793022ea22bae74fa136b054e8ff2a926e6318e1dab8d7d56",
+      "error": null,
+      "score_fraction": [
+        14530330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "9aa9f31be32cd927b1e39830715c7b38aad7b6a44cae1c38dcd3a53dd0fb4d2b"
+    },
+    {
+      "decision_sha256": "8ff444f7aae5736ad2b2ee63c2e160cb3a8850d04cb3de199c3eacb98ee2ef31",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "c4a857bced1f91ba36ad72c567b0f5dbbef119959005802a7ec77fa7fb2e060e",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "70d4cf4cdf06147884d82c483a7793e529e38a49d4f8523abf4a9fcb21a842a7",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "ea1e720b92a511d03ba99cfc27206c5cc8daa41876ba181e97be90a0cd065b01",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "6d90fc19e5a45ebf2747b32b1d2dfa1a5afa18ef0d19fcc984fe445e8a284dbb",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "8dff28ce733cc75c5193295bb4fd97203f111a497b9f281077aafd248cecb0ae",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "6dd5966a4d92a1251ad303496fe31ef675923d1521186ad2b677bf475bb63693",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "2566dfc4c4798e42af49e8b81103be81c7d9da08b82a0703e29d1d7b32c56891",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "04cb8bfcd753d9b5eb1f3d30e025b01d2ac90d3daa59b0344ca4ed200d5487d4",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "5335a8a8e63717b2475dee8d9609cfadb0307ec4bea193f269f1db192a2ff74c",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "5779e476af14f99431a61f5920bf53e7d5cbe163afef5dce70ea208db9f22a4b",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "81fbf538bea837649a14695417083666d02074d81d6a88b9be9ed2ef6e5ef32f",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "336c001db39f7f108f0e3cf6e77b09cf1279f6a03a2a24b57dea0026ffe7f75a",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "d41a6c3044ce77f7fe63b7de2178962204af96e381f73b944113ca7135a2d51e",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "33d98164b90804a91047e610db6824193ab7bda1dfc3f39c4297c3f6fdf0bcb6",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "aba7d039147b814f6c26b5bfac1a1b7e5489e4b93ad0038ab82de74510729262",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "c07997d8f64c062f13136f4be9323275293b28ad2b549d44320dd043842ccf10",
+      "error": null,
+      "score_fraction": [
+        2182904297984273,
+        15000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "bb0c408fd6b337c834ba7298ff6ebd0716f794abfc7b8da4b1d633d50ed04fcb"
+    },
+    {
+      "decision_sha256": "5c609afb83d360ea597baacf5cf9ed952a2a92781ec664e925a91ec175c7c7a9",
+      "error": null,
+      "score_fraction": [
+        16030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "fe6a6bc178e244fd0adfb3e12cf934a8dd234fca98dc7cbb99451b6861d375d8"
+    },
+    {
+      "decision_sha256": "6dc194624211e9d7a89350b63528f08803f2b6b5da95b0b3c5bef52e3b776762",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "3d19e2f67135cb04baf2b62c5ed240b88284fcdd491b23546b07843005428e18",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "2ca7f840394175f85f5d0a6f8f05e215d5bd8218b93bfdc8f7bf514c391c0777",
+      "error": null,
+      "score_fraction": [
+        16030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "8261a608bf55e4a69cf789cfb2d4e9bea8dac210aa78c10228079807d05e04a0"
+    },
+    {
+      "decision_sha256": "f8e023de1d8eca412aa3c5a857583192e641ff925931a634c8916cb8ae4989c4",
+      "error": null,
+      "score_fraction": [
+        14530330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "9e0e8cc7c0c08b885c7afe2843bbf23aadaade1f288cd3badc639ee400046f46"
+    },
+    {
+      "decision_sha256": "d74b740d40fb1fc9d0d7d17f1d0d0aad1fef62cb6ad51ced86212041b23c1186",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "93ef1ac5bea6c20c70ad5c220663c2eaa37170ae079e58494063f590931573e2",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "fe8191ca2271f93d8aa8121f85196095e24aa9e12bc682f318ead8fe2e0444b5",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "c396286529475c4588b12fda24471f3f8d4c09fa7e97d31f41506985bb2ce509",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "4b6d10c84c58a472094033991a48c1b1ba9493f811c4b0ca9745467934974721",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "5c8458e4af49370cffc5b2f56095000e990af0981dca458e5d9f0cce168edb95",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "6cf1deafb26ad42a2ee377fcb0e3f00c2fb81f52c86445e936bd92fa855076fb",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "80850a2a39ec7aa71e158c2f56ccf03355367deee6bb4f3086ecb4ccdf649834",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "882f781f2fcb6985c4327b6857f98530e5e8ccf15a761d31c9f3775bbf0e0d5b",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "25eeaf0906e6c68b8e5c4f043533921a5e4ab8cdc418fc01fed457a096d3f0d1",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "f6fda406d3d302b40968c3d91f2c44bd52c8fe516dea14079816bcacbda9e7c7",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "26c8bdfbef97aeb37be46a08497cd138b8a722234de6b4345c78c95964b12602",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "1858cf243ecb46581db96f1ce734e1bf708bd0da6d4aca6deaf4d9c5aea73af3",
+      "error": null,
+      "score_fraction": [
+        2182904297984273,
+        15000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "d0a4ddcc2db73215fa9b3251d1242acbb6454e613f29ffc5ba9f9546691b5057"
+    },
+    {
+      "decision_sha256": "944e82c1035188ab1dec802eb33e17b97fc09eaa9e42aea6717986c12121d535",
+      "error": null,
+      "score_fraction": [
+        35060660171779819,
+        210000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "748089c79054e67ceb9a2505244058b0699e287fc8f9c1446b6c4e1310fc38a7"
+    },
+    {
+      "decision_sha256": "534979a7c3fee2fcf28f61e8cc74e98776bb0142de058c44a7f782f858576291",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "cd58073a157030ed4179606a086d1c369009995cbe6c73027000c84412a5a02a",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "0e99a9e10fd98679eb28ad192a5efa5dca1339af7a980d742d4ebe2c91751415",
+      "error": null,
+      "score_fraction": [
+        35060660171779819,
+        210000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "727e8dca760e5848f4cb16654abdefc482b146a730d1541f126f1a01d5ecefb2"
+    },
+    {
+      "decision_sha256": "2ceb9c3d8ff0846bc18778697907d8ea4448d7e1b502e2aaa1b46226f2db04d0",
+      "error": null,
+      "score_fraction": [
+        14530330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "2f0e2ffb74dc9d8b67c63788adff9c3fbc19695dcf68ffe6b86300312fc004ac"
+    },
+    {
+      "decision_sha256": "33581b6d5cfa1e3b5797099703d32f97ac6b907dae93904175f799c59dd7ade3",
+      "error": null,
+      "score_fraction": [
+        10780330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "5960610a8c965c2ecc2e3f6dda2396f3ad45ef1aa099c4025a10abed1c4ff4f8"
+    },
+    {
+      "decision_sha256": "e4d3ed435a411fceb4e3a2a9e65b8fe679b285bfebd1c1d529b1fab841d7130c",
+      "error": null,
+      "score_fraction": [
+        14530330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "fd4a86acda5d2e29283ba6854ce04c59489a9326092527b6cfd402ffc074e1e3"
+    },
+    {
+      "decision_sha256": "499f2acebcff235d5a26d7b11698121e20b6ccf0a1b3b7cbe434fdf59fb86575",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "24bd3ee45d5057c68b5d36848234490388970d3afe31bb892acecd808eca9ca4",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "c8eb2c3ac2e20d499d041dc24e9de641d36814dd684980d65bab77794c6c1ee3",
+      "error": null,
+      "score_fraction": [
+        14530330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "fd6a02eb26c6fc92f966751fb4c3d3fa7c0ca034efc92972166626842f23c617"
+    },
+    {
+      "decision_sha256": "0e4a31d1ed60331fd981fb714d21eb5242d479438d4a0eedb3a6eaaf825826bd",
+      "error": null,
+      "score_fraction": [
+        13030330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "b06678fb27954423434d15e5bdd265fd091b5e3acd8f7209dffcd1fa7ca20490"
+    },
+    {
+      "decision_sha256": "10571b622a12e98b5468eec46937fbd7289baf9cea259cad24f43b7d7c59df85",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "819da2e639404b8a79aab6a617333feb22c93421c5c38f2fcaeeca2b41e93ceb",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "ef69036aaab2a2103fd09dc640a4d5c0a91f108b2101de0d316b63f4804622ac",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "b3c870133c99c26fb5e7189ce3de9f522d4bc79172747a121c2f4e715f55c8a4",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "09d308246338b064f5c8a0431293a329b9045a77b0093a3ac347482cd8c660e2",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "5a91b68b6ce5f72c18fe73319c8356bcc0d6bc9b31a7d2b1d793280da42efde9",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "ec3787727230eeac4ae88a4cf750e5bb6722e54af223787b628d79452c0065fb",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "c79e81bb716de8641969ba7c6be69a304da8422e9d7d40c64ea9d4af512fe00e",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "f870ed35e343d8d22bd7d29a1b339c3336e97a5c74943e49c62dd3e825779482",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "65c7b18a2b9a797785b3ffd5a3d79b259c405ff172be46d4baad82b9c7e594ac",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "1d772b3ef2d145f3d9491f02646647d182c037d50727bf68948d3f415171843a",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "9d11af2a503bb7d995b608032ae274bad9624619b6484a820973b4177c697c89",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "6fda4a5b125e2d09fb8904c85194d519fb7e884642353afd2a3088acd32c520d",
+      "error": null,
+      "score_fraction": [
+        16780330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "89b09bcd059811b6c2964d236aa8b4bafaec3338fb55b55cdb1bce82c17f5011"
+    },
+    {
+      "decision_sha256": "1653bba5ed44aaf636d962d624e1b5e23a5a48375fccc1d3e24b97584e5912fb",
+      "error": null,
+      "score_fraction": [
+        2182904297984273,
+        15000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "e6e8c512ad1c5fa5d02cd1a0795bfe842acbe289b0e8a09cb6897b3899ced68c"
+    },
+    {
+      "decision_sha256": "423d38b6caaa4ce8ee2628d772585e46a4e0a4c6ddaa1ec266212b96f9cfe236",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "8aeb5cd590d07369cc4393c47fc8373049d6c4952664bdc0ac844445f69ba194",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "4c6c1e960d98c2f7965732b2a37b91d70f3f532cfade819878a7b42e298b60b7",
+      "error": null,
+      "score_fraction": [
+        5437237167397117,
+        30000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "8d2faffdc1a3c6aa88f6b2ccfb35f4cfe5795bd3a39b9cb1e3134c1de84adba8"
+    },
+    {
+      "decision_sha256": "9a1f44902a7f92dc2811aa404499c5e89a3a39403ccd294c46058ac8ccc1b69c",
+      "error": null,
+      "score_fraction": [
+        35060660171779819,
+        210000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "b94556de6080d12e42c442c059589c1ab8c6ec779f13c8509b136f27f06db941"
+    },
+    {
+      "decision_sha256": "f957983dbd2704c48c33d2c4e4870a50b98682e30a234bf31829b127b7fd9a9b",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "59ae0b424816b9aae479db684d430375c0f2542a5183590cc50d8c335a226a7e",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "ed66dc1d18fc5dac466f4ccb819a512ff046b4db1a7c39313dc674a96f203a5c",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "9819b45e8335294267c1194c72c5b5111f27611c46c9e4c1a9a422cae3c61f4f",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "55e30d67eafd872ba47f0f8ea2376cfb11b3410f5a507327cf101bf2a23f6fcc",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "7e26db310fdc9a39239c1423278cb8b84954bc30f578ea54f2437715c03c0257",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "ed9f9e19b636e274864a6216f41aa2fb3b0848515a2a81383fbb259d8290af54",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "4d5a45e2c1a567aaeac70ed6550be1a73b2aba34a85fbd07fb184bec6dfc8a49",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "8a48f30ae616f31dbccc47fbe58de7a7379574be558b169f4deff6a9bd640d34",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "ba125e62e1d862f050b3b541cf013da8f45f0670a95bd0f6baaad0dbb85da83a",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "de5dd6de726938ab87838b7cf1e276d3edb107f1a93e795c1a8185c6e37a5238",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "9dbf86ed747738c18a16d65704c4ff545eeb0357afd19d36436a0ad5a93892ad",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "bf3d0b6e712f87a13dcde075fd9af0d7ad41b50122e02262fbf840dff8ffc3e1",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "360b5105fccb70dc5bb07e301197746bc5db6ffb34ae7cec69ac11c305364ff3",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "d939b77cf9098af3ed30cbc4908bb3e63eb44314bc852f119ff1caac5da7c8d5",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "80151e4b31ab0b62c505e7a3ab7da9cd0337b11fab2d59fb8c4aa0345fe137dd",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "f9fa5700caea8d74a09340f7919802d0fa6b6fb3cad572fb0a6504b1c5e9523b",
+      "error": null,
+      "score_fraction": [
+        16780330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "dfef1d0cc69b679156bfbea83a967adb192824ae2def6594d6d8fb8df1f16a26"
+    },
+    {
+      "decision_sha256": "69894e25a08efc5f752360c21e64c259a9be885bb6a3f05fab1451938a93c2d6",
+      "error": null,
+      "score_fraction": [
+        5437237167397117,
+        30000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "de1acf61021743a2e73e5b177f3a0ac90e1e8394aee2acd212bb18acd49bd682"
+    },
+    {
+      "decision_sha256": "08af7a0d648561925f4d6962bdd564e187201e8b55651451c573cc0f054250c6",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "d0ed7a143a6b84d7893e7fbd75b655478fc1ac0c17951e03d42b65741996d198",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "0ae132b05efb423bb0be6f5142a7a11ff9d6bd6f84203c4c87d5f28ca6a10d6d",
+      "error": null,
+      "score_fraction": [
+        2182904297984273,
+        15000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "865e3e4e223115dd544b4f2049589410babd9910347d633ecfbf6b1e09ec1d03"
+    },
+    {
+      "decision_sha256": "1e444b4d7e212d432da432f317dbf8d5f4750c8bb3b83230870b1c356ad14990",
+      "error": null,
+      "score_fraction": [
+        35060660171779819,
+        210000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "682895bbb55657154150b84b40bad08864eace92f9398402737881e35fab363b"
+    },
+    {
+      "decision_sha256": "560fb7a85209b199af0d4394067d0dc1712ea98f3513b62cd0a38a32507752f5",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "6506c2dd1f4d4f37507135e964ec53c33e1f774cc7d3d9ad418ba26565bb9f66",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "aae41084088cdc669a3b6a7884718a8e93ee077aba78557bca9a12978d5ac856",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "08a22d78bc75da6f731fdf4519cf765d8800f7a007111089ea4cf1d232fed25b",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "ec3808875d4b29b17db7007d3e36dfdca709582ea9bf8e504d6c3feb384788cd",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "043309e830189dafc808e1e1fa3c1bc9ca30e850e5f21cae7b5e3d681b7c8bf4",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "71cb6dc9c84fb50dd5eaec444f2eb252f57dc307f0d12387c5b8e3c81271e752",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "fa04b7cbd8ff63bfe9d05aa4a9061550cf903ffee0385ad79225ef06a173259b",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "0ebdbae9b89d92249c8388d031060fe325e7bf7f23abd546da7559b0b7741045",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "0912f6d99573064d6ec5e35ec2bb6d1e23631755504f7ddcdc71a28651db2624",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "b7b0ecf8590e7a81d0385f153bce15d246254b1cf1ab9b4c9f7a0229578e1242",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "6e5da02d40b2d46e55ea575dfde60848fe3fd3e5c819908ad69de2a74941df22",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "b099152d2eea1bf6f47ca81e5773bb6641ba98f20e3ddbba7bb89c46cfe3219f",
+      "error": null,
+      "score_fraction": [
+        2182904297984273,
+        15000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "04f0c64d38442bf2d50b3ace7d967cfe097856947a61df71106301811d5463e4"
+    },
+    {
+      "decision_sha256": "5354c2313542ae5cbf4014b229e706bdc7abcd1244d8655e62aa27bd19b8d653",
+      "error": null,
+      "score_fraction": [
+        35060660171779819,
+        210000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "2687798ab6845c6ddc295cab78319e88fdffd4031d35a7ba88c13127f33207dc"
+    },
+    {
+      "decision_sha256": "7d0b4078b29f4ee984d3d801e484201d5dc90ae2cd64607c34e49c6ad24e29b7",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "987463db3af623a9da5bcc297c1cfb4bc6c7475ae1036256e172b28814e4baff",
+      "error": "INVALID_DECISION",
+      "score_fraction": null,
+      "status": "INVALID_DECISION",
+      "witness_sha256": null
+    },
+    {
+      "decision_sha256": "b19118bd028640ab653247a9e69bdad20db26d862ed944b805b12f662814c63f",
+      "error": null,
+      "score_fraction": [
+        35060660171779819,
+        210000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "1916724eb524f59eadbd5e78fb65d4a700f90092541938411b6456a0bb172eb2"
+    },
+    {
+      "decision_sha256": "02f786ad635658b26025cdf50a0fe8fa6e8a45efee590b3cb5e5efaef829127d",
+      "error": null,
+      "score_fraction": [
+        14530330085889911,
+        105000000000000000
+      ],
+      "status": "FEASIBLE",
+      "witness_sha256": "519d48be6c70d41cb5da3290d6b72062d54a8f1deee3eed8b0dd8b2c2baf6bf6"
+    }
+  ],
+  "lower_bound_fraction": [
+    1432904297984273,
+    15000000000000000
+  ],
+  "model_version": "joint-finite-1",
+  "pruned_states": 0,
+  "relative_gap": 0.0,
+  "scope": "Only the declared finite Cartesian domain and fixed scenario sample-average objective",
+  "solver": "exhaustive-cartesian-v1",
+  "status": "GLOBAL_OPTIMAL_CERTIFIED",
+  "termination": "COMPLETED",
+  "total_states": 128,
+  "upper_bound_fraction": [
+    1432904297984273,
+    15000000000000000
+  ]
+}

@@ -1,0 +1,603 @@
+{
+  "campaign": "D:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261022-pilot-02",
+  "configuration": {
+    "cache_policy": "isolated",
+    "data_origin": "SYNTHETIC",
+    "datasets": [
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "tiny",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "small",
+        "levels": 2,
+        "scale": "small",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "facings",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": true
+      },
+      {
+        "category_assignment": "free",
+        "height_scale": 0.8,
+        "id": "low_shelf",
+        "levels": 1,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      }
+    ],
+    "experiments": [
+      {
+        "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+        "datasets": [
+          "tiny"
+        ],
+        "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+        "id": "E01",
+        "metrics": [
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "Does local search improve a valid constructive shelf layout?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "optimization": {
+                "layout_algorithm": "grid",
+                "stop_after_stage": "T1"
+              },
+              "shelves": {
+                "layout_mode": "optimizable"
+              }
+            }
+          },
+          {
+            "id": "local_search",
+            "overrides": {
+              "optimization": {
+                "layout_algorithm": "local_search",
+                "stop_after_stage": "T1"
+              },
+              "shelves": {
+                "layout_mode": "optimizable"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+        "datasets": [
+          "tiny"
+        ],
+        "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+        "id": "E02",
+        "metrics": [
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "How do greedy and MILP allocation compare under identical budgets?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "optimization": {
+                "algorithm": "greedy",
+                "stop_after_stage": "T2"
+              }
+            }
+          },
+          {
+            "id": "milp",
+            "overrides": {
+              "optimization": {
+                "algorithm": "milp",
+                "stop_after_stage": "T2"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+        "datasets": [
+          "facings"
+        ],
+        "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+        "id": "E03",
+        "metrics": [
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "Does optimized facing allocation increase physically replayed capacity?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "optimization": {
+                "slotting_algorithm": "first_fit",
+                "stop_after_stage": "T3"
+              }
+            }
+          },
+          {
+            "id": "milp",
+            "overrides": {
+              "optimization": {
+                "slotting_algorithm": "milp",
+                "stop_after_stage": "T3"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+        "datasets": [
+          "tiny"
+        ],
+        "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+        "id": "E04",
+        "metrics": [
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "How do nearest, return and exact small-tour routing affect travel?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "demand": {
+                "routing_policy": "nearest"
+              }
+            }
+          },
+          {
+            "id": "return",
+            "overrides": {
+              "demand": {
+                "routing_policy": "return"
+              }
+            }
+          },
+          {
+            "id": "exact",
+            "overrides": {
+              "demand": {
+                "routing_policy": "exact"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+        "datasets": [
+          "tiny"
+        ],
+        "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+        "id": "E05",
+        "metrics": [
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "Does complete candidate evaluation improve operational scores?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 1
+              },
+              "shelves": {
+                "layout_mode": "optimizable"
+              }
+            }
+          },
+          {
+            "id": "multistart",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 4
+              },
+              "shelves": {
+                "layout_mode": "optimizable"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+        "datasets": [
+          "tiny",
+          "low_shelf"
+        ],
+        "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+        "id": "E06",
+        "metrics": [
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "How do demand intensity, picker count and shelf height affect outcomes?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "demand": {
+                "picker_count": 1
+              }
+            }
+          },
+          {
+            "id": "more_pickers",
+            "overrides": {
+              "demand": {
+                "arrivals_per_hour": 120,
+                "picker_count": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+        "datasets": [
+          "tiny"
+        ],
+        "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+        "id": "E07",
+        "metrics": [
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "Does disabling wait weighting change selected operational candidates?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 4,
+                "wait_weight": 0
+              },
+              "shelves": {
+                "layout_mode": "optimizable"
+              }
+            }
+          },
+          {
+            "id": "wait_weight",
+            "overrides": {
+              "optimization": {
+                "candidate_count": 4,
+                "wait_weight": 1
+              },
+              "shelves": {
+                "layout_mode": "optimizable"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+        "datasets": [
+          "tiny",
+          "small"
+        ],
+        "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+        "id": "E08",
+        "metrics": [
+          "wall_s",
+          "mean_distance_m",
+          "mean_wait_s"
+        ],
+        "question": "How do OS child memory and wall time change with declared instance size?",
+        "statistical_method": "descriptive_paired_exploratory",
+        "treatments": [
+          {
+            "id": "baseline",
+            "overrides": {
+              "optimization": {
+                "stop_after_stage": "T1"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "job_time_limit_s": 20.0,
+    "max_jobs": 160,
+    "max_retries": 1,
+    "max_wall_s": 1200.0,
+    "memory_limit_mb": 1024,
+    "name": "pilot",
+    "repetitions": 1,
+    "schema_version": "1.0",
+    "seeds": [
+      11
+    ],
+    "workers": 1
+  },
+  "datasets": [
+    {
+      "counts": {
+        "categories": 3,
+        "orders": 20,
+        "products": 12,
+        "shelves": 4
+      },
+      "created_on": "2026-10-22",
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "facings",
+      "generator": "structured_store_v1",
+      "limitations": [
+        "Not representative of a real store",
+        "Feasibility subject to solver model and budget",
+        "Category assignment mode: free"
+      ],
+      "rights": "Locally generated synthetic research data",
+      "sha256": "d30a33db5b89d2ab985922253db7dc6bd17c5901fdb0f2a5c1875780436b8cec",
+      "source": "Deterministic Python random generator, no field observations",
+      "spec": {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "facings",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": true
+      },
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    },
+    {
+      "counts": {
+        "categories": 3,
+        "orders": 20,
+        "products": 12,
+        "shelves": 4
+      },
+      "created_on": "2026-10-22",
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "low_shelf",
+      "generator": "structured_store_v1",
+      "limitations": [
+        "Not representative of a real store",
+        "Feasibility subject to solver model and budget",
+        "Category assignment mode: free"
+      ],
+      "rights": "Locally generated synthetic research data",
+      "sha256": "f5b9fca8c2895a9d7dc35239d68de348d92e543e168173436c0f13cffafff122",
+      "source": "Deterministic Python random generator, no field observations",
+      "spec": {
+        "category_assignment": "free",
+        "height_scale": 0.8,
+        "id": "low_shelf",
+        "levels": 1,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    },
+    {
+      "counts": {
+        "categories": 6,
+        "orders": 100,
+        "products": 48,
+        "shelves": 12
+      },
+      "created_on": "2026-10-22",
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "small",
+      "generator": "structured_store_v1",
+      "limitations": [
+        "Not representative of a real store",
+        "Feasibility subject to solver model and budget",
+        "Category assignment mode: free"
+      ],
+      "rights": "Locally generated synthetic research data",
+      "sha256": "c128e86a0c0f9b3947fc9fb9265605522861552caf77238c9ac519ea2c7a5f07",
+      "source": "Deterministic Python random generator, no field observations",
+      "spec": {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "small",
+        "levels": 2,
+        "scale": "small",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    },
+    {
+      "counts": {
+        "categories": 3,
+        "orders": 20,
+        "products": 12,
+        "shelves": 4
+      },
+      "created_on": "2026-10-22",
+      "data_origin": "SYNTHETIC",
+      "dataset_id": "tiny",
+      "generator": "structured_store_v1",
+      "limitations": [
+        "Not representative of a real store",
+        "Feasibility subject to solver model and budget",
+        "Category assignment mode: free"
+      ],
+      "rights": "Locally generated synthetic research data",
+      "sha256": "2c56ca13bcdf166b21ad570d8ba51ead8d18d1ac4e616470419470256cff6ce2",
+      "source": "Deterministic Python random generator, no field observations",
+      "spec": {
+        "category_assignment": "free",
+        "height_scale": 1.0,
+        "id": "tiny",
+        "levels": 2,
+        "scale": "tiny",
+        "scenario": "feasible",
+        "seed": 101,
+        "variable_facings": false
+      },
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s"
+      },
+      "version": "1.0"
+    }
+  ],
+  "files": {
+    "comparisons.csv": "43d1e08fbced979983dbef298f503eb8ae648fe39bcc72b20b4dd840a55add1f",
+    "failures.csv": "5f7a302cd4f5237891b7dddd7aae85f79bf60b684986736dc690f32dafd8f6a5",
+    "figures/mean_distance_m.png": "454390b0cd7f4ae5c708ed3d8765c491a6bf29bf510932be0280a014b629c0e8",
+    "figures/mean_distance_m.svg": "0dcd66db17248659f63d7ae4ce87682bd1a62fd07d9fbbf635c7b10aebb2ad20",
+    "figures/mean_wait_s.png": "7e3f92803a45491c8d4e64574bee3f5279981f715922c6c68e52f8ae48144958",
+    "figures/mean_wait_s.svg": "e9f8af4e953434649dcc54f4ade03e480b4c81f44965a756b1a0bbc9e033ac5e",
+    "figures/outcomes.png": "92078f228d2ec1a089903c4f8226ed7673063da943263476dc1b389ed3c4c0f9",
+    "figures/outcomes.svg": "3dc24597549d6c877fc526ebb32f45f9ed4c9f2d01563a1e4e44dfb85527a327",
+    "figures/peak_child_rss_bytes.png": "ba8e4b85efe1fca0897f782d9d50c4a171c75f3d8f07100df470a404388f4c91",
+    "figures/peak_child_rss_bytes.svg": "af8de72b08c3f195c8764a81143ba20f34c498b458140e3f8aa2978cf94ba2a6",
+    "figures/wall_s.png": "d977e9cbd2977907f6d7f4529a94f411459d16368bb961581a1ad0ddead3ce40",
+    "figures/wall_s.svg": "cfdbcb69f12f93a8e6153cc4993abc219cb33180fd41889a818e41d9af5f1e8c",
+    "results.csv": "0c9e82419892e116417e0f4eaa97860963f628a14851a35d95ad3f2609077b33",
+    "results.json": "c2711824d7029f910d095f0a46e7e29681e07900e0a5a68db4b604aac975dfae",
+    "statistics.json": "f00cbd9d1e0fa840289d4fe5f45c547d94f6a770612b93e47ae71be05904ba64",
+    "summary.csv": "96489790878dd850ba76733fbc366b483748499e60180db7e26c0e86e7310e6a",
+    "summary.md": "83bb49e10370bccb8e2c4c49ef428299efcd39eb42d4e9337dc185e0d005ade3"
+  },
+  "identity": {
+    "config_sha256": "288b372d60084374a31c9c5a6c035f3cb14bb7ad9105baee0ca2e042eaa5b6a4",
+    "created_utc": "2026-10-22T01:24:45.542215+00:00",
+    "free_disk_bytes": 76106702848,
+    "runtime": {
+      "model_versions": {
+        "input_contract": "1.1",
+        "t1": "grid-local-search-1.1",
+        "t2": "allocation-affinity-milp-1.1",
+        "t3": "facing-strip-milp-1.1",
+        "t4": "picker-grid-queue-1.1",
+        "workflow": "bounded-candidates-1.1"
+      },
+      "packages": {
+        "alembic": "1.20.0",
+        "annotated-doc": "0.0.5",
+        "annotated-types": "0.8.0",
+        "anyio": "4.15.1",
+        "certifi": "2026.10.19",
+        "click": "8.5.0",
+        "colorama": "0.4.6",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "fastapi": "0.157.0",
+        "fonttools": "4.67.0",
+        "h11": "0.16.0",
+        "httpcore": "1.0.9",
+        "httpx": "0.28.1",
+        "hypothesis": "6.170.5",
+        "idna": "3.20",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "mako": "1.4.3",
+        "markupsafe": "3.0.4",
+        "matplotlib": "3.11.2",
+        "mypy": "1.20.2",
+        "mypy_extensions": "1.1.0",
+        "networkx": "3.7",
+        "numpy": "2.5.4",
+        "opentelemetry-api": "1.45.1",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "13.0.0",
+        "pip": "25.0.1",
+        "pluggy": "1.7.0",
+        "psycopg": "3.3.6",
+        "psycopg-binary": "3.3.6",
+        "pydantic": "2.14.1",
+        "pydantic_core": "2.50.1",
+        "pygments": "2.21.0",
+        "pyparsing": "3.3.3",
+        "pytest": "9.1.1",
+        "python-dateutil": "3.0.0",
+        "ruff": "0.17.1",
+        "scipy": "1.18.1",
+        "shapely": "2.2.0",
+        "simpy": "4.1.2",
+        "six": "1.17.0",
+        "smart-retail": "0.1.0",
+        "sortedcontainers": "2.4.0",
+        "sqlalchemy": "2.1.5",
+        "starlette": "1.9.0",
+        "types-networkx": "3.6.1.20261021",
+        "typing-inspection": "0.4.4",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.5",
+        "uvicorn": "0.54.0"
+      },
+      "python": "3.12.10",
+      "solver": {
+        "name": "HiGHS",
+        "version": "1.12.0"
+      },
+      "source_sha256": "00edbecabb36eb025d53fb0c9edd1cbecc32f1051a612145e3682126ef9de08f"
+    },
+    "worker_limit": 1
+  },
+  "validation": {
+    "files": 238,
+    "status": "PASS"
+  }
+}

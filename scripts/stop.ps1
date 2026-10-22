@@ -1,7 +1,12 @@
+param([switch]$StopMongoDB)
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $statePath = Join-Path $projectRoot 'var/services.json'
-if (-not (Test-Path -LiteralPath $statePath)) { Write-Output 'No recorded services'; exit }
+if (-not (Test-Path -LiteralPath $statePath)) {
+    Write-Output 'No recorded services'
+    if ($StopMongoDB) { & (Join-Path $PSScriptRoot 'stop_mongodb.ps1') }
+    exit
+}
 $services = Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json
 foreach ($service in $services) {
     $process = Get-Process -Id $service.pid -ErrorAction SilentlyContinue
@@ -12,3 +17,4 @@ foreach ($service in $services) {
 }
 Remove-Item -LiteralPath $statePath
 Write-Output 'Recorded Smart Retail services stopped'
+if ($StopMongoDB) { & (Join-Path $PSScriptRoot 'stop_mongodb.ps1') }

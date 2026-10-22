@@ -1,5 +1,32 @@
 {
   "$defs": {
+    "ArrivalPeriodInput": {
+      "additionalProperties": false,
+      "properties": {
+        "start_s": {
+          "minimum": 0,
+          "title": "Start S",
+          "type": "number"
+        },
+        "end_s": {
+          "exclusiveMinimum": 0,
+          "title": "End S",
+          "type": "number"
+        },
+        "arrivals_per_hour": {
+          "minimum": 0,
+          "title": "Arrivals Per Hour",
+          "type": "number"
+        }
+      },
+      "required": [
+        "start_s",
+        "end_s",
+        "arrivals_per_hour"
+      ],
+      "title": "ArrivalPeriodInput",
+      "type": "object"
+    },
     "BehaviorInput": {
       "additionalProperties": false,
       "properties": {
@@ -28,6 +55,25 @@
   },
   "additionalProperties": false,
   "properties": {
+    "schema_version": {
+      "const": "1.1",
+      "default": "1.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "data_origin": {
+      "default": "UNSPECIFIED",
+      "enum": [
+        "SYNTHETIC",
+        "REAL_VERIFIED",
+        "REAL_UNVERIFIED",
+        "ASSUMED",
+        "DERIVED",
+        "UNSPECIFIED"
+      ],
+      "title": "Data Origin",
+      "type": "string"
+    },
     "arrivals_per_hour": {
       "default": 20,
       "exclusiveMinimum": 0,
@@ -63,6 +109,31 @@
     },
     "behavior": {
       "$ref": "#/$defs/BehaviorInput"
+    },
+    "periods": {
+      "items": {
+        "$ref": "#/$defs/ArrivalPeriodInput"
+      },
+      "maxItems": 168,
+      "title": "Periods",
+      "type": "array"
+    },
+    "picker_count": {
+      "default": 1,
+      "maximum": 100,
+      "minimum": 1,
+      "title": "Picker Count",
+      "type": "integer"
+    },
+    "routing_policy": {
+      "default": "nearest",
+      "enum": [
+        "nearest",
+        "return",
+        "exact"
+      ],
+      "title": "Routing Policy",
+      "type": "string"
     }
   },
   "title": "DemandInput",

@@ -19,6 +19,7 @@ def solve(
     algorithm: str = "milp",
     time_limit_s: float = 30,
     distance_weight: float = 1,
+    affinity_weight: float = 1,
 ) -> dict:
     if algorithm not in ("milp", "greedy"):
         raise EngineError("INVALID_INPUT", f"Unknown allocation algorithm {algorithm}")
@@ -56,10 +57,38 @@ def solve(
                                 raise EngineError(
                                     "PROBLEM_LIMIT", "Too many proximity constraints for baseline"
                                 )
-    matrix = lil_matrix((n + m + len(pairs), n * m), dtype=float)
+    affinity = []
+    category_index = {c.id: i for i, c in enumerate(categories)}
+    total_affinity = sum(weight for c in categories for _, weight in c.affinity) or 1
+    for i, c in enumerate(categories):
+        for other_id, weight in c.affinity:
+            if other_id not in category_index:
+                raise EngineError("INVALID_REFERENCE", "Unknown affinity category")
+            for a in range(m):
+                for b in range(m):
+                    affinity.append(
+                        (
+                            i * m + a,
+                            category_index[other_id] * m + b,
+                            affinity_weight
+                            * weight
+                            / total_affinity
+                            * centers[a].distance(centers[b])
+                            / diag,
+                        )
+                    )
+                    if n * m + len(affinity) > 20000:
+                        raise EngineError(
+                            "PROBLEM_LIMIT", "T2 affinity linearization exceeds 20,000 variables"
+                        )
+    variables = n * m + len(affinity)
+    if variables > 20000:
+        raise EngineError("PROBLEM_LIMIT", "T2 affinity linearization exceeds 20,000 variables")
+    costs = np.concatenate([costs, np.array([penalty for _, _, penalty in affinity])])
+    matrix = lil_matrix((n + m + len(pairs) + 3 * len(affinity), variables), dtype=float)
     lower = np.full(matrix.shape[0], -np.inf)
     upper = np.full(matrix.shape[0], np.inf)
-    bounds_upper = np.ones(n * m)
+    bounds_upper = np.ones(variables)
     for i, c in enumerate(categories):
         matrix[i, i * m : (i + 1) * m] = 1
         lower[i] = upper[i] = 1
@@ -72,20 +101,40 @@ def solve(
         matrix[row, a] = 1
         matrix[row, b] = 1
         upper[row] = 1
+    for index, (a, b, _) in enumerate(affinity):
+        y = n * m + index
+        row = n + m + len(pairs) + index * 3
+        matrix[row, y], matrix[row, a], upper[row] = 1, -1, 0
+        matrix[row + 1, y], matrix[row + 1, b], upper[row + 1] = 1, -1, 0
+        matrix[row + 2, a], matrix[row + 2, b], matrix[row + 2, y], upper[row + 2] = 1, 1, -1, 1
+
+    def refresh_affinity(vector):
+        for index, (a, b, _) in enumerate(affinity):
+            vector[n * m + index] = vector[a] * vector[b]
+
     if algorithm == "greedy":
-        x = np.zeros(n * m)
+        x = np.zeros(variables)
         for i in sorted(
             range(n),
             key=lambda i: (-categories[i].priority * categories[i].demand, categories[i].id),
         ):
-            for k in sorted(range(m), key=lambda k: (costs[i * m + k], shelves[k].id)):
+
+            def rank(k):
+                trial = x.copy()
+                trial[i * m + k] = 1
+                refresh_affinity(trial)
+                return (float(costs @ trial), shelves[k].id)
+
+            for k in sorted(range(m), key=rank):
                 idx = i * m + k
                 if not bounds_upper[idx]:
                     continue
                 x[idx] = 1
+                refresh_affinity(x)
                 if np.all(matrix @ x <= upper + 1e-7):
                     break
                 x[idx] = 0
+                refresh_affinity(x)
             else:
                 raise EngineError(
                     "SEARCH_EXHAUSTED",
@@ -95,8 +144,8 @@ def solve(
     else:
         result = milp(
             costs,
-            integrality=np.ones(n * m),
-            bounds=Bounds(np.zeros(n * m), bounds_upper),
+            integrality=np.ones(variables),
+            bounds=Bounds(np.zeros(variables), bounds_upper),
             constraints=LinearConstraint(matrix.tocsr(), lower, upper),
             options={"time_limit": max(0.001, time_limit_s), "mip_rel_gap": 0.0, "presolve": True},
         )
@@ -118,7 +167,9 @@ def solve(
     assignment = {
         c.id: shelves[int(np.argmax(x[i * m : (i + 1) * m]))].id for i, c in enumerate(categories)
     }
-    errors, objective = replay(floor, shelves, categories, assignment, distance_weight)
+    errors, objective = replay(
+        floor, shelves, categories, assignment, distance_weight, affinity_weight
+    )
     if errors or abs(objective - float(costs @ x)) > 1e-7:
         raise EngineError("INVALID_SOLUTION", "; ".join(errors) or "Objective replay mismatch")
     return {
@@ -127,4 +178,5 @@ def solve(
         "objective": float(costs @ x),
         "objective_units": "dimensionless demand-weighted entrance distance / floor diagonal",
         "algorithm": algorithm,
+        "mip_gap": float(result.mip_gap) if algorithm == "milp" else None,
     }

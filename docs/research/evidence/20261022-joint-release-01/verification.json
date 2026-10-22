@@ -1,0 +1,246 @@
+{
+  "checks": [
+    {
+      "name": "pytest",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "backend/tests",
+        "-q",
+        "--basetemp",
+        "D:\\Smart_Retail_Floor_Allocation\\var\\pytest-release-1e914db71770",
+        "--junitxml",
+        "D:\\Smart_Retail_Floor_Allocation\\docs\\research\\evidence\\20261022-joint-release-01\\pytest.xml"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:08:46.358481+00:00",
+      "ended_utc": "2026-10-22T04:09:43.090985+00:00"
+    },
+    {
+      "name": "ruff",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "backend"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:09:43.090985+00:00",
+      "ended_utc": "2026-10-22T04:09:43.186764+00:00"
+    },
+    {
+      "name": "mypy",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "-m",
+        "mypy",
+        "--config-file",
+        "backend/pyproject.toml",
+        "backend/src/smart_retail"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:09:43.186764+00:00",
+      "ended_utc": "2026-10-22T04:09:43.643290+00:00"
+    },
+    {
+      "name": "pip-check",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:09:43.643290+00:00",
+      "ended_utc": "2026-10-22T04:09:44.233811+00:00"
+    },
+    {
+      "name": "eslint",
+      "command": [
+        "powershell",
+        "-NoProfile",
+        "-Command",
+        "npm --prefix frontend run lint"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:09:44.233811+00:00",
+      "ended_utc": "2026-10-22T04:09:45.680390+00:00"
+    },
+    {
+      "name": "vitest",
+      "command": [
+        "powershell",
+        "-NoProfile",
+        "-Command",
+        "npm --prefix frontend test"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:09:45.680390+00:00",
+      "ended_utc": "2026-10-22T04:09:46.718947+00:00"
+    },
+    {
+      "name": "frontend-build",
+      "command": [
+        "powershell",
+        "-NoProfile",
+        "-Command",
+        "npm --prefix frontend run build"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:09:46.719951+00:00",
+      "ended_utc": "2026-10-22T04:09:50.316678+00:00"
+    },
+    {
+      "name": "npm-audit",
+      "command": [
+        "powershell",
+        "-NoProfile",
+        "-Command",
+        "npm --prefix frontend audit --json"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:09:50.316678+00:00",
+      "ended_utc": "2026-10-22T04:09:51.775261+00:00"
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "scripts/verify_architecture.py",
+        "--output",
+        "D:\\Smart_Retail_Floor_Allocation\\docs\\research\\evidence\\20261022-joint-release-01\\architecture.json"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:09:51.775261+00:00",
+      "ended_utc": "2026-10-22T04:09:52.017258+00:00"
+    },
+    {
+      "name": "e2e",
+      "command": [
+        "powershell",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "scripts/verify_e2e.ps1"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T04:09:52.017258+00:00",
+      "ended_utc": "2026-10-22T04:11:15.607290+00:00"
+    }
+  ],
+  "runtime": {
+    "source_sha256": "1530dc2f0dac05656d19894bf597349970a2c9e540ed0806cdc1b05aa69e6568",
+    "python": "3.12.10",
+    "solver": {
+      "name": "HiGHS",
+      "version": "1.12.0"
+    },
+    "model_versions": {
+      "input_contract": "1.1",
+      "t1": "grid-local-search-1.1",
+      "t2": "allocation-affinity-milp-1.1",
+      "t3": "facing-strip-milp-1.1",
+      "t4": "picker-grid-queue-1.1",
+      "workflow": "bounded-candidates-1.1",
+      "joint": "finite-saa-feedback-1"
+    },
+    "packages": {
+      "alembic": "1.20.0",
+      "annotated-doc": "0.0.5",
+      "annotated-types": "0.8.0",
+      "anyio": "4.15.1",
+      "certifi": "2026.10.19",
+      "click": "8.5.0",
+      "colorama": "0.4.6",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "fastapi": "0.157.0",
+      "fonttools": "4.67.0",
+      "h11": "0.16.0",
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "hypothesis": "6.170.5",
+      "idna": "3.20",
+      "iniconfig": "2.3.1",
+      "kiwisolver": "1.5.1",
+      "librt": "0.16.0",
+      "mako": "1.4.3",
+      "markupsafe": "3.0.4",
+      "matplotlib": "3.11.2",
+      "mypy": "1.20.2",
+      "mypy_extensions": "1.1.0",
+      "networkx": "3.7",
+      "numpy": "2.5.4",
+      "opentelemetry-api": "1.45.1",
+      "packaging": "26.3",
+      "pathspec": "1.1.1",
+      "pillow": "13.0.0",
+      "pip": "25.0.1",
+      "pluggy": "1.7.0",
+      "psycopg": "3.3.6",
+      "psycopg-binary": "3.3.6",
+      "pydantic": "2.14.1",
+      "pydantic_core": "2.50.1",
+      "pygments": "2.21.0",
+      "pyparsing": "3.3.3",
+      "pytest": "9.1.1",
+      "python-dateutil": "3.0.0",
+      "ruff": "0.17.1",
+      "scipy": "1.18.1",
+      "shapely": "2.2.0",
+      "simpy": "4.1.2",
+      "six": "1.17.0",
+      "smart-retail": "0.1.0",
+      "sortedcontainers": "2.4.0",
+      "sqlalchemy": "2.1.5",
+      "starlette": "1.9.0",
+      "types-networkx": "3.6.1.20261021",
+      "typing-inspection": "0.4.4",
+      "typing_extensions": "4.16.0",
+      "tzdata": "2026.5",
+      "uvicorn": "0.54.0"
+    }
+  },
+  "git_head": "3a53f0ea12318fd939d68bece92ee71ada97074f",
+  "git_index_sha256": "41a13a20ded900a66967b0c39838b011cfd65eab68d608835aa0b0a8bc84f647",
+  "scope": "Local Windows/SQLite synthetic platform; not PostgreSQL/Compose or field validation",
+  "files": {
+    "architecture.json": "0e559e4c52f38c0f7c8c8e275f8603184cf865172875c4353e74b8860aa6a39d",
+    "architecture.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "architecture.stdout.log": "0762044dae4af116afca9fbcbea27e7ad0e2037efeecc2127203cf7b4e069124",
+    "e2e.stderr.log": "a106b43a22bead86b3ba40b5a814f85103b6458fd6583a71775e0018bfdf8f7b",
+    "e2e.stdout.log": "d9898c8fa6dafbad5f48c359628076640a091d848d8555800839cf9ac0f88c11",
+    "eslint.stderr.log": "82bb3a6c927ab99b48d0d4e752a57b990c2469b67945bad8b837118a21fca999",
+    "eslint.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "frontend-build.stderr.log": "9fd6372896509f48d615b3b8b4b87adc098533b74c9daaf29c429c9299f78bb8",
+    "frontend-build.stdout.log": "297fec8767bd53842b0d4c00080e32b8181c58a16ea57b57a02856f702b2f79a",
+    "isolated-health.json": "6e5e042b507ba6b545f70506d86c45d0f6ebac04f95ad76ba514eaeddcb13b79",
+    "mypy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mypy.stdout.log": "a83a70edf408d123cd597d2aef487538650d1d33f5e9a95e4fc05d86733a72ec",
+    "npm-audit.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "npm-audit.stdout.log": "15d46536ab850adae98b6617c631d28ce23a628e6e3d54cb61c7ae0f08aab090",
+    "pip-check.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pip-check.stdout.log": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf",
+    "pytest.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pytest.stdout.log": "be8b2ebf3703aa6c033cade8043c815037b4dbbd9b96aec8e6b97f3934403737",
+    "pytest.xml": "2b703338ea4107bc77422d147f857ea9ce295490ceac8b073d20c010e04e10d5",
+    "ruff.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ruff.stdout.log": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+    "vitest.stderr.log": "ce577522715a0a0337060190832043b80394231e5cac1b06c5787fc43fa971e4",
+    "vitest.stdout.log": "5cb7f5aeab55138d759d843c6ca615bcec173d2960b393d9c0a1fc9f2a7fd045",
+    "browser/axe-results.json": "36a9c71b4f1a23b6c54ee7093165b2f136f39eb5b2ce312be0a9782a50c82525",
+    "browser/results.json": "33b986ad8bf7af275e61f88c1bec709fe8d4afa09f15c4fab276134993b671e7",
+    "browser/test-results/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "browser/ui/desktop-dashboard.png": "12a5b331621c8e7d4d52ba87d0befe55767eee646a6056d3699a1995a815b465",
+    "browser/ui/desktop-editor.png": "00b7b16f5cf1f66fd16c22a429f266f9ad3446faf042d2fda0a04b00cadd9ca6",
+    "browser/ui/downloaded-report.json": "39f8a00f3cc034a0a60b5bad801e6f2bcf93a7a93328d9bccd717c39fb8bdb0f",
+    "browser/ui/joint-exact.png": "3d43d356d8138ce6561a5fd8690d87c2a79e46cccf73c6a151687503c0b7264c",
+    "browser/ui/joint-feedback.png": "576280f25793c9b96eeaf651398789712b0b89a655f2b77b70c42623883d1693",
+    "browser/ui/mobile-dashboard.png": "a857da0f28a3036f073ae9dd3b9319103ff8aac7cff2d29dc9e075a36d6a41ba",
+    "browser/ui/mobile-editor.png": "3355995169d079d9dcd20fad7b4ffbe3f9518a2207d8ecdb3718a8bd6cdb3f68",
+    "browser/ui/research-dashboard.png": "5af5094ea0731f3fb9b8fb631951dec5ed10d200a92a8828c13f5bed0a54a7de"
+  }
+}

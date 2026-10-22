@@ -1,153 +1,22 @@
-"""Application orchestration. Engines never choose the whole-system workflow."""
+"""Application orchestration and mode dispatch."""
 
-import hashlib
-import json
 import math
 import time
 from collections.abc import Callable
-from dataclasses import asdict
 
+from smart_retail.application.stage_workflow import _candidate
+from smart_retail.application.stage_workflow import canonical_hash as canonical_hash
 from smart_retail.contracts.inputs import to_domain
 from smart_retail.domain.models import EngineError
-from smart_retail.engines.t1_layout.engine import solve as layout
-from smart_retail.engines.t2_allocation.engine import solve as allocate
-from smart_retail.engines.t3_slotting.engine import solve as slot
-from smart_retail.engines.t4_simulation.engine import solve as simulate
-
-
-def canonical_hash(value: dict) -> str:
-    return hashlib.sha256(
-        json.dumps(
-            value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False
-        ).encode()
-    ).hexdigest()
-
-
-def _candidate(
-    sections: dict,
-    cancelled: Callable[[], bool] = lambda: False,
-    progress: Callable[[str], None] = lambda _: None,
-    *,
-    deadline: float,
-    variant: int = 0,
-    cache: dict | None = None,
-) -> dict:
-    dataset = to_domain(sections)
-    result: dict = {
-        "input_sha256": canonical_hash(sections),
-        "seed": dataset.config.seed,
-        "floorplan": sections["floorplan"],
-        "stages": {},
-        "stage_cache": {},
-    }
-
-    def cached(stage: str, inputs: dict, compute: Callable):
-        key = canonical_hash(
-            {
-                "stage": stage,
-                "version": "research-v1",
-                "runtime": sections.get("_runtime"),
-                "inputs": inputs,
-            }
-        )
-        hit = cache is not None and key in cache
-        value = cache[key] if cache is not None and key in cache else compute()
-        if cache is not None:
-            cache[key] = value
-        result["stage_cache"][stage] = {"key": key, "hit": hit}
-        return value
-
-    def check(stage: str) -> None:
-        progress(stage)
-        if cancelled():
-            raise EngineError("CANCELLED", "Run was cancelled")
-        if time.monotonic() >= deadline:
-            raise EngineError("TIMEOUT", f"Budget exhausted before {stage}")
-
-    check("T1")
-    t1 = cached(
-        "T1",
-        {
-            "floor": sections["floorplan"],
-            "shelves": sections["shelves"],
-            "variant": variant if dataset.layout_mode != "fixed" else 0,
-            "max_iterations": dataset.config.max_iterations,
-        },
-        lambda: layout(
-            dataset.floorplan,
-            dataset.shelves,
-            dataset.layout_mode,
-            deadline=deadline,
-            max_iterations=dataset.config.max_iterations,
-            cancelled=cancelled,
-            variant=variant,
-        ),
-    )
-    result["stages"]["T1"] = asdict(t1)
-    check("T2")
-    t2 = cached(
-        "T2",
-        {
-            "shelves": asdict(t1),
-            "categories": sections["categories"],
-            "floor": sections["floorplan"],
-            "algorithm": dataset.config.algorithm,
-            "distance_weight": dataset.config.distance_weight,
-        },
-        lambda: allocate(
-            dataset.floorplan,
-            t1.shelves,
-            dataset.categories,
-            algorithm=dataset.config.algorithm,
-            distance_weight=dataset.config.distance_weight,
-            time_limit_s=max(0.001, deadline - time.monotonic()),
-        ),
-    )
-    result["stages"]["T2"] = t2
-    check("T3")
-    t3 = cached(
-        "T3",
-        {
-            "shelves": asdict(t1),
-            "products": sections["products"],
-            "assignment": t2["assignment"],
-            "algorithm": dataset.config.slotting_algorithm,
-        },
-        lambda: slot(
-            t1.shelves,
-            dataset.products,
-            t2["assignment"],
-            algorithm=dataset.config.slotting_algorithm,
-            deadline=deadline,
-            cancelled=cancelled,
-        ),
-    )
-    result["stages"]["T3"] = asdict(t3)
-    check("T4")
-    t4 = cached(
-        "T4",
-        {
-            "shelves": asdict(t1),
-            "planogram": asdict(t3),
-            "assignment": t2["assignment"],
-            "floor": sections["floorplan"],
-            "demand": sections["demand"],
-            "orders": sections["orders"],
-            "products": sections["products"],
-            "seed": dataset.config.seed,
-        },
-        lambda: simulate(dataset, t1.shelves, t2["assignment"], deadline, t3),
-    )
-    result["stages"]["T4"] = asdict(t4)
-    check("COMPLETE")
-    result["status"] = "SUCCEEDED"
-    return result
 
 
 def execute(
     sections: dict,
     cancelled: Callable[[], bool] = lambda: False,
     progress: Callable[[str], None] = lambda _: None,
+    *,
+    stage_cache: dict | None = None,
+    observer: Callable = lambda *args: None,
 ) -> dict:
     """Bounded full-stage candidate evaluation; no global optimality assertion.
 
@@ -155,6 +24,10 @@ def execute(
     A failed layout/allocation is evidence about that candidate only.
     """
     dataset = to_domain(sections)
+    if dataset.config.joint is not None:
+        from smart_retail.application.feedback.coordinator import optimize
+
+        return optimize(sections, cancelled, progress, stage_cache=stage_cache, observer=observer)
     deadline = time.monotonic() + dataset.config.time_limit_s
     records: list[dict] = []
     solutions: list[tuple[float, int, dict]] = []
@@ -162,7 +35,7 @@ def execute(
         math.dist(a, b) for a in dataset.floorplan.boundary for b in dataset.floorplan.boundary
     )
     demand = {p.sku: p.demand for p in dataset.products}
-    cache: dict = {}
+    cache: dict = stage_cache if stage_cache is not None else {}
     for index in range(dataset.config.candidate_count):
         if cancelled():
             raise EngineError("CANCELLED", "Run was cancelled")
@@ -172,16 +45,62 @@ def execute(
             raise EngineError("TIMEOUT", "Integrated budget exhausted")
         try:
             candidate = _candidate(
-                sections, cancelled, progress, deadline=deadline, variant=index, cache=cache
+                sections,
+                cancelled,
+                progress,
+                deadline=deadline,
+                variant=index,
+                cache=cache,
+                observer=observer,
             )
         except EngineError as exc:
             if exc.code in ("CANCELLED", "INVALID_SOLUTION", "INVALID_INPUT"):
                 raise
-            records.append({"candidate": index, "status": exc.code, "message": str(exc)})
+            records.append(
+                {
+                    "candidate": index,
+                    "status": exc.code,
+                    "message": str(exc),
+                    "failed_stage": exc.stage,
+                }
+            )
             if dataset.config.candidate_count == 1:
                 raise
             if exc.code == "TIMEOUT":
                 break
+            continue
+        if dataset.config.stop_after_stage != "T4":
+            stage = dataset.config.stop_after_stage
+            if stage == "T1":
+                from smart_retail.domain.models import Shelf, ShelfLevel
+                from smart_retail.engines.t1_layout.geometry import footprint
+
+                shelves = [
+                    Shelf(**{**s, "levels": tuple(ShelfLevel(**level) for level in s["levels"])})
+                    for s in candidate["stages"]["T1"]["shelves"]
+                ]
+                score = sum(
+                    math.dist(
+                        dataset.floorplan.entrance,
+                        (footprint(s).centroid.x, footprint(s).centroid.y),
+                    )
+                    for s in shelves
+                )
+            elif stage == "T2":
+                score = candidate["stages"]["T2"]["objective"]
+            else:
+                score = -candidate["stages"]["T3"]["objective"]
+            records.append(
+                {
+                    "candidate": index,
+                    "status": "FEASIBLE",
+                    "score": score,
+                    "components": [score],
+                    "stages": candidate["stages"],
+                    "stage_cache": candidate["stage_cache"],
+                }
+            )
+            solutions.append((score, index, candidate))
             continue
         metrics = candidate["stages"]["T4"]["metrics"]
         capacity = {p["sku"]: p["capacity_units"] for p in candidate["stages"]["T3"]["placements"]}
@@ -226,6 +145,7 @@ def execute(
         )
     ]
     result["integrated"] = {
+        "stop_after_stage": dataset.config.stop_after_stage,
         "algorithm": "bounded_grid_multistart_v1",
         "selected_candidate": selected,
         "requested_candidates": dataset.config.candidate_count,

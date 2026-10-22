@@ -1,0 +1,130 @@
+{
+  "assumptions": [
+    "Exploratory Student-t intervals and paired tests; no population-level efficacy claim",
+    "Repeated identical seeds are averaged before pairing, not counted as independent replications",
+    "Failure rates include all attempted jobs; solution metrics only exist for valid results",
+    "Completion rate is not a proof of feasibility/infeasibility for unsolved cases",
+    "Holm adjustment covers every reported nondegenerate paired metric comparison"
+  ],
+  "comparisons": [],
+  "selected_metrics": {
+    "E10": [
+      "wall_s",
+      "mean_distance_m",
+      "mean_wait_s"
+    ]
+  },
+  "summary": [
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5101091635454027,
+        1.0
+      ],
+      "dataset": "tiny",
+      "experiment": "E10",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "mean_distance_m": {
+          "ci95": [
+            5.707106781186548,
+            5.707106781186548
+          ],
+          "maximum": 5.707106781186548,
+          "mean": 5.707106781186548,
+          "median": 5.707106781186548,
+          "minimum": 5.707106781186548,
+          "n": 4,
+          "sd": 0.0
+        },
+        "mean_wait_s": {
+          "ci95": [
+            -0.1329251638581489,
+            0.6527563621810507
+          ],
+          "maximum": 0.473719728300847,
+          "mean": 0.2599155991614509,
+          "median": 0.2599155991614509,
+          "minimum": 0.046111470022054846,
+          "n": 4,
+          "sd": 0.24687974302496768
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            143198164.61274657,
+            145258539.38725343
+          ],
+          "maximum": 144715776,
+          "mean": 144228352,
+          "median": 144461824.0,
+          "minimum": 143273984,
+          "n": 4,
+          "sd": 647418.5506558592
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.2652586483102164,
+            1.6800538516897836
+          ],
+          "maximum": 1.59375,
+          "mean": 1.47265625,
+          "median": 1.4921875,
+          "minimum": 1.3125,
+          "n": 4,
+          "sd": 0.1303384766275229
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 4,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.22410041159073787,
+            0.22410041159073787
+          ],
+          "maximum": 0.22410041159073787,
+          "mean": 0.22410041159073787,
+          "median": 0.22410041159073787,
+          "minimum": 0.22410041159073787,
+          "n": 4,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            724.0,
+            724.0
+          ],
+          "maximum": 724.0,
+          "mean": 724.0,
+          "median": 724.0,
+          "minimum": 724.0,
+          "n": 4,
+          "sd": 0.0
+        },
+        "wall_s": {
+          "ci95": [
+            1.8351230500475708,
+            2.047376949959414
+          ],
+          "maximum": 2.0310000000172295,
+          "mean": 1.9412500000034925,
+          "median": 1.9219999999913853,
+          "minimum": 1.8900000000139698,
+          "n": 4,
+          "sd": 0.06669520222837545
+        }
+      },
+      "succeeded": 4,
+      "total": 4,
+      "treatment": "baseline"
+    }
+  ]
+}

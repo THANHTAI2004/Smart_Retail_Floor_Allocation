@@ -4,19 +4,15 @@ import copy
 from datetime import UTC, datetime
 from uuid import uuid4
 
-from sqlalchemy import delete, select, update
-from sqlalchemy.orm import Session
-
 from smart_retail.application.workflow import canonical_hash
 from smart_retail.contracts.inputs import SECTIONS, to_domain, validate_references
-from smart_retail.infrastructure.database import (
-    OrderLineRecord,
-    OrderRecord,
-    ProductKey,
+from smart_retail.contracts.migration import normalize
+from smart_retail.infrastructure.provenance import runtime_identity
+from smart_retail.infrastructure.repositories.contracts import (
     ProjectRecord,
+    Repositories,
     RunRecord,
 )
-from smart_retail.infrastructure.provenance import runtime_identity
 
 
 class ServiceError(ValueError):
@@ -40,42 +36,21 @@ def project_dict(record: ProjectRecord) -> dict:
     }
 
 
-def get_project(session: Session, identifier: str) -> ProjectRecord:
-    project = session.get(ProjectRecord, identifier)
+def get_project(session: Repositories, identifier: str) -> ProjectRecord:
+    project = session.get_project(identifier)
     if project is None:
         raise ServiceError(404, "Project not found")
     return project
 
 
-def create_project(session: Session, name: str) -> dict:
+def create_project(session: Repositories, name: str) -> dict:
     project = ProjectRecord(id=str(uuid4()), name=name.strip(), created_at=now(), sections={})
-    session.add(project)
-    session.commit()
+    session.create_project(project)
     return project_dict(project)
 
 
-def sync_orders(session: Session, project_id: str, sections: dict) -> None:
-    session.execute(delete(OrderLineRecord).where(OrderLineRecord.project_id == project_id))
-    session.execute(delete(OrderRecord).where(OrderRecord.project_id == project_id))
-    session.execute(delete(ProductKey).where(ProductKey.project_id == project_id))
-    session.add_all(
-        ProductKey(project_id=project_id, sku=p["sku"])
-        for p in sections.get("products", {}).get("items", [])
-    )
-    session.flush()
-    session.add_all(
-        OrderRecord(project_id=project_id, **o)
-        for o in sections.get("orders", {}).get("orders", [])
-    )
-    session.flush()
-    session.add_all(
-        OrderLineRecord(project_id=project_id, **o)
-        for o in sections.get("orders", {}).get("order_lines", [])
-    )
-
-
 def save_section(
-    session: Session, identifier: str, section: str, payload: dict, expected_revision: int
+    session: Repositories, identifier: str, section: str, payload: dict, expected_revision: int
 ) -> dict:
     if section not in SECTIONS:
         raise ServiceError(404, "Unknown input group")
@@ -86,20 +61,14 @@ def save_section(
     errors = validate_references(sections)
     if errors:
         raise ServiceError(422, "; ".join(errors))
-    changed = session.execute(
-        update(ProjectRecord)
-        .where(ProjectRecord.id == identifier, ProjectRecord.revision == expected_revision)
-        .values(sections=sections, revision=expected_revision + 1)
-        .returning(ProjectRecord.id)
-    ).scalar_one_or_none()
+    try:
+        changed = session.save_project(identifier, expected_revision, sections)
+    except ValueError as exc:
+        raise ServiceError(413, str(exc)) from exc
     if changed is None:
-        session.rollback()
+        get_project(session, identifier)
         raise ServiceError(409, "Project changed in another session. Reload before saving.")
-    if section in ("products", "orders"):
-        sync_orders(session, identifier, sections)
-    session.commit()
-    session.expire_all()
-    return project_dict(get_project(session, identifier))
+    return project_dict(changed)
 
 
 def validation_report(sections: dict) -> dict:
@@ -112,12 +81,13 @@ def validation_report(sections: dict) -> dict:
     return {"valid": not errors and not missing, "missing": missing, "errors": errors}
 
 
-def enqueue(session: Session, identifier: str) -> dict:
+def enqueue(session: Repositories, identifier: str) -> dict:
     project = get_project(session, identifier)
     report = validation_report(project.sections)
     if not report["valid"]:
         raise ServiceError(422, "; ".join(report["errors"]))
-    snapshot = copy.deepcopy(project.sections)
+    snapshot, migrations = normalize(project.sections)
+    snapshot["_contract_migrations"] = migrations
     snapshot["_runtime"] = runtime_identity()
     run = RunRecord(
         id=str(uuid4()),
@@ -129,8 +99,7 @@ def enqueue(session: Session, identifier: str) -> dict:
         stage="PENDING",
         created_at=now(),
     )
-    session.add(run)
-    session.commit()
+    session.insert_run(run)
     return run_dict(run)
 
 
@@ -155,38 +124,21 @@ def run_dict(run: RunRecord, include_snapshot: bool = False) -> dict:
     return result
 
 
-def get_run(session: Session, identifier: str) -> RunRecord:
-    run = session.get(RunRecord, identifier)
+def get_run(session: Repositories, identifier: str) -> RunRecord:
+    run = session.get_run(identifier)
     if run is None:
         raise ServiceError(404, "Run not found")
     return run
 
 
-def cancel(session: Session, identifier: str) -> dict:
+def cancel(session: Repositories, identifier: str) -> dict:
     get_run(session, identifier)
-    session.execute(
-        update(RunRecord)
-        .where(RunRecord.id == identifier, RunRecord.status == "QUEUED")
-        .values(status="CANCELLED")
-    )
-    session.execute(
-        update(RunRecord)
-        .where(RunRecord.id == identifier, RunRecord.status == "RUNNING")
-        .values(status="CANCEL_REQUESTED")
-    )
-    session.commit()
-    session.expire_all()
-    return run_dict(get_run(session, identifier))
+    record = session.cancel_run(identifier)
+    if record is None:
+        raise ServiceError(404, "Run not found")
+    return run_dict(record)
 
 
-def list_runs(session: Session, identifier: str) -> list[dict]:
+def list_runs(session: Repositories, identifier: str) -> list[dict]:
     get_project(session, identifier)
-    return [
-        run_dict(r)
-        for r in session.scalars(
-            select(RunRecord)
-            .where(RunRecord.project_id == identifier)
-            .order_by(RunRecord.created_at.desc())
-            .limit(100)
-        )
-    ]
+    return [run_dict(r) for r in session.list_runs(identifier)]
