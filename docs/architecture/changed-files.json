@@ -1,0 +1,991 @@
+{
+  "head": "2cbce4751f5fea6cd2ea30dffc0a198d60a34187",
+  "files": [
+    {
+      "path": ".dockerignore",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 187,
+      "sha256": "ab97f5a3958eeaed52621c3c806122ea2dc8a08c9103bda9bdd645fdfca2fd9b"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 2203,
+      "sha256": "ca1b6581663aa902201fe9ca541007e9b64e3760e34d624f7b84d604d88c19df"
+    },
+    {
+      "path": ".gitignore",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 226,
+      "sha256": "e7ac2a7463b3b11d222673cd7dcf0e1ee4b7a2c80924193271b6c6695504752e"
+    },
+    {
+      "path": "AGENTS.md",
+      "operation": "modified",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 1765,
+      "sha256": "5d9b891a79b86ae481bb7010af6c73739aa9cb731a74c239e6f1f3d925516cac"
+    },
+    {
+      "path": "HANDOFF.md",
+      "operation": "modified",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 1147859,
+      "sha256": "a3a3e8f8005c0fdf68617e78670d750e4cf4ac43c7a673677f92b774318ddf50"
+    },
+    {
+      "path": "README.md",
+      "operation": "modified",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 10273,
+      "sha256": "fd2e6755f99457282af05bf54b9f4f314600d97e9bfad9a2e947883709f2ade3"
+    },
+    {
+      "path": "backend/Dockerfile",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 387,
+      "sha256": "aa901b06ed45d2200a3a6471a39f126f0128a56a023e13c7361cea06a9f332ff"
+    },
+    {
+      "path": "backend/alembic.ini",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 138,
+      "sha256": "e701352d9c07e5b577d083228a9af7d30365ead10a30836a59936df4a06ebe51"
+    },
+    {
+      "path": "backend/migrations/env.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 774,
+      "sha256": "d1e931adcf50745a650cdf8a8e2528d45df84d0a693adcd4b4aff25a025f9fc6"
+    },
+    {
+      "path": "backend/migrations/versions/0001_foundation.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 3064,
+      "sha256": "313048ddb6e88551fd96545a091c97c06ef16bc5a5b2e0ace42c9c875f3c74d0"
+    },
+    {
+      "path": "backend/pyproject.toml",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 988,
+      "sha256": "6ce8ac9da4d1c0e3f2e80c41118b322d4382a889a5bbdcecaa8534422ea88637"
+    },
+    {
+      "path": "backend/requirements-lock.txt",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 866,
+      "sha256": "a8be8ddd66e6784d5ec5b5837ba8cf76c29f58210f4d8e257ed5e6bb2bfd0544"
+    },
+    {
+      "path": "backend/src/smart_retail/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 108,
+      "sha256": "ef2cb570035054af20b48bb918fc100be3652a8f3aa5db3cc8fa0ffe6832b351"
+    },
+    {
+      "path": "backend/src/smart_retail/api/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/api/main.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 7193,
+      "sha256": "434f27339a37755f663003688e1df234ed0f0a12073c6b18aae66c9dc32079f5"
+    },
+    {
+      "path": "backend/src/smart_retail/application/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/application/projects.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 6069,
+      "sha256": "c0f6d36ccb489a044d7bd629900e56b85016eec92f003a264b1a7efe9f83d571"
+    },
+    {
+      "path": "backend/src/smart_retail/application/workflow.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 2378,
+      "sha256": "e8c9d62644d65ae76579b372cadc4968420e1e53ccd501c07c0a349d48174cec"
+    },
+    {
+      "path": "backend/src/smart_retail/contracts/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/contracts/inputs.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 11399,
+      "sha256": "8ad42c88c74459cbdc0270842d81ecbe53f1d8abfffa74742e9f308448a05ba2"
+    },
+    {
+      "path": "backend/src/smart_retail/contracts/outputs.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 1002,
+      "sha256": "662ed306a8c87bed4bf70e0d01b4994c8dad54d849fbdea045ab17c4b92a89e6"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/categories/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/categories/models.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 386,
+      "sha256": "4c35afb7928e89c0bc236c8ed52dceebf42c8584c07327de42874831afa54a28"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/demand/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/demand/models.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 619,
+      "sha256": "541a1bb1ae2b44ad7648f1b56c08f308701b62e3819ef316afa49c5cdeb7e313"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/floorplan/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/floorplan/models.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 519,
+      "sha256": "d3104965a4478d7aba71e9ba3f8f365e2574635316bc7d97ed04e4a2001c47e1"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/models.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 1158,
+      "sha256": "7721c5473adfa21c4ab8e81d49138e4d032e8231dc44375999768366c7e8c46f"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/optimization/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/optimization/models.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 516,
+      "sha256": "934c6583d4baa7bfe17e26e280b9e6be2a753d71992b8fe9816ebdd4e362170c"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/orders/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/orders/models.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 327,
+      "sha256": "298cee321972ba1a765f0658a1739a8205420c2df1d131df030bf72b2abb3bdb"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/primitives.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 240,
+      "sha256": "117420d3ef131a0401ecc5024fa2ff55670964de12c04bd42d21d4b5b2425a3b"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/products/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/products/models.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 529,
+      "sha256": "35feb2e3982d4173cd4827883f8c5cfc430a5685fa56a7ad4593d1c1cd0b1d3c"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/projects/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/projects/models.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 437,
+      "sha256": "748fffce5848977fea49408a2bd19a99e35197ca8164a92a3118cfba8ec5889f"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/shelves/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/shelves/models.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 567,
+      "sha256": "f6925eb65cbf47261590c2ca49dceb02c9a96e28dd0c1b55a5ed511181c39a56"
+    },
+    {
+      "path": "backend/src/smart_retail/domain/workspace.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 871,
+      "sha256": "7ccb455ac805d864225cd10d4d7b016ad4a3a6ac768f8f64c745b660396aafd2"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t1_layout/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t1_layout/engine.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 5203,
+      "sha256": "09930577255074ceae4ad6f22acbc5df2f7cacb8807daaa75de45a07e0d97b3a"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t2_allocation/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t2_allocation/engine.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 5211,
+      "sha256": "21884d5ca87461cdea00635cdeda82499b84664130d0e1287391998d9a4e6eb6"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t3_slotting/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t3_slotting/engine.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 3227,
+      "sha256": "407b9d1e80f00acc2e4e2190c7328569283791397c4a49d231118303019ac165"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t4_simulation/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t4_simulation/engine.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 8340,
+      "sha256": "a07ce39e87e9a12a86735e34ad889ce1a027df6d595509aa157a3a4d9c598a6f"
+    },
+    {
+      "path": "backend/src/smart_retail/infrastructure/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/infrastructure/database.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 4024,
+      "sha256": "e1dfd4e5e40a8b4755c480b03d84ada5e5ba2f01d324090054b04d3fe73464cc"
+    },
+    {
+      "path": "backend/src/smart_retail/infrastructure/provenance.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 638,
+      "sha256": "769d166303c5c0d8992f09758704302b89c304a4243e2ac60afb5368934007cd"
+    },
+    {
+      "path": "backend/src/smart_retail/reporting/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/reporting/export.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 784,
+      "sha256": "d57e629f737c7b6075e954655044184daa6b7ca39c29d2175e89fa0599150b52"
+    },
+    {
+      "path": "backend/src/smart_retail/workers/__init__.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/src/smart_retail/workers/runner.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 7191,
+      "sha256": "ffd663f808a11d39b029f7456ba1a1ff26f6f328ed4ebbffa03d75ccd6095c3c"
+    },
+    {
+      "path": "backend/tests/conftest.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 1288,
+      "sha256": "adf36989799a0e69cf97240d76f8bddcd567bc98748de4ae2dd876c1e0158774"
+    },
+    {
+      "path": "backend/tests/contracts/test_inputs.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 2257,
+      "sha256": "f0424f414b5ef8632fd3558a294a76094ff98bc0046178808fe51354268f0050"
+    },
+    {
+      "path": "backend/tests/integration/test_api.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 4916,
+      "sha256": "6ee62400ef46b1fa594afc412fdf202eb36ba6684cf459f8d3dc3e8067592f0e"
+    },
+    {
+      "path": "backend/tests/integration/test_worker_control.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 2374,
+      "sha256": "fdfdbc77583366308f6cecdbd7151fef0307a5f736c548b5100fa508a74cfdf8"
+    },
+    {
+      "path": "backend/tests/performance/test_baseline.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 904,
+      "sha256": "5cca3cf501169cc492118f189f80a80ed924a19a573916e4b3d57a038fc3d291"
+    },
+    {
+      "path": "backend/tests/regression/test_workflow.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 415,
+      "sha256": "cb65e1062784d33abfc0bc2243ce11ea3672b0ffcdaac4849ccf097af6354662"
+    },
+    {
+      "path": "backend/tests/unit/test_architecture.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 1035,
+      "sha256": "530a90f457bb778cd1527272da50a11a7d0b0f491380726b7afa75c3f7df8c79"
+    },
+    {
+      "path": "backend/tests/unit/test_engines.py",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 6646,
+      "sha256": "28e8e718fe2cb6e074fd148f11ddbd207fe4bd19f50877707645214522eead4c"
+    },
+    {
+      "path": "configs/local.env.example",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 400,
+      "sha256": "8c0e4e61a042c64bf48b7a5cda15b6ed42f1bf1708310d29d7bd15019b13c6d3"
+    },
+    {
+      "path": "datasets/samples/invalid_inputs.json",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 989,
+      "sha256": "5c14bc87f10ceb965e6830ad1ae0df40abe8acae397e9cac23622f1dcfc5ba5c"
+    },
+    {
+      "path": "datasets/samples/small_store.json",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 1950,
+      "sha256": "fde3f46a0c7daef90bc20e8e37b876c10f62e042614d81272c30c35f8eca3a68"
+    },
+    {
+      "path": "datasets/schemas/categories.schema.json",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 2370,
+      "sha256": "2ce7cc53d185e36bf609c548520ca6eb45b2324a36130a9d8038e6f9471660e7"
+    },
+    {
+      "path": "datasets/schemas/demand.schema.json",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 1574,
+      "sha256": "74a017e675281531fb62333b9bf65b544ff862924cfcbb46babe36b6ec00b037"
+    },
+    {
+      "path": "datasets/schemas/floorplan.schema.json",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 1637,
+      "sha256": "ae926b483479f9afdfe8d6e5339f7eacd5051996810310edd69b42d0e6497bc8"
+    },
+    {
+      "path": "datasets/schemas/optimization.schema.json",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 1036,
+      "sha256": "c8535dcde93d856caf99d09168dd46364ede9bba89f46e562d05f04cf5e4b1eb"
+    },
+    {
+      "path": "datasets/schemas/orders.schema.json",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 2149,
+      "sha256": "7ea08e84c6edcd58ba895acb3871d6ec8ba7057aa8cb2158716dabaa923160b4"
+    },
+    {
+      "path": "datasets/schemas/products.schema.json",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 2631,
+      "sha256": "832ba1b9a9d319ea149eb7b5fead7120e4b952bc545e15f9bbd703a33365f472"
+    },
+    {
+      "path": "datasets/schemas/shelves.schema.json",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 3808,
+      "sha256": "cb2fdc3d6eb419e9c4aa93b53a3c68b73e14e0520286fda76a1c302870b05343"
+    },
+    {
+      "path": "datasets/synthetic/README.md",
+      "operation": "created",
+      "phase": "Phase 2 / baseline engines",
+      "bytes": 444,
+      "sha256": "06fd3674efbfc520c68c42717fd78252fc93ecc0498af0de4e964426aba4864f"
+    },
+    {
+      "path": "docker-compose.yml",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 1484,
+      "sha256": "7ad2f67a2dd1587e71c7cd88afd84f2199a932269a148302c36100cebff2eba0"
+    },
+    {
+      "path": "docs/api/routes.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 1722,
+      "sha256": "4bca8557c7b5a7b54a126754d53b2b7abb99213e06f78e621590d74f42be2772"
+    },
+    {
+      "path": "docs/architecture/actual-tree.txt",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 4600,
+      "sha256": "5c56ed0fbe58211fab96a916d1a0a6c9af0173261df548e1d599138921a6d217"
+    },
+    {
+      "path": "docs/architecture/migration.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 3123,
+      "sha256": "01d809efb5414e92afc3c7c230ca8ab152608f3ee39a58ee6eaa8d6dd065288d"
+    },
+    {
+      "path": "docs/architecture/overview.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 4080,
+      "sha256": "c6dee55e8f78bce70b98ae8778c30e38e957a8450b71156b109ba15a83e0fdae"
+    },
+    {
+      "path": "docs/architecture/phase-status.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 4136,
+      "sha256": "a95bc37465afc4fe317b1dd46e42025f2edd39c2579460e3cee527d95918c017"
+    },
+    {
+      "path": "docs/data/input-contracts.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 3830,
+      "sha256": "f206492bd2b3d512c9a613b6733b3cec7746c2c9f85465936314b4ee7815a230"
+    },
+    {
+      "path": "docs/decisions/0001-modular-monolith.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 1607,
+      "sha256": "4cc0abd818ffe211ca41e1727d02f89f03d9b2a3f2ef1257b424db15c85f5042"
+    },
+    {
+      "path": "docs/modules/engines.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 5667,
+      "sha256": "3914e2d9d3c02e76f82f5d2686de7b5ada6fbc44b2d0ac7fa96a1942a86fa7ec"
+    },
+    {
+      "path": "docs/modules/input-modules.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 2127,
+      "sha256": "dc653fc7c295f20a978866da134f774f06f689eafcc4b311bdf19710010a85bb"
+    },
+    {
+      "path": "docs/requirements/rebuild-request.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 21614,
+      "sha256": "319555cf496eba704a20bbec1ba1b437509a8e9806d70dbaf3e88dfe72353d0b"
+    },
+    {
+      "path": "docs/testing/axe-results.json",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 40,
+      "sha256": "874f178e3f4ef30ea33ed78dfa4becf44c69cf3960a1aa6db4af24e6e1a1e525"
+    },
+    {
+      "path": "docs/testing/playwright-results.json",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 8109,
+      "sha256": "db1c38901389f495c98e3b50ee4d14b86bffb1fb447000af07d20bc910d71068"
+    },
+    {
+      "path": "docs/testing/preservation.json",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 150,
+      "sha256": "c27db4101568bc6f2499768546c22c5dac9fde84b96dbf55c8983b323a0d7af8"
+    },
+    {
+      "path": "docs/testing/pytest-results.xml",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 7855,
+      "sha256": "f2ce4ee45f961e76156a39d1847776aa89fa150de40ff0cc8f2512599a94d3a1"
+    },
+    {
+      "path": "docs/testing/ui/desktop-dashboard.png",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 100207,
+      "sha256": "1e369c2025693787a566ef1c77a031fe997fae53053b5670e01cab84fba3343c"
+    },
+    {
+      "path": "docs/testing/ui/desktop-editor.png",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 98932,
+      "sha256": "7e62a55c0314f276646c5a2ee61c3dfd463fa01e8153a4fb7fc550dca1c7d162"
+    },
+    {
+      "path": "docs/testing/ui/downloaded-report.json",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 18757,
+      "sha256": "23119e8a52da5e45a38547b20ce515d1aed80a75ef87839f4f5959a3d4df210f"
+    },
+    {
+      "path": "docs/testing/ui/evidence.json",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 2747,
+      "sha256": "c014afa8b7c1a6f5cae4d3e181c42d28a4e792a305df2a4f2000bc42ed92a008"
+    },
+    {
+      "path": "docs/testing/ui/mobile-dashboard.png",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 73088,
+      "sha256": "7a5301070f0e7b3379508eb189b81a321c8dc49ddf921a0378b25267b65f9ab9"
+    },
+    {
+      "path": "docs/testing/ui/mobile-editor.png",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 57552,
+      "sha256": "cb5f8b38c46c7d7b7899b127bebc0d47fb403587a90d70873f82805eb6e82fe3"
+    },
+    {
+      "path": "docs/testing/verification-summary.json",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 1468,
+      "sha256": "53f758cfd79412bc2bc56de2321edabceb6d1ddebb7d033dd6d823974f305979"
+    },
+    {
+      "path": "docs/testing/verification.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 4078,
+      "sha256": "d2e0c7328990db7da52a9d80c4bbb373804ac77c5a8b0fe949f50c38c54954e1"
+    },
+    {
+      "path": "experiments/README.md",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 612,
+      "sha256": "36cdebe35e2218af477488224b2a8c5bd1941c2abbff656111a0128a174d4bf6"
+    },
+    {
+      "path": "frontend/Dockerfile",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 351,
+      "sha256": "e2dd35a96dbdce98cfa5a88a4bae42fe4901de1ec238711f2475b1de5a4b5c00"
+    },
+    {
+      "path": "frontend/eslint.config.js",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 427,
+      "sha256": "0ba6fc30499431983c40cd1b2c6136b6cc41302dda7c66024a06dd56394aa72d"
+    },
+    {
+      "path": "frontend/index.html",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 377,
+      "sha256": "2a479120e3b31088afc670151d80a8d03f38ed7643d5c1cc4320169dabdacd1e"
+    },
+    {
+      "path": "frontend/nginx.conf",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 234,
+      "sha256": "0307e6efbd3d863bc9f7fa44541c80972ffe0f3375d635c4c6f987932c3b5df5"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 91818,
+      "sha256": "b30e1e56f869a2bc5499cd6fec9f51bec50a279685f686ea94af6784b99fdf73"
+    },
+    {
+      "path": "frontend/package.json",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 940,
+      "sha256": "126298c7c90a300ffd12641b2bf6cb1b842a66033cc9621acc428ebbc73558d4"
+    },
+    {
+      "path": "frontend/playwright.config.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 433,
+      "sha256": "db2ca0cbb21e3b918705c5a779146203917e0202fe43907692cfa61efeaf0b11"
+    },
+    {
+      "path": "frontend/public/favicon.svg",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 274,
+      "sha256": "0dd7f6d0da069e763985f390b69e22c53ecdb120aad7e7d3db9a046ffe70c9c0"
+    },
+    {
+      "path": "frontend/src/app/App.tsx",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 36839,
+      "sha256": "9b38f4befba4fd9794e6f19a5f5e06ed5170ce7944ea5ec3b3c2e26013671985"
+    },
+    {
+      "path": "frontend/src/app/styles.css",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 20838,
+      "sha256": "1ddeedd45d83646a4ef5688839eea2a6063d91de32ffc97c9902a97d80d00e59"
+    },
+    {
+      "path": "frontend/src/components/InputEditor.tsx",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 6980,
+      "sha256": "650d6e5916eff2f9e2c522e7262b0e75343eac5a09883ace3921e4e9a314c6d2"
+    },
+    {
+      "path": "frontend/src/components/Stat.tsx",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 406,
+      "sha256": "0e75ef3d34c555c66fbff1341d07823039e7b1ad14337b2dec278e9669b9d258"
+    },
+    {
+      "path": "frontend/src/features/categories/definition.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 377,
+      "sha256": "7cc6bc58f2b6d84f18433f409812c1abff60fce619ab8ee9e1a89a233568755d"
+    },
+    {
+      "path": "frontend/src/features/demand/definition.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 401,
+      "sha256": "fceb83a12c1e3bdbc18d76b0e2e9e70eeffddde45683f26ccea9f79faf783cf3"
+    },
+    {
+      "path": "frontend/src/features/floorplan-editor/FloorplanEditor.tsx",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 17412,
+      "sha256": "2a74160d57ff7472ea0e78b3a672d24bb10ad8884bce654a7170e308b3dd30eb"
+    },
+    {
+      "path": "frontend/src/features/optimization/definition.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 423,
+      "sha256": "142b9137f78c6fe07b2f29162263881ea473be2760661a4d5aa3d71941e59a7a"
+    },
+    {
+      "path": "frontend/src/features/orders/definition.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 363,
+      "sha256": "d9d79c5ec4d26ab01d708cd841fa85b4ecc032f11958079e15a509ab9c60f942"
+    },
+    {
+      "path": "frontend/src/features/products/definition.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 398,
+      "sha256": "73d37b43dabec5d7ac988483a3cd5fd3efdb3dee70290e3a4e6e1e8d4f4faac9"
+    },
+    {
+      "path": "frontend/src/features/projects/sample.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 91,
+      "sha256": "3a8c5da7a1e8d5d5840d8c48dd39ac1baf2cb9246a7bb90a01668f72feb4ab7f"
+    },
+    {
+      "path": "frontend/src/features/results/PlanogramViewer.tsx",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 2775,
+      "sha256": "a89e9d581a7a67536eb345f44231e3427ef3d6cc230f29bf32c8e71106c43f08"
+    },
+    {
+      "path": "frontend/src/features/results/SimulationAnalytics.tsx",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 1115,
+      "sha256": "20cb6bd5a70b8ffde99f6450513c9429d72bdba6ce41938373b6bbc1826d1c82"
+    },
+    {
+      "path": "frontend/src/features/shelves/definition.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 403,
+      "sha256": "33a9929f88716a9fddd28eb76ef0078a4c7f8779dbf53f27510787ff9e682aeb"
+    },
+    {
+      "path": "frontend/src/main.tsx",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 213,
+      "sha256": "16a31ebcd6f5b1d6602af95f89dbff9d4747ee524a007d005cc52aeae26772e8"
+    },
+    {
+      "path": "frontend/src/pages/DataInputPage.tsx",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 2006,
+      "sha256": "755fe3115a6d437c5026d7d2ebcff03110a2a3950373fe3cb8dc0812511d9afc"
+    },
+    {
+      "path": "frontend/src/pages/ReportsPage.tsx",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 2683,
+      "sha256": "18abc75a8d2e20564ebdca1c96f2156d6ae7215aaaacc63c9e069ebfdad04577"
+    },
+    {
+      "path": "frontend/src/services/api.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 1670,
+      "sha256": "fdb56cf57189097b00d23532c8ec474254bb61f2b16b3366fe9a69ba6c807fb0"
+    },
+    {
+      "path": "frontend/src/types/models.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 2057,
+      "sha256": "2008f438706a6f644a88b8d1ffac1e637244ff1baff92a6fcd5dd8e77d4ab609"
+    },
+    {
+      "path": "frontend/src/utils/geometry.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 1819,
+      "sha256": "417379eaeae728c0cef1aff393c6dc579103a05285fbd075a348d5673ef95d84"
+    },
+    {
+      "path": "frontend/tests/e2e/accessibility.spec.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 1033,
+      "sha256": "7befda2cb0adfca51ce2b7bdde6f0e6c42e1a101222f44a1b8e81754ce70e872"
+    },
+    {
+      "path": "frontend/tests/e2e/workflow.spec.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 7548,
+      "sha256": "f1a5133820c13dc38599db07bf81178bd52aa92a26b3691e2bf30f8f5bc82b5a"
+    },
+    {
+      "path": "frontend/tests/geometry.test.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 1539,
+      "sha256": "8f8a70a584db2c1ec983c0ed25ac190c109877b660682e29de5a6ea062874b93"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 432,
+      "sha256": "292c798190ee72f555a4bbbeb00a9bb0ae4f3aea8cc83b9ef2190cbeb9ab7ca0"
+    },
+    {
+      "path": "frontend/vite.config.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 239,
+      "sha256": "02a388b35de4ed9245b4bc742a980f02a4824e65ff8d4169b94d411835cb9e63"
+    },
+    {
+      "path": "frontend/vitest.config.ts",
+      "operation": "created",
+      "phase": "Phase 3",
+      "bytes": 152,
+      "sha256": "27131f24782b8436a591cc1fbfb7f028f3cd1aa76bed7323844caa16b264ed11"
+    },
+    {
+      "path": "scripts/setup.ps1",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 784,
+      "sha256": "d7614c5159947cc99ea404359dbdddafde09be4c4faf95223f6d9f3fc8a52835"
+    },
+    {
+      "path": "scripts/start.ps1",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 3009,
+      "sha256": "2d56c6bde52dd8ce55d3705d718a9f9928cd0b62209ac88dc5fd529a1e3c3da3"
+    },
+    {
+      "path": "scripts/stop.ps1",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 750,
+      "sha256": "16094fb53b923f5dddfdeb6eeadc921067059dbb1535c4034b7f60d9c07abcd0"
+    },
+    {
+      "path": "scripts/verify_postgres.py",
+      "operation": "created",
+      "phase": "Phase 0-1 / documentation-infrastructure",
+      "bytes": 1831,
+      "sha256": "42d8e86ece7e12d97f97e0b7b307b1444ff32222a9a8011def8dfadc84f451b4"
+    }
+  ],
+  "moved_original_tree": {
+    "from": "smart-retail-layout/",
+    "to": "D:\\04_Archives\\SmartRetail\\20261021-retired-source-358740e0",
+    "entries": 57457,
+    "original_entry_manifest": "C:\\Users\\admin\\Documents\\SmartRetailBackups\\20261021-rebuild-00301a95\\manifest.json"
+  },
+  "preserved_original_roots": [
+    "de-cuong",
+    "docx",
+    "Retail_TestPack",
+    "HANDOFF.html",
+    "HANDOFF_files",
+    ".git"
+  ],
+  "not_counted": [
+    "ignored environments/caches/runtime",
+    "inherited browser artifact deletions",
+    "self-hash of this manifest",
+    "new browser-observation logs under .playwright-mcp; final Git status retained externally"
+  ]
+}

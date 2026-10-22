@@ -1,0 +1,2585 @@
+{
+  "input_sha256": "9e1156a387364b5b9ea69f0762974be23bad396a3097d88c5c96622bdecf4fac",
+  "seed": 37,
+  "floorplan": {
+    "units": "m",
+    "boundary": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        12.0,
+        0.0
+      ],
+      [
+        12.0,
+        9.0
+      ],
+      [
+        0.0,
+        9.0
+      ]
+    ],
+    "entrance": [
+      0.0,
+      4.5
+    ],
+    "obstacles": [
+      [
+        [
+          9.0,
+          6.0
+        ],
+        [
+          10.0,
+          6.0
+        ],
+        [
+          10.0,
+          7.0
+        ],
+        [
+          9.0,
+          7.0
+        ]
+      ]
+    ],
+    "min_aisle_m": 0.8,
+    "grid_m": 0.5
+  },
+  "stages": {
+    "T1": {
+      "shelves": [
+        {
+          "id": "S",
+          "width_m": 1.0,
+          "depth_m": 0.6,
+          "height_m": 1.0,
+          "levels": [
+            {
+              "id": "L",
+              "width_m": 1.0,
+              "depth_m": 0.6,
+              "height_m": 0.5,
+              "max_load_kg": 6.0
+            }
+          ],
+          "x": 1.0,
+          "y": 1.0,
+          "rotation": 0,
+          "faces": 1,
+          "kind": "gondola",
+          "locked": false
+        }
+      ],
+      "status": "FEASIBLE_GRID_BASELINE"
+    },
+    "T2": {
+      "status": "OPTIMAL",
+      "assignment": {
+        "C": "S"
+      },
+      "objective": 0.23560796062763054,
+      "objective_units": "dimensionless demand-weighted entrance distance / floor diagonal",
+      "algorithm": "milp"
+    },
+    "T3": {
+      "placements": [
+        {
+          "sku": "A",
+          "shelf_id": "S",
+          "face": 0,
+          "level_id": "L",
+          "x_m": 0.0,
+          "width_m": 0.3,
+          "orientation": 0,
+          "facings": 1,
+          "layers": 2,
+          "depth_units": 2,
+          "capacity_units": 4,
+          "load_kg": 4.0
+        },
+        {
+          "sku": "B",
+          "shelf_id": "S",
+          "face": 0,
+          "level_id": "L",
+          "x_m": 0.3,
+          "width_m": 0.3,
+          "orientation": 0,
+          "facings": 1,
+          "layers": 1,
+          "depth_units": 2,
+          "capacity_units": 2,
+          "load_kg": 2.0
+        }
+      ],
+      "status": "OPTIMAL",
+      "algorithm": "milp",
+      "objective": 14.0,
+      "objective_units": "demand-weighted capacity units",
+      "mip_gap": 0.0
+    },
+    "T4": {
+      "metrics": {
+        "journeys": [
+          {
+            "kind": "customer",
+            "id": "C1",
+            "arrival_s": 137.48618853317143,
+            "completion_s": 153.5754441841602,
+            "elapsed_s": 16.089255650988775,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "kind": "customer",
+            "id": "C2",
+            "arrival_s": 466.07054230414656,
+            "completion_s": 482.15979795513533,
+            "elapsed_s": 16.089255650988775,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "kind": "customer",
+            "id": "C3",
+            "arrival_s": 585.7179255699456,
+            "completion_s": 601.8071812209345,
+            "elapsed_s": 16.08925565098889,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "kind": "customer",
+            "id": "C4",
+            "arrival_s": 654.8132477547126,
+            "completion_s": 670.9025034057015,
+            "elapsed_s": 16.08925565098889,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "kind": "customer",
+            "id": "C5",
+            "arrival_s": 1140.336136752442,
+            "completion_s": 1156.4253924034308,
+            "elapsed_s": 16.08925565098889,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "kind": "customer",
+            "id": "C6",
+            "arrival_s": 1250.4917008043958,
+            "completion_s": 1266.5809564553847,
+            "elapsed_s": 16.08925565098889,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "kind": "customer",
+            "id": "C7",
+            "arrival_s": 1561.7577627605922,
+            "completion_s": 1577.847018411581,
+            "elapsed_s": 16.08925565098889,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "kind": "customer",
+            "id": "C8",
+            "arrival_s": 1632.1697530691185,
+            "completion_s": 1648.2590087201074,
+            "elapsed_s": 16.08925565098889,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "kind": "customer",
+            "id": "C9",
+            "arrival_s": 1643.622605838305,
+            "completion_s": 1659.7118614892938,
+            "elapsed_s": 16.08925565098889,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "kind": "customer",
+            "id": "C10",
+            "arrival_s": 1737.7670173901924,
+            "completion_s": 1753.8562730411813,
+            "elapsed_s": 16.08925565098889,
+            "distance_m": 9.707106781186548,
+            "wait_s": 0.0,
+            "late": false,
+            "picks": [
+              {
+                "sku": "A",
+                "quantity": 1
+              },
+              {
+                "sku": "B",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "routes": [
+          {
+            "id": "C1",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "id": "C2",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "id": "C3",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "id": "C4",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "id": "C5",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "id": "C6",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "id": "C7",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "id": "C8",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "id": "C9",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "id": "C10",
+            "kind": "customer",
+            "shelves": [
+              "S:0"
+            ],
+            "points_m": [
+              [
+                0.0,
+                4.5
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                1.25,
+                0.75
+              ],
+              [
+                0.75,
+                0.75
+              ],
+              [
+                0.25,
+                0.75
+              ],
+              [
+                0.25,
+                1.25
+              ],
+              [
+                0.25,
+                1.75
+              ],
+              [
+                0.25,
+                2.25
+              ],
+              [
+                0.25,
+                2.75
+              ],
+              [
+                0.25,
+                3.25
+              ],
+              [
+                0.25,
+                3.75
+              ],
+              [
+                0.25,
+                4.25
+              ],
+              [
+                0.0,
+                4.5
+              ]
+            ]
+          }
+        ],
+        "completed": 10,
+        "mean_distance_m": 9.707106781186548,
+        "mean_wait_s": 0.0,
+        "late_orders": 0,
+        "walkable_cells": 426,
+        "simulation_end_s": 1753.8562730411813
+      },
+      "assumptions": [
+        "Synthetic baskets and Poisson customer arrivals; no observed trajectories",
+        "Customers and pickers use nearest-next-shelf routes on a four-neighbor grid",
+        "Congestion is a one-server shelf service queue, not corridor pedestrian dynamics",
+        "Arrivals are truncated at horizon_s; admitted journeys drain to completion",
+        "Order arrivals use seconds since earliest supplied order timestamp"
+      ]
+    }
+  },
+  "stage_cache": {
+    "T1": {
+      "key": "20981e5e739d22aba329991014688527a4b17fcd248178a5c2bbb1fe34efa7b7",
+      "hit": false
+    },
+    "T2": {
+      "key": "604e25fc7e3cc078dc61929d3034dfbeb6f43b5308b39fa5786fb26dbe8f22d6",
+      "hit": false
+    },
+    "T3": {
+      "key": "38b0915d67d7bd5ab22c345b2ee0006d12b789d44354021558dba3b0fccdab9d",
+      "hit": false
+    },
+    "T4": {
+      "key": "e20eeb063ada3fd64bcc2b1bf16aa7b43ac50e17a252194f2bed045077f71c13",
+      "hit": false
+    }
+  },
+  "status": "SUCCEEDED",
+  "integrated": {
+    "algorithm": "bounded_grid_multistart_v1",
+    "selected_candidate": 0,
+    "requested_candidates": 1,
+    "evaluated_candidates": 1,
+    "candidates": [
+      {
+        "candidate": 0,
+        "status": "FEASIBLE",
+        "score": 0.6471404520791032,
+        "components": [
+          0.6471404520791032,
+          0.0,
+          0.0
+        ],
+        "stages": {
+          "T1": {
+            "shelves": [
+              {
+                "id": "S",
+                "width_m": 1.0,
+                "depth_m": 0.6,
+                "height_m": 1.0,
+                "levels": [
+                  {
+                    "id": "L",
+                    "width_m": 1.0,
+                    "depth_m": 0.6,
+                    "height_m": 0.5,
+                    "max_load_kg": 6.0
+                  }
+                ],
+                "x": 1.0,
+                "y": 1.0,
+                "rotation": 0,
+                "faces": 1,
+                "kind": "gondola",
+                "locked": false
+              }
+            ],
+            "status": "FEASIBLE_GRID_BASELINE"
+          },
+          "T2": {
+            "status": "OPTIMAL",
+            "assignment": {
+              "C": "S"
+            },
+            "objective": 0.23560796062763054,
+            "objective_units": "dimensionless demand-weighted entrance distance / floor diagonal",
+            "algorithm": "milp"
+          },
+          "T3": {
+            "placements": [
+              {
+                "sku": "A",
+                "shelf_id": "S",
+                "face": 0,
+                "level_id": "L",
+                "x_m": 0.0,
+                "width_m": 0.3,
+                "orientation": 0,
+                "facings": 1,
+                "layers": 2,
+                "depth_units": 2,
+                "capacity_units": 4,
+                "load_kg": 4.0
+              },
+              {
+                "sku": "B",
+                "shelf_id": "S",
+                "face": 0,
+                "level_id": "L",
+                "x_m": 0.3,
+                "width_m": 0.3,
+                "orientation": 0,
+                "facings": 1,
+                "layers": 1,
+                "depth_units": 2,
+                "capacity_units": 2,
+                "load_kg": 2.0
+              }
+            ],
+            "status": "OPTIMAL",
+            "algorithm": "milp",
+            "objective": 14.0,
+            "objective_units": "demand-weighted capacity units",
+            "mip_gap": 0.0
+          },
+          "T4": {
+            "metrics": {
+              "journeys": [
+                {
+                  "kind": "customer",
+                  "id": "C1",
+                  "arrival_s": 137.48618853317143,
+                  "completion_s": 153.5754441841602,
+                  "elapsed_s": 16.089255650988775,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "customer",
+                  "id": "C2",
+                  "arrival_s": 466.07054230414656,
+                  "completion_s": 482.15979795513533,
+                  "elapsed_s": 16.089255650988775,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "customer",
+                  "id": "C3",
+                  "arrival_s": 585.7179255699456,
+                  "completion_s": 601.8071812209345,
+                  "elapsed_s": 16.08925565098889,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "customer",
+                  "id": "C4",
+                  "arrival_s": 654.8132477547126,
+                  "completion_s": 670.9025034057015,
+                  "elapsed_s": 16.08925565098889,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "customer",
+                  "id": "C5",
+                  "arrival_s": 1140.336136752442,
+                  "completion_s": 1156.4253924034308,
+                  "elapsed_s": 16.08925565098889,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "customer",
+                  "id": "C6",
+                  "arrival_s": 1250.4917008043958,
+                  "completion_s": 1266.5809564553847,
+                  "elapsed_s": 16.08925565098889,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "customer",
+                  "id": "C7",
+                  "arrival_s": 1561.7577627605922,
+                  "completion_s": 1577.847018411581,
+                  "elapsed_s": 16.08925565098889,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "customer",
+                  "id": "C8",
+                  "arrival_s": 1632.1697530691185,
+                  "completion_s": 1648.2590087201074,
+                  "elapsed_s": 16.08925565098889,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "customer",
+                  "id": "C9",
+                  "arrival_s": 1643.622605838305,
+                  "completion_s": 1659.7118614892938,
+                  "elapsed_s": 16.08925565098889,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                },
+                {
+                  "kind": "customer",
+                  "id": "C10",
+                  "arrival_s": 1737.7670173901924,
+                  "completion_s": 1753.8562730411813,
+                  "elapsed_s": 16.08925565098889,
+                  "distance_m": 9.707106781186548,
+                  "wait_s": 0.0,
+                  "late": false,
+                  "picks": [
+                    {
+                      "sku": "A",
+                      "quantity": 1
+                    },
+                    {
+                      "sku": "B",
+                      "quantity": 1
+                    }
+                  ]
+                }
+              ],
+              "routes": [
+                {
+                  "id": "C1",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                },
+                {
+                  "id": "C2",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                },
+                {
+                  "id": "C3",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                },
+                {
+                  "id": "C4",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                },
+                {
+                  "id": "C5",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                },
+                {
+                  "id": "C6",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                },
+                {
+                  "id": "C7",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                },
+                {
+                  "id": "C8",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                },
+                {
+                  "id": "C9",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                },
+                {
+                  "id": "C10",
+                  "kind": "customer",
+                  "shelves": [
+                    "S:0"
+                  ],
+                  "points_m": [
+                    [
+                      0.0,
+                      4.5
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      1.25,
+                      0.75
+                    ],
+                    [
+                      0.75,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      0.75
+                    ],
+                    [
+                      0.25,
+                      1.25
+                    ],
+                    [
+                      0.25,
+                      1.75
+                    ],
+                    [
+                      0.25,
+                      2.25
+                    ],
+                    [
+                      0.25,
+                      2.75
+                    ],
+                    [
+                      0.25,
+                      3.25
+                    ],
+                    [
+                      0.25,
+                      3.75
+                    ],
+                    [
+                      0.25,
+                      4.25
+                    ],
+                    [
+                      0.0,
+                      4.5
+                    ]
+                  ]
+                }
+              ],
+              "completed": 10,
+              "mean_distance_m": 9.707106781186548,
+              "mean_wait_s": 0.0,
+              "late_orders": 0,
+              "walkable_cells": 426,
+              "simulation_end_s": 1753.8562730411813
+            },
+            "assumptions": [
+              "Synthetic baskets and Poisson customer arrivals; no observed trajectories",
+              "Customers and pickers use nearest-next-shelf routes on a four-neighbor grid",
+              "Congestion is a one-server shelf service queue, not corridor pedestrian dynamics",
+              "Arrivals are truncated at horizon_s; admitted journeys drain to completion",
+              "Order arrivals use seconds since earliest supplied order timestamp"
+            ]
+          }
+        },
+        "stage_cache": {
+          "T1": {
+            "key": "20981e5e739d22aba329991014688527a4b17fcd248178a5c2bbb1fe34efa7b7",
+            "hit": false
+          },
+          "T2": {
+            "key": "604e25fc7e3cc078dc61929d3034dfbeb6f43b5308b39fa5786fb26dbe8f22d6",
+            "hit": false
+          },
+          "T3": {
+            "key": "38b0915d67d7bd5ab22c345b2ee0006d12b789d44354021558dba3b0fccdab9d",
+            "hit": false
+          },
+          "T4": {
+            "key": "e20eeb063ada3fd64bcc2b1bf16aa7b43ac50e17a252194f2bed045077f71c13",
+            "hit": false
+          }
+        }
+      }
+    ],
+    "pareto_candidates": [
+      0
+    ],
+    "global_optimality_proven": false,
+    "termination": "CANDIDATE_LIMIT",
+    "normalization": [
+      "mean route m / floor diagonal m",
+      "mean wait s / arrival horizon s",
+      "sum positive (demand - capacity units) / max(1, total demand)"
+    ],
+    "assumptions": [
+      "Product demand is treated as horizon unit demand for stock shortfall scoring",
+      "T1 variants change sweep direction, orientation order and shelf order",
+      "One shared wall budget; deterministic candidate ordering can favor early candidates",
+      "Content-addressed stage reuse is limited to this run; no historical artifacts are reused"
+    ]
+  },
+  "runtime": {
+    "source_sha256": "4512b83382ba5e7c632aa6827ef8dd5bc48595c3f8e332a74524cfb03707d686",
+    "python": "3.12.10",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "shapely": "2.2.0",
+      "simpy": "4.1.2",
+      "networkx": "3.7",
+      "pydantic": "2.14.1",
+      "SQLAlchemy": "2.1.5"
+    }
+  }
+}

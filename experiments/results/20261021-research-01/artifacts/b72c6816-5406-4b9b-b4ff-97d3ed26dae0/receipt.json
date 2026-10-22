@@ -1,0 +1,12 @@
+{
+  "run_id": "b72c6816-5406-4b9b-b4ff-97d3ed26dae0",
+  "status": "FAILED",
+  "stage": "T3",
+  "input_sha256": "4e9ff56c09226e8b51eaa4371adba2213baaff4c85c1f2b9b8cb5f2d90e0aba8",
+  "result_sha256": null,
+  "error": {
+    "code": "SLOTTING_FAILED",
+    "message": "SKU B cannot be placed by first-fit within dimensions, facings and load limits; infeasibility is not proven"
+  },
+  "child_exit": 0
+}

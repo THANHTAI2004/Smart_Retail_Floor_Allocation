@@ -1,0 +1,708 @@
+{
+  "schema": "smart-retail-report/1",
+  "run": {
+    "id": "6020ed1e-d69e-44c2-b87b-148da70b69cd",
+    "project_id": "a2d5702b-d9fc-4318-bd94-d18f2d61398d",
+    "project_revision": 9,
+    "input_sha256": "dbb9e1bc86169ba372c2462dfba13d66dc35dd7ec3b272450fb3d9d2f374dd29",
+    "status": "SUCCEEDED",
+    "stage": "COMPLETE",
+    "created_at": "2026-10-21T15:02:45.049963+00:00",
+    "result": {
+      "input_sha256": "dbb9e1bc86169ba372c2462dfba13d66dc35dd7ec3b272450fb3d9d2f374dd29",
+      "seed": 42,
+      "floorplan": {
+        "units": "m",
+        "boundary": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            12.0,
+            0.0
+          ],
+          [
+            12.0,
+            9.0
+          ],
+          [
+            0.0,
+            9.0
+          ]
+        ],
+        "entrance": [
+          0.0,
+          4.5
+        ],
+        "obstacles": [
+          [
+            [
+              9.0,
+              6.0
+            ],
+            [
+              10.0,
+              6.0
+            ],
+            [
+              10.0,
+              7.0
+            ],
+            [
+              9.0,
+              7.0
+            ]
+          ]
+        ],
+        "min_aisle_m": 0.9,
+        "grid_m": 0.5
+      },
+      "stages": {
+        "T1": {
+          "shelves": [
+            {
+              "id": "S01",
+              "width_m": 2.0,
+              "depth_m": 0.6,
+              "height_m": 1.8,
+              "levels": [
+                {
+                  "id": "L1",
+                  "width_m": 1.9,
+                  "depth_m": 0.55,
+                  "height_m": 0.5,
+                  "max_load_kg": 80.0
+                },
+                {
+                  "id": "L2",
+                  "width_m": 1.9,
+                  "depth_m": 0.55,
+                  "height_m": 0.5,
+                  "max_load_kg": 80.0
+                }
+              ],
+              "x": 1.0,
+              "y": 1.0,
+              "rotation": 0,
+              "faces": 1,
+              "kind": "gondola",
+              "locked": false
+            },
+            {
+              "id": "S02",
+              "width_m": 2.0,
+              "depth_m": 0.6,
+              "height_m": 1.8,
+              "levels": [
+                {
+                  "id": "L1",
+                  "width_m": 1.9,
+                  "depth_m": 0.55,
+                  "height_m": 0.5,
+                  "max_load_kg": 80.0
+                },
+                {
+                  "id": "L2",
+                  "width_m": 1.9,
+                  "depth_m": 0.55,
+                  "height_m": 0.5,
+                  "max_load_kg": 80.0
+                }
+              ],
+              "x": 4.0,
+              "y": 1.0,
+              "rotation": 0,
+              "faces": 1,
+              "kind": "gondola",
+              "locked": false
+            }
+          ],
+          "status": "FEASIBLE_GRID_BASELINE"
+        },
+        "T2": {
+          "status": "OPTIMAL",
+          "assignment": {
+            "DRINK": "S01",
+            "FOOD": "S02"
+          },
+          "objective": 0.31336529816073866,
+          "objective_units": "dimensionless demand-weighted entrance distance / floor diagonal",
+          "algorithm": "milp"
+        },
+        "T3": {
+          "placements": [
+            {
+              "sku": "WATER",
+              "shelf_id": "S01",
+              "level_id": "L1",
+              "face": 0,
+              "x_m": 0.0,
+              "width_m": 0.36,
+              "orientation": 0,
+              "facings": 4,
+              "layers": 1,
+              "depth_units": 6,
+              "capacity_units": 24,
+              "load_kg": 12.0
+            },
+            {
+              "sku": "RICE",
+              "shelf_id": "S02",
+              "level_id": "L1",
+              "face": 0,
+              "x_m": 0.0,
+              "width_m": 0.5700000000000001,
+              "orientation": 0,
+              "facings": 3,
+              "layers": 1,
+              "depth_units": 4,
+              "capacity_units": 12,
+              "load_kg": 12.0
+            }
+          ],
+          "status": "FEASIBLE_FIRST_FIT"
+        },
+        "T4": {
+          "metrics": {
+            "journeys": [
+              {
+                "kind": "picker",
+                "id": "O001",
+                "arrival_s": 0.0,
+                "completion_s": 31.66666666666667,
+                "elapsed_s": 31.66666666666667,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C1",
+                "arrival_s": 122.40723447297613,
+                "completion_s": 142.0739011396428,
+                "elapsed_s": 19.66666666666667,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C2",
+                "arrival_s": 284.7738297957211,
+                "completion_s": 304.4404964623877,
+                "elapsed_s": 19.66666666666663,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C3",
+                "arrival_s": 315.08417207613473,
+                "completion_s": 334.75083874280136,
+                "elapsed_s": 19.66666666666663,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C4",
+                "arrival_s": 450.58493313196584,
+                "completion_s": 470.25159979863247,
+                "elapsed_s": 19.66666666666663,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C5",
+                "arrival_s": 557.7209440805792,
+                "completion_s": 577.387610747246,
+                "elapsed_s": 19.666666666666742,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C6",
+                "arrival_s": 561.3509653454622,
+                "completion_s": 581.387610747246,
+                "elapsed_s": 20.036645401783744,
+                "distance_m": 14.0,
+                "wait_s": 0.36997873511700163,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C7",
+                "arrival_s": 593.1301398949744,
+                "completion_s": 612.7968065616411,
+                "elapsed_s": 19.666666666666742,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C8",
+                "arrival_s": 691.987850099431,
+                "completion_s": 702.6545167660977,
+                "elapsed_s": 10.666666666666742,
+                "distance_m": 8.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C9",
+                "arrival_s": 721.8710203754498,
+                "completion_s": 732.5376870421165,
+                "elapsed_s": 10.666666666666742,
+                "distance_m": 8.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C10",
+                "arrival_s": 920.7995916822215,
+                "completion_s": 940.4662583488882,
+                "elapsed_s": 19.666666666666742,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C11",
+                "arrival_s": 1091.4587146723804,
+                "completion_s": 1111.125381339047,
+                "elapsed_s": 19.666666666666515,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C12",
+                "arrival_s": 1235.1935075891986,
+                "completion_s": 1245.860174255865,
+                "elapsed_s": 10.666666666666515,
+                "distance_m": 8.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C13",
+                "arrival_s": 1274.2597426492598,
+                "completion_s": 1293.9264093159263,
+                "elapsed_s": 19.666666666666515,
+                "distance_m": 14.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C14",
+                "arrival_s": 1652.4424604618564,
+                "completion_s": 1663.109127128523,
+                "elapsed_s": 10.666666666666515,
+                "distance_m": 8.0,
+                "wait_s": 0.0,
+                "late": false
+              },
+              {
+                "kind": "customer",
+                "id": "C15",
+                "arrival_s": 1665.3807883460724,
+                "completion_s": 1676.047455012739,
+                "elapsed_s": 10.666666666666515,
+                "distance_m": 8.0,
+                "wait_s": 0.0,
+                "late": false
+              }
+            ],
+            "routes": [
+              {
+                "id": "O001",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C1",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C2",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C3",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C4",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C5",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C6",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C7",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C8",
+                "shelves": [
+                  "S01"
+                ]
+              },
+              {
+                "id": "C9",
+                "shelves": [
+                  "S01"
+                ]
+              },
+              {
+                "id": "C10",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C11",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C12",
+                "shelves": [
+                  "S01"
+                ]
+              },
+              {
+                "id": "C13",
+                "shelves": [
+                  "S01",
+                  "S02"
+                ]
+              },
+              {
+                "id": "C14",
+                "shelves": [
+                  "S01"
+                ]
+              },
+              {
+                "id": "C15",
+                "shelves": [
+                  "S01"
+                ]
+              }
+            ],
+            "completed": 16,
+            "mean_distance_m": 12.125,
+            "mean_wait_s": 0.023123670944812602,
+            "late_orders": 0,
+            "walkable_cells": 420,
+            "simulation_end_s": 1676.047455012739
+          },
+          "assumptions": [
+            "Synthetic baskets and Poisson customer arrivals; no observed trajectories",
+            "Customers and pickers use nearest-next-shelf routes on a four-neighbor grid",
+            "Congestion is a one-server shelf service queue, not corridor pedestrian dynamics",
+            "Arrivals are truncated at horizon_s; admitted journeys drain to completion",
+            "Order arrivals use seconds since earliest supplied order timestamp"
+          ]
+        }
+      },
+      "status": "SUCCEEDED",
+      "runtime": {
+        "source_sha256": "1b3e3977f8c79f926eceb31b5b45d8fd977d0966f28fe2a578ffdb9f1ee15b93",
+        "python": "3.12.10",
+        "packages": {
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "shapely": "2.2.0",
+          "simpy": "4.1.2",
+          "networkx": "3.7",
+          "pydantic": "2.14.1",
+          "SQLAlchemy": "2.1.5"
+        }
+      }
+    },
+    "error": null,
+    "result_sha256": "901c3e14b88301aa95d25e25e2997f0942ab6b9a2356af8e83180944c78f0375",
+    "snapshot": {
+      "floorplan": {
+        "units": "m",
+        "boundary": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            12.0,
+            0.0
+          ],
+          [
+            12.0,
+            9.0
+          ],
+          [
+            0.0,
+            9.0
+          ]
+        ],
+        "entrance": [
+          0.0,
+          4.5
+        ],
+        "obstacles": [
+          [
+            [
+              9.0,
+              6.0
+            ],
+            [
+              10.0,
+              6.0
+            ],
+            [
+              10.0,
+              7.0
+            ],
+            [
+              9.0,
+              7.0
+            ]
+          ]
+        ],
+        "min_aisle_m": 0.9,
+        "grid_m": 0.5
+      },
+      "shelves": {
+        "layout_mode": "optimizable",
+        "items": [
+          {
+            "id": "S01",
+            "kind": "gondola",
+            "width_m": 2.0,
+            "depth_m": 0.6,
+            "height_m": 1.8,
+            "levels": [
+              {
+                "id": "L1",
+                "width_m": 1.9,
+                "depth_m": 0.55,
+                "height_m": 0.5,
+                "max_load_kg": 80.0
+              },
+              {
+                "id": "L2",
+                "width_m": 1.9,
+                "depth_m": 0.55,
+                "height_m": 0.5,
+                "max_load_kg": 80.0
+              }
+            ],
+            "x": null,
+            "y": null,
+            "rotation": 0,
+            "faces": 1,
+            "locked": false
+          },
+          {
+            "id": "S02",
+            "kind": "gondola",
+            "width_m": 2.0,
+            "depth_m": 0.6,
+            "height_m": 1.8,
+            "levels": [
+              {
+                "id": "L1",
+                "width_m": 1.9,
+                "depth_m": 0.55,
+                "height_m": 0.5,
+                "max_load_kg": 80.0
+              },
+              {
+                "id": "L2",
+                "width_m": 1.9,
+                "depth_m": 0.55,
+                "height_m": 0.5,
+                "max_load_kg": 80.0
+              }
+            ],
+            "x": null,
+            "y": null,
+            "rotation": 0,
+            "faces": 1,
+            "locked": false
+          }
+        ]
+      },
+      "categories": {
+        "items": [
+          {
+            "id": "DRINK",
+            "name": "Đồ uống",
+            "priority": 1.0,
+            "demand": 80.0,
+            "required_width_m": 2.0,
+            "fixed_shelf_id": null,
+            "near": [],
+            "separate": [],
+            "distance_m": 3.0
+          },
+          {
+            "id": "FOOD",
+            "name": "Thực phẩm",
+            "priority": 1.0,
+            "demand": 60.0,
+            "required_width_m": 2.0,
+            "fixed_shelf_id": null,
+            "near": [],
+            "separate": [],
+            "distance_m": 3.0
+          }
+        ]
+      },
+      "products": {
+        "items": [
+          {
+            "sku": "WATER",
+            "name": "Nước uống",
+            "category_id": "DRINK",
+            "width_m": 0.08,
+            "depth_m": 0.08,
+            "height_m": 0.22,
+            "weight_kg": 0.5,
+            "demand": 80.0,
+            "facings": 4,
+            "orientations": [
+              0,
+              90
+            ],
+            "stack_layers": 1,
+            "clearance_m": 0.01
+          },
+          {
+            "sku": "RICE",
+            "name": "Gạo",
+            "category_id": "FOOD",
+            "width_m": 0.18,
+            "depth_m": 0.12,
+            "height_m": 0.25,
+            "weight_kg": 1.0,
+            "demand": 60.0,
+            "facings": 3,
+            "orientations": [
+              0
+            ],
+            "stack_layers": 1,
+            "clearance_m": 0.01
+          }
+        ]
+      },
+      "demand": {
+        "arrivals_per_hour": 30.0,
+        "horizon_s": 1800.0,
+        "customers": 15,
+        "baskets": [
+          [
+            "WATER",
+            "RICE"
+          ],
+          [
+            "WATER"
+          ]
+        ],
+        "behavior": {
+          "model": "synthetic_basket",
+          "speed_m_s": 1.2,
+          "dwell_s": 4.0
+        }
+      },
+      "orders": {
+        "orders": [
+          {
+            "id": "O001",
+            "placed_at": "2026-10-21T09:00:00+07:00",
+            "kind": "online",
+            "due_s": 120.0
+          }
+        ],
+        "order_lines": [
+          {
+            "order_id": "O001",
+            "sku": "WATER",
+            "quantity": 3
+          },
+          {
+            "order_id": "O001",
+            "sku": "RICE",
+            "quantity": 2
+          }
+        ]
+      },
+      "optimization": {
+        "seed": 42,
+        "time_limit_s": 30.0,
+        "max_iterations": 10000,
+        "algorithm": "milp",
+        "distance_weight": 1.0,
+        "capacity_weight": 0
+      },
+      "_runtime": {
+        "source_sha256": "1b3e3977f8c79f926eceb31b5b45d8fd977d0966f28fe2a578ffdb9f1ee15b93",
+        "python": "3.12.10",
+        "packages": {
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "shapely": "2.2.0",
+          "simpy": "4.1.2",
+          "networkx": "3.7",
+          "pydantic": "2.14.1",
+          "SQLAlchemy": "2.1.5"
+        }
+      }
+    }
+  }
+}

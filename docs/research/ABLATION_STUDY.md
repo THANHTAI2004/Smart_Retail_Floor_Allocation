@@ -1,0 +1,5 @@
+# Ablation study
+
+E07 compares four candidates with wait_weight=0 and wait_weight=1, retaining travel_weight=1. Both arms have mean distance 13.1886 m and mean wait 0.0242 s. This fixture provides no evidence for a benefit from wait weighting.
+
+E05 contrasts one versus four candidates. There is no full ablation of capacity feedback, persistent cache, routing policy or all integrated components. A future congestion-rich dataset and prospectively defined design are required; do not modify fixtures after observing results to manufacture an effect.

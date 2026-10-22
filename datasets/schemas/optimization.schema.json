@@ -1,0 +1,83 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "seed": {
+      "default": 42,
+      "maximum": 2147483647,
+      "minimum": 0,
+      "title": "Seed",
+      "type": "integer"
+    },
+    "time_limit_s": {
+      "default": 30,
+      "exclusiveMinimum": 0,
+      "maximum": 300,
+      "title": "Time Limit S",
+      "type": "number"
+    },
+    "max_iterations": {
+      "default": 10000,
+      "maximum": 1000000,
+      "minimum": 1,
+      "title": "Max Iterations",
+      "type": "integer"
+    },
+    "algorithm": {
+      "default": "milp",
+      "enum": [
+        "milp",
+        "greedy"
+      ],
+      "title": "Algorithm",
+      "type": "string"
+    },
+    "distance_weight": {
+      "default": 1,
+      "exclusiveMinimum": 0,
+      "title": "Distance Weight",
+      "type": "number"
+    },
+    "capacity_weight": {
+      "const": 0,
+      "default": 0,
+      "title": "Capacity Weight",
+      "type": "integer"
+    },
+    "slotting_algorithm": {
+      "default": "first_fit",
+      "enum": [
+        "first_fit",
+        "milp"
+      ],
+      "title": "Slotting Algorithm",
+      "type": "string"
+    },
+    "candidate_count": {
+      "default": 1,
+      "maximum": 8,
+      "minimum": 1,
+      "title": "Candidate Count",
+      "type": "integer"
+    },
+    "travel_weight": {
+      "default": 1,
+      "minimum": 0,
+      "title": "Travel Weight",
+      "type": "number"
+    },
+    "wait_weight": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Wait Weight",
+      "type": "number"
+    },
+    "stock_weight": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Stock Weight",
+      "type": "number"
+    }
+  },
+  "title": "OptimizationInput",
+  "type": "object"
+}

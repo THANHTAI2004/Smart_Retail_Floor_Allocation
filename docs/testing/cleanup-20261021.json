@@ -1,0 +1,193 @@
+{
+  "status": "PARTIAL_CLEANUP_GENERATED_FILE_REMOVAL_BLOCKED",
+  "backup": "C:\\Users\\admin\\Documents\\SmartRetailBackups\\20261021-cleanup-055596ea",
+  "source_cleanup": [
+    "Removed unused T3 slot-state load field; shared shelf-level load enforcement preserved",
+    "Removed unreachable duplicate T2 proximity-count guard; in-loop guard preserved",
+    "Made request helper and Level/Inputs/Placement types internal",
+    "Removed unused prettier devDependency and updated npm lock"
+  ],
+  "artifact_policy": "New Playwright output goes to var/playwright; TypeScript build info goes to var/typescript; package metadata ignored and caches excluded from Docker context",
+  "verification": {
+    "pytest": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "42",
+      "time": "7.595",
+      "timestamp": "2026-10-21T22:36:37.535213+07:00",
+      "hostname": "DESKTOP-HURBB0S"
+    },
+    "vitest_passed": 4,
+    "playwright": {
+      "startTime": "2026-10-21T15:38:23.085Z",
+      "duration": 16936.649,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "knip": "PASS - zero findings",
+    "eslint": "PASS",
+    "build": "PASS",
+    "ruff": "PASS",
+    "mypy": "PASS - 45 source files",
+    "pip_check": "PASS"
+  },
+  "preservation": {
+    "unchanged_dataset_and_historical_evidence_files": 22,
+    "business_data_equal": true,
+    "business_row_counts": {
+      "projects": 16,
+      "product_keys": 24,
+      "orders": 12,
+      "order_lines": 24,
+      "optimization_runs": 8
+    },
+    "index_sha256": "ced0ce9518eae6274a2d87367da438e0bc1d7ce15119460b0d83891f06bbabcc",
+    "head": "2cbce4751f5fea6cd2ea30dffc0a198d60a34187"
+  },
+  "blocked_action": {
+    "reason": "Automatic execution review rejected recursive removal: blocked by policy",
+    "command_executed": false,
+    "remaining_targets": [
+      "D:\\Smart_Retail_Floor_Allocation\\.hypothesis",
+      "D:\\Smart_Retail_Floor_Allocation\\.mypy_cache",
+      "D:\\Smart_Retail_Floor_Allocation\\.ruff_cache",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\.pytest_cache",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\.ruff_cache",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\migrations\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\migrations\\versions\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\api\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\application\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\contracts\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\domain\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\domain\\categories\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\domain\\demand\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\domain\\floorplan\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\domain\\optimization\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\domain\\orders\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\domain\\products\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\domain\\projects\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\domain\\shelves\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\engines\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\engines\\t1_layout\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\engines\\t2_allocation\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\engines\\t3_slotting\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\engines\\t4_simulation\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\infrastructure\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\reporting\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail\\workers\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\tests\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\tests\\contracts\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\tests\\integration\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\tests\\performance\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\tests\\regression\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\tests\\unit\\__pycache__",
+      "D:\\Smart_Retail_Floor_Allocation\\frontend\\tsconfig.tsbuildinfo",
+      "D:\\Smart_Retail_Floor_Allocation\\frontend\\dist",
+      "D:\\Smart_Retail_Floor_Allocation\\frontend\\test-results",
+      "D:\\Smart_Retail_Floor_Allocation\\var\\pytest-cleanup-baseline",
+      "D:\\Smart_Retail_Floor_Allocation\\var\\pytest-delivery",
+      "D:\\Smart_Retail_Floor_Allocation\\var\\pytest-final",
+      "D:\\Smart_Retail_Floor_Allocation\\var\\pytest-release",
+      "D:\\Smart_Retail_Floor_Allocation\\var\\pytest-release-final",
+      "D:\\Smart_Retail_Floor_Allocation\\var\\pytest-tmp",
+      "D:\\Smart_Retail_Floor_Allocation\\var\\pytest-verified",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\tests\\e2e",
+      "D:\\Smart_Retail_Floor_Allocation\\backend\\src\\smart_retail.egg-info"
+    ],
+    "snapshot_of_removal_candidates": {
+      "files": 308,
+      "links": 68,
+      "bytes": 33781911
+    }
+  },
+  "not_removed": [
+    ".git",
+    ".venv",
+    "frontend/node_modules (except unused package removed by npm)",
+    "var/smart_retail.db and real run artifacts",
+    "original research files and historical verification evidence",
+    "documented public domain models and migrations"
+  ],
+  "changed_files": [
+    {
+      "path": ".dockerignore",
+      "before_sha256": "ab97f5a3958eeaed52621c3c806122ea2dc8a08c9103bda9bdd645fdfca2fd9b",
+      "after_sha256": "9511ce80ddf3d1af6ad35a67dece63a3eb329222d76adec1a551d1f406578764"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "before_sha256": "ca1b6581663aa902201fe9ca541007e9b64e3760e34d624f7b84d604d88c19df",
+      "after_sha256": "68ac9d5c57622c593ab1dcbe78fbe703e3a786fa29bae7ad1f3dc219e05229ad"
+    },
+    {
+      "path": ".gitignore",
+      "before_sha256": "e7ac2a7463b3b11d222673cd7dcf0e1ee4b7a2c80924193271b6c6695504752e",
+      "after_sha256": "a39a4a2009ddd1044bd9e299327195c3389f4bcadb19ca9313dde532d58cbb68"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t2_allocation/engine.py",
+      "before_sha256": "21884d5ca87461cdea00635cdeda82499b84664130d0e1287391998d9a4e6eb6",
+      "after_sha256": "70fa492a24b3f713582b63a9ffbf54eb792907f62b6a680b13e762fcbd4f4837"
+    },
+    {
+      "path": "backend/src/smart_retail/engines/t3_slotting/engine.py",
+      "before_sha256": "407b9d1e80f00acc2e4e2190c7328569283791397c4a49d231118303019ac165",
+      "after_sha256": "df9bc080845a3b8cd9331a3229f41265f412cfd75a272960ae53b6b528fdad17"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "before_sha256": "b30e1e56f869a2bc5499cd6fec9f51bec50a279685f686ea94af6784b99fdf73",
+      "after_sha256": "9478e0d5933614c78a01f34afaf6955ed9b8b65ee33939c8376c3be453173d66"
+    },
+    {
+      "path": "frontend/package.json",
+      "before_sha256": "126298c7c90a300ffd12641b2bf6cb1b842a66033cc9621acc428ebbc73558d4",
+      "after_sha256": "b8ec0a68bf078f0ccdec02a2e23891c8a7f1a207314e863e8fb8d714b23c8632"
+    },
+    {
+      "path": "frontend/playwright.config.ts",
+      "before_sha256": "db2ca0cbb21e3b918705c5a779146203917e0202fe43907692cfa61efeaf0b11",
+      "after_sha256": "6ffe480e0fb8de056f9d2303542c32e65c5799e650f15b2d774a9c4535a5f33f"
+    },
+    {
+      "path": "frontend/src/services/api.ts",
+      "before_sha256": "fdb56cf57189097b00d23532c8ec474254bb61f2b16b3366fe9a69ba6c807fb0",
+      "after_sha256": "1c3d1276d02c9d87bda2a5bcd218d09d25c3a409cafb59cd531a282d800be13f"
+    },
+    {
+      "path": "frontend/src/types/models.ts",
+      "before_sha256": "2008f438706a6f644a88b8d1ffac1e637244ff1baff92a6fcd5dd8e77d4ab609",
+      "after_sha256": "70ee8f37b4b4c787a6797215cf15746e5ab99a9f0d23e9e785902052ba4dcd04"
+    },
+    {
+      "path": "frontend/tests/e2e/accessibility.spec.ts",
+      "before_sha256": "7befda2cb0adfca51ce2b7bdde6f0e6c42e1a101222f44a1b8e81754ce70e872",
+      "after_sha256": "c2f49cb3594df0b44c44818798c5ae1c0f8f358e550b2769686f7238edfbf799"
+    },
+    {
+      "path": "frontend/tests/e2e/workflow.spec.ts",
+      "before_sha256": "f1a5133820c13dc38599db07bf81178bd52aa92a26b3691e2bf30f8f5bc82b5a",
+      "after_sha256": "9dc96c8eeaefad59838454c780927cd14739f6d5a2009d1de28a874eb7a32fcc"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "before_sha256": "292c798190ee72f555a4bbbeb00a9bb0ae4f3aea8cc83b9ef2190cbeb9ab7ca0",
+      "after_sha256": "974a4db1d2aff5b04da2aec402071499ff884db636f16f44b150f1850a300c0f"
+    },
+    {
+      "path": "HANDOFF.md",
+      "before_sha256": "a3a3e8f8005c0fdf68617e78670d750e4cf4ac43c7a673677f92b774318ddf50",
+      "after_sha256": "144424597bd09bee6c7cefe1118fb5fc5e3c47804d41de3e2d5d3ea7f7149186"
+    },
+    {
+      "path": "README.md",
+      "before_sha256": "fd2e6755f99457282af05bf54b9f4f314600d97e9bfad9a2e947883709f2ade3",
+      "after_sha256": "547402b4ba7a437d7547f6c60198e4ef31dc9c707b7a3ff6be99f33d0ad9e506"
+    }
+  ]
+}

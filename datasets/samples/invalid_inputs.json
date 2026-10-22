@@ -1,0 +1,71 @@
+{
+  "floorplan": {
+    "units": "m",
+    "boundary": [
+      [
+        0,
+        0
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        4,
+        0
+      ]
+    ],
+    "entrance": [
+      0,
+      0
+    ]
+  },
+  "shelves": {
+    "layout_mode": "fixed",
+    "items": [
+      {
+        "id": "S1",
+        "width_m": -1
+      }
+    ]
+  },
+  "categories": {
+    "items": [
+      {
+        "id": "C",
+        "name": "Category",
+        "required_width_m": 0
+      }
+    ]
+  },
+  "products": {
+    "items": [
+      {
+        "sku": "P",
+        "name": "Product",
+        "category_id": "C",
+        "width_m": -1
+      }
+    ]
+  },
+  "demand": {
+    "customers": -1
+  },
+  "orders": {
+    "orders": [],
+    "order_lines": [
+      {
+        "order_id": "missing",
+        "sku": "P",
+        "quantity": 0
+      }
+    ]
+  },
+  "optimization": {
+    "time_limit_s": 0
+  }
+}

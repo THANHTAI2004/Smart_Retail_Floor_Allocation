@@ -1,0 +1,53 @@
+services:
+  database:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: retail
+      POSTGRES_DB: retail
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U retail -d retail"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  migrate:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment: &backend-env
+      SMART_RETAIL_DATABASE_URL: postgresql+psycopg://retail:${POSTGRES_PASSWORD}@database/retail
+      SMART_RETAIL_ARTIFACTS: /app/var/artifacts
+    command: ["alembic", "-c", "backend/alembic.ini", "upgrade", "head"]
+    depends_on:
+      database:
+        condition: service_healthy
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment: *backend-env
+    ports: ["127.0.0.1:8010:8000"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment: *backend-env
+    command: ["python", "-m", "smart_retail.workers.runner"]
+    volumes: ["run_artifacts:/app/var/artifacts"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports: ["127.0.0.1:5173:80"]
+    depends_on: [backend]
+volumes:
+  postgres_data:
+  run_artifacts:

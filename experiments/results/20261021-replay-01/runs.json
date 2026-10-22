@@ -1,0 +1,19 @@
+[
+  {
+    "experiment": "REPLAY",
+    "treatment": "saved",
+    "seed": 11,
+    "run_id": "f2bdc86c-e28e-44e1-8965-324ff475ac42",
+    "status": "SUCCEEDED",
+    "error": null,
+    "wall_s": 1.841590800031554,
+    "input_sha256": "9b4112e3bcd0922b69944655665d8185e98bd7b52af5d303ee66bb97ee6dd176",
+    "result_sha256": "42a75553ac4580a40f8b46ba5a1a9c0f80367b9fed5dc66dc41a384a8058d0b2",
+    "peak_child_memory_bytes": null,
+    "t2_objective": 0.31816670539199976,
+    "t3_objective": 2640.0,
+    "mean_distance_m": 13.457106781186548,
+    "mean_wait_s": 0.0,
+    "selected_candidate": 2
+  }
+]

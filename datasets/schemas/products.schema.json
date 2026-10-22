@@ -1,0 +1,114 @@
+{
+  "$defs": {
+    "ProductInput": {
+      "additionalProperties": false,
+      "properties": {
+        "sku": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Sku",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "category_id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Category Id",
+          "type": "string"
+        },
+        "width_m": {
+          "exclusiveMinimum": 0,
+          "title": "Width M",
+          "type": "number"
+        },
+        "depth_m": {
+          "exclusiveMinimum": 0,
+          "title": "Depth M",
+          "type": "number"
+        },
+        "height_m": {
+          "exclusiveMinimum": 0,
+          "title": "Height M",
+          "type": "number"
+        },
+        "weight_kg": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Weight Kg",
+          "type": "number"
+        },
+        "demand": {
+          "default": 1,
+          "minimum": 0,
+          "title": "Demand",
+          "type": "number"
+        },
+        "facings": {
+          "default": 1,
+          "maximum": 1000,
+          "minimum": 1,
+          "title": "Facings",
+          "type": "integer"
+        },
+        "orientations": {
+          "default": [
+            0
+          ],
+          "items": {
+            "enum": [
+              0,
+              90
+            ],
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Orientations",
+          "type": "array"
+        },
+        "stack_layers": {
+          "default": 1,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Stack Layers",
+          "type": "integer"
+        },
+        "clearance_m": {
+          "default": 0.01,
+          "minimum": 0,
+          "title": "Clearance M",
+          "type": "number"
+        }
+      },
+      "required": [
+        "sku",
+        "name",
+        "category_id",
+        "width_m",
+        "depth_m",
+        "height_m"
+      ],
+      "title": "ProductInput",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "items": {
+        "$ref": "#/$defs/ProductInput"
+      },
+      "maxItems": 10000,
+      "title": "Items",
+      "type": "array"
+    }
+  },
+  "title": "ProductsInput",
+  "type": "object"
+}

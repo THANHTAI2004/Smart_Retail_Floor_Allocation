@@ -1,0 +1,32 @@
+import { expect, test } from "@playwright/test";
+
+test("drawing undo/redo and bounded MILP research workflow use persisted inputs", async ({ page, request }) => {
+  await page.goto("/#projects");
+  await page.getByRole("button", { name: "Tạo dự án mẫu", exact: true }).click();
+  await expect(page.getByText("Đã tạo dự án với 7 nhóm dữ liệu tổng hợp.")).toBeVisible();
+  await page.getByText("Tọa độ & kích thước cạnh", { exact: true }).click();
+  const vertex = page.getByLabel("x (m)", { exact: true }).first();
+  await vertex.fill("0.5");
+  await page.getByRole("button", { name: "Hoàn tác", exact: true }).click();
+  await expect(vertex).toHaveValue("0");
+  await page.getByRole("button", { name: "Làm lại", exact: true }).click();
+  await expect(vertex).toHaveValue("0.5");
+  await page.getByRole("button", { name: "Hoàn tác", exact: true }).click();
+  await page.getByRole("link", { name: "Cấu hình tối ưu", exact: true }).click();
+  await page.getByLabel("slotting_algorithm", { exact: true }).fill("milp");
+  await page.getByLabel("candidate_count", { exact: true }).fill("4");
+  await page.getByRole("button", { name: "Lưu dữ liệu", exact: true }).click();
+  await expect(page.getByText(/Đã lưu optimization/)).toBeVisible();
+  await page.getByRole("link", { name: "Lần chạy", exact: true }).click();
+  await page.getByRole("button", { name: "Chạy baseline", exact: true }).click();
+  await expect(page.locator("tbody").getByText("SUCCEEDED", { exact: true }).first()).toBeVisible({ timeout: 45000 });
+  await page.getByRole("link", { name: "So sánh & báo cáo", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Đánh giá liên tầng" })).toBeVisible();
+  const projectId = await page.evaluate(() => localStorage.getItem("smart-retail-project"));
+  const response = await request.get(`/api/projects/${projectId}/runs`);
+  expect(response.ok()).toBeTruthy();
+  const [run] = await response.json();
+  expect(run.result.stages.T3.algorithm).toBe("milp");
+  expect(run.result.integrated.evaluated_candidates).toBe(4);
+  expect(run.result.integrated.global_optimality_proven).toBe(false);
+});

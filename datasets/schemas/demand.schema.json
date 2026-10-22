@@ -1,0 +1,70 @@
+{
+  "$defs": {
+    "BehaviorInput": {
+      "additionalProperties": false,
+      "properties": {
+        "model": {
+          "const": "synthetic_basket",
+          "default": "synthetic_basket",
+          "title": "Model",
+          "type": "string"
+        },
+        "speed_m_s": {
+          "default": 1.2,
+          "exclusiveMinimum": 0,
+          "title": "Speed M S",
+          "type": "number"
+        },
+        "dwell_s": {
+          "default": 5,
+          "minimum": 0,
+          "title": "Dwell S",
+          "type": "number"
+        }
+      },
+      "title": "BehaviorInput",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "arrivals_per_hour": {
+      "default": 20,
+      "exclusiveMinimum": 0,
+      "title": "Arrivals Per Hour",
+      "type": "number"
+    },
+    "horizon_s": {
+      "default": 3600,
+      "exclusiveMinimum": 0,
+      "maximum": 86400,
+      "title": "Horizon S",
+      "type": "number"
+    },
+    "customers": {
+      "default": 20,
+      "maximum": 10000,
+      "minimum": 0,
+      "title": "Customers",
+      "type": "integer"
+    },
+    "baskets": {
+      "items": {
+        "items": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Baskets",
+      "type": "array"
+    },
+    "behavior": {
+      "$ref": "#/$defs/BehaviorInput"
+    }
+  },
+  "title": "DemandInput",
+  "type": "object"
+}

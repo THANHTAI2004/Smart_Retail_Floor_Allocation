@@ -1,0 +1,219 @@
+{
+  "floorplan": {
+    "units": "m",
+    "boundary": [
+      [
+        0,
+        0
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        9
+      ],
+      [
+        0,
+        9
+      ]
+    ],
+    "entrance": [
+      0,
+      4.5
+    ],
+    "obstacles": [
+      [
+        [
+          9,
+          6
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          9,
+          7
+        ]
+      ]
+    ],
+    "min_aisle_m": 0.8,
+    "grid_m": 0.5
+  },
+  "shelves": {
+    "layout_mode": "optimizable",
+    "items": [
+      {
+        "id": "S01",
+        "kind": "gondola",
+        "width_m": 2,
+        "depth_m": 0.6,
+        "height_m": 1.8,
+        "levels": [
+          {
+            "id": "L1",
+            "width_m": 1.9,
+            "depth_m": 0.55,
+            "height_m": 0.5,
+            "max_load_kg": 80
+          },
+          {
+            "id": "L2",
+            "width_m": 1.9,
+            "depth_m": 0.55,
+            "height_m": 0.5,
+            "max_load_kg": 80
+          }
+        ],
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "faces": 1,
+        "locked": false
+      },
+      {
+        "id": "S02",
+        "kind": "gondola",
+        "width_m": 2,
+        "depth_m": 0.6,
+        "height_m": 1.8,
+        "levels": [
+          {
+            "id": "L1",
+            "width_m": 1.9,
+            "depth_m": 0.55,
+            "height_m": 0.5,
+            "max_load_kg": 80
+          },
+          {
+            "id": "L2",
+            "width_m": 1.9,
+            "depth_m": 0.55,
+            "height_m": 0.5,
+            "max_load_kg": 80
+          }
+        ],
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "faces": 1,
+        "locked": false
+      }
+    ]
+  },
+  "categories": {
+    "items": [
+      {
+        "id": "DRINK",
+        "name": "Đồ uống",
+        "demand": 80,
+        "priority": 1,
+        "required_width_m": 2
+      },
+      {
+        "id": "FOOD",
+        "name": "Thực phẩm",
+        "demand": 60,
+        "priority": 1,
+        "required_width_m": 2
+      }
+    ]
+  },
+  "products": {
+    "items": [
+      {
+        "sku": "WATER",
+        "name": "Nước uống",
+        "category_id": "DRINK",
+        "width_m": 0.08,
+        "depth_m": 0.08,
+        "height_m": 0.22,
+        "weight_kg": 0.5,
+        "demand": 80,
+        "facings": 4,
+        "orientations": [
+          0,
+          90
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.01
+      },
+      {
+        "sku": "RICE",
+        "name": "Gạo",
+        "category_id": "FOOD",
+        "width_m": 0.18,
+        "depth_m": 0.12,
+        "height_m": 0.25,
+        "weight_kg": 1,
+        "demand": 60,
+        "facings": 3,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.01
+      }
+    ]
+  },
+  "demand": {
+    "arrivals_per_hour": 30,
+    "horizon_s": 1800,
+    "customers": 15,
+    "baskets": [
+      [
+        "WATER",
+        "RICE"
+      ],
+      [
+        "WATER"
+      ]
+    ],
+    "behavior": {
+      "model": "synthetic_basket",
+      "speed_m_s": 1.2,
+      "dwell_s": 4
+    }
+  },
+  "orders": {
+    "orders": [
+      {
+        "id": "O001",
+        "placed_at": "2026-10-21T09:00:00+07:00",
+        "kind": "online",
+        "due_s": 120
+      }
+    ],
+    "order_lines": [
+      {
+        "order_id": "O001",
+        "sku": "WATER",
+        "quantity": 3
+      },
+      {
+        "order_id": "O001",
+        "sku": "RICE",
+        "quantity": 2
+      }
+    ]
+  },
+  "optimization": {
+    "seed": 42,
+    "time_limit_s": 30,
+    "max_iterations": 10000,
+    "algorithm": "milp",
+    "distance_weight": 1,
+    "capacity_weight": 0,
+    "slotting_algorithm": "first_fit",
+    "candidate_count": 1,
+    "travel_weight": 1,
+    "wait_weight": 0,
+    "stock_weight": 0
+  }
+}

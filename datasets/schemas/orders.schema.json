@@ -1,0 +1,95 @@
+{
+  "$defs": {
+    "OrderInput": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "placed_at": {
+          "format": "date-time",
+          "title": "Placed At",
+          "type": "string"
+        },
+        "kind": {
+          "default": "online",
+          "enum": [
+            "online",
+            "in_store"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "due_s": {
+          "default": 3600,
+          "exclusiveMinimum": 0,
+          "title": "Due S",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "placed_at"
+      ],
+      "title": "OrderInput",
+      "type": "object"
+    },
+    "OrderLineInput": {
+      "additionalProperties": false,
+      "properties": {
+        "order_id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Order Id",
+          "type": "string"
+        },
+        "sku": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Sku",
+          "type": "string"
+        },
+        "quantity": {
+          "exclusiveMinimum": 0,
+          "maximum": 100000,
+          "title": "Quantity",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "order_id",
+        "sku",
+        "quantity"
+      ],
+      "title": "OrderLineInput",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "orders": {
+      "items": {
+        "$ref": "#/$defs/OrderInput"
+      },
+      "maxItems": 10000,
+      "title": "Orders",
+      "type": "array"
+    },
+    "order_lines": {
+      "items": {
+        "$ref": "#/$defs/OrderLineInput"
+      },
+      "maxItems": 100000,
+      "title": "Order Lines",
+      "type": "array"
+    }
+  },
+  "title": "OrdersInput",
+  "type": "object"
+}

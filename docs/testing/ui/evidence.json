@@ -1,0 +1,63 @@
+{
+  "contract": "Local retail research workspace; direct data editing and scaled floorplan canvas; primary save/run actions; desktop and narrow layouts with explicit input errors and persisted state.",
+  "targetViewports": [
+    "1440x1000",
+    "390x844"
+  ],
+  "accessibility": {
+    "status": "pass",
+    "evidence": "Axe WCAG A/AA returned zero violations on Dashboard and Floorplan Editor after contrast corrections. Playwright exercised labeled controls, keyboard focus and mobile menu. This is bounded coverage, not a full accessibility certification."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Playwright verified document width does not exceed viewport at 390px; desktop/mobile screenshots reviewed. Reduced motion emulated; editor ruler moved clear of edge labels and shelf dimensions shown on selection at narrow scales."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "Delayed projects response shows loading indicator and disables create until response completes."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "New project displays 0/7 completion and no run results."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Invalid negative aisle produces visible HTTP 422; reload confirms invalid draft was not persisted."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "Saving floorplan and shelves in a new project produces 2/7 completion without filling remaining groups."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Real worker succeeds, replay reproduces checksum in backend test, result viewers render, browser downloads report JSON."
+    },
+    "permission": {
+      "status": "not-applicable",
+      "reason": "Local single-user foundation has no authentication or roles. No permission request path is offered or claimed."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "1440x1000",
+      "artifact": "desktop-dashboard.png",
+      "observation": "Dashboard with persisted data completion and real successful run history."
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "desktop-editor.png",
+      "observation": "Konva floorplan with measured edges, shelves, obstacle and editing controls."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "mobile-dashboard.png",
+      "observation": "Two-column KPI layout, stacked panels and mobile navigation without horizontal page overflow."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "mobile-editor.png",
+      "observation": "Wrapped toolbar, scaled canvas, separate ruler and keyboard coordinate controls in narrow layout."
+    }
+  ]
+}

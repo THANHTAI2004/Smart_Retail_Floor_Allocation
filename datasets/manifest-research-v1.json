@@ -1,0 +1,35 @@
+{
+  "dataset_id": "SMART-RETAIL-SYNTHETIC-20261021",
+  "version": "research-v1",
+  "kind": "SYNTHETIC",
+  "created_on": "2026-10-21",
+  "source": "Local small_store fixture and deterministic transformations in experiments/run_campaign.py",
+  "units": {
+    "length": "m",
+    "mass": "kg",
+    "time": "s",
+    "product_demand": "assumed horizon unit demand for stock scoring"
+  },
+  "rights": "Locally generated synthetic scenarios for this repository; no verified real-store rights or third-party license asserted",
+  "confidence": "Synthetic witnesses only; not calibrated or measured store data",
+  "transformations": "See E01-E08 cases() and immutable per-run input.json",
+  "validation": "Pydantic seven groups, FK, independent geometry/allocation/packing/route replay",
+  "files": {
+    "datasets/samples/invalid_inputs.json": "5c14bc87f10ceb965e6830ad1ae0df40abe8acae397e9cac23622f1dcfc5ba5c",
+    "datasets/samples/small_store.json": "6930640035aa6c5f4871a42c906429657c574398016552be968f2f4cdd774eaa"
+  },
+  "schema_bundle_version": "research-v1-external-manifest",
+  "schemas": {
+    "categories.schema.json": "2ce7cc53d185e36bf609c548520ca6eb45b2324a36130a9d8038e6f9471660e7",
+    "demand.schema.json": "74a017e675281531fb62333b9bf65b544ff862924cfcbb46babe36b6ec00b037",
+    "floorplan.schema.json": "ae926b483479f9afdfe8d6e5339f7eacd5051996810310edd69b42d0e6497bc8",
+    "optimization.schema.json": "b02a16730a53e45db113bbb4039fe8f2f21cbe81b4cd29fa84770fe032f7c3e5",
+    "orders.schema.json": "7ea08e84c6edcd58ba895acb3871d6ec8ba7057aa8cb2158716dabaa923160b4",
+    "products.schema.json": "832ba1b9a9d319ea149eb7b5fead7120e4b952bc545e15f9bbd703a33365f472",
+    "shelves.schema.json": "cb2fdc3d6eb419e9c4aa93b53a3c68b73e14e0520286fda76a1c302870b05343"
+  },
+  "limitations": [
+    "No per-envelope contract version yet",
+    "No S05 measured floorplan, S06 authorized real source, S07 measured SKU audit"
+  ]
+}

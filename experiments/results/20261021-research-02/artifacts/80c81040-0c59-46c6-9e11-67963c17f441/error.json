@@ -1,0 +1,4 @@
+{
+  "code": "SLOTTING_FAILED",
+  "message": "SKU B cannot be placed by first-fit within dimensions, facings and load limits; infeasibility is not proven"
+}

@@ -1,0 +1,18 @@
+﻿{
+    "status":  "ok",
+    "database":  "sqlite",
+    "worker_online":  true,
+    "runtime":  {
+                    "source_sha256":  "4512b83382ba5e7c632aa6827ef8dd5bc48595c3f8e332a74524cfb03707d686",
+                    "python":  "3.12.10",
+                    "packages":  {
+                                     "numpy":  "2.5.4",
+                                     "scipy":  "1.18.1",
+                                     "shapely":  "2.2.0",
+                                     "simpy":  "4.1.2",
+                                     "networkx":  "3.7",
+                                     "pydantic":  "2.14.1",
+                                     "SQLAlchemy":  "2.1.5"
+                                 }
+                }
+}

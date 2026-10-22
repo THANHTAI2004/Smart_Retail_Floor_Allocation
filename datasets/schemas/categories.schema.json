@@ -1,0 +1,100 @@
+{
+  "$defs": {
+    "CategoryInput": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "priority": {
+          "default": 1,
+          "exclusiveMinimum": 0,
+          "title": "Priority",
+          "type": "number"
+        },
+        "demand": {
+          "default": 1,
+          "minimum": 0,
+          "title": "Demand",
+          "type": "number"
+        },
+        "required_width_m": {
+          "exclusiveMinimum": 0,
+          "title": "Required Width M",
+          "type": "number"
+        },
+        "fixed_shelf_id": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_.-]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fixed Shelf Id"
+        },
+        "near": {
+          "items": {
+            "maxLength": 120,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "type": "string"
+          },
+          "title": "Near",
+          "type": "array"
+        },
+        "separate": {
+          "items": {
+            "maxLength": 120,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "type": "string"
+          },
+          "title": "Separate",
+          "type": "array"
+        },
+        "distance_m": {
+          "default": 3,
+          "exclusiveMinimum": 0,
+          "title": "Distance M",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "required_width_m"
+      ],
+      "title": "CategoryInput",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "items": {
+        "$ref": "#/$defs/CategoryInput"
+      },
+      "maxItems": 200,
+      "title": "Items",
+      "type": "array"
+    }
+  },
+  "title": "CategoriesInput",
+  "type": "object"
+}

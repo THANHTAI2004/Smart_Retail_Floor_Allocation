@@ -1,0 +1,173 @@
+{
+  "$defs": {
+    "LevelInput": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "width_m": {
+          "exclusiveMinimum": 0,
+          "title": "Width M",
+          "type": "number"
+        },
+        "depth_m": {
+          "exclusiveMinimum": 0,
+          "title": "Depth M",
+          "type": "number"
+        },
+        "height_m": {
+          "exclusiveMinimum": 0,
+          "title": "Height M",
+          "type": "number"
+        },
+        "max_load_kg": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Load Kg"
+        }
+      },
+      "required": [
+        "id",
+        "width_m",
+        "depth_m",
+        "height_m"
+      ],
+      "title": "LevelInput",
+      "type": "object"
+    },
+    "ShelfInput": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "default": "gondola",
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "width_m": {
+          "exclusiveMinimum": 0,
+          "title": "Width M",
+          "type": "number"
+        },
+        "depth_m": {
+          "exclusiveMinimum": 0,
+          "title": "Depth M",
+          "type": "number"
+        },
+        "height_m": {
+          "exclusiveMinimum": 0,
+          "title": "Height M",
+          "type": "number"
+        },
+        "levels": {
+          "items": {
+            "$ref": "#/$defs/LevelInput"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Levels",
+          "type": "array"
+        },
+        "x": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "X"
+        },
+        "y": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Y"
+        },
+        "rotation": {
+          "default": 0,
+          "enum": [
+            0,
+            90
+          ],
+          "title": "Rotation",
+          "type": "integer"
+        },
+        "faces": {
+          "default": 1,
+          "enum": [
+            1,
+            2
+          ],
+          "title": "Faces",
+          "type": "integer"
+        },
+        "locked": {
+          "default": false,
+          "title": "Locked",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "width_m",
+        "depth_m",
+        "height_m",
+        "levels"
+      ],
+      "title": "ShelfInput",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "layout_mode": {
+      "default": "optimizable",
+      "enum": [
+        "fixed",
+        "optimizable"
+      ],
+      "title": "Layout Mode",
+      "type": "string"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/ShelfInput"
+      },
+      "maxItems": 100,
+      "title": "Items",
+      "type": "array"
+    }
+  },
+  "title": "ShelvesInput",
+  "type": "object"
+}

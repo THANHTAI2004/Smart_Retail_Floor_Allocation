@@ -1,0 +1,84 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "units": {
+      "const": "m",
+      "default": "m",
+      "title": "Units",
+      "type": "string"
+    },
+    "boundary": {
+      "items": {
+        "maxItems": 2,
+        "minItems": 2,
+        "prefixItems": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "type": "array"
+      },
+      "maxItems": 1000,
+      "minItems": 3,
+      "title": "Boundary",
+      "type": "array"
+    },
+    "entrance": {
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "title": "Entrance",
+      "type": "array"
+    },
+    "obstacles": {
+      "items": {
+        "items": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "type": "array"
+        },
+        "type": "array"
+      },
+      "maxItems": 100,
+      "title": "Obstacles",
+      "type": "array"
+    },
+    "min_aisle_m": {
+      "default": 0.8,
+      "exclusiveMinimum": 0,
+      "title": "Min Aisle M",
+      "type": "number"
+    },
+    "grid_m": {
+      "default": 0.25,
+      "maximum": 2,
+      "minimum": 0.1,
+      "title": "Grid M",
+      "type": "number"
+    }
+  },
+  "required": [
+    "boundary",
+    "entrance"
+  ],
+  "title": "FloorplanInput",
+  "type": "object"
+}

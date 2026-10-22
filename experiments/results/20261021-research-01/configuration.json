@@ -1,0 +1,31 @@
+{
+  "started_utc": "2026-10-21T15:57:01.162026+00:00",
+  "runtime": {
+    "source_sha256": "32c917dba3a100f4d1da151134c8405a5f1feba9925e5e53b129dc1f1fecdbc1",
+    "python": "3.12.10",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "shapely": "2.2.0",
+      "simpy": "4.1.2",
+      "networkx": "3.7",
+      "pydantic": "2.14.1",
+      "SQLAlchemy": "2.1.5"
+    }
+  },
+  "campaign_sha256": "ae4ab26a554104637aee6c59a277abf35ec1b1b84e73dc8b051f46b9ea12fb3c",
+  "sample_sha256": "e9f86db19401a92e31f13d8bb6c63995c1352872e82e074edb8c6b0ae0a6ba5d",
+  "seeds": [
+    11,
+    23,
+    37,
+    53,
+    71
+  ],
+  "platform": "Windows-11-10.0.26300-SP0",
+  "data_kind": "SYNTHETIC",
+  "model_version": "strip-packing-and-grid-multistart-v1",
+  "rights": "Local synthetic fixtures; no real-store data or external usage rights asserted",
+  "memory_measurement": "Not instrumented; null rather than parent-process memory proxy",
+  "scope": "Small synthetic smoke campaign; insufficient for general scalability or field validity"
+}

@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-21",
+  "pytest": {
+    "passed": 86,
+    "failed": 0,
+    "errors": 0,
+    "seconds": 8.344
+  },
+  "vitest": {
+    "passed": 4,
+    "failed": 0
+  },
+  "playwright": {
+    "startTime": "2026-10-21T16:01:08.709Z",
+    "duration": 23604.202999999998,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": {
+    "ruff_backend_experiments": "PASS",
+    "mypy_48_source_files": "PASS",
+    "eslint": "PASS",
+    "typescript_vite_build": "PASS",
+    "pip_check": "PASS",
+    "npm_audit_vulnerabilities": 0,
+    "sqlite_upgrade_check_downgrade_upgrade": "PASS",
+    "architecture_static_import_audit": "PASS"
+  },
+  "commands": [
+    ".venv/Scripts/python.exe -m pytest backend/tests -q --basetemp var/pytest-research-final-02 --junitxml=docs/research/evidence/20261021/pytest.xml",
+    ".venv/Scripts/python.exe -m ruff check backend experiments --config backend/pyproject.toml",
+    ".venv/Scripts/python.exe -m mypy --config-file backend/pyproject.toml backend/src/smart_retail",
+    "npm --prefix frontend run lint",
+    "npm --prefix frontend run build",
+    "npm --prefix frontend test",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify_e2e.ps1",
+    ".venv/Scripts/python.exe -m pip check",
+    "npm --prefix frontend audit --json",
+    ".venv/Scripts/python.exe -m alembic -c backend/alembic.ini upgrade head / check / downgrade base / upgrade head (dedicated SQLite URL)"
+  ],
+  "index_sha256": "ced0ce9518eae6274a2d87367da438e0bc1d7ce15119460b0d83891f06bbabcc",
+  "head": "2cbce4751f5fea6cd2ea30dffc0a198d60a34187",
+  "live_database_tables_unchanged": {
+    "projects": true,
+    "product_keys": true,
+    "orders": true,
+    "order_lines": true,
+    "optimization_runs": true
+  },
+  "postgresql_compose": "BLOCKED_ENVIRONMENT: docker/psql unavailable on PATH; no disposable PostgreSQL URL supplied",
+  "warnings": [
+    "Starlette TestClient httpx deprecation",
+    "Five expected first-fit failures in E03 are algorithm outcomes, not test failures",
+    "Full research acceptance remains incomplete"
+  ],
+  "preservation_snapshot": "C:\\Users\\admin\\Documents\\SmartRetailBackups\\20261021-research-acceptance-01"
+}
