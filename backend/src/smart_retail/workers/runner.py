@@ -15,6 +15,7 @@ from uuid import uuid4
 from smart_retail.application.workflow import canonical_hash, execute
 from smart_retail.domain.models import EngineError
 from smart_retail.infrastructure.database import ROOT, connect
+from smart_retail.infrastructure.filesystem import normalize_fs_path
 from smart_retail.infrastructure.provenance import runtime_identity
 from smart_retail.infrastructure.stage_cache import StageCache
 from smart_retail.workers.resources import sample as sample_resources
@@ -25,12 +26,13 @@ logger = logging.getLogger("smart_retail.worker")
 def read_progress(path: Path) -> str | None:
     """A missed progress sample must not interrupt process supervision on Windows."""
     try:
-        return json.loads(path.read_text(encoding="utf-8"))["stage"]
+        return json.loads(normalize_fs_path(path).read_text(encoding="utf-8"))["stage"]
     except (PermissionError, FileNotFoundError):
         return None
 
 
 def atomic_json(path: Path, value: dict) -> None:
+    path = normalize_fs_path(path)
     temporary = path.with_suffix(".tmp")
     temporary.write_text(
         json.dumps(value, ensure_ascii=True, allow_nan=False, indent=2), encoding="utf-8"
@@ -48,7 +50,7 @@ def atomic_json(path: Path, value: dict) -> None:
 
 
 def child(snapshot: dict, directory: str, cache_directory: str | None = None) -> None:
-    root = Path(directory)
+    root = normalize_fs_path(directory)
     try:
         if snapshot.get("_runtime") != runtime_identity():
             raise EngineError(
@@ -114,6 +116,8 @@ def work_once(
     cancelled=lambda: False,
     cache_root: Path | None = None,
 ) -> bool:
+    artifact_root = normalize_fs_path(artifact_root)
+    cache_root = normalize_fs_path(cache_root) if cache_root else None
     with factory() as db:
         db.recover_expired(time.time())
         candidate = db.claim(heartbeat_id, time.time())

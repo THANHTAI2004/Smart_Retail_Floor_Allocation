@@ -1,0 +1,110 @@
+{
+  "status": "FAIL",
+  "platform": "win32",
+  "checks": [
+    {
+      "name": "full-long",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "backend/tests",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\var\\lp-8571b8d7ed\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested",
+        "--junitxml",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\docs\\release\\evidence\\20261022-longpath-02\\full-long.xml"
+      ],
+      "started_utc": "2026-10-22T06:18:28.697591+00:00",
+      "ended_utc": "2026-10-22T06:19:26.238726+00:00",
+      "exit_code": 1,
+      "logical_base_length": 350,
+      "status": "FAIL"
+    },
+    {
+      "name": "full-short",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "backend/tests",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\var\\lp-db8ac7f7bc",
+        "--junitxml",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\docs\\release\\evidence\\20261022-longpath-02\\full-short.xml"
+      ],
+      "started_utc": "2026-10-22T06:19:26.238726+00:00",
+      "ended_utc": "2026-10-22T06:20:21.009752+00:00",
+      "exit_code": 1,
+      "logical_base_length": 50,
+      "status": "FAIL"
+    },
+    {
+      "name": "http-repeat-1",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "backend/tests/integration/test_joint_research_http.py::test_joint_http_worker_certificate_report_and_safe_artifact",
+        "backend/tests/integration/test_research_http.py::test_research_http_runs_real_child_and_exports_audited_report",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\var\\lp-69ecbbe0f4\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested",
+        "--junitxml",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\docs\\release\\evidence\\20261022-longpath-02\\http-repeat-1.xml"
+      ],
+      "started_utc": "2026-10-22T06:20:21.010752+00:00",
+      "ended_utc": "2026-10-22T06:20:40.004032+00:00",
+      "exit_code": 0,
+      "logical_base_length": 350,
+      "status": "PASS"
+    },
+    {
+      "name": "http-repeat-2",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "backend/tests/integration/test_joint_research_http.py::test_joint_http_worker_certificate_report_and_safe_artifact",
+        "backend/tests/integration/test_research_http.py::test_research_http_runs_real_child_and_exports_audited_report",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\var\\lp-2c44565cf2\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested",
+        "--junitxml",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\docs\\release\\evidence\\20261022-longpath-02\\http-repeat-2.xml"
+      ],
+      "started_utc": "2026-10-22T06:20:40.005032+00:00",
+      "ended_utc": "2026-10-22T06:20:56.194517+00:00",
+      "exit_code": 1,
+      "logical_base_length": 350,
+      "status": "FAIL"
+    },
+    {
+      "name": "http-repeat-3",
+      "command": [
+        "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "backend/tests/integration/test_joint_research_http.py::test_joint_http_worker_certificate_report_and_safe_artifact",
+        "backend/tests/integration/test_research_http.py::test_research_http_runs_real_child_and_exports_audited_report",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\var\\lp-7716bf037a\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested",
+        "--junitxml",
+        "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\docs\\release\\evidence\\20261022-longpath-02\\http-repeat-3.xml"
+      ],
+      "started_utc": "2026-10-22T06:20:56.195517+00:00",
+      "ended_utc": "2026-10-22T06:21:15.767885+00:00",
+      "exit_code": 0,
+      "logical_base_length": 350,
+      "status": "PASS"
+    }
+  ],
+  "unc_live": "NOT_APPLICABLE"
+}

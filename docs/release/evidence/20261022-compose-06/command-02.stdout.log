@@ -1,0 +1,74 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.95kB done
+#1 DONE 0.0s
+
+#2 [initialize internal] load build definition from Dockerfile
+#2 transferring dockerfile: 516B done
+#2 DONE 0.0s
+
+#3 [worker internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.4s
+
+#4 [worker internal] load .dockerignore
+#4 transferring context: 418B done
+#4 DONE 0.0s
+
+#5 [initialize 1/9] FROM docker.io/library/python:3.12-slim@sha256:cb33f7f771ecec2ef1225cf39b159591a040391bd73e4c01f00fdfc4c47611d2
+#5 resolve docker.io/library/python:3.12-slim@sha256:cb33f7f771ecec2ef1225cf39b159591a040391bd73e4c01f00fdfc4c47611d2 0.0s done
+#5 DONE 0.0s
+
+#6 [initialize internal] load build context
+#6 transferring context: 14.39kB 0.0s done
+#6 DONE 0.0s
+
+#7 [worker 8/9] COPY experiments/configs /app/experiments/configs
+#7 CACHED
+
+#8 [worker 3/9] COPY backend/requirements-lock.txt /app/backend/requirements-lock.txt
+#8 CACHED
+
+#9 [worker 4/9] RUN pip install --no-cache-dir -r backend/requirements-lock.txt
+#9 CACHED
+
+#10 [worker 5/9] COPY backend /app/backend
+#10 CACHED
+
+#11 [worker 7/9] COPY datasets /app/datasets
+#11 CACHED
+
+#12 [worker 2/9] WORKDIR /app
+#12 CACHED
+
+#13 [worker 6/9] RUN pip install --no-cache-dir --no-deps ./backend
+#13 CACHED
+
+#14 [worker 9/9] RUN mkdir -p /app/var
+#14 CACHED
+
+#15 [worker] exporting to image
+#15 exporting layers done
+#15 exporting manifest sha256:cc752d4622024c00656b0700c56951040afad1da446d1bf2a4a7a4f5419d39d7 0.0s done
+#15 exporting config sha256:70318d69f7b6bafa883f34ef73ad23d430ca204c12ae7b6e96dac2eaebbbea53
+#15 exporting config sha256:70318d69f7b6bafa883f34ef73ad23d430ca204c12ae7b6e96dac2eaebbbea53 0.0s done
+#15 exporting attestation manifest sha256:52480e5204199878ec8ef362802d2aaf4f1af0afa839cb06ae1c9f174d016d1b 0.0s done
+#15 exporting manifest list sha256:12509feafa4f4ba8d7b0896299ca6d5c2c77c7b0babf5a819904b9caabb014e9 0.0s done
+#15 naming to docker.io/library/srverifyf56fda46bbf8-worker:latest 0.0s done
+#15 unpacking to docker.io/library/srverifyf56fda46bbf8-worker:latest
+#15 unpacking to docker.io/library/srverifyf56fda46bbf8-worker:latest done
+#15 DONE 0.2s
+
+#16 [initialize] exporting to image
+#16 exporting layers done
+#16 exporting manifest sha256:6543d1b2385567c87d30c9376f9d7000b4e50012e7f6fa9bf300eaf4bf25b483 0.0s done
+#16 exporting config sha256:890ea1648b3d17b1db3dd1b05d69f180c782fc0d702cc1166405f7b8284602cd 0.0s done
+#16 exporting attestation manifest sha256:c03be653cc12f0310097c1682a35a74381419557a62b556bca153e827c45de40 0.0s done
+#16 exporting manifest list sha256:1db5838b0b1fa304ba4e15f65e05691f419567aee370a6a2d0a4634f13c6fd35 0.0s done
+#16 naming to docker.io/library/srverifyf56fda46bbf8-initialize:latest done
+#16 unpacking to docker.io/library/srverifyf56fda46bbf8-initialize:latest done
+#16 DONE 0.2s
+
+#17 [worker] resolving provenance for metadata file
+#17 DONE 0.0s
+
+#18 [initialize] resolving provenance for metadata file
+#18 DONE 0.0s

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+    "-m",
+    "smart_retail.application.feedback.cli",
+    "--input",
+    "experiments\\results\\20261022-release-joint-01\\artifacts\\19ccbca1-3f33-4b69-8e4f-b4648040156c\\input.json",
+    "--certificate",
+    "experiments\\reports\\20261022-release-joint-01\\certificates\\c7d290a6dfb6779e31e6d79d5680b6a3e28567d68c9d05d77a451d854fb3c350.json",
+    "--output",
+    "docs/release/evidence/20261022-proof-replay.json"
+  ],
+  "started_utc": "2026-10-22T06:29:29.639190+00:00",
+  "ended_utc": "2026-10-22T06:29:31.256898+00:00",
+  "exit_code": 0,
+  "stdout": "{'status': 'PASS', 'checked': 4, 'trust': 'Independent exhaustive re-evaluation using official model/validators; no solver-reported MIP proof'}\n",
+  "stderr": ""
+}

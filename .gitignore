@@ -16,3 +16,15 @@ var/
 *.log
 .coverage
 coverage.xml
+
+# Private deployment configuration and keys
+.env.local
+.env.*.local
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Generated campaign runs are retained locally with fingerprints/manifests.
+# Configs, source, datasets, reports and acceptance evidence remain versioned.
+/experiments/results/*/

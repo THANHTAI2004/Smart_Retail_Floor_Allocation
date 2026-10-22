@@ -1,5 +1,7 @@
 # Current state - 2026-10-22
 
+Current MongoDB-only checkpoint: SQL adapters, SQL databases and drivers have been removed. See [MongoDB-only acceptance](../migration/MONGODB_ONLY_ACCEPTANCE.md). The following migration details are historical.
+
 ## MongoDB migration, current checkpoint
 
 Primary persistence is authenticated MongoDB Community 8.0.16 via synchronous

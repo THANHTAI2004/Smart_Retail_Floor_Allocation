@@ -1,0 +1,192 @@
+....................................EEEEEEEE....................EE..EE.E [ 42%]
+EEEEEEEEEEEEEEEEEEEE........E........................................... [ 84%]
+......................EE...                                              [100%]
+=================================== ERRORS ====================================
+__________ ERROR at setup of test_crud_revision_and_partial_updates ___________
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_________ ERROR at setup of test_bad_input_leaves_database_unchanged __________
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_orders_references_are_checked_atomically_in_project_aggregate _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_______ ERROR at setup of test_queue_snapshot_worker_replay_and_report ________
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+______________ ERROR at setup of test_cancel_queued_is_terminal _______________
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+__________________ ERROR at setup of test_worker_time_budget __________________
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+____ ERROR at setup of test_mongo_reconnect_preserves_project_and_indexes _____
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+____________ ERROR at setup of test_missing_project_and_blank_name ____________
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+__ ERROR at setup of test_resume_reports_checksums_and_full_campaign_replay ___
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_____ ERROR at setup of test_persistent_cache_invalidation_and_tampering ______
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_process_creation_failures_have_bounded_retry_and_terminal_receipts _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_imported_dataset_requires_hash_and_synthetic_origin __
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_real_worker_retains_failed_search_and_proven_infeasibility_without_success _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_joint_http_worker_certificate_report_and_safe_artifact _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_native_backup_restores_documents_gridfs_and_indexes __
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+___________ ERROR at setup of test_restore_refuses_existing_target ____________
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+____ ERROR at setup of test_restore_validates_all_checksums_before_writing ____
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_concurrent_project_updates_exactly_one_revision_wins _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_concurrent_atomic_claim_unique_and_expired_owner_fenced _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_cancel_wins_final_publish_race_and_snapshot_immutable _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_gridfs_large_result_and_arbitrary_precision_numbers_roundtrip _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_____ ERROR at setup of test_worker_restart_recovery_and_non_ttl_indexes ______
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+__________ ERROR at setup of test_corrupt_result_cannot_be_published __________
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_research_http_runs_real_child_and_exports_audited_report _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_cache_short_long_unicode_repeated_and_no_temp[False] _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_cache_short_long_unicode_repeated_and_no_temp[True] __
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_____ ERROR at setup of test_cache_corruption_and_concurrent_publication ______
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_________ ERROR at setup of test_spawned_subprocess_writes_deep_cache _________
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+___ ERROR at setup of test_failed_link_never_overwrites_or_leaks_temporary ____
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+___ ERROR at setup of test_windows_drive_unc_conversion_and_posix_identity ____
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+______ ERROR at setup of test_cancellation_kills_a_real_running_t4_child ______
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+______ ERROR at setup of test_snapshot_corruption_fails_before_execution ______
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+__ ERROR at setup of test_wall_measurement_includes_process_creation_latency __
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_____ ERROR at setup of test_csv_api_transaction_and_reference_validation _____
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_ ERROR at setup of test_progress_read_survives_transient_windows_sharing_violation _
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+_____ ERROR at setup of test_progress_read_does_not_hide_corrupt_artifact _____
+C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [WinError 3] The system cannot find the path specified: '\\\\\\\\?\\\\D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\lp-979ca889a1\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested\\\\duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested'
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Smart_Retail_Floor_Allocation\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+ERROR backend\tests\integration\test_api.py::test_crud_revision_and_partial_updates
+ERROR backend\tests\integration\test_api.py::test_bad_input_leaves_database_unchanged
+ERROR backend\tests\integration\test_api.py::test_orders_references_are_checked_atomically_in_project_aggregate
+ERROR backend\tests\integration\test_api.py::test_queue_snapshot_worker_replay_and_report
+ERROR backend\tests\integration\test_api.py::test_cancel_queued_is_terminal
+ERROR backend\tests\integration\test_api.py::test_worker_time_budget - FileNo...
+ERROR backend\tests\integration\test_api.py::test_mongo_reconnect_preserves_project_and_indexes
+ERROR backend\tests\integration\test_api.py::test_missing_project_and_blank_name
+ERROR backend\tests\integration\test_experiment_platform.py::test_resume_reports_checksums_and_full_campaign_replay
+ERROR backend\tests\integration\test_experiment_platform.py::test_persistent_cache_invalidation_and_tampering
+ERROR backend\tests\integration\test_experiment_platform.py::test_process_creation_failures_have_bounded_retry_and_terminal_receipts
+ERROR backend\tests\integration\test_experiment_platform.py::test_imported_dataset_requires_hash_and_synthetic_origin
+ERROR backend\tests\integration\test_joint_no_incumbent.py::test_real_worker_retains_failed_search_and_proven_infeasibility_without_success
+ERROR backend\tests\integration\test_joint_research_http.py::test_joint_http_worker_certificate_report_and_safe_artifact
+ERROR backend\tests\integration\test_mongodb_backup.py::test_native_backup_restores_documents_gridfs_and_indexes
+ERROR backend\tests\integration\test_mongodb_backup.py::test_restore_refuses_existing_target
+ERROR backend\tests\integration\test_mongodb_backup.py::test_restore_validates_all_checksums_before_writing
+ERROR backend\tests\integration\test_mongodb_persistence.py::test_concurrent_project_updates_exactly_one_revision_wins
+ERROR backend\tests\integration\test_mongodb_persistence.py::test_concurrent_atomic_claim_unique_and_expired_owner_fenced
+ERROR backend\tests\integration\test_mongodb_persistence.py::test_cancel_wins_final_publish_race_and_snapshot_immutable
+ERROR backend\tests\integration\test_mongodb_persistence.py::test_gridfs_large_result_and_arbitrary_precision_numbers_roundtrip
+ERROR backend\tests\integration\test_mongodb_persistence.py::test_worker_restart_recovery_and_non_ttl_indexes
+ERROR backend\tests\integration\test_mongodb_persistence.py::test_corrupt_result_cannot_be_published
+ERROR backend\tests\integration\test_research_http.py::test_research_http_runs_real_child_and_exports_audited_report
+ERROR backend\tests\integration\test_windows_long_path.py::test_cache_short_long_unicode_repeated_and_no_temp[False]
+ERROR backend\tests\integration\test_windows_long_path.py::test_cache_short_long_unicode_repeated_and_no_temp[True]
+ERROR backend\tests\integration\test_windows_long_path.py::test_cache_corruption_and_concurrent_publication
+ERROR backend\tests\integration\test_windows_long_path.py::test_spawned_subprocess_writes_deep_cache
+ERROR backend\tests\integration\test_windows_long_path.py::test_failed_link_never_overwrites_or_leaks_temporary
+ERROR backend\tests\integration\test_windows_long_path.py::test_windows_drive_unc_conversion_and_posix_identity
+ERROR backend\tests\integration\test_worker_control.py::test_cancellation_kills_a_real_running_t4_child
+ERROR backend\tests\integration\test_worker_control.py::test_snapshot_corruption_fails_before_execution
+ERROR backend\tests\integration\test_worker_wall_time.py::test_wall_measurement_includes_process_creation_latency
+ERROR backend\tests\regression\test_platform_contracts.py::test_csv_api_transaction_and_reference_validation
+ERROR backend\tests\unit\test_progress_read.py::test_progress_read_survives_transient_windows_sharing_violation
+ERROR backend\tests\unit\test_progress_read.py::test_progress_read_does_not_hide_corrupt_artifact
+135 passed, 1 warning, 36 errors in 11.17s

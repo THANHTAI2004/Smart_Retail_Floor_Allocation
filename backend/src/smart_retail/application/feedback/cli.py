@@ -8,6 +8,7 @@ from pathlib import Path
 from smart_retail.application.feedback.coordinator import identity, resolved_config, validate_space
 from smart_retail.application.feedback.evaluator import evaluate
 from smart_retail.engines.joint_exact.verifier import verify
+from smart_retail.infrastructure.filesystem import normalize_fs_path
 from smart_retail.infrastructure.provenance import runtime_identity
 
 
@@ -18,6 +19,9 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--time-limit", type=float, default=120)
     args = parser.parse_args()
+    args.input = normalize_fs_path(args.input)
+    args.certificate = normalize_fs_path(args.certificate)
+    args.output = normalize_fs_path(args.output)
     if not 0 < args.time_limit <= 300:
         parser.error("time-limit must be in (0,300] seconds")
     if args.output.exists():

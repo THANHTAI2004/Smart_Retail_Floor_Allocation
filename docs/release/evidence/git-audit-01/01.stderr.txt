@@ -1,0 +1,9 @@
+warning: in the working copy of '.dockerignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/src/smart_retail/application/experiments/cli.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/src/smart_retail/application/experiments/service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/src/smart_retail/application/experiments/storage.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/src/smart_retail/application/feedback/cli.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/src/smart_retail/infrastructure/mongodb/health.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/unit/test_architecture.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/architecture/overview.md', LF will be replaced by CRLF the next time Git touches it

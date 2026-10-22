@@ -1,4 +1,107 @@
-# Current handoff - MongoDB migration verified, 2026-10-22
+# Current handoff - Windows long paths and release verification, 2026-10-22
+
+Windows filesystem fix verified: only os.link had extended paths previously.
+Replayed old cache source from verified backup: root 244 characters, temporary
+write at 286 characters fails FileNotFoundError. New infrastructure/filesystem.py
+normalizes owned artifact roots for all derived I/O; drive/UNC syntax, Unicode,
+logical campaign identity and atomic no-overwrite hard-link semantics preserved.
+Cache format/scientific checksums and numerical engines unchanged.
+
+Updated cache, worker, experiment storage/campaign/HTTP/report/replay/certificate
+I/O boundaries. Added six deep-path regression cases including spawned process,
+32 concurrent writers, failed-link cleanup, immutable JSON and checksum detection.
+Fresh final long-path receipt: docs/release/evidence/20261022-longpath-03/verification.json:
+171 pytest PASS at logical base 350 chars, 171 PASS at 50 chars; both previously
+reported HTTP tests PASS on three independent deep-path repeats. No MongoDB skips.
+Earlier attempts retained as superseded harness/test-development evidence.
+
+Fresh full quality receipt: docs/release/evidence/20261022-release-quality-01/verification.json:
+171 pytest, 4 Vitest, 9 Playwright and Ruff/mypy/pip check/ESLint/build/npm audit/
+architecture PASS. Final source identity matches new three-job sequential/feedback/
+exact campaign and replay; 3/3 identical input/result SHA/numeric comparison.
+Independent certificate CLI PASS: evidence/20261022-proof-replay.json.
+Campaigns: experiments/results/20261022-release-joint{-replay}-01;
+reports: experiments/reports/20261022-release-joint-01 and comparison-01.json.
+
+Compose ports now parameterized for isolated project testing; private env/keys
+excluded from Docker context. Added scripts/verify_mongodb_compose.ps1 and
+verify_atlas_connection.ps1 with UUID namespaces, sanitized receipts and explicit
+BLOCKED exit codes. Real isolated Compose PASS: config/build/auth/indices, API/worker/
+frontend, seven inputs, T1-T4/result/report/SHA, restart persistence, cancellation
+and expired worker recovery. Receipt: evidence/20261022-compose-06/verification.json.
+Actual volume/network/port isolation inspected (compose-isolation.json). Atlas
+remains BLOCKED_ATLAS_CREDENTIALS; no live Atlas success is claimed.
+The user explicitly authorized installing missing tools. WinGet per-user Docker
+attempt returned No applicable installer found; direct official installer command
+was rejected before execution (blocked by policy). A safer pinned WinGet user-mode installation subsequently succeeded. Docker
+Desktop 4.96.1, CLI/engine 29.9.2, Compose v5.6.0 and WSL 2.7.13 installed;
+WSL needed elevated WinGet/UAC. Engine started with no reboot or BIOS changes.
+Real Compose config validation PASS; isolated build/runtime verification follows
+the final release receipt. Earlier BLOCKED attempts are retained as history.
+Installed yaml@2.8.1 in ignored var/release-tools for static validation. WSL missing;
+hypervisor present; original shell not elevated. Atlas credentials not supplied.
+
+Original 16 projects, 8 runs, 32 artifact hashes unchanged; representative historical
+scientific manifests PASS. Main API/worker/frontend restarted on current source:
+http://127.0.0.1:5173/#research. External pre-edit source backup verified at
+C:/Users/admin/Documents/SmartRetailBackups/20261022-longpath-061451.
+Large generated result retention archive/manifest recorded in release evidence.
+
+Git policy: ignore generated experiments/results subdirectories only, preserve
+configs/source/reports/docs. Stage audited source/evidence including prior explicit
+MongoDB-only removals. User's prior commit authorization permits a local checkpoint;
+the new master prompt expressly forbids GitHub push. No push, reset, clean, amend
+or research deletion. See final Git audit/release report for checkpoint status.
+
+Release report: docs/release/FINAL_RELEASE_REPORT.md. Acceptance:
+docs/release/FINAL_RELEASE_ACCEPTANCE.md. Target is RELEASE_READY_WITH_EXTERNAL_BLOCKERS
+after local checkpoint; only Atlas credentials and remote CI remain external
+verification limits. Docker and WSL installation/runtime succeeded. Live UNC share not available (syntax and local deep paths tested).
+
+# Historical handoff - MongoDB-only retirement before long-path release
+
+The user explicitly requested removal of the remaining SQL implementation after
+the published migration. Native MongoDB is now the only persistence and recovery
+path in this checkout. SQL importer/tests, Alembic scripts, PostgreSQL verifier,
+local SQLite stores and SQL driver packages have been retired. No new Git staging,
+commit or push is part of this removal milestone.
+
+Before removal, verified external archive:
+C:/Users/admin/Documents/SmartRetailBackups/20261022-mongodb-only-01.
+522 original database/source/cache files were archived and read back by SHA-256.
+34 legacy application/campaign databases were decoded into smart_retail_history,
+with per-table counts/checksums and readback before removing SQL bytes locally.
+Scientific JSON/manifests/results remain unchanged. Old SQL backups remain outside
+the checkout as recovery evidence and are never loaded by the application.
+
+Both project and older experiment Python venvs had SQLAlchemy/Alembic/SQL driver
+packages removed. Mypy now uses filesystem caching. Standard Python installation
+is untouched; no application source imports its sqlite3 module. Future setup
+removes retired persistence packages from the project venv before installing locks.
+
+Native BSON backup/restore now includes documents, IDs, indexes and GridFS, with
+checksums, exclusive backup creation and refusal to overwrite existing databases.
+Requires all writers stopped; does not claim an online distributed snapshot.
+Actual primary backup/restore verified 16 projects/8 runs and every collection
+document equal in an isolated target. Receipt: docs/migration/mongodb-only-native-restore.json.
+Retirement manifest: docs/migration/mongodb-only-removal.json.
+Operations: docs/migration/MONGODB_BACKUP_RESTORE.md.
+**MONGODB_ONLY_VERIFIED.** Fresh final release:
+docs/migration/evidence/20261022-mongodb-only-release-01/verification.json.
+165 pytest, 4 Vitest, 9 Playwright PASS, no integration skips. Ruff/mypy/pip
+check/ESLint/build/npm audit/architecture PASS. Pilot and replay each ran 19/19
+jobs with identical input/result SHA and numerical values. Current runtime
+identity matches the final release and both campaigns. Primary BSON restore
+compared every collection document; history restore verified all 34 source
+databases / 206 archived tables. Read-created WAL/SHM were also archived/removed.
+No in-checkout SQLite database remains; original scientific JSON unchanged.
+API/worker/frontend restarted successfully at http://127.0.0.1:5173/#research.
+Acceptance: docs/migration/MONGODB_ONLY_ACCEPTANCE.md.
+Closeout: docs/migration/mongodb-only-closeout.json. Docker/Atlas/remote CI remain
+unexecuted. This retirement is not staged, committed or pushed. Previous 164/4/9
+counts below are historical source evidence, not verification of this retirement.
+
+# Historical handoff - MongoDB migration verified before SQL retirement
 
 Publication checkpoint: the user explicitly authorized commit and push to their
 existing GitHub account on 2026-10-22. Publish the current source, tests, contracts,

@@ -13,11 +13,12 @@ from smart_retail.application.projects import ServiceError
 from smart_retail.application.stage_workflow import canonical_hash
 from smart_retail.contracts.experiments import CampaignSpec
 from smart_retail.infrastructure.database import ROOT
+from smart_retail.infrastructure.filesystem import normalize_fs_path
 from smart_retail.workers.resources import is_alive
 
 
 def home() -> Path:
-    path = Path(os.getenv("SMART_RETAIL_RESEARCH_HOME", str(ROOT / "var/research"))).resolve()
+    path = normalize_fs_path(os.getenv("SMART_RETAIL_RESEARCH_HOME", str(ROOT / "var/research"))).resolve()
     path.mkdir(parents=True, exist_ok=True)
     return path
 
@@ -174,7 +175,7 @@ def report_file(identifier: str, relative: str) -> Path:
     report = data["supervisor"].get("report")
     if not report:
         raise ServiceError(409, "Report is not ready")
-    root = Path(report).resolve()
+    root = normalize_fs_path(report).resolve()
     path = (root / relative).resolve()
     if (
         not path.is_relative_to(root)

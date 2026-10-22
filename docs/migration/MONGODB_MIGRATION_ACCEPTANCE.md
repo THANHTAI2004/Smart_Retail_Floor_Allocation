@@ -1,4 +1,6 @@
-# MongoDB migration acceptance — 2026-10-22
+# MongoDB migration acceptance â€” 2026-10-22
+
+Current MongoDB-only checkpoint: SQL adapters, SQL databases and drivers have been removed. See [MongoDB-only acceptance](MONGODB_ONLY_ACCEPTANCE.md). The following migration details are historical.
 
 Status: **MONGODB_MIGRATION_VERIFIED**. All final local release and replay checks
 below completed successfully. Local runtime: real authenticated MongoDB Community 8.0.16,
@@ -37,7 +39,7 @@ The source remains in place, read-only to migration. `mongodb-live-service.json`
 compares original source rows to MongoDB and verifies all original 32 artifact
 hashes. Recoverable copies are outside the checkout.
 
-Read [SQLITE_ROLLBACK.md](SQLITE_ROLLBACK.md) before recovery: the first source
+Read the externally archived SQL recovery guide before recovery: the first source
 archive is a mixed-time capture and is not an exact pre-migration tree. A separate
 reconstructed SQL recovery bundle was actually tested against its copied SQLite
 store (16 projects / 8 runs); receipt `sqlite-recovery-verification.json`.
@@ -54,9 +56,9 @@ No current MongoDB data is dropped by rollback instructions.
 | Cancel/timeout and final publication race | MongoDB worker integration and supervisor tests |
 | Immutable snapshot and checksum rejection | Snapshot unchanged on publication; corrupt snapshot/result rejected |
 | BSON overflow, scientific integer precision | 17 MiB result and 120-digit integers roundtrip through GridFS; corrupt chunk rejected |
-| Enqueue → T1 → T2 → T3 → T4 → result/report, replay, CSV/JSON | Existing full backend workflow tests and Playwright on isolated real MongoDB |
+| Enqueue â†’ T1 â†’ T2 â†’ T3 â†’ T4 â†’ result/report, replay, CSV/JSON | Existing full backend workflow tests and Playwright on isolated real MongoDB |
 | Migration dry-run, idempotency, conflict refusal, orphan and active-run policy | Isolated real MongoDB integration controls |
-| Persistence across actual MongoDB restart | `mongodb-restart-verification-02.json`: PID 22196 → 6492, all main rows and large GridFS payload unchanged |
+| Persistence across actual MongoDB restart | `mongodb-restart-verification-02.json`: PID 22196 â†’ 6492, all main rows and large GridFS payload unchanged |
 | No SQL runtime dependency / no public MongoDB bind | `mongodb-live-service.json`, static architecture audit |
 | Indexes / startup cutover consistency | `mongodb-index-health.json`, receipt ID + database + source SHA gate |
 | Historical engine/research bytes | `historical-science-preservation.json` |
@@ -85,7 +87,7 @@ matching analysis lives under `experiments/reports`.
 
 | Campaign directory | Purpose |
 |---|---|
-| `20261022-mongodb-pilot-02` | 19-job T1–T4/E01–E08 pilot |
+| `20261022-mongodb-pilot-02` | 19-job T1â€“T4/E01â€“E08 pilot |
 | `20261022-mongodb-pilot-replay-02` | New execution of the same pilot |
 | `20261022-mongodb-certification-02` | 15-job sequential/multistart/feedback/exact/hybrid comparison |
 | `20261022-mongodb-certification-replay-02` | New execution with independent certificate checks |

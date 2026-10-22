@@ -1,8 +1,8 @@
 # MongoDB operations and migration
 
 The main API, durable queue and experiment worker use synchronous PyMongo.
-SQLite is used only by the offline importer and the separately preserved SQL
-recovery application. Engines and domain objects have no database dependency.
+No SQL persistence adapter, driver or importer remains in the project.
+Engines and domain objects have no database dependency.
 
 ## Verified local Windows environment
 
@@ -41,38 +41,15 @@ set environment variables in the shell or service manager. An explicit URI takes
 precedence over the local private-file fallback. Never copy an authenticated URI
 into source, screenshots or evidence.
 
-## Import an existing SQLite store
+## Existing data and deployment receipts
 
-Stop all source writers and target application writers before the final import.
-Each invocation needs a **new external backup directory** and a **new report path**.
-The importer opens SQLite with `mode=ro`, creates an SQLite online backup, checks
-integrity, and hashes the backup before importing any documents.
-
-```powershell
-.venv/Scripts/python.exe backend/scripts/migrate_sqlite_to_mongodb.py --source var/smart_retail.db --backup-dir C:/Users/admin/Documents/SmartRetailBackups/my-mongo-dryrun --output docs/migration/my-dryrun.json --dry-run --check-target
-.venv/Scripts/python.exe backend/scripts/migrate_sqlite_to_mongodb.py --source var/smart_retail.db --backup-dir C:/Users/admin/Documents/SmartRetailBackups/my-mongo-cutover --output docs/migration/my-cutover.json --cutover
-```
-
-The actual checkout has already completed cutover. Do not repeat `--cutover`
-over its existing receipt. A normal rerun without `--cutover` reads back equal
-documents and inserts no duplicates; any conflicting ID refuses the operation
-and preserves the target edit. Do not rerun a legacy import after legitimate
-MongoDB edits and expect those edits to be overwritten. Dry-run validates source
-and, with `--check-target`, target conflicts; it writes the external backup/report
-but no target records or indexes.
-
-The importer checks embedded SKU/order relations against all legacy relational
-rows, preserves IDs, revision, timestamps and scientific hashes, and reads back
-every imported project/run. Historical workers receive `MIGRATED_OFFLINE`, epoch
-zero and the original epoch as metadata. RUNNING/CANCEL_REQUESTED sources are
-rejected by default. `--active-policy mark-lost` explicitly records FAILED with
-`MIGRATION_RECOVERY_REQUIRED`; it cannot automatically authorize cutover. Resolve
-and review active work before making the final frozen source snapshot.
-
-The local cutover gate checks `var/mongodb/cutover.json` against the verified
-receipt ID, database name and SQLite backup SHA stored in MongoDB. A deployment
-to another database must perform its own import/review. The receipt is local
-operational state, not a substitute for maintaining recoverable backups.
+Main data uses `smart_retail`. Historical SQL campaign rows were decoded and
+checksummed into `smart_retail_history` before removing in-checkout SQL files.
+The 34 archived databases have table counts, source hashes and MongoDB readback
+checks. This archive is separate from the live queue. Scientific JSON remains.
+Windows startup validates an existing cutover receipt against MongoDB metadata;
+it no longer requires or inspects any SQL file. There is no SQL import command
+or fallback. Use native BSON backup/restore for current recovery operations.
 
 ## Persistence semantics
 
@@ -110,5 +87,4 @@ Docker/Compose and Atlas have **not** been run on this machine. Do not use
 
 Preserve MongoDB data together with GridFS collections and filesystem artifacts.
 For ongoing deployments use a separately verified backup procedure appropriate
-to that deployment; the preserved SQLite snapshot only covers the cutover point.
-See [rollback guide](SQLITE_ROLLBACK.md) for the tested pre-cutover recovery path.
+to that deployment. See [native backup/restore](MONGODB_BACKUP_RESTORE.md).

@@ -1,0 +1,2 @@
+origin	https://github.com/THANHTAI2004/Smart_Retail_Floor_Allocation.git (fetch)
+origin	https://github.com/THANHTAI2004/Smart_Retail_Floor_Allocation.git (push)

@@ -1,0 +1,56 @@
+ M .dockerignore
+ M .gitignore
+ M HANDOFF.md
+ M README.md
+ D backend/alembic.ini
+ D backend/migrations/env.py
+ D backend/migrations/versions/0001_foundation.py
+ M backend/pyproject.toml
+ D backend/scripts/migrate_sqlite_to_mongodb.py
+ M backend/src/smart_retail/application/experiments/campaign.py
+ M backend/src/smart_retail/application/experiments/cli.py
+ M backend/src/smart_retail/application/experiments/reports.py
+ M backend/src/smart_retail/application/experiments/service.py
+ M backend/src/smart_retail/application/experiments/storage.py
+ M backend/src/smart_retail/application/feedback/cli.py
+ M backend/src/smart_retail/infrastructure/mongodb/health.py
+ D backend/src/smart_retail/infrastructure/mongodb/migration.py
+ M backend/src/smart_retail/infrastructure/stage_cache.py
+ M backend/src/smart_retail/workers/runner.py
+ D backend/tests/integration/test_sqlite_mongodb_migration.py
+ M backend/tests/unit/test_architecture.py
+ M docker-compose.yml
+ M docs/architecture/CURRENT_STATE.md
+ M docs/architecture/DEPENDENCY_MAP.md
+ M docs/architecture/overview.md
+ M docs/architecture/phase-status.md
+ M docs/decisions/0001-modular-monolith.md
+ M docs/migration/MONGODB_MIGRATION_ACCEPTANCE.md
+ M docs/migration/MONGODB_OPERATIONS.md
+ D docs/migration/SQLITE_ROLLBACK.md
+ M docs/testing/verification.md
+ D experiments/results/20261021-replay-01/campaign.db
+ D experiments/results/20261021-research-01/campaign.db
+ D experiments/results/20261021-research-02/campaign.db
+ M scripts/setup.ps1
+ D scripts/verify_postgres.py
+?? backend/src/smart_retail/infrastructure/filesystem.py
+?? backend/src/smart_retail/infrastructure/mongodb/backup.py
+?? backend/tests/integration/test_mongodb_backup.py
+?? backend/tests/integration/test_windows_long_path.py
+?? docs/decisions/0002-mongodb-only.md
+?? docs/migration/MONGODB_BACKUP_RESTORE.md
+?? docs/migration/MONGODB_ONLY_ACCEPTANCE.md
+?? docs/migration/evidence/20261022-mongodb-only-release-01/
+?? docs/migration/mongodb-only-closeout.json
+?? docs/migration/mongodb-only-history-restore.json
+?? docs/migration/mongodb-only-native-restore.json
+?? docs/migration/mongodb-only-removal.json
+?? docs/release/
+?? experiments/reports/20261022-mongodb-only-comparison-01.json
+?? experiments/reports/20261022-mongodb-only-pilot-01/
+?? scripts/verify_atlas_connection.ps1
+?? scripts/verify_mongodb_compose.ps1
+?? scripts/verify_mongodb_deployment.py
+?? scripts/verify_windows_long_path.ps1
+?? scripts/verify_windows_long_path.py

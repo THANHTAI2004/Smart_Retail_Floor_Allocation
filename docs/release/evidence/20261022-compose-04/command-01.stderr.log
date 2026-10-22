@@ -1,0 +1,280 @@
+ Image srverify260d7d8450c4-backend Building 
+ Image srverify260d7d8450c4-frontend Building 
+Dockerfile:1
+
+--------------------
+
+   1 | >>> FROM python:3.12-slim
+
+   2 |     WORKDIR /app
+
+   3 |     COPY backend/requirements-lock.txt /app/backend/requirements-lock.txt
+
+--------------------
+
+target backend: failed to solve: error getting credentials - err: exec: "docker-credential-desktop": executable file not found in %PATH%, out: ``
+
+119  /usr/local/bin/dockerd --config-file /run/config/docker/daemon.json
+
+google.golang.org/grpc.(*ClientConn).Invoke
+
+	/root/build-deb/engine/vendor/google.golang.org/grpc/call.go:39
+
+github.com/moby/buildkit/session/auth.(*authClient).GetTokenAuthority
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/session/auth/auth_grpc.pb.go:69
+
+github.com/moby/buildkit/session/auth.GetTokenAuthority.func1
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/session/auth/auth.go:133
+
+github.com/moby/buildkit/session.(*Manager).Any
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/session/group.go:87
+
+github.com/moby/buildkit/session/auth.GetTokenAuthority
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/session/auth/auth.go:130
+
+github.com/moby/buildkit/util/resolver.(*dockerAuthorizer).AddResponses
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/util/resolver/authorizer.go:201
+
+github.com/containerd/containerd/v2/core/remotes/docker.(*request).retryRequest
+
+	/root/build-deb/engine/vendor/github.com/containerd/containerd/v2/core/remotes/docker/resolver.go:869
+
+github.com/containerd/containerd/v2/core/remotes/docker.(*request).doWithRetriesInner
+
+	/root/build-deb/engine/vendor/github.com/containerd/containerd/v2/core/remotes/docker/resolver.go:804
+
+github.com/containerd/containerd/v2/core/remotes/docker.(*request).doWithRetries
+
+	/root/build-deb/engine/vendor/github.com/containerd/containerd/v2/core/remotes/docker/resolver.go:779
+
+github.com/containerd/containerd/v2/core/remotes/docker.(*dockerResolver).Resolve
+
+	/root/build-deb/engine/vendor/github.com/containerd/containerd/v2/core/remotes/docker/resolver.go:333
+
+github.com/moby/buildkit/util/resolver.(*Resolver).Resolve
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/util/resolver/pool.go:261
+
+github.com/moby/buildkit/util/imageutil.Config
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/util/imageutil/config.go:107
+
+github.com/moby/buildkit/source/containerimage.(*Source).ResolveImageMetadata.func2
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/source/containerimage/source.go:190
+
+github.com/moby/buildkit/util/flightcontrol.(*call[...]).run
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/util/flightcontrol/flightcontrol.go:122
+
+sync.(*Once).doSlow
+
+	/usr/local/go/src/sync/once.go:78
+
+sync.(*Once).Do
+
+	/usr/local/go/src/sync/once.go:69
+
+runtime.goexit
+
+	/usr/local/go/src/runtime/asm_amd64.s:1771
+
+
+
+119  /usr/local/bin/dockerd --config-file /run/config/docker/daemon.json
+
+github.com/moby/buildkit/frontend/gateway.(*llbBridgeForwarder).Return
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/frontend/gateway/gateway.go:1104
+
+github.com/moby/buildkit/control/gateway.(*GatewayForwarder).Return
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/control/gateway/gateway.go:109
+
+github.com/moby/buildkit/frontend/gateway/pb._LLBBridge_Return_Handler.func1
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/frontend/gateway/pb/gateway_grpc.pb.go:523
+
+google.golang.org/grpc.getChainUnaryHandler.func1
+
+	/root/build-deb/engine/vendor/google.golang.org/grpc/server.go:1238
+
+github.com/moby/moby/v2/daemon/server/router/grpc.unaryInterceptor
+
+	/root/build-deb/engine/daemon/server/router/grpc/grpc.go:77
+
+google.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1
+
+	/root/build-deb/engine/vendor/google.golang.org/grpc/server.go:1229
+
+github.com/moby/buildkit/frontend/gateway/pb._LLBBridge_Return_Handler
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/frontend/gateway/pb/gateway_grpc.pb.go:525
+
+google.golang.org/grpc.(*Server).register.(*Server).wrapUnaryHandler.func1
+
+	/root/build-deb/engine/vendor/google.golang.org/grpc/server.go:1284
+
+google.golang.org/grpc.(*Server).processRPC
+
+	/root/build-deb/engine/vendor/google.golang.org/grpc/server.go:1450
+
+google.golang.org/grpc.(*Server).handleStream
+
+	/root/build-deb/engine/vendor/google.golang.org/grpc/server.go:1595
+
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+
+	/root/build-deb/engine/vendor/google.golang.org/grpc/server.go:1096
+
+runtime.goexit
+
+	/usr/local/go/src/runtime/asm_amd64.s:1771
+
+
+
+33856 v0.38.1 C:\Users\admin\.docker\cli-plugins\docker-buildx.exe bake --file - --progress rawjson --metadata-file C:\Users\admin\AppData\Local\Temp\compose-build-metadataFile-c01aa79e-6e1a-41ba-bb20-3c4d4c005dd5.json --allow fs.read=D:\Smart_Retail_Floor_Allocation --allow fs.read=D:\Smart_Retail_Floor_Allocation --allow fs.read=D:\Smart_Retail_Floor_Allocation
+
+google.golang.org/grpc.(*ClientConn).Invoke
+
+	google.golang.org/grpc@v1.84.0/call.go:39
+
+github.com/moby/buildkit/frontend/gateway/pb.(*lLBBridgeClient).Solve
+
+	github.com/moby/buildkit@v0.34.0/frontend/gateway/pb/gateway_grpc.pb.go:105
+
+github.com/moby/buildkit/client.(*gatewayClientForBuild).Solve
+
+	github.com/moby/buildkit@v0.34.0/client/build.go:98
+
+github.com/moby/buildkit/frontend/gateway/grpcclient.(*grpcClient).Solve
+
+	github.com/moby/buildkit@v0.34.0/frontend/gateway/grpcclient/client.go:416
+
+github.com/docker/buildx/build.solve
+
+	github.com/docker/buildx/build/build.go:1657
+
+github.com/docker/buildx/build.Build.func4.7.3
+
+	github.com/docker/buildx/build/build.go:903
+
+github.com/moby/buildkit/frontend/gateway/grpcclient.(*grpcClient).Run
+
+	github.com/moby/buildkit@v0.34.0/frontend/gateway/grpcclient/client.go:219
+
+github.com/moby/buildkit/client.(*Client).Build.func2
+
+	github.com/moby/buildkit@v0.34.0/client/build.go:59
+
+github.com/moby/buildkit/client.(*Client).solve.func3
+
+	github.com/moby/buildkit@v0.34.0/client/solve.go:368
+
+golang.org/x/sync/errgroup.(*Group).Go.func1
+
+	golang.org/x/sync@v0.23.0/errgroup/errgroup.go:93
+
+runtime.goexit
+
+	runtime/asm_amd64.s:1771
+
+
+
+119  /usr/local/bin/dockerd --config-file /run/config/docker/daemon.json
+
+github.com/moby/buildkit/client/llb/sourceresolver.(*imageMetaResolver).ResolveImageConfig
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/client/llb/sourceresolver/imageresolver.go:51
+
+github.com/moby/buildkit/frontend/gateway/forwarder.(*BridgeClient).ResolveImageConfig
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/frontend/gateway/forwarder/forward.go:112
+
+github.com/moby/buildkit/frontend/dockerfile/builder.(*withResolveCache).ResolveImageConfig.func1
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/frontend/dockerfile/builder/resolvecache.go:37
+
+github.com/moby/buildkit/util/flightcontrol.(*CachedGroup[...]).Do.func1
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/util/flightcontrol/cached.go:43
+
+github.com/moby/buildkit/util/flightcontrol.(*call[...]).run
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/util/flightcontrol/flightcontrol.go:122
+
+
+
+33856 v0.38.1 C:\Users\admin\.docker\cli-plugins\docker-buildx.exe bake --file - --progress rawjson --metadata-file C:\Users\admin\AppData\Local\Temp\compose-build-metadataFile-c01aa79e-6e1a-41ba-bb20-3c4d4c005dd5.json --allow fs.read=D:\Smart_Retail_Floor_Allocation --allow fs.read=D:\Smart_Retail_Floor_Allocation --allow fs.read=D:\Smart_Retail_Floor_Allocation
+
+google.golang.org/grpc.(*ClientConn).Invoke
+
+	google.golang.org/grpc@v1.84.0/call.go:39
+
+github.com/moby/buildkit/api/services/control.(*controlClient).Solve
+
+	github.com/moby/buildkit@v0.34.0/api/services/control/control_grpc.pb.go:88
+
+github.com/moby/buildkit/client.(*Client).solve.func2
+
+	github.com/moby/buildkit@v0.34.0/client/solve.go:356
+
+golang.org/x/sync/errgroup.(*Group).Go.func1
+
+	golang.org/x/sync@v0.23.0/errgroup/errgroup.go:93
+
+
+
+119  /usr/local/bin/dockerd --config-file /run/config/docker/daemon.json
+
+github.com/moby/buildkit/frontend/dockerfile/dockerfile2llb.(*dispatchContext).resolveBaseImage
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/frontend/dockerfile/dockerfile2llb/convert.go:704
+
+github.com/moby/buildkit/frontend/dockerfile/dockerfile2llb.(*dispatchContext).resolveReachableStages.func1
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/frontend/dockerfile/dockerfile2llb/convert.go:608
+
+golang.org/x/sync/errgroup.(*Group).Go.func1
+
+	/root/build-deb/engine/vendor/golang.org/x/sync/errgroup/errgroup.go:93
+
+runtime.goexit
+
+	/usr/local/go/src/runtime/asm_amd64.s:1771
+
+
+
+33856 v0.38.1 C:\Users\admin\.docker\cli-plugins\docker-buildx.exe bake --file - --progress rawjson --metadata-file C:\Users\admin\AppData\Local\Temp\compose-build-metadataFile-c01aa79e-6e1a-41ba-bb20-3c4d4c005dd5.json --allow fs.read=D:\Smart_Retail_Floor_Allocation --allow fs.read=D:\Smart_Retail_Floor_Allocation --allow fs.read=D:\Smart_Retail_Floor_Allocation
+
+github.com/docker/buildx/build.Build.func4.8.3
+
+	github.com/docker/buildx/build/build.go:1054
+
+github.com/docker/buildx/build.Build.func4.8
+
+	github.com/docker/buildx/build/build.go:1178
+
+golang.org/x/sync/errgroup.(*Group).Go.func1
+
+	golang.org/x/sync@v0.23.0/errgroup/errgroup.go:93
+
+
+
+33856 v0.38.1 C:\Users\admin\.docker\cli-plugins\docker-buildx.exe bake --file - --progress rawjson --metadata-file C:\Users\admin\AppData\Local\Temp\compose-build-metadataFile-c01aa79e-6e1a-41ba-bb20-3c4d4c005dd5.json --allow fs.read=D:\Smart_Retail_Floor_Allocation --allow fs.read=D:\Smart_Retail_Floor_Allocation --allow fs.read=D:\Smart_Retail_Floor_Allocation
+
+github.com/moby/buildkit/client.(*Client).solve.func2
+
+	github.com/moby/buildkit@v0.34.0/client/solve.go:358
+
+golang.org/x/sync/errgroup.(*Group).Go.func1
+
+	golang.org/x/sync@v0.23.0/errgroup/errgroup.go:93
+
+
+

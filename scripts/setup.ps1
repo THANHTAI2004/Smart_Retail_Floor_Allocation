@@ -2,6 +2,8 @@ $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $projectRoot
 if (-not (Test-Path -LiteralPath '.venv\Scripts\python.exe')) { python -m venv .venv }
+& '.venv\Scripts\python.exe' -m pip uninstall -y SQLAlchemy alembic psycopg psycopg-binary psycopg2-binary motor
+if ($LASTEXITCODE -ne 0) { throw 'Removing retired SQL/Motor packages failed' }
 & '.venv\Scripts\python.exe' -m pip install -r backend/requirements-lock.txt
 if ($LASTEXITCODE -ne 0) { throw 'Python dependencies failed' }
 & '.venv\Scripts\python.exe' -m pip install -e backend --no-deps

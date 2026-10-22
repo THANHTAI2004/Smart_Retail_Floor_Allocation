@@ -16,6 +16,7 @@ from smart_retail.application.workflow import canonical_hash
 from smart_retail.contracts.experiments import CampaignSpec
 from smart_retail.contracts.inputs import SECTIONS, to_domain
 from smart_retail.infrastructure.database import connect
+from smart_retail.infrastructure.filesystem import logical_fs_path, normalize_fs_path
 from smart_retail.infrastructure.provenance import runtime_identity
 from smart_retail.workers.resources import is_alive
 from smart_retail.workers.runner import work_once
@@ -26,6 +27,7 @@ def utc():
 
 
 def initialize(spec: CampaignSpec, root: Path):
+    root = normalize_fs_path(root)
     began = time.monotonic()
     root.mkdir(parents=True, exist_ok=False)
     disk = shutil.disk_usage(root)
@@ -88,6 +90,7 @@ def initialize(spec: CampaignSpec, root: Path):
 
 
 def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: int | None = None):
+    root = normalize_fs_path(root)
     if not resume:
         initialize(spec, root)
     verify_integrity(root)
@@ -105,7 +108,7 @@ def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: i
             raise ValueError("Campaign already has a live supervisor")
     write(lock, {"pid": os.getpid(), "started_utc": utc()}, immutable=True)
     campaign_database = (
-        "sr_campaign_" + hashlib.sha256(str(root.resolve()).encode()).hexdigest()[:24]
+        "sr_campaign_" + hashlib.sha256(str(logical_fs_path(root.resolve())).encode()).hexdigest()[:24]
     )
     engine, factory = connect(database=campaign_database)
     engine.ready()

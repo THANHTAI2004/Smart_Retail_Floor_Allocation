@@ -6,8 +6,11 @@ import time
 from pathlib import Path
 from uuid import uuid4
 
+from smart_retail.infrastructure.filesystem import normalize_fs_path, publish_immutable_file
+
 
 def read(path: Path):
+    path = normalize_fs_path(path)
     for attempt in range(25):
         try:
             return json.loads(path.read_text(encoding="utf-8"))
@@ -18,11 +21,17 @@ def read(path: Path):
 
 
 def write(path: Path, value, *, immutable: bool = False):
+    path = normalize_fs_path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(value, ensure_ascii=True, allow_nan=False, sort_keys=True, indent=2) + "\n"
     if immutable:
-        with path.open("x", encoding="utf-8") as stream:
-            stream.write(text)
+        temporary = path.with_name(f".{uuid4()}.tmp")
+        try:
+            temporary.write_text(text, encoding="utf-8")
+            if not publish_immutable_file(temporary, path):
+                raise FileExistsError(path)
+        finally:
+            temporary.unlink(missing_ok=True)
     else:
         temporary = path.with_name(f".{uuid4()}.tmp")
         temporary.write_text(text, encoding="utf-8")
@@ -37,6 +46,7 @@ def write(path: Path, value, *, immutable: bool = False):
 
 
 def fingerprint(root: Path) -> dict[str, str]:
+    root = normalize_fs_path(root)
     return {
         path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
         for path in sorted(root.rglob("*.json"))
@@ -46,6 +56,7 @@ def fingerprint(root: Path) -> dict[str, str]:
 
 
 def verify_integrity(root: Path):
+    root = normalize_fs_path(root)
     saved = read(root / "integrity.json")
     for relative, expected in saved.items():
         path = (root / relative).resolve()

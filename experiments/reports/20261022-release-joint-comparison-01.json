@@ -1,0 +1,31 @@
+{
+  "atol": 1e-08,
+  "rows": [
+    {
+      "byte_identical_result": true,
+      "job_key": "20eb2b64835b4be7e240fb7e6086b46dff68973763ee5b85e1a9c3eb9fd5e50b",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "4c8677e191ada2408ccc6e868d2b700c4c4d12fb15343df276f05a96dcd8349a",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    },
+    {
+      "byte_identical_result": true,
+      "job_key": "c7d290a6dfb6779e31e6d79d5680b6a3e28567d68c9d05d77a451d854fb3c350",
+      "numerically_equivalent": true,
+      "present_in_both": true,
+      "same_input_hash": true,
+      "same_status": true
+    }
+  ],
+  "rtol": 1e-09,
+  "scope": "Scientific result JSON excludes wall/CPU/cache-hit telemetry, which remains in receipts/stage artifacts"
+}

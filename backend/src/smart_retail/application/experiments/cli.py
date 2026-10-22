@@ -11,6 +11,7 @@ from smart_retail.application.experiments.storage import read, verify_integrity,
 from smart_retail.application.workflow import canonical_hash
 from smart_retail.contracts.experiments import CampaignSpec, DatasetSpec
 from smart_retail.contracts.inputs import to_domain
+from smart_retail.infrastructure.filesystem import normalize_fs_path
 
 
 def equivalent(a, b, atol=1e-8, rtol=1e-9):
@@ -26,6 +27,7 @@ def equivalent(a, b, atol=1e-8, rtol=1e-9):
 
 
 def compare(left: Path, right: Path):
+    left, right = normalize_fs_path(left), normalize_fs_path(right)
     verify_integrity(left)
     verify_integrity(right)
     a = {r["job_key"]: r for r in (read(p) for p in (left / "records").glob("*.json"))}

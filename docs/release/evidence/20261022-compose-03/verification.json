@@ -1,0 +1,37 @@
+{
+  "target": "compose",
+  "started_utc": "2026-10-22T06:39:19.211566+00:00",
+  "platform": "win32",
+  "status": "FAIL",
+  "project": "srverifyd50112e794c6",
+  "database": "sr_compose_8f8bf4c22306415f",
+  "api_port": 57178,
+  "web_port": 57179,
+  "volumes_retained": true,
+  "private_env_in_ignored_var": true,
+  "commands": [
+    {
+      "arguments": [
+        "config",
+        "--quiet"
+      ],
+      "started_utc": "2026-10-22T06:39:19.217563+00:00",
+      "ended_utc": "2026-10-22T06:39:19.493283+00:00",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "build",
+        "backend",
+        "frontend"
+      ],
+      "started_utc": "2026-10-22T06:39:20.022486+00:00",
+      "ended_utc": "2026-10-22T06:39:22.003478+00:00",
+      "exit_code": 1
+    }
+  ],
+  "compose_config_validation": "PASS",
+  "error_type": "RuntimeError",
+  "ended_utc": "2026-10-22T06:39:22.003478+00:00",
+  "exit_code": 1
+}

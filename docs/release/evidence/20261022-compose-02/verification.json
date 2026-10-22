@@ -1,0 +1,28 @@
+{
+  "target": "compose",
+  "started_utc": "2026-10-22T06:37:12.953860+00:00",
+  "platform": "win32",
+  "status": "BLOCKED",
+  "project": "srverify1d5801d90559",
+  "database": "sr_compose_fc173d200297429f",
+  "api_port": 55082,
+  "web_port": 55083,
+  "volumes_retained": true,
+  "private_env_in_ignored_var": true,
+  "commands": [
+    {
+      "arguments": [
+        "config",
+        "--quiet"
+      ],
+      "started_utc": "2026-10-22T06:37:12.959859+00:00",
+      "ended_utc": "2026-10-22T06:37:13.331157+00:00",
+      "exit_code": 0
+    }
+  ],
+  "compose_config_validation": "PASS",
+  "blocker": "BLOCKED_DOCKER_RUNTIME",
+  "reason": "Docker installed; engine unavailable",
+  "ended_utc": "2026-10-22T06:37:13.662362+00:00",
+  "exit_code": 2
+}

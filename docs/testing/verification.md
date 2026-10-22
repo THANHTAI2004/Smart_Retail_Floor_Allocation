@@ -1,5 +1,7 @@
 # Phạm vi kiểm chứng bản tái cấu trúc
 
+Historical SQL-era checkpoint; superseded by [MongoDB-only acceptance](../migration/MONGODB_ONLY_ACCEPTANCE.md). SQL commands below are retired and are not current run instructions.
+
 Các kết quả dưới đây thuộc mã mới; lịch sử V4 trong HANDOFF không phải kết quả
 kiểm thử của bản tái cấu trúc. Xem receipt máy đọc trong thư mục này để biết lượt
 chạy cuối cùng. Không có kết luận nghiệm thu đầy đủ toàn bộ yêu cầu sản phẩm.

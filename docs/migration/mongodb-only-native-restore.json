@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "source_database": "smart_retail",
+  "restored_database": "sr_restore_acceptance_20261022_mongodb_only",
+  "collections": 4,
+  "all_documents_equal": true,
+  "projects": 16,
+  "runs": 8,
+  "snapshot_and_result_checksums": "PASS",
+  "archive_sha256": "c87c4cca082a91a8c676e671ad042b264e9d8c365297dc032e76865279eef01f"
+}

@@ -1,5 +1,7 @@
 # ADR 0001 — Một ứng dụng ở root, modular monolith và job theo process
 
+Historical SQL-era checkpoint; superseded by [MongoDB-only acceptance](../migration/MONGODB_ONLY_ACCEPTANCE.md). SQL commands below are retired and are not current run instructions.
+
 Trạng thái: được triển khai ngày 21/10/2026 theo yêu cầu người dùng.
 
 Quyết định dùng React/TypeScript/Vite/Konva; FastAPI/Pydantic; SQLAlchemy/Alembic;

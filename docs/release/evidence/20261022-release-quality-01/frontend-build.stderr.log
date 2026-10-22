@@ -1,0 +1,2 @@
+npm notice run smart-retail-frontend@0.1.0 build
+npm notice run tsc -b && vite build

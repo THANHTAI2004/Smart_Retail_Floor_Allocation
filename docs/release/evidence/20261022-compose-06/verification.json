@@ -1,0 +1,111 @@
+{
+  "target": "compose",
+  "started_utc": "2026-10-22T06:42:55.073248+00:00",
+  "platform": "win32",
+  "status": "PASS",
+  "project": "srverifyf56fda46bbf8",
+  "database": "sr_compose_a4f5d0e2ada540ac",
+  "api_port": 58607,
+  "web_port": 58608,
+  "volumes_retained": true,
+  "private_env_in_ignored_var": true,
+  "commands": [
+    {
+      "arguments": [
+        "config",
+        "--quiet"
+      ],
+      "started_utc": "2026-10-22T06:42:55.079732+00:00",
+      "ended_utc": "2026-10-22T06:42:55.246870+00:00",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "build",
+        "backend",
+        "frontend"
+      ],
+      "started_utc": "2026-10-22T06:42:55.900024+00:00",
+      "ended_utc": "2026-10-22T06:42:58.117832+00:00",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "up",
+        "-d",
+        "--wait"
+      ],
+      "started_utc": "2026-10-22T06:42:58.118833+00:00",
+      "ended_utc": "2026-10-22T06:43:06.696767+00:00",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "exec",
+        "-T",
+        "backend",
+        "python",
+        "-c",
+        "from pymongo import MongoClient; from pymongo.errors import OperationFailure; c=MongoClient('mongodb://database:27017',serverSelectionTimeoutMS=3000);\ntry: c.smart_retail.projects.find_one(); raise AssertionError('Authentication disabled')\nexcept OperationFailure as e: assert e.code==13"
+      ],
+      "started_utc": "2026-10-22T06:43:06.789652+00:00",
+      "ended_utc": "2026-10-22T06:43:07.650622+00:00",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "restart",
+        "database",
+        "backend",
+        "worker",
+        "frontend"
+      ],
+      "started_utc": "2026-10-22T06:43:09.392089+00:00",
+      "ended_utc": "2026-10-22T06:43:15.107453+00:00",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "stop",
+        "worker"
+      ],
+      "started_utc": "2026-10-22T06:43:16.160414+00:00",
+      "ended_utc": "2026-10-22T06:43:19.517224+00:00",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "exec",
+        "-T",
+        "backend",
+        "<verification code via stdin>"
+      ],
+      "started_utc": "2026-10-22T06:43:19.672991+00:00",
+      "ended_utc": "2026-10-22T06:43:20.535430+00:00",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "start",
+        "worker"
+      ],
+      "started_utc": "2026-10-22T06:43:20.535964+00:00",
+      "ended_utc": "2026-10-22T06:43:23.047504+00:00",
+      "exit_code": 0
+    }
+  ],
+  "compose_config_validation": "PASS",
+  "checks": [
+    "config/build",
+    "auth",
+    "indexes",
+    "API/worker/frontend",
+    "seven inputs",
+    "T1-T4/result/report/SHA",
+    "restart persistence",
+    "queued cancel",
+    "expired worker recovery"
+  ],
+  "ended_utc": "2026-10-22T06:43:27.810300+00:00",
+  "exit_code": 0
+}

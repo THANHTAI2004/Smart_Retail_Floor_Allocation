@@ -1,0 +1,9 @@
+
+ RUN  v5.0.5 D:/Smart_Retail_Floor_Allocation/frontend
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  13:06:01
+   Duration  181ms (transform 62%, import 21%, tests 9%, worker 8%)
+

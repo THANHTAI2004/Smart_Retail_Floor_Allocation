@@ -1,0 +1,1707 @@
+[
+  {
+    "joint": {
+      "best": {
+        "components": [
+          0.1470710678118655,
+          0.0,
+          0.6666666666666666,
+          0.0
+        ],
+        "decisions": {
+          "assignment": {
+            "A": "S1"
+          },
+          "placements": [
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 0,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1.0,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P1",
+              "width_m": 0.2,
+              "x_m": 0.0
+            },
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 0,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1.0,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P2",
+              "width_m": 0.2,
+              "x_m": 0.2
+            }
+          ],
+          "poses": {
+            "S1": [
+              2.0,
+              3.0,
+              0
+            ]
+          },
+          "routing_policy": "nearest"
+        },
+        "id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+        "scenario_seeds": [
+          11,
+          112
+        ],
+        "score": 0.15266981034180868,
+        "score_fraction": [
+          16030330085889911,
+          105000000000000000
+        ]
+      },
+      "certificate": null,
+      "evaluations": 7,
+      "general_optimality": "JOINT_GENERAL_OPTIMALITY_NOT_PROVEN",
+      "initial_score": 0.15266981034180868,
+      "mode": "feedback",
+      "normalization": {
+        "scales": [
+          100.0,
+          100.0,
+          1.0,
+          1.0
+        ],
+        "weights": [
+          1.0,
+          0.2,
+          0.1,
+          0.1
+        ]
+      },
+      "pareto_scope": "Evaluated candidates only",
+      "proof_status": "FEASIBLE_NOT_PROVEN",
+      "state_snapshots": [
+        {
+          "candidate_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "sha256": "0d327308a710107d1e7dbf1e819f83b1d2fb779e60efbdcd9192b1ca65e89bc3"
+        },
+        {
+          "candidate_id": "9d81c3ae99371e725a4744eaf8d5951eeec0bb70354128e747c943ce69c781ed",
+          "sha256": "72263bbd5df354e00c48e8db89bc1584b806d09f3010c0abd9b151875cad1540"
+        },
+        {
+          "candidate_id": "f41a4b9bd3045f8c995ee992cbb324e18d2cdafece767b906854abb9991c6ecc",
+          "sha256": "0601dd828a2e019beb51142a2b87b6f3e597415ffd5ecfbc453b908589b2cf91"
+        },
+        {
+          "candidate_id": "d8d6249672b384b758700a79fbc750a44a999329b49f3c7bc812e4911e9ba96b",
+          "sha256": "e1bd8bdab0f48d639ff4b89a389e6763ae456ffd902525139f92231e02f6cd28"
+        },
+        {
+          "candidate_id": "143966a2468a7ec3cb2550ef7739d84b1c99e8ba98cc35223d411eabdd9e2bd4",
+          "sha256": "17e4585bce810a08ceb7f5e396e2f9c65771b170c716430d1f00673ed0c23169"
+        },
+        {
+          "candidate_id": "1255b64446670a3b261fe2e562b096de419c2aee47b20608d8ae3c5e71ae6d4b",
+          "sha256": "211bdfc7575d81eccffd5702f92918b78b68289844323796c224514c172ef168"
+        }
+      ],
+      "status": "CONVERGED_LOCAL",
+      "trace": [
+        {
+          "evaluation_budget": 80,
+          "event": 0,
+          "mode": "feedback",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "INITIALIZED"
+        },
+        {
+          "candidate_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "event": 1,
+          "iteration": 0,
+          "score": 0.15266981034180868,
+          "status": "EVALUATING"
+        },
+        {
+          "action_count": 6,
+          "candidate_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "event": 2,
+          "feedback": {
+            "candidate_bottlenecks": [
+              "S1:0"
+            ],
+            "diagnostic_evidence": {
+              "scenario_kpis": [
+                {
+                  "completed": 5,
+                  "late_orders": 0,
+                  "mean_completion_s": 16.70710678118655,
+                  "mean_distance_m": 14.707106781186548,
+                  "mean_wait_s": 0.0,
+                  "picker_utilization": 0.09111838474623306
+                },
+                {
+                  "completed": 5,
+                  "late_orders": 0,
+                  "mean_completion_s": 16.707106781186546,
+                  "mean_distance_m": 14.707106781186548,
+                  "mean_wait_s": 0.0,
+                  "picker_utilization": 0.10579745445657991
+                }
+              ],
+              "scope": "Simulated shelf queues and finite picker pool; no corridor congestion inference",
+              "totals": {
+                "customer_distance_m": 117.6568542494924,
+                "picker_distance_m": 29.414213562373096,
+                "picker_wait_s": 0.0,
+                "shelf_wait_s": 0.0
+              },
+              "travel_attribution": "Journey distance divided across picked SKU types; diagnostic proxy only",
+              "wait_attribution": "Journey shelf wait divided across visited shelves; diagnostic proxy only"
+            },
+            "frequently_co_picked_categories": [],
+            "high_travel_skus": [
+              [
+                "P1",
+                73.53553390593275
+              ],
+              [
+                "P2",
+                73.53553390593275
+              ]
+            ],
+            "high_wait_locations": [
+              [
+                "S1:0",
+                0.0
+              ]
+            ],
+            "hot_shelves": [
+              [
+                "S1:0",
+                10
+              ]
+            ],
+            "objective_components": [
+              0.1470710678118655,
+              0.0,
+              0.6666666666666666,
+              0.0
+            ],
+            "recommended_action_types": [
+              "T1_MOVE",
+              "T2_REASSIGN",
+              "T3_FACE"
+            ],
+            "sku_pick_counts": {
+              "P1": 10,
+              "P2": 10
+            }
+          },
+          "iteration": 1,
+          "status": "IMPROVING"
+        },
+        {
+          "accepted": false,
+          "action": "T3_FACE",
+          "after": 0.15266981034180868,
+          "before": 0.15266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "1d53960cd0f71970e099ee57b12ef63ec7966521d34d2e66716f87132056b929"
+            },
+            "T2": {
+              "key": "33247d2993b8ff38f06ef33a2a1b95601eedadfc3778d8988e091ddaa57c7fa1"
+            },
+            "T3": {
+              "key": "1a78ca0062ebaa51e50978bbbbce3a5f31a9fea12f7be5a6bc3f6c1a53c0f7b0"
+            },
+            "T4": {
+              "key": "0f8092a60f901e9a3908248b996d3c291730a1bfea2a2ae8cbbc68d711ee7726"
+            }
+          },
+          "candidate_id": "9d81c3ae99371e725a4744eaf8d5951eeec0bb70354128e747c943ce69c781ed",
+          "changed": [
+            "P1"
+          ],
+          "components": [
+            0.1470710678118655,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 3,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "after": 0.15266981034180868,
+          "before": 0.15266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "1d53960cd0f71970e099ee57b12ef63ec7966521d34d2e66716f87132056b929"
+            },
+            "T2": {
+              "key": "33247d2993b8ff38f06ef33a2a1b95601eedadfc3778d8988e091ddaa57c7fa1"
+            },
+            "T3": {
+              "key": "16c0a2a875aa164af172c64935253984c2f9090c4e61c2966639d0a709861cbc"
+            },
+            "T4": {
+              "key": "bd7c5e31bcc4d90886ae6a945e38cb1a130c3c882cd0f455e65a443f94fd9d59"
+            }
+          },
+          "candidate_id": "f41a4b9bd3045f8c995ee992cbb324e18d2cdafece767b906854abb9991c6ecc",
+          "changed": [
+            "P1"
+          ],
+          "components": [
+            0.1470710678118655,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 1.8
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 4,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_FACE",
+          "after": 0.15266981034180868,
+          "before": 0.15266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "1d53960cd0f71970e099ee57b12ef63ec7966521d34d2e66716f87132056b929"
+            },
+            "T2": {
+              "key": "33247d2993b8ff38f06ef33a2a1b95601eedadfc3778d8988e091ddaa57c7fa1"
+            },
+            "T3": {
+              "key": "0321a858b64abb21a5c544d28bd13f60c6a0b7e961642a9d3ee6048185e6ae17"
+            },
+            "T4": {
+              "key": "76c5982d9afda30cc55320e4bb31b666bce98b87940b8a95c9d7553285118316"
+            }
+          },
+          "candidate_id": "d8d6249672b384b758700a79fbc750a44a999329b49f3c7bc812e4911e9ba96b",
+          "changed": [
+            "P2"
+          ],
+          "components": [
+            0.1470710678118655,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 5,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "before": 0.15266981034180868,
+          "event": 6,
+          "iteration": 1,
+          "layer": "T3",
+          "reason": "INVALID_DECISION",
+          "status": "FAILED"
+        },
+        {
+          "accepted": false,
+          "action": "T3_POSITION",
+          "after": 0.15266981034180868,
+          "before": 0.15266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "1d53960cd0f71970e099ee57b12ef63ec7966521d34d2e66716f87132056b929"
+            },
+            "T2": {
+              "key": "33247d2993b8ff38f06ef33a2a1b95601eedadfc3778d8988e091ddaa57c7fa1"
+            },
+            "T3": {
+              "key": "e459ea6d5e5101ae6e6ba02e584ae9045e72547ec1dd3decce82583f3c30183a"
+            },
+            "T4": {
+              "key": "7566e3121df926e4ad91d910676c70d6f464aa1e3eb2879478c36bf7182075bf"
+            }
+          },
+          "candidate_id": "143966a2468a7ec3cb2550ef7739d84b1c99e8ba98cc35223d411eabdd9e2bd4",
+          "changed": [
+            "P2"
+          ],
+          "components": [
+            0.1470710678118655,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 1.8
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 7,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "accepted": false,
+          "action": "T3_SWAP",
+          "after": 0.15266981034180868,
+          "before": 0.15266981034180868,
+          "cache_keys": {
+            "T1": {
+              "key": "1d53960cd0f71970e099ee57b12ef63ec7966521d34d2e66716f87132056b929"
+            },
+            "T2": {
+              "key": "33247d2993b8ff38f06ef33a2a1b95601eedadfc3778d8988e091ddaa57c7fa1"
+            },
+            "T3": {
+              "key": "a2342a99c94f2d527942ad5fe88ccb8779db16f775ae84c2402df6da66d397d2"
+            },
+            "T4": {
+              "key": "f690e290013096d56500149b7fe7e7a7ba28b346c52742a30f84686de2333a34"
+            }
+          },
+          "candidate_id": "1255b64446670a3b261fe2e562b096de419c2aee47b20608d8ae3c5e71ae6d4b",
+          "changed": [
+            "P1",
+            "P2"
+          ],
+          "components": [
+            0.1470710678118655,
+            0.0,
+            0.6666666666666666,
+            0.0
+          ],
+          "decisions": {
+            "assignment": {
+              "A": "S1"
+            },
+            "placements": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.2
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1.0,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "poses": {
+              "S1": [
+                2.0,
+                3.0,
+                0
+              ]
+            },
+            "routing_policy": "nearest"
+          },
+          "event": 8,
+          "iteration": 1,
+          "layer": "T3",
+          "parent_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "reason": "NO_STRICT_IMPROVEMENT",
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "EVALUATING",
+          "validation": "PASS"
+        },
+        {
+          "best_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "best_score": 0.15266981034180868,
+          "event": 9,
+          "iteration": 1,
+          "status": "NO_IMPROVEMENT"
+        },
+        {
+          "best_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "event": 10,
+          "status": "CONVERGED_LOCAL"
+        }
+      ],
+      "verification": {}
+    },
+    "record": {
+      "attempts": [
+        "0b50abcd-2a6a-45f8-8137-6c898c855d1e"
+      ],
+      "certificate_verification": null,
+      "completed": 5,
+      "dataset": "local_trap",
+      "ended_utc": "2026-10-22T06:27:00.250959+00:00",
+      "error": null,
+      "experiment": "E13",
+      "failed_stage": null,
+      "first_scenario_mean_distance_m": 14.707106781186548,
+      "first_scenario_mean_wait_s": 0.0,
+      "holdout_objective": null,
+      "input_sha256": "13e14713012ac56339f429533d32636ab2830722f04186e0808ea609302824dd",
+      "job_key": "20eb2b64835b4be7e240fb7e6086b46dff68973763ee5b85e1a9c3eb9fd5e50b",
+      "joint_evaluated_states": null,
+      "joint_evaluations": 7,
+      "joint_gap": null,
+      "joint_iterations_to_best": 0,
+      "joint_objective": 0.15266981034180868,
+      "joint_pruned_states": null,
+      "joint_status": "CONVERGED_LOCAL",
+      "late_orders": 0,
+      "max_shelf_queue": 0,
+      "mean_completion_s": 16.70710678118655,
+      "mean_distance_m": 14.70710678118655,
+      "mean_wait_s": 0.0,
+      "mip_gap": null,
+      "peak_child_rss_bytes": 132206592,
+      "picker_utilization": 0.09111838474623306,
+      "proof_status": "FEASIBLE_NOT_PROVEN",
+      "repetition": 0,
+      "result_sha256": "05081f955153659a5c88a087179fdfcaa9d5a255b57c6a28e0003215756fcb73",
+      "routing_policy": "nearest",
+      "run_id": "0b50abcd-2a6a-45f8-8137-6c898c855d1e",
+      "sampled_child_cpu_s": 1.890625,
+      "seed": 11,
+      "simulation_end_s": 183.35604639740103,
+      "solution_feasible": true,
+      "started_utc": "2026-10-22T06:26:57.682802+00:00",
+      "status": "SUCCEEDED",
+      "t1_objective": 4.5,
+      "t2_objective": 0.397747564417433,
+      "t3_objective": 6.0,
+      "throughput_per_hour": 98.16965599807534,
+      "total_distance_m": 73.53553390593274,
+      "total_picking_s": 10.0,
+      "total_travel_s": 73.53553390593274,
+      "training_scenario_seeds": [
+        11,
+        112
+      ],
+      "treatment": "feedback",
+      "validation": {
+        "candidates": 6,
+        "routes": 30,
+        "scope": "Independent geometry/topology, assignment/objective, physical packing, route/time/order replay",
+        "status": "PASS"
+      },
+      "walkable_cells": 248,
+      "wall_s": 2.577999999979511
+    }
+  },
+  {
+    "joint": {
+      "best": {
+        "components": [
+          0.1470710678118655,
+          0.0,
+          0.6666666666666666,
+          0.0
+        ],
+        "decisions": {
+          "assignment": {
+            "A": "S1"
+          },
+          "placements": [
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 0,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1.0,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P1",
+              "width_m": 0.2,
+              "x_m": 0.0
+            },
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 0,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1.0,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P2",
+              "width_m": 0.2,
+              "x_m": 0.2
+            }
+          ],
+          "poses": {
+            "S1": [
+              2.0,
+              3.0,
+              0
+            ]
+          },
+          "routing_policy": "nearest"
+        },
+        "id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+        "scenario_seeds": [
+          11,
+          112
+        ],
+        "score": 0.15266981034180868,
+        "score_fraction": [
+          16030330085889911,
+          105000000000000000
+        ]
+      },
+      "certificate": null,
+      "evaluations": 1,
+      "general_optimality": "JOINT_GENERAL_OPTIMALITY_NOT_PROVEN",
+      "initial_score": 0.15266981034180868,
+      "mode": "sequential",
+      "normalization": {
+        "scales": [
+          100.0,
+          100.0,
+          1.0,
+          1.0
+        ],
+        "weights": [
+          1.0,
+          0.2,
+          0.1,
+          0.1
+        ]
+      },
+      "pareto_scope": "Evaluated candidates only",
+      "proof_status": "FEASIBLE_NOT_PROVEN",
+      "state_snapshots": [
+        {
+          "candidate_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "sha256": "0d327308a710107d1e7dbf1e819f83b1d2fb779e60efbdcd9192b1ca65e89bc3"
+        }
+      ],
+      "status": "COMPLETED",
+      "trace": [
+        {
+          "evaluation_budget": 80,
+          "event": 0,
+          "mode": "sequential",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "INITIALIZED"
+        },
+        {
+          "candidate_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "event": 1,
+          "iteration": 0,
+          "score": 0.15266981034180868,
+          "status": "EVALUATING"
+        },
+        {
+          "best_id": "41ba3f29851c4f8634c91eca8dc6f6952a44b0570f39caf4009df4b0965fd2ff",
+          "event": 2,
+          "status": "COMPLETED"
+        }
+      ],
+      "verification": {}
+    },
+    "record": {
+      "attempts": [
+        "fe3fb53a-0e1b-4a5b-985b-a8c14804eac6"
+      ],
+      "certificate_verification": null,
+      "completed": 5,
+      "dataset": "local_trap",
+      "ended_utc": "2026-10-22T06:26:57.398254+00:00",
+      "error": null,
+      "experiment": "E13",
+      "failed_stage": null,
+      "first_scenario_mean_distance_m": 14.707106781186548,
+      "first_scenario_mean_wait_s": 0.0,
+      "holdout_objective": null,
+      "input_sha256": "f36de881ff1568a3d72f200e6acb9cc7637669dc8208d0ce1fade37be3ce1781",
+      "job_key": "4c8677e191ada2408ccc6e868d2b700c4c4d12fb15343df276f05a96dcd8349a",
+      "joint_evaluated_states": null,
+      "joint_evaluations": 1,
+      "joint_gap": null,
+      "joint_iterations_to_best": 0,
+      "joint_objective": 0.15266981034180868,
+      "joint_pruned_states": null,
+      "joint_status": "COMPLETED",
+      "late_orders": 0,
+      "max_shelf_queue": 0,
+      "mean_completion_s": 16.70710678118655,
+      "mean_distance_m": 14.70710678118655,
+      "mean_wait_s": 0.0,
+      "mip_gap": null,
+      "peak_child_rss_bytes": 130850816,
+      "picker_utilization": 0.09111838474623306,
+      "proof_status": "FEASIBLE_NOT_PROVEN",
+      "repetition": 0,
+      "result_sha256": "d85cd9faf223f17bac1d058a1868bc85da7f93ac9de51fd444395189a4f39ab6",
+      "routing_policy": "nearest",
+      "run_id": "fe3fb53a-0e1b-4a5b-985b-a8c14804eac6",
+      "sampled_child_cpu_s": 1.328125,
+      "seed": 11,
+      "simulation_end_s": 183.35604639740103,
+      "solution_feasible": true,
+      "started_utc": "2026-10-22T06:26:55.401944+00:00",
+      "status": "SUCCEEDED",
+      "t1_objective": 4.5,
+      "t2_objective": 0.397747564417433,
+      "t3_objective": 6.0,
+      "throughput_per_hour": 98.16965599807534,
+      "total_distance_m": 73.53553390593274,
+      "total_picking_s": 10.0,
+      "total_travel_s": 73.53553390593274,
+      "training_scenario_seeds": [
+        11,
+        112
+      ],
+      "treatment": "baseline",
+      "validation": {
+        "candidates": 1,
+        "routes": 5,
+        "scope": "Independent geometry/topology, assignment/objective, physical packing, route/time/order replay",
+        "status": "PASS"
+      },
+      "walkable_cells": 248,
+      "wall_s": 2.0
+    }
+  },
+  {
+    "joint": {
+      "best": {
+        "components": [
+          0.07707106781186548,
+          0.0,
+          0.6666666666666666,
+          0.0
+        ],
+        "decisions": {
+          "assignment": {
+            "A": "S1"
+          },
+          "placements": [
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 1,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P1",
+              "width_m": 0.2,
+              "x_m": 0.0
+            },
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 1,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P2",
+              "width_m": 0.2,
+              "x_m": 0.2
+            }
+          ],
+          "poses": {
+            "S1": [
+              2.0,
+              3.0,
+              0
+            ]
+          },
+          "routing_policy": "nearest"
+        },
+        "id": "0252652b52b007efe81163fd09f2302f00085fcd8a90c3f91b684ba27fd56f19",
+        "scenario_seeds": [
+          11,
+          112
+        ],
+        "score": 0.10266981034180868,
+        "score_fraction": [
+          10780330085889911,
+          105000000000000000
+        ]
+      },
+      "certificate": {
+        "absolute_gap": 0.0,
+        "arithmetic_scope": "Exact rational comparison of serialized deterministic IEEE-754 simulator observations; not exact real arithmetic",
+        "artifact_sha256": "cfda1e9031dee82e8525954e6df23d5fbec3ba0a1125d218c56e28f61ad12897",
+        "bound_justification": "Every weighted normalized component is nonnegative; complete enumeration attains minimum",
+        "complete": true,
+        "evaluated_states": 4,
+        "feasibility_validation": "official validators + independent application replay",
+        "finite_space": {
+          "assignments": {
+            "A": [
+              "S1"
+            ]
+          },
+          "max_states": 256,
+          "model_version": "joint-finite-1",
+          "placements": {
+            "P1": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P1",
+                "width_m": 0.2,
+                "x_m": 0.0
+              }
+            ],
+            "P2": [
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 0,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              },
+              {
+                "capacity_units": 1,
+                "depth_units": 1,
+                "face": 1,
+                "facings": 1,
+                "layers": 1,
+                "level_id": "L1",
+                "load_kg": 1,
+                "orientation": 0,
+                "shelf_id": "S1",
+                "sku": "P2",
+                "width_m": 0.2,
+                "x_m": 0.2
+              }
+            ]
+          },
+          "poses": {
+            "S1": [
+              [
+                2.0,
+                3.0,
+                0
+              ]
+            ]
+          },
+          "routing_policies": [
+            "nearest"
+          ]
+        },
+        "identity": {
+          "finite_space_sha256": "97657b958dfb38d1d12f09bd7faf14823caa9c8ac85f86ad5cebb23956bfc928",
+          "model_version": "joint-finite-1",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "problem_id": "48338945f9d3ebc93d37ad4ab7903bb9fff044c214724c90ad71a4f84f53ebee",
+          "runtime": {
+            "model_versions": {
+              "input_contract": "1.1",
+              "joint": "finite-saa-feedback-1",
+              "t1": "grid-local-search-1.1",
+              "t2": "allocation-affinity-milp-1.1",
+              "t3": "facing-strip-milp-1.1",
+              "t4": "picker-grid-queue-1.1",
+              "workflow": "bounded-candidates-1.1"
+            },
+            "packages": {
+              "annotated-doc": "0.0.5",
+              "annotated-types": "0.8.0",
+              "anyio": "4.15.1",
+              "certifi": "2026.10.19",
+              "click": "8.5.0",
+              "colorama": "0.4.6",
+              "contourpy": "1.4.0",
+              "cycler": "0.12.1",
+              "dnspython": "2.9.0",
+              "fastapi": "0.157.0",
+              "fonttools": "4.67.0",
+              "h11": "0.16.0",
+              "httpcore": "1.0.9",
+              "httpx": "0.28.1",
+              "hypothesis": "6.170.5",
+              "idna": "3.20",
+              "iniconfig": "2.3.1",
+              "kiwisolver": "1.5.1",
+              "librt": "0.16.0",
+              "markupsafe": "3.0.4",
+              "matplotlib": "3.11.2",
+              "mypy": "1.20.2",
+              "mypy_extensions": "1.1.0",
+              "networkx": "3.7",
+              "numpy": "2.5.4",
+              "opentelemetry-api": "1.45.1",
+              "packaging": "26.3",
+              "pathspec": "1.1.1",
+              "pillow": "13.0.0",
+              "pip": "25.0.1",
+              "pluggy": "1.7.0",
+              "pydantic": "2.14.1",
+              "pydantic_core": "2.50.1",
+              "pygments": "2.21.0",
+              "pymongo": "4.18.2",
+              "pyparsing": "3.3.3",
+              "pytest": "9.1.1",
+              "python-dateutil": "3.0.0",
+              "ruff": "0.17.1",
+              "scipy": "1.18.1",
+              "shapely": "2.2.0",
+              "simpy": "4.1.2",
+              "six": "1.17.0",
+              "smart-retail": "0.1.0",
+              "sortedcontainers": "2.4.0",
+              "starlette": "1.9.0",
+              "types-networkx": "3.6.1.20261021",
+              "typing-inspection": "0.4.4",
+              "typing_extensions": "4.16.0",
+              "tzdata": "2026.5",
+              "uvicorn": "0.54.0"
+            },
+            "python": "3.12.10",
+            "solver": {
+              "name": "HiGHS",
+              "version": "1.12.0"
+            },
+            "source_sha256": "b3c5c5d7a195abb4ae4af750deb8eb535f0893c70e68eefa605edf4fcf111346"
+          },
+          "scenario_sha256": "6d4b78b159d9df046178cd894b28cda9d3bff016d325b11e4434c185fd576ef3"
+        },
+        "incumbent": {
+          "assignment": {
+            "A": "S1"
+          },
+          "placements": [
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 1,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P1",
+              "width_m": 0.2,
+              "x_m": 0.0
+            },
+            {
+              "capacity_units": 1,
+              "depth_units": 1,
+              "face": 1,
+              "facings": 1,
+              "layers": 1,
+              "level_id": "L1",
+              "load_kg": 1,
+              "orientation": 0,
+              "shelf_id": "S1",
+              "sku": "P2",
+              "width_m": 0.2,
+              "x_m": 0.2
+            }
+          ],
+          "poses": {
+            "S1": [
+              2.0,
+              3.0,
+              0
+            ]
+          },
+          "routing_policy": "nearest"
+        },
+        "leaves": [
+          {
+            "decision_sha256": "5a6b4d9b4bde63ce1957708cc451708883758d5519d252baf03e9049cee483d8",
+            "error": null,
+            "score_fraction": [
+              16030330085889911,
+              105000000000000000
+            ],
+            "status": "FEASIBLE",
+            "witness_sha256": "cf1768a593669fc61e330b7f13e6be64404fe90b63db9e79aef2fd9e3d24c432"
+          },
+          {
+            "decision_sha256": "fa0071e4c479242fefaa3037a1d1c27c9d95e343d60c9f8ab5fb06e386e1bcd1",
+            "error": null,
+            "score_fraction": [
+              16030330085889911,
+              105000000000000000
+            ],
+            "status": "FEASIBLE",
+            "witness_sha256": "edb19efc546977466119ac0543673281cd18b02528ac13977b08f9e34c93690d"
+          },
+          {
+            "decision_sha256": "06b8c0b2a8417d3ab973ce0beef811bfb6a2d688df6f59f66e81886c03a46a1e",
+            "error": null,
+            "score_fraction": [
+              16030330085889911,
+              105000000000000000
+            ],
+            "status": "FEASIBLE",
+            "witness_sha256": "1d38b0f152efbd75e16fbdabab58abd6982d3aa8ead599c07f7f461bb8b9a1be"
+          },
+          {
+            "decision_sha256": "0252652b52b007efe81163fd09f2302f00085fcd8a90c3f91b684ba27fd56f19",
+            "error": null,
+            "score_fraction": [
+              10780330085889911,
+              105000000000000000
+            ],
+            "status": "FEASIBLE",
+            "witness_sha256": "9de10bd6244fe5a20e20e6bea966347b55053b23edc7a514636262ad76e76049"
+          }
+        ],
+        "lower_bound_fraction": [
+          10780330085889911,
+          105000000000000000
+        ],
+        "model_version": "joint-finite-1",
+        "pruned_states": 0,
+        "relative_gap": 0.0,
+        "scope": "Only the declared finite Cartesian domain and fixed scenario sample-average objective",
+        "solver": "exhaustive-cartesian-v1",
+        "status": "GLOBAL_OPTIMAL_CERTIFIED",
+        "termination": "COMPLETED",
+        "total_states": 4,
+        "upper_bound_fraction": [
+          10780330085889911,
+          105000000000000000
+        ]
+      },
+      "evaluations": 4,
+      "general_optimality": "JOINT_GENERAL_OPTIMALITY_NOT_PROVEN",
+      "initial_score": 0.10266981034180868,
+      "mode": "exact",
+      "normalization": {
+        "scales": [
+          100.0,
+          100.0,
+          1.0,
+          1.0
+        ],
+        "weights": [
+          1.0,
+          0.2,
+          0.1,
+          0.1
+        ]
+      },
+      "pareto_scope": "Evaluated candidates only",
+      "proof_status": "GLOBAL_OPTIMAL_CERTIFIED",
+      "state_snapshots": [
+        {
+          "candidate_id": "5a6b4d9b4bde63ce1957708cc451708883758d5519d252baf03e9049cee483d8",
+          "sha256": "67079bd8019abc9097858f887e9e371cfcabfc17540d6c42a41c8061b24af791"
+        },
+        {
+          "candidate_id": "fa0071e4c479242fefaa3037a1d1c27c9d95e343d60c9f8ab5fb06e386e1bcd1",
+          "sha256": "dd471d1e02ecb2d07714f21e155299a8808c39ccfc57eb5dd201392b6d74d154"
+        },
+        {
+          "candidate_id": "06b8c0b2a8417d3ab973ce0beef811bfb6a2d688df6f59f66e81886c03a46a1e",
+          "sha256": "f6377e655efafe959786050fa3eeb2493c176981cb566a4243e0a51eaa02a258"
+        },
+        {
+          "candidate_id": "0252652b52b007efe81163fd09f2302f00085fcd8a90c3f91b684ba27fd56f19",
+          "sha256": "31ae0240cad4ceb473ccba4f4e1f614e301a0bbfe34e61dcc623daa48833c097"
+        }
+      ],
+      "status": "COMPLETED",
+      "trace": [
+        {
+          "evaluation_budget": 80,
+          "event": 0,
+          "mode": "exact",
+          "objective": {
+            "scales": [
+              100.0,
+              100.0,
+              1.0,
+              1.0
+            ],
+            "weights": [
+              1.0,
+              0.2,
+              0.1,
+              0.1
+            ]
+          },
+          "scenario_seeds": [
+            11,
+            112
+          ],
+          "status": "INITIALIZED"
+        },
+        {
+          "certificate": {
+            "absolute_gap": 0.0,
+            "arithmetic_scope": "Exact rational comparison of serialized deterministic IEEE-754 simulator observations; not exact real arithmetic",
+            "artifact_sha256": "cfda1e9031dee82e8525954e6df23d5fbec3ba0a1125d218c56e28f61ad12897",
+            "bound_justification": "Every weighted normalized component is nonnegative; complete enumeration attains minimum",
+            "complete": true,
+            "evaluated_states": 4,
+            "feasibility_validation": "official validators + independent application replay",
+            "finite_space": {
+              "assignments": {
+                "A": [
+                  "S1"
+                ]
+              },
+              "max_states": 256,
+              "model_version": "joint-finite-1",
+              "placements": {
+                "P1": [
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 0,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P1",
+                    "width_m": 0.2,
+                    "x_m": 0.0
+                  },
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 1,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P1",
+                    "width_m": 0.2,
+                    "x_m": 0.0
+                  }
+                ],
+                "P2": [
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 0,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P2",
+                    "width_m": 0.2,
+                    "x_m": 0.2
+                  },
+                  {
+                    "capacity_units": 1,
+                    "depth_units": 1,
+                    "face": 1,
+                    "facings": 1,
+                    "layers": 1,
+                    "level_id": "L1",
+                    "load_kg": 1,
+                    "orientation": 0,
+                    "shelf_id": "S1",
+                    "sku": "P2",
+                    "width_m": 0.2,
+                    "x_m": 0.2
+                  }
+                ]
+              },
+              "poses": {
+                "S1": [
+                  [
+                    2.0,
+                    3.0,
+                    0
+                  ]
+                ]
+              },
+              "routing_policies": [
+                "nearest"
+              ]
+            },
+            "identity": {
+              "finite_space_sha256": "97657b958dfb38d1d12f09bd7faf14823caa9c8ac85f86ad5cebb23956bfc928",
+              "model_version": "joint-finite-1",
+              "objective": {
+                "scales": [
+                  100.0,
+                  100.0,
+                  1.0,
+                  1.0
+                ],
+                "weights": [
+                  1.0,
+                  0.2,
+                  0.1,
+                  0.1
+                ]
+              },
+              "problem_id": "48338945f9d3ebc93d37ad4ab7903bb9fff044c214724c90ad71a4f84f53ebee",
+              "runtime": {
+                "model_versions": {
+                  "input_contract": "1.1",
+                  "joint": "finite-saa-feedback-1",
+                  "t1": "grid-local-search-1.1",
+                  "t2": "allocation-affinity-milp-1.1",
+                  "t3": "facing-strip-milp-1.1",
+                  "t4": "picker-grid-queue-1.1",
+                  "workflow": "bounded-candidates-1.1"
+                },
+                "packages": {
+                  "annotated-doc": "0.0.5",
+                  "annotated-types": "0.8.0",
+                  "anyio": "4.15.1",
+                  "certifi": "2026.10.19",
+                  "click": "8.5.0",
+                  "colorama": "0.4.6",
+                  "contourpy": "1.4.0",
+                  "cycler": "0.12.1",
+                  "dnspython": "2.9.0",
+                  "fastapi": "0.157.0",
+                  "fonttools": "4.67.0",
+                  "h11": "0.16.0",
+                  "httpcore": "1.0.9",
+                  "httpx": "0.28.1",
+                  "hypothesis": "6.170.5",
+                  "idna": "3.20",
+                  "iniconfig": "2.3.1",
+                  "kiwisolver": "1.5.1",
+                  "librt": "0.16.0",
+                  "markupsafe": "3.0.4",
+                  "matplotlib": "3.11.2",
+                  "mypy": "1.20.2",
+                  "mypy_extensions": "1.1.0",
+                  "networkx": "3.7",
+                  "numpy": "2.5.4",
+                  "opentelemetry-api": "1.45.1",
+                  "packaging": "26.3",
+                  "pathspec": "1.1.1",
+                  "pillow": "13.0.0",
+                  "pip": "25.0.1",
+                  "pluggy": "1.7.0",
+                  "pydantic": "2.14.1",
+                  "pydantic_core": "2.50.1",
+                  "pygments": "2.21.0",
+                  "pymongo": "4.18.2",
+                  "pyparsing": "3.3.3",
+                  "pytest": "9.1.1",
+                  "python-dateutil": "3.0.0",
+                  "ruff": "0.17.1",
+                  "scipy": "1.18.1",
+                  "shapely": "2.2.0",
+                  "simpy": "4.1.2",
+                  "six": "1.17.0",
+                  "smart-retail": "0.1.0",
+                  "sortedcontainers": "2.4.0",
+                  "starlette": "1.9.0",
+                  "types-networkx": "3.6.1.20261021",
+                  "typing-inspection": "0.4.4",
+                  "typing_extensions": "4.16.0",
+                  "tzdata": "2026.5",
+                  "uvicorn": "0.54.0"
+                },
+                "python": "3.12.10",
+                "solver": {
+                  "name": "HiGHS",
+                  "version": "1.12.0"
+                },
+                "source_sha256": "b3c5c5d7a195abb4ae4af750deb8eb535f0893c70e68eefa605edf4fcf111346"
+              },
+              "scenario_sha256": "6d4b78b159d9df046178cd894b28cda9d3bff016d325b11e4434c185fd576ef3"
+            },
+            "incumbent": {
+              "assignment": {
+                "A": "S1"
+              },
+              "placements": [
+                {
+                  "capacity_units": 1,
+                  "depth_units": 1,
+                  "face": 1,
+                  "facings": 1,
+                  "layers": 1,
+                  "level_id": "L1",
+                  "load_kg": 1,
+                  "orientation": 0,
+                  "shelf_id": "S1",
+                  "sku": "P1",
+                  "width_m": 0.2,
+                  "x_m": 0.0
+                },
+                {
+                  "capacity_units": 1,
+                  "depth_units": 1,
+                  "face": 1,
+                  "facings": 1,
+                  "layers": 1,
+                  "level_id": "L1",
+                  "load_kg": 1,
+                  "orientation": 0,
+                  "shelf_id": "S1",
+                  "sku": "P2",
+                  "width_m": 0.2,
+                  "x_m": 0.2
+                }
+              ],
+              "poses": {
+                "S1": [
+                  2.0,
+                  3.0,
+                  0
+                ]
+              },
+              "routing_policy": "nearest"
+            },
+            "leaves": [
+              {
+                "decision_sha256": "5a6b4d9b4bde63ce1957708cc451708883758d5519d252baf03e9049cee483d8",
+                "error": null,
+                "score_fraction": [
+                  16030330085889911,
+                  105000000000000000
+                ],
+                "status": "FEASIBLE",
+                "witness_sha256": "cf1768a593669fc61e330b7f13e6be64404fe90b63db9e79aef2fd9e3d24c432"
+              },
+              {
+                "decision_sha256": "fa0071e4c479242fefaa3037a1d1c27c9d95e343d60c9f8ab5fb06e386e1bcd1",
+                "error": null,
+                "score_fraction": [
+                  16030330085889911,
+                  105000000000000000
+                ],
+                "status": "FEASIBLE",
+                "witness_sha256": "edb19efc546977466119ac0543673281cd18b02528ac13977b08f9e34c93690d"
+              },
+              {
+                "decision_sha256": "06b8c0b2a8417d3ab973ce0beef811bfb6a2d688df6f59f66e81886c03a46a1e",
+                "error": null,
+                "score_fraction": [
+                  16030330085889911,
+                  105000000000000000
+                ],
+                "status": "FEASIBLE",
+                "witness_sha256": "1d38b0f152efbd75e16fbdabab58abd6982d3aa8ead599c07f7f461bb8b9a1be"
+              },
+              {
+                "decision_sha256": "0252652b52b007efe81163fd09f2302f00085fcd8a90c3f91b684ba27fd56f19",
+                "error": null,
+                "score_fraction": [
+                  10780330085889911,
+                  105000000000000000
+                ],
+                "status": "FEASIBLE",
+                "witness_sha256": "9de10bd6244fe5a20e20e6bea966347b55053b23edc7a514636262ad76e76049"
+              }
+            ],
+            "lower_bound_fraction": [
+              10780330085889911,
+              105000000000000000
+            ],
+            "model_version": "joint-finite-1",
+            "pruned_states": 0,
+            "relative_gap": 0.0,
+            "scope": "Only the declared finite Cartesian domain and fixed scenario sample-average objective",
+            "solver": "exhaustive-cartesian-v1",
+            "status": "GLOBAL_OPTIMAL_CERTIFIED",
+            "termination": "COMPLETED",
+            "total_states": 4,
+            "upper_bound_fraction": [
+              10780330085889911,
+              105000000000000000
+            ]
+          },
+          "event": 1,
+          "status": "GLOBAL_OPTIMAL_CERTIFIED",
+          "verification": {
+            "checked": 4,
+            "status": "PASS",
+            "trust": "Independent exhaustive re-evaluation using official model/validators; no solver-reported MIP proof"
+          }
+        },
+        {
+          "best_id": "0252652b52b007efe81163fd09f2302f00085fcd8a90c3f91b684ba27fd56f19",
+          "event": 2,
+          "status": "COMPLETED"
+        }
+      ],
+      "verification": {
+        "checked": 4,
+        "status": "PASS",
+        "trust": "Independent exhaustive re-evaluation using official model/validators; no solver-reported MIP proof"
+      }
+    },
+    "record": {
+      "attempts": [
+        "19ccbca1-3f33-4b69-8e4f-b4648040156c"
+      ],
+      "certificate_verification": "PASS",
+      "completed": 5,
+      "dataset": "local_trap",
+      "ended_utc": "2026-10-22T06:27:03.612761+00:00",
+      "error": null,
+      "experiment": "E13",
+      "failed_stage": null,
+      "first_scenario_mean_distance_m": 7.707106781186548,
+      "first_scenario_mean_wait_s": 0.0,
+      "holdout_objective": null,
+      "input_sha256": "847a38932561aae919864f58a3518caba089890859516e3c9d543fbf84ca5062",
+      "job_key": "c7d290a6dfb6779e31e6d79d5680b6a3e28567d68c9d05d77a451d854fb3c350",
+      "joint_evaluated_states": 4,
+      "joint_evaluations": 4,
+      "joint_gap": 0.0,
+      "joint_iterations_to_best": 0,
+      "joint_objective": 0.10266981034180868,
+      "joint_pruned_states": 0,
+      "joint_status": "COMPLETED",
+      "late_orders": 0,
+      "max_shelf_queue": 0,
+      "mean_completion_s": 9.70710678118655,
+      "mean_distance_m": 7.707106781186549,
+      "mean_wait_s": 0.0,
+      "mip_gap": null,
+      "peak_child_rss_bytes": 130592768,
+      "picker_utilization": 0.055042664992117914,
+      "proof_status": "GLOBAL_OPTIMAL_CERTIFIED",
+      "repetition": 0,
+      "result_sha256": "c47dd327ffc237bad8b3c6c514b5b61530c87c4e66d076b32fe62e5561c3dce3",
+      "routing_policy": "nearest",
+      "run_id": "19ccbca1-3f33-4b69-8e4f-b4648040156c",
+      "sampled_child_cpu_s": 1.984375,
+      "seed": 11,
+      "simulation_end_s": 176.35604639740103,
+      "solution_feasible": true,
+      "started_utc": "2026-10-22T06:27:01.014608+00:00",
+      "status": "SUCCEEDED",
+      "t1_objective": 4.5,
+      "t2_objective": 0.397747564417433,
+      "t3_objective": 6.0,
+      "throughput_per_hour": 102.0662481820372,
+      "total_distance_m": 38.53553390593274,
+      "total_picking_s": 10.0,
+      "total_travel_s": 38.53553390593274,
+      "training_scenario_seeds": [
+        11,
+        112
+      ],
+      "treatment": "exact",
+      "validation": {
+        "candidates": 1,
+        "routes": 5,
+        "scope": "Independent geometry/topology, assignment/objective, physical packing, route/time/order replay",
+        "status": "PASS"
+      },
+      "walkable_cells": 248,
+      "wall_s": 2.5929999999934807
+    }
+  }
+]

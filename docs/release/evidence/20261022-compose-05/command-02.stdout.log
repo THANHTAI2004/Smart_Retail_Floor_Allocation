@@ -1,0 +1,78 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.95kB done
+#1 DONE 0.0s
+
+#2 [worker internal] load build definition from Dockerfile
+#2 transferring dockerfile: 516B 0.0s done
+#2 DONE 0.0s
+
+#3 [worker internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 1.2s
+
+#4 [worker internal] load .dockerignore
+#4 transferring context: 418B done
+#4 DONE 0.0s
+
+#5 [initialize 1/9] FROM docker.io/library/python:3.12-slim@sha256:cb33f7f771ecec2ef1225cf39b159591a040391bd73e4c01f00fdfc4c47611d2
+#5 resolve docker.io/library/python:3.12-slim@sha256:cb33f7f771ecec2ef1225cf39b159591a040391bd73e4c01f00fdfc4c47611d2 0.1s done
+#5 DONE 0.1s
+
+#6 [initialize internal] load build context
+#6 transferring context: 14.39kB 0.0s done
+#6 transferring context: 14.39kB 0.0s done
+#6 DONE 0.2s
+
+#6 [worker internal] load build context
+#6 DONE 0.2s
+
+#7 [worker 5/9] COPY backend /app/backend
+#7 CACHED
+
+#8 [worker 7/9] COPY datasets /app/datasets
+#8 CACHED
+
+#9 [worker 8/9] COPY experiments/configs /app/experiments/configs
+#9 CACHED
+
+#10 [worker 3/9] COPY backend/requirements-lock.txt /app/backend/requirements-lock.txt
+#10 CACHED
+
+#11 [worker 4/9] RUN pip install --no-cache-dir -r backend/requirements-lock.txt
+#11 CACHED
+
+#12 [worker 2/9] WORKDIR /app
+#12 CACHED
+
+#13 [worker 6/9] RUN pip install --no-cache-dir --no-deps ./backend
+#13 CACHED
+
+#14 [worker 9/9] RUN mkdir -p /app/var
+#14 CACHED
+
+#15 [initialize] exporting to image
+#15 exporting layers done
+#15 exporting manifest sha256:dff75404922fbc6b2640a9cdb185323be4d277bdaa03413d4954fd3e6efbd48d 0.1s done
+#15 exporting config sha256:0cf0c519c91aa0a7e8dd72ef92a03c1c2109405f970ed226815b564cd944f3fb
+#15 exporting config sha256:0cf0c519c91aa0a7e8dd72ef92a03c1c2109405f970ed226815b564cd944f3fb 0.2s done
+#15 exporting attestation manifest sha256:e6773535ef483fae52f834ef7395311de0cc2042ef1296e07a1b790bd6200607
+#15 exporting attestation manifest sha256:e6773535ef483fae52f834ef7395311de0cc2042ef1296e07a1b790bd6200607 0.2s done
+#15 exporting manifest list sha256:0c9738a39a6b226dadd4217d154f68dec7ca7659185735b359e598d105a32ed1 0.0s done
+#15 naming to docker.io/library/srverify8614a29d0220-initialize:latest done
+#15 unpacking to docker.io/library/srverify8614a29d0220-initialize:latest done
+#15 DONE 0.9s
+
+#16 [worker] exporting to image
+#16 exporting layers done
+#16 exporting manifest sha256:11ad9164f77e3a411a65e5cee7bf6880fb3e5b853371475a14a2e8e50f3961e6 0.1s done
+#16 exporting config sha256:627d9651551b7b33875c3242fc81a67205cee72a60f4d324974b14a8739c7c27 0.3s done
+#16 exporting attestation manifest sha256:72e981cc2a9dad186c484f101dc9510cc624847c657e2a7fda942bd82ede95cb 0.1s done
+#16 exporting manifest list sha256:056911f802e25fbfc5a8cb506cbe8130eab8c890d2754b5ccd67716d78bd81ce 0.0s done
+#16 naming to docker.io/library/srverify8614a29d0220-worker:latest done
+#16 unpacking to docker.io/library/srverify8614a29d0220-worker:latest 0.0s done
+#16 DONE 0.9s
+
+#17 [worker] resolving provenance for metadata file
+#17 DONE 0.0s
+
+#18 [initialize] resolving provenance for metadata file
+#18 DONE 0.0s

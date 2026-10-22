@@ -1,0 +1,81 @@
+{
+  "status": "PASS",
+  "verified_utc": "2026-10-22T06:44:13.302053+00:00",
+  "project": "srverifyf56fda46bbf8",
+  "mounts": {
+    "database": [
+      {
+        "Type": "volume",
+        "Name": "c0d926c0d0a417ac23e0bdf88b26090c0f77b4a242f9a7bd2727a520ae9daf1e",
+        "Source": "/var/lib/docker/volumes/c0d926c0d0a417ac23e0bdf88b26090c0f77b4a242f9a7bd2727a520ae9daf1e/_data",
+        "Destination": "/data/configdb",
+        "Driver": "local",
+        "Mode": "",
+        "RW": true,
+        "Propagation": ""
+      },
+      {
+        "Type": "volume",
+        "Name": "srverifyf56fda46bbf8_mongodb_data",
+        "Source": "/var/lib/docker/volumes/srverifyf56fda46bbf8_mongodb_data/_data",
+        "Destination": "/data/db",
+        "Driver": "local",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": ""
+      }
+    ],
+    "backend": [
+      {
+        "Type": "volume",
+        "Name": "srverifyf56fda46bbf8_run_artifacts",
+        "Source": "/var/lib/docker/volumes/srverifyf56fda46bbf8_run_artifacts/_data",
+        "Destination": "/app/var/artifacts",
+        "Driver": "local",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": ""
+      },
+      {
+        "Type": "volume",
+        "Name": "srverifyf56fda46bbf8_research_campaigns",
+        "Source": "/var/lib/docker/volumes/srverifyf56fda46bbf8_research_campaigns/_data",
+        "Destination": "/app/var/research",
+        "Driver": "local",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": ""
+      }
+    ],
+    "worker": [
+      {
+        "Type": "volume",
+        "Name": "srverifyf56fda46bbf8_run_artifacts",
+        "Source": "/var/lib/docker/volumes/srverifyf56fda46bbf8_run_artifacts/_data",
+        "Destination": "/app/var/artifacts",
+        "Driver": "local",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": ""
+      }
+    ],
+    "frontend": []
+  },
+  "networks": {
+    "database": [
+      "srverifyf56fda46bbf8_default"
+    ],
+    "backend": [
+      "srverifyf56fda46bbf8_default"
+    ],
+    "worker": [
+      "srverifyf56fda46bbf8_default"
+    ],
+    "frontend": [
+      "srverifyf56fda46bbf8_default"
+    ]
+  },
+  "database_port_not_published": true,
+  "shared_test_artifacts_only": true,
+  "stopped_after_test": true
+}

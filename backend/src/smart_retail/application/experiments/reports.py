@@ -8,9 +8,11 @@ from pathlib import Path
 from smart_retail.application.experiments.analysis import analyze
 from smart_retail.application.experiments.joint_reports import export as export_joint
 from smart_retail.application.experiments.storage import read, verify_integrity, write
+from smart_retail.infrastructure.filesystem import normalize_fs_path
 
 
 def table(path, rows):
+    path = normalize_fs_path(path)
     columns = sorted({key for row in rows for key in row}) or ["no_records"]
     with path.open("x", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, columns)
@@ -25,6 +27,7 @@ def table(path, rows):
 
 
 def report(root: Path, output: Path):
+    root, output = normalize_fs_path(root), normalize_fs_path(output)
     integrity = verify_integrity(root)
     rows = [read(path) for path in sorted((root / "records").glob("*.json"))]
     if not rows:

@@ -18,3 +18,11 @@ docx
 de-cuong
 Retail_TestPack
 docs/testing/ui
+.env
+.env.*
+!.env.example
+**/*.pem
+**/*.key
+experiments/results
+experiments/reports
+docs/release/evidence

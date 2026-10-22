@@ -1,0 +1,37 @@
+ .dockerignore                                      |   8 +
+ .gitignore                                         |  10 +
+ HANDOFF.md                                         |  45 ++-
+ README.md                                          | 350 ++++-----------------
+ backend/alembic.ini                                |   6 -
+ backend/migrations/env.py                          |  26 --
+ backend/migrations/versions/0001_foundation.py     |  80 -----
+ backend/pyproject.toml                             |   1 +
+ backend/scripts/migrate_sqlite_to_mongodb.py       |   6 -
+ .../application/experiments/campaign.py            |   5 +-
+ .../smart_retail/application/experiments/cli.py    |   2 +
+ .../application/experiments/reports.py             |   3 +
+ .../application/experiments/service.py             |   5 +-
+ .../application/experiments/storage.py             |  15 +-
+ .../src/smart_retail/application/feedback/cli.py   |   4 +
+ .../smart_retail/infrastructure/mongodb/health.py  |   8 +-
+ .../infrastructure/mongodb/migration.py            | 310 ------------------
+ .../src/smart_retail/infrastructure/stage_cache.py |  25 +-
+ backend/src/smart_retail/workers/runner.py         |   8 +-
+ .../integration/test_sqlite_mongodb_migration.py   | 152 ---------
+ backend/tests/unit/test_architecture.py            |  32 +-
+ docker-compose.yml                                 |   4 +-
+ docs/architecture/CURRENT_STATE.md                 |   2 +
+ docs/architecture/DEPENDENCY_MAP.md                |   2 +
+ docs/architecture/overview.md                      |   2 +-
+ docs/architecture/phase-status.md                  |   2 +
+ docs/decisions/0001-modular-monolith.md            |   2 +
+ docs/migration/MONGODB_MIGRATION_ACCEPTANCE.md     |  12 +-
+ docs/migration/MONGODB_OPERATIONS.md               |  46 +--
+ docs/migration/SQLITE_ROLLBACK.md                  |  67 ----
+ docs/testing/verification.md                       |   2 +
+ experiments/results/20261021-replay-01/campaign.db | Bin 143360 -> 0 bytes
+ .../results/20261021-research-01/campaign.db       | Bin 811008 -> 0 bytes
+ .../results/20261021-research-02/campaign.db       | Bin 3526656 -> 0 bytes
+ scripts/setup.ps1                                  |   2 +
+ scripts/verify_postgres.py                         |  51 ---
+ 36 files changed, 225 insertions(+), 1070 deletions(-)

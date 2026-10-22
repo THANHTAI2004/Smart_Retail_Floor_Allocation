@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "environment": "Windows 11 Pro 10.0.26300; current shell not elevated",
+  "os_model": "Acer Predator PH315-55",
+  "hypervisor_present": true,
+  "cim_virtualization_firmware_reported": false,
+  "cim_slat_reported": false,
+  "wsl_status": "WSL not installed",
+  "docker_installed": true,
+  "attempts": [
+    {
+      "command": "winget install --exact --id Docker.DockerDesktop --scope user --silent --accept-package-agreements --accept-source-agreements --disable-interactivity",
+      "exit_code": 1,
+      "result": "No applicable installer found",
+      "log": "WinGet-2026-10-22-13-22-45.913.log"
+    },
+    {
+      "command": "download verified official Docker Desktop 4.96.1 installer and run per-user install",
+      "exit_code": null,
+      "result": "Command rejected before execution: blocked by policy"
+    },
+    {
+      "command": "winget install --exact --id Docker.DockerDesktop --version 4.96.1 --source winget --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --override \"install --user --quiet --accept-license --backend=wsl-2\"",
+      "exit_code": 0,
+      "result": "Successfully installed; hash verified by WinGet"
+    },
+    {
+      "command": "winget install --exact --id Microsoft.WSL --version 2.7.13 --source winget --silent --accept-package-agreements --accept-source-agreements --disable-interactivity",
+      "exit_code": "0x80073d28",
+      "result": "Administrator required"
+    },
+    {
+      "command": "same pinned Microsoft.WSL package through elevated WinGet via UAC",
+      "exit_code": 0,
+      "result": "WSL version and kernel verified; Docker engine started"
+    }
+  ],
+  "installed_supporting_tools": [
+    {
+      "tool": "yaml",
+      "version": "2.8.1",
+      "location": "var/release-tools",
+      "command": "npm install --prefix var/release-tools --save-exact yaml@2.8.1 --no-audit --no-fund",
+      "exit_code": 0
+    }
+  ],
+  "user_install_authorization": true,
+  "reboot_performed": false,
+  "system_features_changed": "WSL installed via elevated package manager; no manual BIOS changes",
+  "wsl_installed": true,
+  "wsl_version": "2.7.13.0",
+  "docker_desktop_version": "4.96.1",
+  "docker_cli_version": "29.9.2",
+  "compose_version": "v5.6.0",
+  "docker_engine_version": "29.9.2",
+  "completed_utc": "2026-10-22T06:39:22.552955+00:00"
+}

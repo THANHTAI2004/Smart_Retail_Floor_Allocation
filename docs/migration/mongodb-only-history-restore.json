@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "source_database": "smart_retail_history",
+  "restored_database": "sr_history_restore_20261022_mongodb_only",
+  "collection_document_counts": {
+    "worker_heartbeats": 0,
+    "optimization_runs": 0,
+    "research_payloads.chunks": 257,
+    "retired_sql_tables": 206,
+    "retired_databases": 34,
+    "research_payloads.files": 8,
+    "projects": 0
+  },
+  "all_documents_equal": true,
+  "retired_database_count": 34,
+  "all_archived_table_row_checksums": "PASS"
+}

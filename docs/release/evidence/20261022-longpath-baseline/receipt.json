@@ -1,0 +1,16 @@
+{
+  "command": [
+    "D:\\Smart_Retail_Floor_Allocation\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "backend/tests/integration/test_joint_research_http.py::test_joint_http_worker_certificate_report_and_safe_artifact",
+    "backend/tests/integration/test_research_http.py::test_research_http_runs_real_child_and_exports_audited_report",
+    "-q",
+    "--basetemp",
+    "D:\\Smart_Retail_Floor_Allocation\\var\\longpath-baseline-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\nested-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\\nested-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\\nested-ddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "--tb=short"
+  ],
+  "exit_code": 1,
+  "base_length": 314,
+  "started_environment": "Windows"
+}

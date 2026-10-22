@@ -8,7 +8,7 @@ flowchart LR
     React[React / TypeScript / Konva] --> API[FastAPI adapters]
     API --> App[Application services]
     App --> Domain[Domain models]
-    App --> DB[(SQLAlchemy / PostgreSQL hoặc SQLite)]
+    App --> DB[(MongoDB / PyMongo)]
     DB --> Worker[Durable queue worker]
     Worker --> Child[Killable child process]
     Child --> T1[T1 Geometry]

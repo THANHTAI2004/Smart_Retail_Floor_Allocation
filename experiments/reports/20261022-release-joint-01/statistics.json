@@ -1,0 +1,707 @@
+{
+  "assumptions": [
+    "Exploratory Student-t intervals and paired tests; no population-level efficacy claim",
+    "Repeated identical seeds are averaged before pairing, not counted as independent replications",
+    "Failure rates include all attempted jobs; solution metrics only exist for valid results",
+    "Completion rate is not a proof of feasibility/infeasibility for unsolved cases",
+    "Holm adjustment covers every reported nondegenerate paired metric comparison"
+  ],
+  "comparisons": [
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 0.5929999999934807,
+        "mean": 0.5929999999934807,
+        "median": 0.5929999999934807,
+        "minimum": 0.5929999999934807,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "wall_s",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "exact"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": -7.000000000000001,
+        "mean": -7.000000000000001,
+        "median": -7.000000000000001,
+        "minimum": -7.000000000000001,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "mean_distance_m",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "exact"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "mean_wait_s",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "exact"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": -0.05,
+        "mean": -0.05,
+        "median": -0.05,
+        "minimum": -0.05,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "joint_objective",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "exact"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 3,
+        "mean": 3,
+        "median": 3,
+        "minimum": 3,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "joint_evaluations",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "exact"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "joint_iterations_to_best",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "exact"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "mean": null,
+        "median": null,
+        "n": 0,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "holdout_objective",
+      "paired_effect_dz": null,
+      "seeds": [],
+      "treatment": "exact"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 0.5779999999795109,
+        "mean": 0.5779999999795109,
+        "median": 0.5779999999795109,
+        "minimum": 0.5779999999795109,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "wall_s",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "feedback"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "mean_distance_m",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "feedback"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "mean_wait_s",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "feedback"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "joint_objective",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "feedback"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 6,
+        "mean": 6,
+        "median": 6,
+        "minimum": 6,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "joint_evaluations",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "feedback"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 1,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "joint_iterations_to_best",
+      "paired_effect_dz": null,
+      "seeds": [
+        11
+      ],
+      "treatment": "feedback"
+    },
+    {
+      "baseline": "baseline",
+      "dataset": "local_trap",
+      "difference": {
+        "ci95": null,
+        "mean": null,
+        "median": null,
+        "n": 0,
+        "sd": null
+      },
+      "experiment": "E13",
+      "exploratory_p": null,
+      "holm_p": null,
+      "limitation": "Insufficient independent seeds or constant differences; no test inference",
+      "metric": "holdout_objective",
+      "paired_effect_dz": null,
+      "seeds": [],
+      "treatment": "feedback"
+    }
+  ],
+  "selected_metrics": {
+    "E13": [
+      "joint_objective",
+      "joint_evaluations",
+      "joint_iterations_to_best",
+      "holdout_objective",
+      "wall_s",
+      "mean_distance_m",
+      "mean_wait_s"
+    ]
+  },
+  "summary": [
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.20654931437723745,
+        1.0
+      ],
+      "dataset": "local_trap",
+      "experiment": "E13",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": null,
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 1,
+          "sd": null
+        },
+        "joint_iterations_to_best": {
+          "ci95": null,
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 1,
+          "sd": null
+        },
+        "joint_objective": {
+          "ci95": null,
+          "maximum": 0.15266981034180868,
+          "mean": 0.15266981034180868,
+          "median": 0.15266981034180868,
+          "minimum": 0.15266981034180868,
+          "n": 1,
+          "sd": null
+        },
+        "mean_distance_m": {
+          "ci95": null,
+          "maximum": 14.70710678118655,
+          "mean": 14.70710678118655,
+          "median": 14.70710678118655,
+          "minimum": 14.70710678118655,
+          "n": 1,
+          "sd": null
+        },
+        "mean_wait_s": {
+          "ci95": null,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "n": 1,
+          "sd": null
+        },
+        "peak_child_rss_bytes": {
+          "ci95": null,
+          "maximum": 130850816,
+          "mean": 130850816,
+          "median": 130850816,
+          "minimum": 130850816,
+          "n": 1,
+          "sd": null
+        },
+        "sampled_child_cpu_s": {
+          "ci95": null,
+          "maximum": 1.328125,
+          "mean": 1.328125,
+          "median": 1.328125,
+          "minimum": 1.328125,
+          "n": 1,
+          "sd": null
+        },
+        "t1_objective": {
+          "ci95": null,
+          "maximum": 4.5,
+          "mean": 4.5,
+          "median": 4.5,
+          "minimum": 4.5,
+          "n": 1,
+          "sd": null
+        },
+        "t2_objective": {
+          "ci95": null,
+          "maximum": 0.397747564417433,
+          "mean": 0.397747564417433,
+          "median": 0.397747564417433,
+          "minimum": 0.397747564417433,
+          "n": 1,
+          "sd": null
+        },
+        "t3_objective": {
+          "ci95": null,
+          "maximum": 6.0,
+          "mean": 6.0,
+          "median": 6.0,
+          "minimum": 6.0,
+          "n": 1,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": null,
+          "maximum": 2.0,
+          "mean": 2.0,
+          "median": 2.0,
+          "minimum": 2.0,
+          "n": 1,
+          "sd": null
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 1,
+      "succeeded": 1,
+      "total": 1,
+      "treatment": "baseline"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.20654931437723745,
+        1.0
+      ],
+      "dataset": "local_trap",
+      "experiment": "E13",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": null,
+          "maximum": 4,
+          "mean": 4,
+          "median": 4,
+          "minimum": 4,
+          "n": 1,
+          "sd": null
+        },
+        "joint_iterations_to_best": {
+          "ci95": null,
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 1,
+          "sd": null
+        },
+        "joint_objective": {
+          "ci95": null,
+          "maximum": 0.10266981034180868,
+          "mean": 0.10266981034180868,
+          "median": 0.10266981034180868,
+          "minimum": 0.10266981034180868,
+          "n": 1,
+          "sd": null
+        },
+        "mean_distance_m": {
+          "ci95": null,
+          "maximum": 7.707106781186549,
+          "mean": 7.707106781186549,
+          "median": 7.707106781186549,
+          "minimum": 7.707106781186549,
+          "n": 1,
+          "sd": null
+        },
+        "mean_wait_s": {
+          "ci95": null,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "n": 1,
+          "sd": null
+        },
+        "peak_child_rss_bytes": {
+          "ci95": null,
+          "maximum": 130592768,
+          "mean": 130592768,
+          "median": 130592768,
+          "minimum": 130592768,
+          "n": 1,
+          "sd": null
+        },
+        "sampled_child_cpu_s": {
+          "ci95": null,
+          "maximum": 1.984375,
+          "mean": 1.984375,
+          "median": 1.984375,
+          "minimum": 1.984375,
+          "n": 1,
+          "sd": null
+        },
+        "t1_objective": {
+          "ci95": null,
+          "maximum": 4.5,
+          "mean": 4.5,
+          "median": 4.5,
+          "minimum": 4.5,
+          "n": 1,
+          "sd": null
+        },
+        "t2_objective": {
+          "ci95": null,
+          "maximum": 0.397747564417433,
+          "mean": 0.397747564417433,
+          "median": 0.397747564417433,
+          "minimum": 0.397747564417433,
+          "n": 1,
+          "sd": null
+        },
+        "t3_objective": {
+          "ci95": null,
+          "maximum": 6.0,
+          "mean": 6.0,
+          "median": 6.0,
+          "minimum": 6.0,
+          "n": 1,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": null,
+          "maximum": 2.5929999999934807,
+          "mean": 2.5929999999934807,
+          "median": 2.5929999999934807,
+          "minimum": 2.5929999999934807,
+          "n": 1,
+          "sd": null
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 1,
+      "succeeded": 1,
+      "total": 1,
+      "treatment": "exact"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.20654931437723745,
+        1.0
+      ],
+      "dataset": "local_trap",
+      "experiment": "E13",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": null,
+          "maximum": 7,
+          "mean": 7,
+          "median": 7,
+          "minimum": 7,
+          "n": 1,
+          "sd": null
+        },
+        "joint_iterations_to_best": {
+          "ci95": null,
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 1,
+          "sd": null
+        },
+        "joint_objective": {
+          "ci95": null,
+          "maximum": 0.15266981034180868,
+          "mean": 0.15266981034180868,
+          "median": 0.15266981034180868,
+          "minimum": 0.15266981034180868,
+          "n": 1,
+          "sd": null
+        },
+        "mean_distance_m": {
+          "ci95": null,
+          "maximum": 14.70710678118655,
+          "mean": 14.70710678118655,
+          "median": 14.70710678118655,
+          "minimum": 14.70710678118655,
+          "n": 1,
+          "sd": null
+        },
+        "mean_wait_s": {
+          "ci95": null,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "n": 1,
+          "sd": null
+        },
+        "peak_child_rss_bytes": {
+          "ci95": null,
+          "maximum": 132206592,
+          "mean": 132206592,
+          "median": 132206592,
+          "minimum": 132206592,
+          "n": 1,
+          "sd": null
+        },
+        "sampled_child_cpu_s": {
+          "ci95": null,
+          "maximum": 1.890625,
+          "mean": 1.890625,
+          "median": 1.890625,
+          "minimum": 1.890625,
+          "n": 1,
+          "sd": null
+        },
+        "t1_objective": {
+          "ci95": null,
+          "maximum": 4.5,
+          "mean": 4.5,
+          "median": 4.5,
+          "minimum": 4.5,
+          "n": 1,
+          "sd": null
+        },
+        "t2_objective": {
+          "ci95": null,
+          "maximum": 0.397747564417433,
+          "mean": 0.397747564417433,
+          "median": 0.397747564417433,
+          "minimum": 0.397747564417433,
+          "n": 1,
+          "sd": null
+        },
+        "t3_objective": {
+          "ci95": null,
+          "maximum": 6.0,
+          "mean": 6.0,
+          "median": 6.0,
+          "minimum": 6.0,
+          "n": 1,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": null,
+          "maximum": 2.577999999979511,
+          "mean": 2.577999999979511,
+          "median": 2.577999999979511,
+          "minimum": 2.577999999979511,
+          "n": 1,
+          "sd": null
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 1,
+      "succeeded": 1,
+      "total": 1,
+      "treatment": "feedback"
+    }
+  ]
+}

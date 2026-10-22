@@ -1,5 +1,7 @@
 # Trạng thái triển khai theo yêu cầu ngày 21/10/2026
 
+Historical SQL-era checkpoint; superseded by [MongoDB-only acceptance](../migration/MONGODB_ONLY_ACCEPTANCE.md). SQL commands below are retired and are not current run instructions.
+
 Đây là bàn giao phần đã thực hiện, chưa phải nghiệm thu toàn bộ prompt. Danh sách
 tệp chính xác ở `changed-files.json`; cây thực tế ở `actual-tree.txt`. Chạy ứng dụng
 bằng `scripts/start.ps1`, kiểm thử theo README. Các receipt cuối ở docs/testing.

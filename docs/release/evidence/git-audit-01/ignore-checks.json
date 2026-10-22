@@ -1,0 +1,34 @@
+{
+  "var/mongodb/private.json": {
+    "ignored": true,
+    "rule": ".gitignore:14:var/\tvar/mongodb/private.json"
+  },
+  ".env": {
+    "ignored": true,
+    "rule": ".gitignore:15:.env\t.env"
+  },
+  ".env.local": {
+    "ignored": true,
+    "rule": ".gitignore:21:.env.local\t.env.local"
+  },
+  "var/artifacts/run/result.json": {
+    "ignored": true,
+    "rule": ".gitignore:14:var/\tvar/artifacts/run/result.json"
+  },
+  "experiments/results/local-generated/new.json": {
+    "ignored": true,
+    "rule": ".gitignore:28:/experiments/results/*/\texperiments/results/local-generated/new.json"
+  },
+  "backend/src/smart_retail/infrastructure/filesystem.py": {
+    "ignored": false,
+    "rule": ""
+  },
+  "experiments/configs/joint_certification.json": {
+    "ignored": false,
+    "rule": ""
+  },
+  "docs/release/FINAL_RELEASE_REPORT.md": {
+    "ignored": false,
+    "rule": ""
+  }
+}

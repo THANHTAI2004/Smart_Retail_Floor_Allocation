@@ -1,5 +1,7 @@
 # Dependency map - current research platform
 
+Current MongoDB-only checkpoint: SQL adapters, SQL databases and drivers have been removed. See [MongoDB-only acceptance](../migration/MONGODB_ONLY_ACCEPTANCE.md). The following migration details are historical.
+
 Primary database: MongoDB/PyMongo. Project/run/worker structural contracts are in
 `infrastructure/repositories/contracts.py`; concrete repositories, serializers,
 GridFS, indexes and client ownership are in `infrastructure/mongodb/`. API and

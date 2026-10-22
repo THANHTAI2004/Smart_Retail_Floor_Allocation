@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "candidate_files": 1485,
+  "secret_hits": [],
+  "original_head": "85add59f11ca48265e7613c9f09747b80eaaec3b",
+  "no_push": true,
+  "untracked_raw_outputs_ignored_and_retained": true
+}

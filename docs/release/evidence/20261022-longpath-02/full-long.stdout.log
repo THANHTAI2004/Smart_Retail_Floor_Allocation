@@ -1,0 +1,21 @@
+........................................................................ [ 42%]
+................F....................................................... [ 84%]
+...........................                                              [100%]
+================================== FAILURES ===================================
+____________ test_windows_drive_unc_conversion_and_posix_identity _____________
+backend\tests\integration\test_windows_long_path.py:106: in test_windows_drive_unc_conversion_and_posix_identity
+    assert logical_fs_path(normalize_fs_path(tmp_path)) == tmp_path.resolve()
+E   AssertionError: assert WindowsPath('D:/Smart_Retail_Floor_Allocation/var/lp-8571b8d7ed/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/duon...-th\u1eed-nestednestednestednestednested/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/test_windows_drive_unc_convers0') == WindowsPath('//?/D:/Smart_Retail_Floor_Allocation/var/lp-8571b8d7ed/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/...-th\u1eed-nestednestednestednestednested/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/test_windows_drive_unc_convers0')
+E    +  where WindowsPath('D:/Smart_Retail_Floor_Allocation/var/lp-8571b8d7ed/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/duon...-th\u1eed-nestednestednestednestednested/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/test_windows_drive_unc_convers0') = logical_fs_path(WindowsPath('//?/D:/Smart_Retail_Floor_Allocation/var/lp-8571b8d7ed/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/...-th\u1eed-nestednestednestednestednested/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/test_windows_drive_unc_convers0'))
+E    +    where WindowsPath('//?/D:/Smart_Retail_Floor_Allocation/var/lp-8571b8d7ed/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/...-th\u1eed-nestednestednestednestednested/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/test_windows_drive_unc_convers0') = normalize_fs_path(WindowsPath('//?/D:/Smart_Retail_Floor_Allocation/var/lp-8571b8d7ed/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/...-th\u1eed-nestednestednestednestednested/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/test_windows_drive_unc_convers0'))
+E    +  and   WindowsPath('//?/D:/Smart_Retail_Floor_Allocation/var/lp-8571b8d7ed/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/...-th\u1eed-nestednestednestednestednested/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/test_windows_drive_unc_convers0') = resolve()
+E    +    where resolve = WindowsPath('//?/D:/Smart_Retail_Floor_Allocation/var/lp-8571b8d7ed/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/...-th\u1eed-nestednestednestednestednested/duong-dan-ki\u1ec3m-th\u1eed-nestednestednestednestednested/test_windows_drive_unc_convers0').resolve
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Smart_Retail_Floor_Allocation\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend\tests\integration\test_windows_long_path.py::test_windows_drive_unc_conversion_and_posix_identity
+1 failed, 170 passed, 1 warning in 54.66s

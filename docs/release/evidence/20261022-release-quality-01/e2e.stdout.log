@@ -1,0 +1,16 @@
+MongoDB connection and indexes verified
+
+Running 9 tests using 1 worker
+
+  ok 1 tests\e2e\accessibility.spec.ts:6:1 › dashboard and editor accessibility checks (2.6s)
+  ok 2 tests\e2e\experiment-platform.spec.ts:5:1 › research dashboard runs real campaign, reports, figures and replay (8.7s)
+  ok 3 tests\e2e\input-tables.spec.ts:4:1 › saved versioned product table exports and imports CSV without losing metadata (1.3s)
+  ok 4 tests\e2e\joint-optimization.spec.ts:5:1 › joint dashboard shows real local trap, exact proof, trace and candidate views (31.5s)
+  ok 5 tests\e2e\research.spec.ts:3:1 › drawing undo/redo and bounded MILP research workflow use persisted inputs (5.1s)
+  ok 6 tests\e2e\workflow.spec.ts:6:1 › loading state keeps project creation disabled until data arrives (1.4s)
+  ok 7 tests\e2e\workflow.spec.ts:25:1 › create, edit, persist, run, inspect, replay, compare and download (10.5s)
+  ok 8 tests\e2e\workflow.spec.ts:144:1 › backend validation error is visible and invalid edits are not persisted (1.4s)
+  ok 9 tests\e2e\workflow.spec.ts:165:1 › empty and partial project and offline worker feedback (3.0s)
+
+  9 passed (1.1m)
+E2E evidence: D:\Smart_Retail_Floor_Allocation\var\e2e-20261022-132509

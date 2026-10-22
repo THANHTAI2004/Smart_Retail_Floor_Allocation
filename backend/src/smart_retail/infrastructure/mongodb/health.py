@@ -15,12 +15,8 @@ def main():
     owner, _ = connect()
     try:
         owner.ready()
-        if args.cutover_check and Path("var/smart_retail.db").exists():
-            receipt_path = Path("var/mongodb/cutover.json")
-            if not receipt_path.exists():
-                raise RuntimeError(
-                    "SQLite data exists: verified migration/cutover receipt required before starting MongoDB application"
-                )
+        receipt_path = Path("var/mongodb/cutover.json")
+        if args.cutover_check and receipt_path.exists():
             receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
             if receipt[
                 "database"

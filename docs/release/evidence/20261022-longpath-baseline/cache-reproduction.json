@@ -1,0 +1,8 @@
+{
+  "status": "REPRODUCED",
+  "root_length": 244,
+  "failure": "FileNotFoundError",
+  "winerror": null,
+  "filename_length": 286,
+  "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 10, in <module>\n  File \"old_stage_cache.py\", line 60, in __setitem__\n  File \"C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py\", line 1047, in write_text\n    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'D:\\\\Smart_Retail_Floor_Allocation\\\\var\\\\reproduction-cache\\\\nested55aaaaaaaaaaaaaaaaaaaaaaaaaaa\\\\nested91aaaaaaaaaaaaaaaaaaaaaaaaaaa\\\\nested127aaaaaaaaaaaaaaaaaaaaaaaaaaa\\\\nested164aaaaaaaaaaaaaaaaaaaaaaaaaaa\\\\nested201aaaaaaaaaaaaaaaaaaaaaaaaaaa\\\\cache\\\\.5356de3a-2738-4329-b42b-1316b84e871a.tmp'\n"
+}

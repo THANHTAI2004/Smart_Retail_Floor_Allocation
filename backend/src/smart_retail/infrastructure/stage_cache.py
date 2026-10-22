@@ -1,7 +1,6 @@
 """Content-addressed JSON stage cache with checksum validation and no pickle."""
 
 import json
-import os
 from dataclasses import asdict, is_dataclass
 from pathlib import Path
 from uuid import uuid4
@@ -15,13 +14,14 @@ from smart_retail.domain.models import (
     ShelfLevel,
     SimulationResult,
 )
+from smart_retail.infrastructure.filesystem import normalize_fs_path, publish_immutable_file
 
 
 class StageCache(dict):
     def __init__(self, root: Path):
         super().__init__()
-        self.root = root
-        root.mkdir(parents=True, exist_ok=True)
+        self.root = normalize_fs_path(root)
+        self.root.mkdir(parents=True, exist_ok=True)
 
     def __contains__(self, key):
         return (self.root / f"{key}.json").exists()
@@ -57,22 +57,9 @@ class StageCache(dict):
         if path.exists():
             return
         temporary = self.root / f".{uuid4()}.tmp"
-        temporary.write_text(json.dumps(envelope, allow_nan=False), encoding="utf-8")
         # Publish by hard link: an already published immutable value is never replaced.
         try:
-
-            def native_path(value: Path) -> str:
-                absolute = str(value.resolve())
-                if os.name != "nt" or absolute.startswith("\\\\?\\"):
-                    return absolute
-                return (
-                    "\\\\?\\UNC\\" + absolute[2:]
-                    if absolute.startswith("\\\\")
-                    else "\\\\?\\" + absolute
-                )
-
-            os.link(native_path(temporary), native_path(path))
-        except FileExistsError:
-            pass
+            temporary.write_text(json.dumps(envelope, allow_nan=False), encoding="utf-8")
+            publish_immutable_file(temporary, path)
         finally:
-            temporary.unlink()
+            temporary.unlink(missing_ok=True)

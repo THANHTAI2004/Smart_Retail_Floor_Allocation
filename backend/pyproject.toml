@@ -38,6 +38,7 @@ known-first-party = ["smart_retail"]
 
 [tool.mypy]
 python_version = "3.12"
+sqlite_cache = false
 check_untyped_defs = true
 ignore_missing_imports = true
 disable_error_code = ["import-untyped"]
