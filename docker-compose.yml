@@ -19,6 +19,7 @@ services:
     environment: &backend-env
       MONGODB_URI: ${MONGODB_URI:?Set private authenticated MONGODB_URI using database hostname and authSource=admin}
       MONGODB_DATABASE: ${MONGODB_DATABASE:-smart_retail}
+      SMART_RETAIL_CAMPAIGN_DB_PREFIX: ${SMART_RETAIL_CAMPAIGN_DB_PREFIX:-sr_campaign_}
       SMART_RETAIL_ARTIFACTS: /app/var/artifacts
     command: ["python", "-m", "smart_retail.infrastructure.mongodb.health"]
     depends_on:

@@ -1,7 +1,8 @@
+param([string]$OutputRoot = '', [string]$DatabasePrefix = 'sr_e2e_')
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $projectRoot
-$runRoot = Join-Path $projectRoot ('var/e2e-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+$runRoot = if ($OutputRoot) { if ([IO.Path]::IsPathRooted($OutputRoot)) { [IO.Path]::GetFullPath($OutputRoot) } else { [IO.Path]::GetFullPath((Join-Path $projectRoot $OutputRoot)) } } else { Join-Path $projectRoot ('var/e2e-' + (Get-Date -Format 'yyyyMMdd-HHmmss')) }
 if (Test-Path -LiteralPath $runRoot) { throw 'Verification directory already exists' }
 foreach ($port in 8011,5174) {
     if (Get-NetTCPConnection -State Listen -LocalPort $port -ErrorAction SilentlyContinue) { throw "Verification port $port is occupied" }
@@ -12,7 +13,7 @@ $savedEnvironment = @{}
 foreach ($envName in $envNames) { $savedEnvironment[$envName] = [Environment]::GetEnvironmentVariable($envName,'Process') }
 $processes = @()
 try {
-    $env:MONGODB_DATABASE = 'sr_e2e_' + [guid]::NewGuid().ToString('N')
+    $env:MONGODB_DATABASE = $DatabasePrefix + [guid]::NewGuid().ToString('N').Substring(0,20)
     $env:SMART_RETAIL_ARTIFACTS = Join-Path $runRoot 'artifacts'
     $env:SMART_RETAIL_RESEARCH_HOME = Join-Path $runRoot 'research'
     $env:SMART_RETAIL_API_URL = 'http://127.0.0.1:8011'

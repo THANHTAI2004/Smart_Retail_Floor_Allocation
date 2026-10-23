@@ -11,6 +11,7 @@ import sys
 import time
 from datetime import UTC, datetime
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from uuid import uuid4
 
@@ -93,7 +94,7 @@ def compose(output, record):
     # buildx also needs the adjacent credential helper, not only docker.exe.
     os.environ["PATH"] = str(Path(docker).parent) + os.pathsep + os.environ.get("PATH", "")
     project = "srverify" + uuid4().hex[:12]
-    database = "sr_compose_" + uuid4().hex[:16]
+    database = os.getenv("SMART_RETAIL_COMPOSE_DB_PREFIX", "sr_compose_") + uuid4().hex[:16]
     api_port, web_port = free_port(), free_port()
     password = secrets.token_urlsafe(32)
     uri = f"mongodb://verify:{password}@database:27017/?authSource=admin"
@@ -150,6 +151,7 @@ def compose(output, record):
             time.sleep(.5)
         else:
             raise TimeoutError("Compose API/worker readiness")
+        record["runtime"] = request("/api/health")["runtime"]
         run("exec", "-T", "backend", "python", "-c", "from pymongo import MongoClient; from pymongo.errors import OperationFailure; c=MongoClient('mongodb://database:27017',serverSelectionTimeoutMS=3000);\ntry: c.smart_retail.projects.find_one(); raise AssertionError('Authentication disabled')\nexcept OperationFailure as e: assert e.code==13")
         p = request("/api/projects", {"name": "Compose isolated verification"})
         sample = json.loads((ROOT / "datasets/samples/small_store.json").read_text(encoding="utf-8"))
@@ -165,6 +167,22 @@ def compose(output, record):
         assert final["status"] == "SUCCEEDED"
         assert canonical_hash(final["result"]) == final["result_sha256"]
         request(f"/api/runs/{job['id']}/report")
+        if os.getenv("SMART_RETAIL_COMPOSE_JOINT_SMOKE") == "1":
+            config = next(c["configuration"] for c in request("/api/research/configurations") if c["id"] == "joint_certification")
+            config["seeds"] = [11]
+            config["experiments"][0]["treatments"] = [t for t in config["experiments"][0]["treatments"] if t["id"] in ["feedback", "exact", "hybrid"]]
+            campaign = request("/api/research/campaigns", config, "POST")
+            deadline = time.monotonic() + 120
+            while time.monotonic() < deadline:
+                details = request(f"/api/research/campaigns/{campaign['id']}")
+                assert details["status"] != "FAILED"
+                if details.get("supervisor", {}).get("report"):
+                    break
+                time.sleep(.5)
+            else:
+                raise TimeoutError("Container joint campaign")
+            assert len(details["records"]) == 3 and all(r["status"] == "SUCCEEDED" for r in details["records"])
+            record["joint_campaign"] = {"id": campaign["id"], "records": details["records"]}
         with urlopen(f"http://127.0.0.1:{web_port}", timeout=10) as response:
             assert response.status == 200
         run("restart", "database", "backend", "worker", "frontend")
@@ -179,6 +197,28 @@ def compose(output, record):
             time.sleep(.5)
         else:
             raise TimeoutError("Persistence after restart")
+        if os.getenv("SMART_RETAIL_COMPOSE_JOINT_SMOKE") == "1":
+            run("stop", "database")
+            try:
+                request("/api/projects")
+                raise AssertionError("Disconnected database returned success")
+            except HTTPError as exc:
+                assert exc.code == 503
+                error = json.loads(exc.read())
+                assert error["code"] == "DATABASE_UNAVAILABLE"
+                record["database_outage"] = {"http_status":503, "code":error["code"]}
+            run("start", "database")
+            run("restart", "worker")
+            deadline = time.monotonic() + 60
+            while time.monotonic() < deadline:
+                try:
+                    if request("/api/health")["worker_online"]:
+                        break
+                except Exception:
+                    pass
+                time.sleep(.5)
+            else:
+                raise TimeoutError("Database/worker recovery after outage")
         run("stop", "worker")
         cancelled = request(f"/api/projects/{p['id']}/runs", {}, "POST")
         request(f"/api/runs/{cancelled['id']}/cancel", {}, "POST")

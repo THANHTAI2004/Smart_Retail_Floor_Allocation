@@ -10,8 +10,9 @@ from smart_retail.application.workflow import canonical_hash
 from smart_retail.contracts.experiments import DatasetSpec
 from smart_retail.contracts.inputs import SECTIONS, to_domain
 from smart_retail.contracts.migration import normalize
+from smart_retail.infrastructure.database import ROOT
 
-DATASET_ROOT = Path(__file__).resolve().parents[5] / "datasets"
+DATASET_ROOT = ROOT / "datasets"
 
 SIZES = {
     "tiny": (4, 3, 12, 20),
@@ -23,7 +24,8 @@ SIZES = {
 
 def generate(spec: DatasetSpec) -> tuple[dict, dict]:
     if spec.input_path:
-        path = Path(spec.input_path).resolve()
+        supplied = Path(spec.input_path)
+        path = (supplied if supplied.is_absolute() else ROOT / supplied).resolve()
         if not path.is_relative_to(DATASET_ROOT.resolve()):
             raise ValueError("Imported dataset must be inside the repository datasets directory")
         raw = path.read_bytes()

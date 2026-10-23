@@ -15,6 +15,7 @@ from smart_retail.infrastructure.filesystem import logical_fs_path, normalize_fs
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--temp-root", type=Path, default=Path("var"))
     args = parser.parse_args()
     output = normalize_fs_path(args.output)
     output.mkdir(parents=True, exist_ok=False)
@@ -24,7 +25,7 @@ def main():
             "backend/tests/integration/test_research_http.py::test_research_http_runs_real_child_and_exports_audited_report"]
     cases += [(f"http-repeat-{i}", http, True) for i in range(1, 4)]
     for label, tests, long in cases:
-        base = Path.cwd() / "var" / ("lp-" + uuid4().hex[:10])
+        base = args.temp_root.resolve() / ("lp-" + uuid4().hex[:10])
         if long:
             while len(str(base)) < 315:
                 base /= "duong-dan-ki\u1ec3m-th\u1eed-" + "nested" * 5

@@ -1,4 +1,79 @@
-# Current handoff - Windows long paths and release verification, 2026-10-22
+# Current handoff - authorized GitHub synchronization, 2026-10-23
+
+The user explicitly authorized committing and pushing the current changes to
+THANHTAI2004/Smart_Retail_Floor_Allocation using account THANHTAI2004.
+Git Credential Manager lists that account; origin/main was two commits behind
+local main after fetch, with no remote-only commits. The staged scope includes
+current audit fixes, regression tests, verification scripts and 13 audit reports.
+Historical no-commit/no-push statements below describe the completed audit only.
+
+Checks during this synchronization: git diff --check PASS; 30 changed files decode
+as UTF-8; credential-pattern review found only a generated-password URI template.
+.venv/Scripts/python.exe -m pytest backend/tests/unit/test_installed_dataset_root.py
+-q --tb=short --basetemp var/git-sync-<unique-id>: 1 PASS, one existing
+Starlette TestClient/httpx deprecation warning. Initial invocation using the default
+temporary directory failed during tmp_path fixture setup; the fresh repository-local
+temporary directory resolved it. Full audit suites were not rerun for this Git task;
+the 2026-10-22 results below remain historical receipts. No application source was
+changed during synchronization. Local runtime evidence under ignored var remains
+on this machine. Next step: commit, push main and verify local/remote HEAD equality.
+
+---
+
+# Current handoff - end-to-end system audit, 2026-10-22
+
+Current audit: **SYSTEM_VERIFIED_WITH_LIMITATIONS**, ID `20261022-afbb7971`. MongoDB Atlas is explicitly
+**OUT_OF_SCOPE** for this request. The prior release's Atlas blockers below are
+historical and do not apply to the system audit.
+
+Evidence is isolated under `var/system-audit/20261022-afbb7971/`; the final
+verification attempt is under its `final/` subdirectory. Main business data at
+entry: 17 projects / 8 optimization runs. Preserve `smart_retail`, original
+artifacts, research fingerprints, Git HEAD/index and running main services.
+No commit or push is authorized for this audit.
+
+Two defects reproduced and fixed: MongoDB connection failure escaped the API
+(now sanitized 503 / DATABASE_UNAVAILABLE), and imported research datasets were
+confined relative to the Python package location (incorrect for installed Docker
+packages; now confined relative to application home). Before/after regression
+logs are retained. Numerical algorithms/objectives were not changed.
+
+The first attempt passed 177 backend tests twice, 10 Playwright tests, new pilot
+38 jobs plus replay and joint 10 jobs plus replay, then exposed the installed
+dataset-root defect in real Docker research execution. These are superseded
+receipts, not final verification for the subsequent fix. Final attempt has
+passed 178 backend tests on both long and short paths plus three deep-path HTTP
+repeats; 4 Vitest, 10 Playwright, 38 pilot jobs/replay, 10 joint jobs/replay and
+real Docker feedback/exact/hybrid, database outage/recovery and restart
+persistence checks also PASS. Numerical probes on the final source pass with
+5 accepted feedback steps and Tiny/Small/Medium queued runs. Source SHA-256:
+321d73d95a4ba9952f4af622601a02edb04f2ad95e60e5c1ddb569408e8841dc.
+
+Read-only preservation PASS: all 57,693 historical research files
+(1,447,827,887 bytes), 32 original artifact files, primary business document SHA
+(17 projects / 8 runs), external legacy backup SHA and Git HEAD/index match.
+No historical research/release report was overwritten. All 13 requested reports
+are in docs/system-audit/; start with FINAL_SYSTEM_AUDIT.md and the 24-gate
+END_TO_END_ACCEPTANCE.md. Exact commands/timestamps/exits are in final/commands/
+journal.json and final/supplemental-journal.json. Failed/superseded attempts are
+retained in the parent audit directory. No test failures/skips in the final
+regression; one Starlette TestClient/httpx deprecation warning per backend suite.
+
+Limits: two-seed audit campaigns, finite declared exact/SAA space, synthetic T4
+with shelf queues, bounded performance probes (no Large/endurance capacity or
+long-duration leak claim), local application security and desktop browser scope.
+No coverage percentage was measured. These limits do not block the defined
+synthetic research workflow. Full E01-E15 scale/seed matrices were not executed.
+
+Main services were deliberately left running; the fixes are verified in fresh
+isolated services and Docker. A later normal app restart is needed for the main
+API process to load the new 503 handler. No restart is performed by this audit.
+No remaining implementation step is required for this bounded audit; broader
+empirical validation/endurance studies remain outside its acceptance claim.
+
+---
+
+# Historical handoff - Windows long paths and release verification, 2026-10-22
 
 Final status: **RELEASE_READY_WITH_EXTERNAL_BLOCKERS**. Acceptance matrix has
 37 PASS / 0 FAIL / 5 BLOCKED (Atlas live access only). Local source checkpoint

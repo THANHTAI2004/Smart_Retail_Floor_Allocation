@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 from uuid import uuid4
 
@@ -20,7 +21,7 @@ def sample():
 
 @pytest.fixture
 def database(tmp_path):
-    name = "sr_test_" + uuid4().hex
+    name = os.getenv("SMART_RETAIL_TEST_DB_PREFIX", "sr_test_") + uuid4().hex[:20]
     engine, factory = connect(database=name)
     try:
         engine.ready()

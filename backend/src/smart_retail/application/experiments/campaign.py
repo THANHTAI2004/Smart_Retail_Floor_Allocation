@@ -108,7 +108,8 @@ def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: i
             raise ValueError("Campaign already has a live supervisor")
     write(lock, {"pid": os.getpid(), "started_utc": utc()}, immutable=True)
     campaign_database = (
-        "sr_campaign_" + hashlib.sha256(str(logical_fs_path(root.resolve())).encode()).hexdigest()[:24]
+        os.getenv("SMART_RETAIL_CAMPAIGN_DB_PREFIX", "sr_campaign_")
+        + hashlib.sha256(str(logical_fs_path(root.resolve())).encode()).hexdigest()[:24]
     )
     engine, factory = connect(database=campaign_database)
     engine.ready()

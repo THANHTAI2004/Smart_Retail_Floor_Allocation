@@ -10,6 +10,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pymongo.errors import ConnectionFailure
 
 from smart_retail.api.research import router as research_router
 from smart_retail.application import projects
@@ -47,6 +48,15 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
 
     app = FastAPI(title="Smart Retail Floor Allocation", version="0.1.0", lifespan=lifespan)
     app.state.session_factory = factory
+    @app.exception_handler(ConnectionFailure)
+    async def database_unavailable(_: Request, exc: ConnectionFailure):
+        logger.warning("MongoDB connectivity failure: %s", type(exc).__name__)
+        return JSONResponse(
+            status_code=503,
+            content={"code": "DATABASE_UNAVAILABLE", "detail": "Database temporarily unavailable"},
+            headers={"Retry-After": "1"},
+        )
+
     app.include_router(research_router)
     app.add_middleware(
         CORSMiddleware,

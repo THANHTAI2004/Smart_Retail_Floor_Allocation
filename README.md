@@ -4,11 +4,16 @@ The retail research application uses React/TypeScript, FastAPI/Pydantic and
 **MongoDB with synchronous PyMongo**. MongoDB is the only application and campaign
 database. No SQL persistence adapter, SQL driver, Alembic or SQL importer remains.
 
-Current release hardens Windows long paths for caches, worker artifacts, campaign
-reports and replay. Fresh verification: **171 pytest at both long and short temp
-roots; 4 Vitest; 9 Playwright PASS**. Isolated Docker Compose verification PASS; Atlas remains blocked by missing credentials.
-See [final release report](docs/release/FINAL_RELEASE_REPORT.md) and
-[acceptance matrix](docs/release/FINAL_RELEASE_ACCEPTANCE.md).
+Current system audit (2026-10-22): **SYSTEM_VERIFIED_WITH_LIMITATIONS**.
+Fresh final-source verification: **178 pytest at both long and short temp roots,
+4 Vitest, 10 Playwright**, three deep-path HTTP repeats, 38 pilot jobs plus replay,
+10 joint jobs plus replay, and real isolated Docker Compose feedback/exact/hybrid,
+restart persistence and database-outage recovery PASS. MongoDB Atlas is explicitly
+outside this audit's scope. See the [final system audit](docs/system-audit/FINAL_SYSTEM_AUDIT.md)
+and [24-gate acceptance matrix](docs/system-audit/END_TO_END_ACCEPTANCE.md) for
+commands, evidence and synthetic-model/performance/security limits. Historical
+[release report](docs/release/FINAL_RELEASE_REPORT.md) and
+[release acceptance](docs/release/FINAL_RELEASE_ACCEPTANCE.md) retain their original scope.
 
 ## Windows startup
 
