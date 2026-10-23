@@ -104,6 +104,37 @@ Optimization Engine Layer giải từng mô hình. Infrastructure triển khai r
 cache và provenance; Persistence là MongoDB/GridFS. Background Worker giám sát
 process con; Reporting and Research Layer tạo campaign, so sánh và báo cáo.
 
+### Quy ước đọc sơ đồ
+
+Các sơ đồ được đọc **từ trên xuống**. Khi gặp hình thoi, chọn nhánh theo nhãn
+trên mũi tên; đường quay lại một khối phía trên biểu thị vòng lặp hoặc phản hồi.
+Vị trí trái/phải giúp tách nhánh, không thể hiện mức ưu tiên hay thời gian chạy.
+
+| Ký hiệu | Cách hiểu |
+|---|---|
+| Hình chữ nhật | Một thành phần, bước xử lý, dữ liệu hoặc trạng thái; đọc nhãn trong khối để phân biệt |
+| Hình thoi | Câu hỏi hoặc điều kiện; đi tiếp theo nhánh `Có`/`Không` hay nhãn tương ứng |
+| Hình trụ | Nơi lưu bền vững như MongoDB hoặc Docker volume |
+| Mũi tên liền có hướng | Chiều xử lý, dữ liệu hoặc lời gọi; nhãn trên đường nối cho biết ý nghĩa cụ thể |
+| Mũi tên nét đứt có hướng | Quan hệ bổ trợ như hiện thực hợp đồng, giám sát hoặc quay lại luồng; đọc chú thích của từng sơ đồ |
+| Đường nối không mũi tên | Quan hệ gắn kết/chia sẻ, ví dụ container sử dụng volume; không biểu thị thứ tự xử lý |
+
+Trong sơ đồ dữ liệu, hình thoi **đặc ở đầu đường nối** mang nghĩa chứa thành phần,
+khác với hình thoi lớn dùng làm nút điều kiện trong flowchart. Màu mặc định của
+Mermaid chỉ để trình bày, không dùng để kết luận thành công, lỗi hoặc mức bảo đảm.
+
+| Thuật ngữ trên sơ đồ | Giải thích ngắn |
+|---|---|
+| UI / API / HTTP | Giao diện người dùng / giao diện lập trình / giao thức trao đổi yêu cầu và phản hồi |
+| T1 / T2 / T3 / T4 | Bố trí kệ / phân bổ ngành hàng / xếp SKU / mô phỏng vận hành |
+| SKU / KPI | Mã sản phẩm / chỉ số đánh giá kết quả |
+| CAS / revision | Chỉ cập nhật khi phiên bản đang lưu khớp phiên bản người gửi mong đợi |
+| Snapshot / SHA-256 | Bản chụp đầu vào bất biến / mã kiểm tra tính toàn vẹn của dữ liệu |
+| Worker / child process | Tiến trình nhận và giám sát công việc / tiến trình con thực hiện tính toán |
+| Lease / fencing | Quyền xử lý có thời hạn / kiểm tra để chủ sở hữu cũ không ghi kết quả |
+| Incumbent / UB / LB | Nghiệm tốt nhất đã giữ / cận trên / cận dưới của mục tiêu đang giảm |
+| Replay / seed | Chạy lại theo điều kiện đã ghi / giá trị khởi tạo bộ sinh ngẫu nhiên |
+
 ```mermaid
 flowchart TD
   U[Người dùng] --> UI[React và TypeScript]
@@ -119,6 +150,15 @@ flowchart TD
   DB --> API
   API -->|Polling kết quả| UI
 ```
+
+**Chú thích sơ đồ 1 — Ai gửi yêu cầu, ai tính toán, ai lưu kết quả?**
+
+- Nhánh từ React đến FastAPI và application services là đường người dùng lưu,
+  đọc dữ liệu hoặc gửi yêu cầu chạy. `Claim công việc` là worker nhận một job đã lưu.
+- Process con thực hiện T1–T4; `Publish có fencing` chỉ cho ghi kết quả nếu worker
+  còn quyền sở hữu. MongoDB/GridFS là nơi lưu, không phải khối giải thuật.
+- Đường quay về React qua API cho biết giao diện lấy kết quả bằng polling:
+  hỏi lại định kỳ, thay vì giữ một HTTP request chờ tính toán xong.
 
 HTTP lưu/đọc dữ liệu và enqueue; numerical workflow chạy trong process con.
 Mũi tên database–worker biểu thị hàng đợi bền vững, không phải một message broker
@@ -199,6 +239,15 @@ flowchart TD
   STAGE --> ENG[T1 T2 T3 T4]
   ENG --> DOM[Immutable domain]
 ```
+
+**Chú thích sơ đồ 2 — Các module backend phối hợp như thế nào?**
+
+- Mỗi khối là một module hoặc nhóm trách nhiệm. Mũi tên biểu thị lời gọi hoặc
+  phụ thuộc chính, không phải thứ tự triển khai các tệp nguồn.
+- Đường nét đứt `Hiện thực` cho biết MongoDB cung cấp phần triển khai của hợp
+  đồng repository. `Callback` là hàm đánh giá do application truyền cho exact engine.
+- `Workflow dispatch` chọn cách chạy; `Stage workflow` gọi các tầng T1–T4.
+  Domain ở cuối sơ đồ là mô hình dữ liệu dùng chung, không phải bước tính toán cuối.
 
 Exact không import application: chiều callback do application truyền vào duy
 trì ranh giới numerical engine. Kiểm tra import tại `scripts/verify_architecture.py`.
@@ -327,6 +376,17 @@ classDiagram
   Project "1" --> "0..*" OptimizationRun
 ```
 
+**Chú thích sơ đồ 3 — Phân biệt dữ liệu chứa trong project và quan hệ tham chiếu.**
+
+- `Project`, `Shelf`, `Product` và các hộp khác là kiểu dữ liệu logic. Các dòng
+  trong hộp Project/OptimizationRun là những thuộc tính tiêu biểu của kiểu đó.
+- Hình thoi đặc ở phía Project nghĩa là dữ liệu thành phần thuộc aggregate này.
+  `1` nghĩa là một; `0..*` nghĩa là không có hoặc có nhiều phần tử. Project đang
+  nhập dở có thể chưa đủ các nhóm; chạy tối ưu mới yêu cầu đầu vào đầy đủ.
+- Các mũi tên `category_id`, `dòng đơn theo SKU`, `quyết định T2` lần lượt là
+  tham chiếu sản phẩm–ngành, đơn–sản phẩm và quan hệ phân bổ ngành–kệ.
+  Một project có thể có nhiều run, mỗi run giữ snapshot riêng.
+
 Đây là quan hệ logic. Bảy nhóm được nhúng trong `projects.sections`; không có
 collection riêng cho từng Shelf/Category/Product. Run giữ snapshot của revision
 tại thời điểm enqueue, độc lập với các lần sửa project về sau.
@@ -379,6 +439,15 @@ flowchart TD
   OWNER -->|Không| REJECT[Từ chối chủ cũ]
 ```
 
+**Chú thích sơ đồ 4 — Từ một lần lưu dữ liệu đến một kết quả bền vững.**
+
+- `CAS khớp?` so revision trong yêu cầu với revision ở database. Nhánh không
+  khớp trả HTTP 409: dữ liệu đã thay đổi, người dùng cần tải lại.
+- Khi đầu vào đủ và hợp lệ, hệ thống tạo snapshot, ghi SHA-256 rồi đưa run vào
+  `QUEUED` — đang chờ. Claim chuyển quyền xử lý cho một worker có lease token.
+- Điều kiện cuối kiểm tra quyền công bố kết quả. Nhánh từ chối bảo vệ database
+  khỏi kết quả do worker đã mất lease gửi về, kể cả khi child đã tính xong.
+
 Vòng đời dữ liệu tách cập nhật project khỏi snapshot run. Xem
 [vận hành](docs/migration/MONGODB_OPERATIONS.md) và
 [BSON/GridFS backup](docs/migration/MONGODB_BACKUP_RESTORE.md).
@@ -428,6 +497,15 @@ flowchart TD
   IMP -->|Không| OUT[Nghiệm khả thi]
   LS -->|Không| OUT
 ```
+
+**Chú thích sơ đồ 5 — T1 tạo và kiểm tra vị trí kệ.**
+
+- `Fixed?` hỏi có dùng nguyên bố trí đã nhập hay không. Nếu có, hệ thống chỉ
+  kiểm tra; nếu không, nó giữ các kệ locked và thử vị trí trên lưới cho phần còn lại.
+- `Replay hình học và topology` kiểm tra lại kích thước, khoảng cách và khả
+  năng tiếp cận. `Giảm J1?` hỏi tổng khoảng cách từ cửa vào đến tâm kệ có giảm không.
+- Đường quay lại bước thử dịch/xoay là local search. Kết quả là một bố trí khả
+  thi; nhánh search hết ngân sách không có nghĩa mọi bố trí đều vô nghiệm.
 
 Grid dừng khi đủ kệ, hết candidate budget, deadline hoặc bị hủy. Local search
 dừng khi không cải thiện hoặc hết ngân sách. `SEARCH_EXHAUSTED` không chứng minh
@@ -483,6 +561,15 @@ flowchart TD
   OK -->|Có| OUT[Assignment và status]
   OK -->|Không| BAD[INVALID_SOLUTION]
 ```
+
+**Chú thích sơ đồ 6 — T2 chọn kệ cho từng ngành hàng.**
+
+- MILP là giải mô hình quy hoạch tuyến tính nguyên hỗn hợp; Greedy là gán lần
+  lượt theo quy tắc ưu tiên. Hai nhánh là hai lựa chọn, không phải hai bước bắt buộc nối tiếp.
+- `Assignment ứng viên` là ánh xạ ngành hàng → kệ. Replay độc lập kiểm tra lại
+  sức chứa, quan hệ gần/tách và ràng buộc kệ cố định mà không dựa vào ma trận solver.
+- `Mục tiêu khớp?` so chi phí tính lại với chi phí đã báo; sai khác hoặc vi phạm
+  ràng buộc dẫn đến `INVALID_SOLUTION`, không được nhận làm nghiệm.
 
 Giới hạn: tối đa 20.000 biến gồm affinity auxiliaries; tối đa 200.000 proximity
 constraints. HiGHS có thể chứng minh vô nghiệm T2; điều đó chưa phải chứng minh
@@ -542,6 +629,15 @@ flowchart TD
   VAL --> OK[Planogram và objective]
 ```
 
+**Chú thích sơ đồ 7 — T3 chuyển phân bổ ngành thành vị trí SKU cụ thể.**
+
+- Đầu vào đã biết mỗi ngành thuộc kệ nào. First-fit chọn chỗ vừa đầu tiên;
+  MILP chọn giữa các option vật lý được liệt kê, như mặt/tầng/hướng đặt.
+- `Strip` là dải chiều rộng hữu dụng trên một mặt và một tầng kệ. `Block` là
+  khối chiếm chỗ của một SKU; `shared load` là tải cộng dồn qua các mặt cùng tầng.
+- Replay tính lại kích thước, overlap, capacity và tải trước khi trả planogram,
+  tức sơ đồ bố trí sản phẩm. Capacity là sức chứa mô hình, không phải tồn kho thực tế.
+
 MILP giới hạn 20.000 options; deadline áp dụng cả sinh option và giải.
 `SLOTTING_FAILED` của first-fit không phải vô nghiệm đã chứng minh. `OPTIMAL`
 chỉ thuộc mô hình strip hữu hạn. Capacity là sức chứa tĩnh, không phải lượng
@@ -579,6 +675,15 @@ flowchart TD
   MORE -->|Không| FIN[Khách ra exit gần nhất hoặc picker về entrance]
   FIN --> KPI[Journey records và KPI]
 ```
+
+**Chú thích sơ đồ 8 — T4 mô phỏng một hành trình lấy hàng.**
+
+- `Graph đi bộ` là mạng các ô có thể đi qua; `service point` là điểm tiếp cận
+  mặt kệ. Đường ngắn nhất được tính trên mạng này, không đi xuyên kệ hay vật cản.
+- Khách tự mua và đơn được picker lấy hàng đi vào hai nhánh khác nhau. Đơn hàng
+  có thể phải chờ người lấy hàng rảnh; cả hai loại hành trình có thể phải chờ phục vụ tại kệ.
+- Vòng `Còn điểm lấy?` lặp cho đến khi lấy xong giỏ/đơn. KPI tổng hợp từ các
+  hành trình đã hoàn tất; hàng đợi kệ không biểu diễn đầy đủ đám đông ngoài thực tế.
 
 Customers không dùng picker pool; supplied orders dùng pool hữu hạn. Cả hai cạnh
 tranh resource phục vụ kệ. Hai mặt một kệ dùng chung resource. Tốc độ đi cố định;
@@ -633,6 +738,15 @@ flowchart TD
   SCORE --> OUT[Result trace và proof nếu có]
 ```
 
+**Chú thích sơ đồ 9 — Chọn cách điều phối chung cho T1–T4.**
+
+- `workflow.execute` là điểm vào chọn chế độ. Nhánh baseline/multistart và
+  nhánh joint coordinator là hai cách điều phối, đều dùng chuỗi engine chính thức.
+- Mỗi tầng sử dụng quyết định phía trước: vị trí kệ → ngành hàng → SKU → KPI
+  vận hành. Khối đánh giá so các phương án theo objective của chế độ đã chọn.
+- `Proof nếu có` chỉ xuất hiện khi chế độ và điều kiện chứng minh đáp ứng;
+  một result thành công không tự đồng nghĩa tối ưu toàn cục.
+
 Hai đường objective khác nhau được triển khai, không hoán đổi kết quả giữa chúng:
 
 | Đường thực thi | Thành phần được giảm | Chuẩn hóa |
@@ -681,6 +795,15 @@ flowchart TD
   STOP -->|Rồi| OUT[Best và trace]
 ```
 
+**Chú thích sơ đồ 10 — Đọc vòng phản hồi từ kết quả vận hành về thiết kế.**
+
+- Theo đường T1 → T2 → T3 → T4 để xem một phương án được đánh giá. Các mũi tên
+  từ Diagnostics quay về T1/T2/T3 là đề xuất sửa quyết định dựa trên KPI vừa quan sát.
+- Nhánh quay về T4 chỉ đổi routing khi bật layer này. `Common seeds` giúp các
+  phương án được so trên cùng kịch bản ngẫu nhiên; `incumbent` là nghiệm tốt nhất đang giữ.
+- Chỉ thay incumbent sau replay hợp lệ và cải thiện lớn hơn tolerance. Nhánh
+  không cải thiện giữ nguyên nghiệm cũ, ghi lý do rồi kiểm tra điều kiện dừng.
+
 Diagnostics dùng SKU picks, shelf visits, tuyến, wait và cặp ngành cùng giỏ.
 Chia tổng travel/wait của journey cho các SKU/điểm ghé là proxy chẩn đoán, không
 phải đo trực tiếp thời gian tại mỗi vị trí. Actions được round-robin qua layers
@@ -724,6 +847,15 @@ flowchart TD
   PASS -->|Không| LIMITED[Bounded hoặc chưa chứng minh]
 ```
 
+**Chú thích sơ đồ 11 — Khi nào Exact có thể đưa ra chứng nhận?**
+
+- `FiniteSpace` là danh sách lựa chọn hữu hạn được khai báo. `Cartesian` nghĩa
+  là xét các tổ hợp của những lựa chọn đó; mỗi `leaf` là một tổ hợp đã kiểm tra.
+- UB/LB là cận trên/dưới cho mục tiêu đang giảm. Certificate ghi miền, identity,
+  các lá và bounds; verifier tính lại để kiểm tra chứ không chỉ đọc trạng thái solver.
+- Nhánh chứng nhận yêu cầu đủ miền và verification PASS. Nếu hết thời gian hoặc
+  chưa kiểm đủ, chỉ giữ kết luận có giới hạn; chứng nhận không mở rộng ra ngoài miền này.
+
 UB là score của nghiệm hợp lệ thuộc miền; LB=0 hợp lệ do mọi thành phần không
 âm. Nếu duyệt hết miền và có nghiệm thì LB=UB. Absolute gap=UB−LB, relative
 gap chia max($10^{-15}$, |UB|). Duyệt hết không có nghiệm có thể cho
@@ -749,6 +881,15 @@ flowchart TD
   EX --> V[Independent verification]
   V --> O[Nghiệm bounds và proof status]
 ```
+
+**Chú thích sơ đồ 12 — Hybrid kết hợp tìm nhanh và kiểm chứng hữu hạn.**
+
+- Feedback tìm một nghiệm tốt trước. Câu hỏi ở hình thoi kiểm tra nghiệm này
+  có thật sự nằm trong miền Exact đã khai báo hay không.
+- `Warm incumbent` là nghiệm sẵn có để Exact giữ làm cận trên ban đầu. Nếu
+  nghiệm nằm ngoài miền, không được dùng nó làm UB cho miền đó.
+- Exact và verifier sử dụng ngân sách còn lại. Vì vậy Hybrid có thể trả nghiệm
+  và bounds mà chưa đạt chứng nhận đầy đủ nếu thời gian kiểm chứng không đủ.
 
 Hybrid không biến nghiệm heuristic ngoài miền thành cận trên của miền. Search
 và verifier dùng chung wall budget; hoàn tất search nhưng chưa verifier xong
@@ -792,6 +933,15 @@ flowchart TD
   REPLAY -.-> CLAIM
 ```
 
+**Chú thích sơ đồ 13 — Theo dõi một yêu cầu từ màn hình đến báo cáo.**
+
+- Đọc trục chính từ người dùng xuống các bước lưu, tạo snapshot, nhận job và
+  tính T1–T4. HTTP 202 chỉ xác nhận đã nhận job vào hàng đợi, chưa phải tính xong.
+- Nhánh nét đứt giám sát hoạt động trong lúc process con chạy. Heartbeat báo
+  worker còn sống; renew gia hạn lease; polling cho React cập nhật status/stage.
+- Hoàn tất, hủy và lỗi đều dẫn về chỗ giao diện đọc trạng thái. Nhánh Replay
+  quay lại claim cho một run mới từ snapshot cũ, không ghi đè kết quả gốc.
+
 `projects.save_section/enqueue` thực hiện validation/snapshot;
 `mongodb/*_repository.py` thực hiện CAS và queue;
 `workers/runner.py` spawn/giám sát; `stage_workflow.py` gọi engine và ghi stages;
@@ -826,6 +976,15 @@ flowchart TD
   COMPLETE -->|Có| SUCCEEDED[SUCCEEDED]
   COMPLETE -->|Chưa| RUNNING
 ```
+
+**Chú thích sơ đồ 14 — Phân biệt đang chờ, đang chạy và kết thúc.**
+
+- `QUEUED` là chờ nhận; `RUNNING` là đã claim. Có hai hộp cùng nhãn `CANCELLED`
+  để tách hủy khi còn chờ và hủy sau khi chạy; chúng là cùng một giá trị trạng thái.
+- Các hình thoi giải thích những tình huống dẫn đến trạng thái tiếp theo. Vòng
+  `Chưa` quay về RUNNING nghĩa là chưa có kết quả cuối, tiếp tục giám sát.
+- `INFEASIBLE` cần chứng minh theo mô hình; `FAILED` là lỗi; `TIMED_OUT` là hết
+  thời gian/lease. `LEASE_LOST` còn chịu fencing nên owner cũ có thể không ghi được nhãn này.
 
 Sơ đồ nhóm các nhánh trạng thái theo chiều dọc để dễ đọc, không biểu thị thứ tự
 kiểm tra điều kiện trong từng vòng giám sát. Các trạng thái đều được
@@ -934,6 +1093,15 @@ flowchart TD
   ANALYSIS --> REPORT[CSV JSON Markdown PNG SVG]
   REPORT --> REPLAY[Replay vào output mới và compare]
 ```
+
+**Chú thích sơ đồ 15 — Một campaign nghiên cứu tạo ra bằng chứng gì?**
+
+- Config xác định dataset, treatment, seed và repetition; plan triển khai các
+  tổ hợp thành jobs. Manifest ghi xuất xứ/checksum để biết chính xác dữ liệu đã dùng.
+- `Records` giữ cả thành công và thất bại. `Checkpoint` ghi tiến độ; nhánh
+  Resume quay lại queue để tiếp tục phần chưa xong theo job/attempt identity.
+- Analysis tổng hợp records thành thống kê/báo cáo. Replay chạy lại ở đích mới;
+  compare đối chiếu kết quả, không thay thế các records ban đầu.
 
 Checkpoint và attempt identity hỗ trợ resume mà không ghi đè kết quả. Runtime/
 config drift bị từ chối. HTTP giới hạn một campaign supervisor hoạt động tại
@@ -1070,6 +1238,15 @@ flowchart TD
   WORK --- ART
   API --- RESEARCH[(research_campaigns)]
 ```
+
+**Chú thích sơ đồ 16 — Đọc ranh giới container, cổng và nơi giữ dữ liệu.**
+
+- Các hộp frontend/backend/worker/initialize là container hoặc bước khởi động.
+  Mũi tên qua health → initialize biểu thị điều kiện sẵn sàng trước khi chạy dịch vụ.
+- `5173 loopback` và `8010 loopback` là cổng trên máy host; `backend 8000` là
+  cổng bên trong container. Frontend chuyển yêu cầu `/api` tới backend qua proxy.
+- Các hình trụ dưới cùng là named volumes, không phải service bổ sung. Đường
+  không mũi tên cho biết volume được gắn/chia sẻ; dữ liệu vẫn còn khi container dừng.
 
 Database không publish cổng ra host; containers dùng network mặc định Compose.
 Initialize chờ database healthy và phải hoàn tất trước backend/worker. Backend
@@ -1220,6 +1397,15 @@ flowchart TD
   REPLAY --> COMPARE[So input status result SHA và số học]
   COMPARE --> REPRO[Kết quả tái lập trong môi trường tương thích]
 ```
+
+**Chú thích sơ đồ 17 — Tái lập cần cùng những điều kiện nào?**
+
+- Đọc từ config/manifest đến snapshot/runtime để xác định đầu vào, source,
+  dependency và seed của lần chạy gốc. Giữ seed đơn thuần chưa đủ để tái lập.
+- `Verify integrity` kiểm tra tính toàn vẹn của tệp đã lưu. Replay mới là bước
+  tính lại trong đích khác; compare kiểm tra hash, status và tương đương số học.
+- Điểm cuối chỉ kết luận trong môi trường tương thích đã kiểm tra. Nó không
+  chứng minh thuật toán hiệu quả trên dữ liệu thực hay tái lập trên mọi môi trường.
 
 Ví dụ chuỗi CLI hiện hành, chạy từ root và dùng các đích mới:
 
