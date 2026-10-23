@@ -3,9 +3,11 @@
 import csv
 import hashlib
 import json
+from collections import Counter, defaultdict
 from pathlib import Path
 
 from smart_retail.application.experiments.analysis import analyze
+from smart_retail.application.experiments.deepmg_export import export as export_deepmg
 from smart_retail.application.experiments.joint_reports import export as export_joint
 from smart_retail.application.experiments.storage import read, verify_integrity, write
 from smart_retail.infrastructure.filesystem import normalize_fs_path
@@ -26,21 +28,81 @@ def table(path, rows):
             )
 
 
-def report(root: Path, output: Path):
-    root, output = normalize_fs_path(root), normalize_fs_path(output)
-    integrity = verify_integrity(root)
-    rows = [read(path) for path in sorted((root / "records").glob("*.json"))]
+def run_means(rows, metrics: dict[str, list[str]]):
+    """Per-repetition means over folds, the deepmg ``*_mean_*`` analogue."""
+    groups = defaultdict(list)
+    for row in rows:
+        key = (row["experiment"], row["dataset"], row["treatment"], row["seed"], row["repetition"])
+        groups[key].append(row)
+    result = []
+    for (experiment, dataset, treatment, seed, repetition), records in sorted(groups.items()):
+        entry = {
+            "experiment": experiment,
+            "dataset": dataset,
+            "treatment": treatment,
+            "seed": seed,
+            "repetition": repetition,
+            "folds_attempted": len(records),
+            "folds_succeeded": sum(r["status"] == "SUCCEEDED" for r in records),
+        }
+        for metric in metrics.get(experiment, []):
+            values = [r[metric] for r in records if isinstance(r.get(metric), (int, float))]
+            entry[metric] = sum(values) / len(values) if values else None
+        result.append(entry)
+    return result
+
+
+def status_matrix(rows):
+    """Outcome counts per arm, the analogue of a confusion matrix for solver statuses."""
+    counts = Counter(
+        (r["experiment"], r["dataset"], r["treatment"], r["status"], r.get("evaluation_status"))
+        for r in rows
+    )
+    return [
+        {
+            "experiment": e,
+            "dataset": d,
+            "treatment": t,
+            "status": s,
+            "evaluation_status": v,
+            "count": n,
+        }
+        for (e, d, t, s, v), n in sorted(counts.items(), key=str)
+    ]
+
+
+def report(root: Path | list[Path], output: Path):
+    roots = [normalize_fs_path(r) for r in (root if isinstance(root, list) else [root])]
+    output = normalize_fs_path(output)
+    integrity = [verify_integrity(r) for r in roots]
+    identities = [read(r / "identity.json")["runtime"] for r in roots]
+    if any(identity != identities[0] for identity in identities):
+        raise ValueError("Campaigns differ in source/dependency identity; do not pool them")
+    per_root = {r: [read(path) for path in sorted((r / "records").glob("*.json"))] for r in roots}
+    rows = [row for r in roots for row in per_root[r]]
     if not rows:
         raise ValueError("Campaign has no recorded outcomes")
+    if len({row["job_key"] for row in rows}) != len(rows):
+        raise ValueError("The same job appears in more than one campaign")
     output.mkdir(parents=True, exist_ok=False)
-    configuration = read(root / "configuration.json")
-    statistics = analyze(rows, {e["id"]: e["metrics"] for e in configuration["experiments"]})
+    configurations = [read(r / "configuration.json") for r in roots]
+    selected: dict[str, list[str]] = {}
+    for configuration in configurations:
+        for e in configuration["experiments"]:
+            selected[e["id"]] = sorted(set(selected.get(e["id"], [])) | set(e["metrics"]))
+    statistics = analyze(rows, selected)
     write(output / "results.json", rows, immutable=True)
     write(output / "statistics.json", statistics, immutable=True)
     table(output / "results.csv", rows)
     table(output / "comparisons.csv", statistics["comparisons"])
+    table(output / "rankings.csv", statistics["rankings"])
     table(output / "failures.csv", [r for r in rows if r["status"] != "SUCCEEDED"])
     table(output / "summary.csv", statistics["summary"])
+    table(output / "status_matrix.csv", status_matrix(rows))
+    table(output / "run_means.csv", run_means(rows, selected))
+    if any("cv_fold" in r for r in rows):
+        table(output / "fold_results.csv", [r for r in rows if "cv_fold" in r])
+    arms = export_deepmg(roots, output, rows, configurations)
     import matplotlib
 
     matplotlib.use("Agg")
@@ -85,17 +147,29 @@ def report(root: Path, output: Path):
         fig.savefig(figures / "outcomes.png")
         fig.savefig(figures / "outcomes.svg")
         plt.close(fig)
-    checkpoint = read(root / "checkpoint.json")
-    export_joint(root, output, rows, table)
-    body = [
-        "# Synthetic experiment report",
-        "",
-        f"Campaign: {read(root / 'configuration.json')['name']}",
-        f"Status: {checkpoint['status']}; attempted {len(rows)} / planned {checkpoint['planned']}; not executed {checkpoint['not_executed']}.",
-        "",
-        "| Experiment | Dataset | Treatment | Succeeded / attempted | Mean wall s | Mean route m |",
-        "|---|---|---|---:|---:|---:|",
-    ]
+    for r in roots:
+        export_joint(r, output, per_root[r], table)
+    body = ["# Synthetic experiment report", ""]
+    for r, configuration in zip(roots, configurations):
+        checkpoint = read(r / "checkpoint.json")
+        body.extend(
+            [
+                f"Campaign: {configuration['name']}",
+                f"Status: {checkpoint['status']}; attempted {len(per_root[r])} / planned {checkpoint['planned']}; not executed {checkpoint['not_executed']}.",
+            ]
+        )
+        if configuration.get("evaluation"):
+            spec = configuration["evaluation"]
+            body.append(
+                f"Held-out protocol: {spec['split']}, folds per repetition {spec['n_folds'] if spec['split'] == 'kfold' else 1}, repetitions = seeds {configuration['seeds']}."
+            )
+    body.extend(
+        [
+            "",
+            "| Experiment | Dataset | Treatment | Succeeded / attempted | Mean wall s | Mean route m |",
+            "|---|---|---|---:|---:|---:|",
+        ]
+    )
     for row in statistics["summary"]:
         body.append(
             f"| {row['experiment']} | {row['dataset']} | {row['treatment']} | {row['succeeded']}/{row['total']} | {row['metrics']['wall_s']['mean']} | {row['metrics']['mean_distance_m']['mean']} |"
@@ -116,22 +190,26 @@ def report(root: Path, output: Path):
         for p in output.rglob("*")
         if p.is_file()
     }
+    single = len(roots) == 1
+    entries = [
+        {
+            "campaign": str(r.resolve()),
+            "identity": read(r / "identity.json"),
+            "configuration": configuration,
+            "datasets": [read(path) for path in sorted((r / "datasets").glob("*/manifest.json"))],
+            "validation": check,
+        }
+        for r, configuration, check in zip(roots, configurations, integrity)
+    ]
     write(
         output / "manifest.json",
-        {
-            "campaign": str(root.resolve()),
-            "identity": read(root / "identity.json"),
-            "configuration": read(root / "configuration.json"),
-            "datasets": [
-                read(path) for path in sorted((root / "datasets").glob("*/manifest.json"))
-            ],
-            "validation": integrity,
-            "files": hashes,
-        },
+        {**entries[0], "files": hashes} if single else {"campaigns": entries, "files": hashes},
         immutable=True,
     )
     return {
         "output": str(output),
         "records": len(rows),
         "figures": len(list(figures.glob("*.png"))),
+        "arms_complete": sum(a["complete"] for a in arms),
+        "arms": len(arms),
     }

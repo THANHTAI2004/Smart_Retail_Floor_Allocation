@@ -6,6 +6,7 @@ from pathlib import Path
 
 from smart_retail.application.experiments.campaign import run
 from smart_retail.application.experiments.generators import generate
+from smart_retail.application.experiments.partition import partition
 from smart_retail.application.experiments.reports import report
 from smart_retail.application.experiments.storage import read, verify_integrity, write
 from smart_retail.application.workflow import canonical_hash
@@ -73,9 +74,13 @@ def main():
     for name in ("status", "verify"):
         sub = commands.add_parser(name)
         sub.add_argument("campaign", type=Path)
-    sub = commands.add_parser("analyze")
-    sub.add_argument("campaign", type=Path)
+    sub = commands.add_parser("analyze", help="Report one campaign or pool split parts")
+    sub.add_argument("campaign", type=Path, nargs="+")
     sub.add_argument("--output", type=Path, required=True)
+    sub = commands.add_parser("split-config", help="Split a >1,000-job design into parts")
+    sub.add_argument("--config", type=Path, required=True)
+    sub.add_argument("--output-dir", type=Path, required=True)
+    sub.add_argument("--max-jobs", type=int, default=1000)
     sub = commands.add_parser("replay")
     sub.add_argument("campaign", type=Path)
     sub.add_argument("--output", type=Path, required=True)
@@ -123,6 +128,14 @@ def main():
         result = verify_integrity(args.campaign)
     elif args.command == "analyze":
         result = report(args.campaign, args.output)
+    elif args.command == "split-config":
+        args.output_dir.mkdir(parents=True, exist_ok=False)
+        parts = partition(read(args.config), args.max_jobs)
+        for part in parts:
+            write(
+                args.output_dir / f"{part.name}.json", part.model_dump(mode="json"), immutable=True
+            )
+        result = {part.name: part.max_jobs for part in parts}
     elif args.command == "compare":
         result = compare(args.left, args.right)
         write(args.output, result, immutable=True)

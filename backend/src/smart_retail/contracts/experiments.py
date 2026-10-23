@@ -2,7 +2,7 @@
 
 from typing import Literal, Self
 
-from pydantic import Field, model_validator
+from pydantic import Field, model_serializer, model_validator
 
 from smart_retail.contracts.inputs import Contract, Identifier
 
@@ -14,6 +14,7 @@ class DatasetSpec(Contract):
     scenario: Literal["feasible", "infeasible", "high_load", "volatile", "uneven"] = "feasible"
     category_assignment: Literal["free", "fixed"] = "free"
     variable_facings: bool = False
+    facings: int = Field(default=1, ge=1, le=20)
     levels: int = Field(default=2, ge=1, le=5)
     height_scale: float = Field(default=1, ge=0.5, le=2)
     input_path: str | None = Field(default=None, max_length=500)
@@ -31,8 +32,25 @@ class Treatment(Contract):
     overrides: dict = Field(default_factory=dict)
 
 
+class EvaluationSpec(Contract):
+    """Repeated stratified k-fold or temporal holdout over orders (deepmg-style protocol).
+
+    Each campaign seed is one repetition: it shuffles the folds and seeds the job.
+    """
+
+    split: Literal["kfold", "temporal_holdout"]
+    n_folds: int = Field(default=10, ge=2, le=20)
+    test_size: float = Field(default=0.2, gt=0, lt=1)
+    budget_fraction: float = Field(default=0.25, ge=0.05, le=0.5)
+    stratify: Literal["dominant_category"] = "dominant_category"
+
+    @property
+    def folds(self) -> int:
+        return self.n_folds if self.split == "kfold" else 1
+
+
 class ExperimentSpec(Contract):
-    id: Literal["E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "E10", "E11", "E12", "E13", "E14", "E15"]
+    id: str = Field(pattern=r"^E\d{2}$")
     question: str = Field(min_length=5)
     hypothesis: str = Field(min_length=5)
     datasets: list[Identifier] = Field(min_length=1, max_length=20)
@@ -47,35 +65,56 @@ class ExperimentSpec(Contract):
             "t3_objective",
             "t1_objective",
             "joint_objective", "joint_evaluations", "joint_iterations_to_best", "holdout_objective",
+            "train_objective",
+            "test_objective",
+            "test_mean_distance_m",
+            "test_mean_wait_s",
+            "generalization_gap",
         ]
     ] = Field(default=["wall_s", "mean_distance_m", "mean_wait_s"], min_length=1)
     acceptance: str = Field(min_length=5)
     statistical_method: Literal["descriptive_paired_exploratory"] = "descriptive_paired_exploratory"
 
 
+def planned_jobs(spec: "CampaignSpec") -> int:
+    folds = spec.evaluation.folds if spec.evaluation else 1
+    return sum(
+        len(e.datasets) * len(e.treatments) * len(spec.seeds) * spec.repetitions * folds
+        for e in spec.experiments
+    )
+
+
 class CampaignSpec(Contract):
-    schema_version: Literal["1.0"] = "1.0"
+    schema_version: Literal["1.0", "1.1"] = "1.0"
     name: str = Field(min_length=1, max_length=120)
     data_origin: Literal["SYNTHETIC"] = "SYNTHETIC"
     datasets: list[DatasetSpec] = Field(min_length=1, max_length=20)
     experiments: list[ExperimentSpec] = Field(min_length=1, max_length=10)
     seeds: list[int] = Field(default=[11, 23, 37], min_length=1, max_length=100)
     repetitions: int = Field(default=1, ge=1, le=10)
-    job_time_limit_s: float = Field(default=15, gt=0, le=300)
+    # Float defaults: unvalidated int defaults would hash differently after a JSON round trip.
+    job_time_limit_s: float = Field(default=15.0, gt=0, le=900)
     memory_limit_mb: int = Field(default=1024, ge=128, le=8192)
-    max_wall_s: float = Field(default=600, gt=0, le=14400)
+    max_wall_s: float = Field(default=600.0, gt=0, le=14400)
     max_jobs: int = Field(default=128, ge=1, le=1000)
     max_retries: int = Field(default=1, ge=0, le=2)
     workers: Literal[1] = 1
     cache_policy: Literal["isolated", "reuse"] = "isolated"
+    evaluation: EvaluationSpec | None = None
+
+    @model_serializer(mode="wrap")
+    def omit_absent_evaluation(self, handler):
+        # Version 1.0 manifests keep their pre-existing canonical form and hash.
+        data = handler(self)
+        if data.get("evaluation") is None:
+            data.pop("evaluation", None)
+        return data
 
     @model_validator(mode="after")
     def references(self) -> Self:
-        count = sum(
-            len(e.datasets) * len(e.treatments) * len(self.seeds) * self.repetitions
-            for e in self.experiments
-        )
-        if count > 1000:
+        if self.evaluation is not None and self.schema_version != "1.1":
+            raise ValueError("Held-out evaluation requires campaign schema_version 1.1")
+        if planned_jobs(self) > 1000:
             raise ValueError(
                 "Campaign plan exceeds the hard limit of 1,000 jobs; split the design explicitly"
             )

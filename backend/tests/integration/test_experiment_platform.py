@@ -96,6 +96,80 @@ def test_resume_reports_checksums_and_full_campaign_replay(tmp_path):
         verify_integrity(output)
 
 
+def test_repeated_kfold_campaign_records_folds_and_pools_reports(tmp_path):
+    arms = {
+        "baseline": {"algorithm": "greedy", "slotting_algorithm": "first_fit"},
+        "milp": {"algorithm": "milp", "slotting_algorithm": "milp"},
+        "milp_multistart": {"algorithm": "milp", "candidate_count": 2},
+    }
+    configuration = CampaignSpec.model_validate(
+        {
+            "schema_version": "1.1",
+            "name": "kfold regression",
+            "seeds": [11],
+            "datasets": [{"id": "tiny", "scale": "tiny", "facings": 6}],
+            "experiments": [
+                {
+                    "id": "E16",
+                    "question": "Do selected plans keep their objective on held-out orders?",
+                    "hypothesis": "Every held-out replay passes independent validation",
+                    "datasets": ["tiny"],
+                    "acceptance": "Zero violations on training and held-out replays",
+                    "treatments": [
+                        {"id": arm, "overrides": {"optimization": overrides}}
+                        for arm, overrides in arms.items()
+                    ],
+                    "metrics": ["test_objective", "train_objective", "generalization_gap"],
+                }
+            ],
+            "evaluation": {"split": "kfold", "n_folds": 3},
+        }
+    )
+    output = tmp_path / "campaign"
+    assert run(configuration, output)["status"] == "COMPLETED"
+    plan = read(output / "datasets" / "tiny" / "splits" / "11.json")
+    assert [f["fold"] for f in plan["folds"]] == [0, 1, 2]
+    records = [read(p) for p in (output / "records").glob("*.json")]
+    assert len(records) == 9
+    assert {(r["treatment"], r["cv_fold"]) for r in records} == {
+        (arm, fold) for arm in arms for fold in range(3)
+    }
+    assert all(
+        r["status"] == "SUCCEEDED"
+        and r["evaluation_status"] == "COMPLETED"
+        and r["train_orders"] + r["test_orders"] == 20
+        and r["validation"]["status"] == "PASS"
+        for r in records
+    )
+    replay = tmp_path / "replay"
+    run(configuration, replay)
+    assert all(r["byte_identical_result"] for r in compare(output, replay)["rows"])
+    report(output, tmp_path / "report")
+    for filename in ("fold_results.csv", "run_means.csv", "status_matrix.csv", "rankings.csv"):
+        assert (tmp_path / "report" / filename).is_file()
+    arm = tmp_path / "report" / "results" / "E16_tiny_milp_k3_r1_t15s"
+    for suffix in (
+        "file_sum_ok.txt",
+        "file_eachfold.txt",
+        "file_mean_test_objective.txt",
+        "file_mean_test_distance.txt",
+        "config.json",
+    ):
+        assert (arm / f"E16_tiny_milp_k3_r1_t15s_{suffix}").is_file()
+    eachfold = (arm / "E16_tiny_milp_k3_r1_t15s_file_eachfold.txt").read_text(encoding="utf-8")
+    assert len(eachfold.splitlines()) == 1 + 3
+    repeat = CampaignSpec.model_validate(read(arm / "E16_tiny_milp_k3_r1_t15s_config.json"))
+    keys = {r["job_key"] for r in records if r["treatment"] == "milp"}
+    single = run(repeat, tmp_path / "repeat-arm")
+    assert single["completed"] == 3
+    assert {read(p)["job_key"] for p in (tmp_path / "repeat-arm" / "records").glob("*.json")} == keys
+    statistics = read(tmp_path / "report" / "statistics.json")
+    assert {c["paired_units"] for c in statistics["comparisons"]} == {3}
+    assert all(c["cross_validated"] for c in statistics["comparisons"])
+    with pytest.raises(ValueError, match="more than one campaign"):
+        report([output, replay], tmp_path / "pooled")
+
+
 def test_persistent_cache_invalidation_and_tampering(sample, tmp_path):
     cache = StageCache(tmp_path / "cache")
     sample["optimization"]["stop_after_stage"] = "T3"

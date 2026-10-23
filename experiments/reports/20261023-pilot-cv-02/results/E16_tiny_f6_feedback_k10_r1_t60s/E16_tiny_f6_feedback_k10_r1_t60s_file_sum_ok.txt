@@ -1,0 +1,29 @@
+# deepmg-style summary	E16	tiny_f6	feedback
+# campaign	pilot_cv
+# question	How much time does one repeated k-fold job cost per method and scale, and do held-out objectives differ between methods?
+# dataset	{"category_assignment": "free", "facings": 6, "height_scale": 1.0, "id": "tiny_f6", "input_file_sha256": null, "input_path": null, "levels": 2, "scale": "tiny", "scenario": "feasible", "seed": 101, "variable_facings": false}
+# treatment	{"optimization": {"algorithm": "milp", "candidate_count": 1, "joint": {"max_actions": 24, "max_evaluations": 80, "max_iterations": 3, "mode": "feedback", "objective": {"scales": [100, 100, 1, 1], "weights": [1, 0.2, 0.1, 0.1]}, "scenario_seed_policy": "job_seed_offsets", "scenario_seeds": [0, 101]}, "slotting_algorithm": "milp"}}
+# evaluation	{"budget_fraction": 0.25, "n_folds": 10, "split": "kfold", "stratify": "dominant_category", "test_size": 0.2}
+# seeds	[1]	repetitions	1
+# job_time_limit_s	60.0	memory_limit_mb	1024
+# planned	10	attempted	10
+seed	repetition	cv_fold	status	evaluation_status	train_orders	test_orders	train_objective	test_objective	generalization_gap	test_mean_distance_m	test_mean_wait_s	mean_distance_m	mean_wait_s	wall_s	run_id
+1	0	0	SUCCEEDED	COMPLETED	18	2	0.05062035318	0.05898849166	0.00836813848	6.873773448	0	7.064249638	0.1129990344	14.422	154911fd-c1ac-4690-ac27-442b8661386f
+1	0	1	SUCCEEDED	COMPLETED	18	2	0.0469167768	0.04935348381	0.002436707008	5.623773448	0	6.564249638	0.02049557031	16	cb893dc9-fb7b-4699-aa04-eb61a1dcd1b2
+1	0	2	SUCCEEDED	COMPLETED	18	2	0.05087545522	0.05172137704	0.0008459218147	6.582106781	0.294430019	7.099963924	0.1129990344	14.234	3b9058bd-bbdf-4ee9-80de-326c5f388a8f
+1	0	3	SUCCEEDED	COMPLETED	18	2	0.04689157346	0.05073354764	0.003841974175	5.790440115	0.1327113461	6.546392495	0.09213894723	18.25	bdd3f84a-b49c-4863-bd7b-d34366e58621
+1	0	4	SUCCEEDED	COMPLETED	18	2	0.04765687959	0.04195552463	-0.005701354959	5.207106781	0	6.653535353	0.09213894723	15.922	674d0954-ee1e-4fa6-905f-749b9a06f69a
+1	0	5	SUCCEEDED	COMPLETED	18	2	0.04689555652	0.04356266748	-0.003332889035	5.498773448	0	6.564249638	0.005641371805	17.328	bd34a09f-a15b-4e10-8b1d-2e0beb4c6cb5
+1	0	6	SUCCEEDED	COMPLETED	18	2	0.04671283134	0.06011028653	0.01339745519	5.748773448	0	6.492821067	0.2348766064	17.328	9134093b-d1b4-4258-b727-d1ad35e90867
+1	0	7	SUCCEEDED	COMPLETED	18	2	0.04766086264	0.04279280561	-0.004868057035	5.248773448	0.3777633523	6.671392495	0.005641371805	18.156	7fb1af14-5fb6-40d1-8ec6-f98f5a2f896d
+1	0	8	SUCCEEDED	COMPLETED	18	2	0.04678922578	0.04779970228	0.001010476502	5.748773448	0.1005397447	6.546392495	0.02049557031	17.25	fe873688-ca58-4a36-bd00-4702101acf22
+1	0	9	SUCCEEDED	COMPLETED	18	2	0.04790392252	0.05011028653	0.002206364008	5.415440115	0	6.689249638	0.08649757542	18.078	0d9b728a-9323-41e9-9479-3652e26efcf9
+summary	n	mean	sd
+train_objective	10	0.04789234371	0.001563654055
+test_objective	10	0.04971281732	0.006227673986
+generalization_gap	10	0.001820473615	0.005878311147
+test_mean_distance_m	10	5.773773448	0.546523807
+test_mean_wait_s	10	0.09054444622	0.1394958226
+wall_s	10	16.6968	1.486166194
+succeeded	10	NA	NA
+total_time_s	NA	166.968	NA

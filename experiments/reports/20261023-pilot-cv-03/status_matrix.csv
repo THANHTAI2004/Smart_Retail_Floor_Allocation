@@ -1,0 +1,9 @@
+count,dataset,evaluation_status,experiment,status,treatment
+10,small_f4,COMPLETED,E16,SUCCEEDED,baseline
+10,small_f4,COMPLETED,E16,SUCCEEDED,feedback
+10,small_f4,COMPLETED,E16,SUCCEEDED,multistart
+10,small_f4,COMPLETED,E16,SUCCEEDED,seq_milp
+10,tiny_f6,COMPLETED,E16,SUCCEEDED,baseline
+10,tiny_f6,COMPLETED,E16,SUCCEEDED,feedback
+10,tiny_f6,COMPLETED,E16,SUCCEEDED,multistart
+10,tiny_f6,COMPLETED,E16,SUCCEEDED,seq_milp

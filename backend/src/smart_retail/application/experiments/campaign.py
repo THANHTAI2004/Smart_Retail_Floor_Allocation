@@ -10,6 +10,7 @@ from pathlib import Path
 
 from smart_retail.application import projects
 from smart_retail.application.experiments.generators import generate, merge
+from smart_retail.application.experiments.splits import apply_split, split_orders
 from smart_retail.application.experiments.storage import fingerprint, read, verify_integrity, write
 from smart_retail.application.experiments.validation import verify
 from smart_retail.application.workflow import canonical_hash
@@ -26,6 +27,26 @@ def utc():
     return datetime.now(UTC).isoformat()
 
 
+def job_sections(spec: CampaignSpec, dataset: dict, job: dict, plans: dict) -> dict:
+    """Single reconstruction rule for planning and execution of one job input."""
+    data = merge(copy.deepcopy(dataset), job["overrides"])
+    if spec.evaluation is not None:
+        data = apply_split(data, plans[job["seed"]], job["cv_fold"], spec.evaluation)
+    data["optimization"].update(
+        seed=job["seed"],
+        time_limit_s=spec.job_time_limit_s,
+        memory_limit_mb=spec.memory_limit_mb,
+    )
+    return data
+
+
+def split_plans(root: Path, dataset_id: str) -> dict:
+    return {
+        int(path.stem): read(path)
+        for path in (root / "datasets" / dataset_id / "splits").glob("*.json")
+    }
+
+
 def initialize(spec: CampaignSpec, root: Path):
     root = normalize_fs_path(root)
     began = time.monotonic()
@@ -35,35 +56,44 @@ def initialize(spec: CampaignSpec, root: Path):
         raise ValueError("At least 512 MiB free disk space required")
     write(root / "configuration.json", spec.model_dump(mode="json"), immutable=True)
     datasets = {}
+    plans: dict[str, dict] = {}
     for ds in spec.datasets:
         data, manifest = generate(ds)
         datasets[ds.id] = data
         write(root / "datasets" / ds.id / "input.json", data, immutable=True)
         write(root / "datasets" / ds.id / "manifest.json", manifest, immutable=True)
+        plans[ds.id] = {}
+        if spec.evaluation is not None:
+            for seed in spec.seeds:
+                plans[ds.id][seed] = split_orders(data, spec.evaluation, seed)
+                write(
+                    root / "datasets" / ds.id / "splits" / f"{seed}.json",
+                    plans[ds.id][seed],
+                    immutable=True,
+                )
+    folds = spec.evaluation.folds if spec.evaluation is not None else 1
     jobs = []
     for experiment in spec.experiments:
         for dataset_id in experiment.datasets:
             for treatment in experiment.treatments:
                 for seed in spec.seeds:
                     for repetition in range(spec.repetitions):
-                        data = merge(copy.deepcopy(datasets[dataset_id]), treatment.overrides)
-                        data["optimization"].update(
-                            seed=seed,
-                            time_limit_s=spec.job_time_limit_s,
-                            memory_limit_mb=spec.memory_limit_mb,
-                        )
-                        to_domain(data)
-                        job = {
-                            "experiment": experiment.id,
-                            "dataset": dataset_id,
-                            "treatment": treatment.id,
-                            "seed": seed,
-                            "repetition": repetition,
-                            "overrides": treatment.overrides,
-                            "input_sha256": canonical_hash(data),
-                        }
-                        job["key"] = canonical_hash(job)
-                        jobs.append(job)
+                        for fold in range(folds):
+                            job = {
+                                "experiment": experiment.id,
+                                "dataset": dataset_id,
+                                "treatment": treatment.id,
+                                "seed": seed,
+                                "repetition": repetition,
+                                "overrides": treatment.overrides,
+                            }
+                            if spec.evaluation is not None:
+                                job.update(cv_fold=fold, split=spec.evaluation.split)
+                            data = job_sections(spec, datasets[dataset_id], job, plans[dataset_id])
+                            to_domain(data)
+                            job["input_sha256"] = canonical_hash(data)
+                            job["key"] = canonical_hash(job)
+                            jobs.append(job)
     write(root / "plan.json", {"jobs": jobs}, immutable=True)
     write(
         root / "identity.json",
@@ -148,13 +178,11 @@ def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: i
                 status = "PAUSED_PARTIAL"
                 break
             key = job["key"]
-            sections = merge(
-                read(root / "datasets" / job["dataset"] / "input.json"), job["overrides"]
-            )
-            sections["optimization"].update(
-                seed=job["seed"],
-                time_limit_s=spec.job_time_limit_s,
-                memory_limit_mb=spec.memory_limit_mb,
+            sections = job_sections(
+                spec,
+                read(root / "datasets" / job["dataset"] / "input.json"),
+                job,
+                split_plans(root, job["dataset"]),
             )
             if canonical_hash(sections) != job["input_sha256"]:
                 raise ValueError("Reconstructed job input fingerprint mismatch")
@@ -308,6 +336,20 @@ def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: i
                     record["mean_distance_m"] = components[0] * scales[0]
                     record["mean_wait_s"] = components[1] * scales[1]
                     record["training_scenario_seeds"] = joint["best"]["scenario_seeds"]
+                held_out = final["result"].get("evaluation")
+                if held_out:
+                    record.update(
+                        evaluation_status=held_out["status"],
+                        objective_definition=held_out["objective_definition"],
+                        train_orders=held_out["train_orders"],
+                        test_orders=held_out["test_orders"],
+                        train_objective=held_out.get("train_objective"),
+                        test_objective=held_out.get("objective"),
+                        generalization_gap=held_out.get("generalization_gap"),
+                        test_mean_distance_m=held_out.get("metrics", {}).get("mean_distance_m"),
+                        test_mean_wait_s=held_out.get("metrics", {}).get("mean_wait_s"),
+                        test_late_orders=held_out.get("metrics", {}).get("late_orders"),
+                    )
             write(root / "records" / f"{key}.json", record, immutable=True)
             records.append(record)
             new_jobs += 1

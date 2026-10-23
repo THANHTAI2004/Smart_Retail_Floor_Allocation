@@ -109,6 +109,15 @@ def child(snapshot: dict, directory: str, cache_directory: str | None = None) ->
         )
 
 
+def wall_budget(limit_s: float) -> float:
+    """Supervisor wall limit: solver budget plus child startup and finalization grace.
+
+    Budget-exhausting searches still verify and write their result after the solver
+    deadline; a fixed 2 s grace killed completed medium-scale feedback jobs.
+    """
+    return limit_s + max(15.0, 0.1 * limit_s)
+
+
 def work_once(
     factory,
     artifact_root: Path,
@@ -185,7 +194,7 @@ def work_once(
     )
     peak_rss = cpu_s = 0.0
     resource_samples = 0
-    budget = snapshot["optimization"]["time_limit_s"] + 2  # child startup grace
+    budget = wall_budget(snapshot["optimization"]["time_limit_s"])
     terminal = None
     try:
         while process.is_alive():

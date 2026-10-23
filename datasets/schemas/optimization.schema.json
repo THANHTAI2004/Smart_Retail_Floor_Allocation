@@ -1,5 +1,49 @@
 {
   "$defs": {
+    "HeldOutEvaluationInput": {
+      "additionalProperties": false,
+      "description": "Held-out orders scored after optimization; engines never receive them.",
+      "properties": {
+        "split": {
+          "enum": [
+            "kfold",
+            "temporal_holdout"
+          ],
+          "title": "Split",
+          "type": "string"
+        },
+        "fold": {
+          "maximum": 99,
+          "minimum": 0,
+          "title": "Fold",
+          "type": "integer"
+        },
+        "budget_fraction": {
+          "default": 0.25,
+          "maximum": 0.5,
+          "minimum": 0.05,
+          "title": "Budget Fraction",
+          "type": "number"
+        },
+        "population_orders": {
+          "maximum": 20000,
+          "minimum": 2,
+          "title": "Population Orders",
+          "type": "integer"
+        },
+        "orders": {
+          "$ref": "#/$defs/OrdersInput"
+        }
+      },
+      "required": [
+        "split",
+        "fold",
+        "population_orders",
+        "orders"
+      ],
+      "title": "HeldOutEvaluationInput",
+      "type": "object"
+    },
     "JointConfig": {
       "additionalProperties": false,
       "properties": {
@@ -202,6 +246,118 @@
       },
       "title": "Objective",
       "type": "object"
+    },
+    "OrderInput": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "placed_at": {
+          "format": "date-time",
+          "title": "Placed At",
+          "type": "string"
+        },
+        "kind": {
+          "default": "online",
+          "enum": [
+            "online",
+            "in_store"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "due_s": {
+          "default": 3600,
+          "exclusiveMinimum": 0,
+          "title": "Due S",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "placed_at"
+      ],
+      "title": "OrderInput",
+      "type": "object"
+    },
+    "OrderLineInput": {
+      "additionalProperties": false,
+      "properties": {
+        "order_id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Order Id",
+          "type": "string"
+        },
+        "sku": {
+          "maxLength": 120,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Sku",
+          "type": "string"
+        },
+        "quantity": {
+          "exclusiveMinimum": 0,
+          "maximum": 100000,
+          "title": "Quantity",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "order_id",
+        "sku",
+        "quantity"
+      ],
+      "title": "OrderLineInput",
+      "type": "object"
+    },
+    "OrdersInput": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.1",
+          "default": "1.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "data_origin": {
+          "default": "UNSPECIFIED",
+          "enum": [
+            "SYNTHETIC",
+            "REAL_VERIFIED",
+            "REAL_UNVERIFIED",
+            "ASSUMED",
+            "DERIVED",
+            "UNSPECIFIED"
+          ],
+          "title": "Data Origin",
+          "type": "string"
+        },
+        "orders": {
+          "items": {
+            "$ref": "#/$defs/OrderInput"
+          },
+          "maxItems": 10000,
+          "title": "Orders",
+          "type": "array"
+        },
+        "order_lines": {
+          "items": {
+            "$ref": "#/$defs/OrderLineInput"
+          },
+          "maxItems": 100000,
+          "title": "Order Lines",
+          "type": "array"
+        }
+      },
+      "title": "OrdersInput",
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -236,6 +392,17 @@
       ],
       "default": null
     },
+    "evaluation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/HeldOutEvaluationInput"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "seed": {
       "default": 42,
       "maximum": 2147483647,
@@ -246,7 +413,7 @@
     "time_limit_s": {
       "default": 30,
       "exclusiveMinimum": 0,
-      "maximum": 300,
+      "maximum": 900,
       "title": "Time Limit S",
       "type": "number"
     },

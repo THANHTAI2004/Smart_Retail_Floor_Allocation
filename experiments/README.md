@@ -24,3 +24,24 @@ Dữ liệu và holdout đều tổng hợp. Xem [README tổng thể](../README
 
 Các kết quả nguyên bản không thuộc phạm vi vận hành hiện hành được định vị tại
 [hồ sơ lưu trữ bên ngoài](../docs/architecture/HISTORICAL_ARCHIVE.md).
+
+## Lặp k-fold trên đơn hàng (2026-10-23, campaign schema 1.1)
+
+Thiết kế: [EXPERIMENT_DESIGN_DEEPMG.md](../docs/research/EXPERIMENT_DESIGN_DEEPMG.md).
+Thêm khối `"evaluation": {"split": "kfold", "n_folds": 10}` (hoặc
+`"temporal_holdout"` với `test_size`) và `"schema_version": "1.1"`. Mỗi seed là một
+lượt lặp; mỗi phương pháp chạy trên cùng các fold. Dùng `facings` ≥ 4 để ràng buộc
+sức chứa có hiệu lực và cho mọi phương pháp cùng một định nghĩa hàm mục tiêu.
+
+```powershell
+# Pilot: 2 instance x 4 phương pháp x 1 lượt x 10 fold = 80 job
+.venv\Scripts\python.exe -m smart_retail.application.experiments.cli run --config experiments/configs/pilot_cv.json --output experiments/results/<thư-mục-mới>
+# Thiết kế > 1.000 job: tách, chạy từng phần, rồi phân tích gộp
+.venv\Scripts\python.exe -m smart_retail.application.experiments.cli split-config --config <thiết-kế>.json --output-dir experiments/configs/<thư-mục-mới>
+.venv\Scripts\python.exe -m smart_retail.application.experiments.cli analyze experiments/results/<phần-1> experiments/results/<phần-2> --output experiments/reports/<thư-mục-mới>
+```
+
+Báo cáo có thêm `fold_results.csv`, `run_means.csv`, `status_matrix.csv`,
+`rankings.csv`; `statistics.json` có Wilcoxon, Nadeau–Bengio, A12, bootstrap CI,
+Friedman/Nemenyi. Hướng dẫn chạy đợt thực nghiệm bài báo:
+[PAPER_EXPERIMENT_RUNBOOK.md](../docs/research/PAPER_EXPERIMENT_RUNBOOK.md).

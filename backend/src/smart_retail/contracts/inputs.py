@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Annotated, Literal, Self
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_serializer, model_validator
 from shapely.geometry import Point as ShapePoint
 from shapely.geometry import Polygon
 
@@ -266,10 +266,27 @@ class OrdersInput(SectionContract):
         return self
 
 
+class HeldOutEvaluationInput(Contract):
+    """Held-out orders scored after optimization; engines never receive them."""
+
+    split: Literal["kfold", "temporal_holdout"]
+    fold: Annotated[int, Field(ge=0, le=99)]
+    budget_fraction: Annotated[float, Field(ge=0.05, le=0.5)] = 0.25
+    population_orders: Annotated[int, Field(ge=2, le=20000)]
+    orders: OrdersInput
+
+    @model_validator(mode="after")
+    def nonempty(self) -> Self:
+        if not self.orders.orders:
+            raise ValueError("Held-out evaluation requires at least one order")
+        return self
+
+
 class OptimizationInput(SectionContract):
     joint: JointConfig | None = None
+    evaluation: HeldOutEvaluationInput | None = None
     seed: Annotated[int, Field(ge=0, le=2147483647)] = 42
-    time_limit_s: Annotated[float, Field(gt=0, le=300)] = 30
+    time_limit_s: Annotated[float, Field(gt=0, le=900)] = 30
     max_iterations: Annotated[int, Field(ge=1, le=1000000)] = 10000
     algorithm: Literal["milp", "greedy"] = "milp"
     distance_weight: Positive = 1
@@ -289,6 +306,14 @@ class OptimizationInput(SectionContract):
         if self.travel_weight + self.wait_weight + self.stock_weight <= 0:
             raise ValueError("At least one integrated objective weight must be positive")
         return self
+
+    @model_serializer(mode="wrap")
+    def omit_absent_evaluation(self, handler):
+        # Inputs without held-out orders keep their pre-existing canonical form.
+        data = handler(self)
+        if data.get("evaluation") is None:
+            data.pop("evaluation", None)
+        return data
 
 
 def unique_ids(items: list, key: str = "id") -> None:
@@ -324,6 +349,13 @@ def validate_references(sections: dict) -> list[str]:
     for line in sections.get("orders", {}).get("order_lines", []):
         if line["sku"] not in skus:
             errors.append(f"Order {line['order_id']}: unknown SKU {line['sku']}")
+    held_out = (sections.get("optimization", {}).get("evaluation") or {}).get("orders")
+    if held_out:
+        training = {o["id"] for o in sections.get("orders", {}).get("orders", [])}
+        if training & {o["id"] for o in held_out["orders"]}:
+            errors.append("Held-out orders overlap training orders")
+        if any(line["sku"] not in skus for line in held_out["order_lines"]):
+            errors.append("Held-out order references an unknown SKU")
     return errors
 
 
@@ -374,6 +406,8 @@ def to_domain(sections: dict) -> d.RetailDataset:
     demand["periods"] = tuple(ArrivalPeriod(**p) for p in demand["periods"])
     if not shelves or not categories or not products:
         raise ValueError("A run requires at least one shelf, category and product")
+    # Held-out orders are application evaluation data, never an engine input.
+    values["optimization"].pop("evaluation", None)
     if values["optimization"]["joint"] is not None:
         import json
 

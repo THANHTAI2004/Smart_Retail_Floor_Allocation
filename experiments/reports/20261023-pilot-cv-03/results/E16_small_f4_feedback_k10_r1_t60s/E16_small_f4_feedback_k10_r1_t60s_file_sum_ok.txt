@@ -1,0 +1,29 @@
+# deepmg-style summary	E16	small_f4	feedback
+# campaign	pilot_cv
+# question	How much time does one repeated k-fold job cost per method and scale, and do held-out objectives differ between methods?
+# dataset	{"category_assignment": "free", "facings": 4, "height_scale": 1.0, "id": "small_f4", "input_file_sha256": null, "input_path": null, "levels": 2, "scale": "small", "scenario": "feasible", "seed": 101, "variable_facings": false}
+# treatment	{"optimization": {"algorithm": "milp", "candidate_count": 1, "joint": {"max_actions": 24, "max_evaluations": 80, "max_iterations": 3, "mode": "feedback", "objective": {"scales": [100, 100, 1, 1], "weights": [1, 0.2, 0.1, 0.1]}, "scenario_seed_policy": "job_seed_offsets", "scenario_seeds": [0, 101]}, "slotting_algorithm": "milp"}}
+# evaluation	{"budget_fraction": 0.25, "n_folds": 10, "split": "kfold", "stratify": "dominant_category", "test_size": 0.2}
+# seeds	[1]	repetitions	1
+# job_time_limit_s	60.0	memory_limit_mb	1024
+# planned	10	attempted	10
+seed	repetition	cv_fold	status	evaluation_status	train_orders	test_orders	train_objective	test_objective	generalization_gap	test_mean_distance_m	test_mean_wait_s	mean_distance_m	mean_wait_s	wall_s	run_id
+1	0	0	SUCCEEDED	COMPLETED	90	10	0.1319830225	0.1264993842	-0.005483638218	13.5375	0	17.29166667	0.5639286777	49.188	cf5232e9-c0be-4094-bd4d-30990ef2e2c9
+1	0	1	SUCCEEDED	COMPLETED	90	10	0.1292829361	0.1249774957	-0.004305440391	13.075	0.01247281133	17.05	0.6733859737	49.032	98851d55-5e11-47c2-9bbb-5d51e03cb0f6
+1	0	2	SUCCEEDED	COMPLETED	90	10	0.1309464606	0.1217795517	-0.009166908849	11.95	0.01181524532	17.30416667	0.73715204	49.547	ce8cd6d3-4394-4e76-be69-0c107a4afe87
+1	0	3	SUCCEEDED	COMPLETED	90	10	0.1298198161	0.1199428474	-0.009876968696	13.125	0.001659846362	17.025	0.7396630407	48.89	0b52fed8-eec4-4773-8148-e31c8d28f808
+1	0	4	SUCCEEDED	COMPLETED	90	10	0.1276015895	0.1291656425	0.001564053015	13.475	0.01064673717	16.85	0.594922252	49.078	d6dac7f5-2399-40c5-bf64-e55fb282add5
+1	0	5	SUCCEEDED	COMPLETED	90	10	0.1283086312	0.1513785992	0.02306996794	15.825	0.0218375887	17.0625	0.560684707	49.469	35cb7dc5-4e5a-4226-b836-217f05e3b1a4
+1	0	6	SUCCEEDED	COMPLETED	90	10	0.1291468356	0.1216964286	-0.007450407017	12.9375	0	17.08333333	0.7299975673	49.672	28afe139-905b-4f32-bc36-cad75c1ae630
+1	0	7	SUCCEEDED	COMPLETED	90	10	0.1268702391	0.1428064511	0.01593621204	14.85	0.0002300705024	16.83333333	0.6462883888	49.015	5954c80a-422a-4b42-89a8-13507ae4a326
+1	0	8	SUCCEEDED	COMPLETED	90	10	0.1273607726	0.1285643939	0.001203621342	13.775	0.02916666667	16.77083333	0.5035981052	49.203	61083d19-59a9-4f16-998e-519fd851b74f
+1	0	9	SUCCEEDED	COMPLETED	90	10	0.129232793	0.1137570419	-0.01547575107	12.425	0.05394896026	16.975	0.8101772777	48.891	e7932abc-c0df-4c0e-a724-9004c769b25d
+summary	n	mean	sd
+train_objective	10	0.1290553096	0.001603500876
+test_objective	10	0.1280567836	0.01118049315
+generalization_gap	10	-0.0009985259909	0.0120430338
+test_mean_distance_m	10	13.4975	1.130462049
+test_mean_wait_s	10	0.01417779263	0.01712470301
+wall_s	10	49.1985	0.2758015591
+succeeded	10	NA	NA
+total_time_s	NA	491.985	NA

@@ -93,7 +93,7 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
             "height_m": rng.choice([0.15, 0.2]),
             "weight_kg": 0.2,
             "demand": rng.randint(1, 30) * (5 if spec.scenario == "uneven" and i % 5 == 0 else 1),
-            "facings": 1,
+            "facings": spec.facings,
             "stack_layers": 1,
             "clearance_m": 0.005,
         }
@@ -101,14 +101,16 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
     ]
     if spec.variable_facings:
         for product in products:
-            product.update(min_facings=1, max_facings=3)
+            product.update(min_facings=spec.facings, max_facings=spec.facings + 2)
     categories: list[dict] = [
         {
             "id": f"C{i}",
             "name": f"Synthetic category {i}",
             "required_width_m": round(
                 sum(
-                    p["width_m"] + p["clearance_m"] for p in products if p["category_id"] == f"C{i}"
+                    p["facings"] * (p["width_m"] + p["clearance_m"])
+                    for p in products
+                    if p["category_id"] == f"C{i}"
                 ),
                 5,
             ),

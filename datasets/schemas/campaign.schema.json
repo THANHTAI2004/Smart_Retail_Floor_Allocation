@@ -54,6 +54,13 @@
           "title": "Variable Facings",
           "type": "boolean"
         },
+        "facings": {
+          "default": 1,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Facings",
+          "type": "integer"
+        },
         "levels": {
           "default": 2,
           "maximum": 5,
@@ -101,27 +108,57 @@
       "title": "DatasetSpec",
       "type": "object"
     },
+    "EvaluationSpec": {
+      "additionalProperties": false,
+      "description": "Repeated stratified k-fold or temporal holdout over orders (deepmg-style protocol).\n\nEach campaign seed is one repetition: it shuffles the folds and seeds the job.",
+      "properties": {
+        "split": {
+          "enum": [
+            "kfold",
+            "temporal_holdout"
+          ],
+          "title": "Split",
+          "type": "string"
+        },
+        "n_folds": {
+          "default": 10,
+          "maximum": 20,
+          "minimum": 2,
+          "title": "N Folds",
+          "type": "integer"
+        },
+        "test_size": {
+          "default": 0.2,
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "Test Size",
+          "type": "number"
+        },
+        "budget_fraction": {
+          "default": 0.25,
+          "maximum": 0.5,
+          "minimum": 0.05,
+          "title": "Budget Fraction",
+          "type": "number"
+        },
+        "stratify": {
+          "const": "dominant_category",
+          "default": "dominant_category",
+          "title": "Stratify",
+          "type": "string"
+        }
+      },
+      "required": [
+        "split"
+      ],
+      "title": "EvaluationSpec",
+      "type": "object"
+    },
     "ExperimentSpec": {
       "additionalProperties": false,
       "properties": {
         "id": {
-          "enum": [
-            "E01",
-            "E02",
-            "E03",
-            "E04",
-            "E05",
-            "E06",
-            "E07",
-            "E08",
-            "E09",
-            "E10",
-            "E11",
-            "E12",
-            "E13",
-            "E14",
-            "E15"
-          ],
+          "pattern": "^E\\d{2}$",
           "title": "Id",
           "type": "string"
         },
@@ -174,7 +211,12 @@
               "joint_objective",
               "joint_evaluations",
               "joint_iterations_to_best",
-              "holdout_objective"
+              "holdout_objective",
+              "train_objective",
+              "test_objective",
+              "test_mean_distance_m",
+              "test_mean_wait_s",
+              "generalization_gap"
             ],
             "type": "string"
           },
@@ -231,8 +273,11 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "1.0",
       "default": "1.0",
+      "enum": [
+        "1.0",
+        "1.1"
+      ],
       "title": "Schema Version",
       "type": "string"
     },
@@ -288,9 +333,9 @@
       "type": "integer"
     },
     "job_time_limit_s": {
-      "default": 15,
+      "default": 15.0,
       "exclusiveMinimum": 0,
-      "maximum": 300,
+      "maximum": 900,
       "title": "Job Time Limit S",
       "type": "number"
     },
@@ -302,7 +347,7 @@
       "type": "integer"
     },
     "max_wall_s": {
-      "default": 600,
+      "default": 600.0,
       "exclusiveMinimum": 0,
       "maximum": 14400,
       "title": "Max Wall S",
@@ -336,6 +381,17 @@
       ],
       "title": "Cache Policy",
       "type": "string"
+    },
+    "evaluation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EvaluationSpec"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     }
   },
   "required": [

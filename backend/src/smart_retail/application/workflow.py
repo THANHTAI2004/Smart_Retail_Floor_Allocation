@@ -4,6 +4,7 @@ import math
 import time
 from collections.abc import Callable
 
+from smart_retail.application.evaluation import integrated_score, with_held_out
 from smart_retail.application.stage_workflow import _candidate
 from smart_retail.application.stage_workflow import canonical_hash as canonical_hash
 from smart_retail.contracts.inputs import to_domain
@@ -24,6 +25,15 @@ def execute(
     A failed layout/allocation is evidence about that candidate only.
     """
     dataset = to_domain(sections)
+    if sections["optimization"].get("evaluation") is not None:
+        return with_held_out(
+            sections,
+            execute,
+            cancelled=cancelled,
+            progress=progress,
+            stage_cache=stage_cache,
+            observer=observer,
+        )
     if dataset.config.joint is not None:
         from smart_retail.application.feedback.coordinator import optimize
 
@@ -31,10 +41,6 @@ def execute(
     deadline = time.monotonic() + dataset.config.time_limit_s
     records: list[dict] = []
     solutions: list[tuple[float, int, dict]] = []
-    diagonal = max(
-        math.dist(a, b) for a in dataset.floorplan.boundary for b in dataset.floorplan.boundary
-    )
-    demand = {p.sku: p.demand for p in dataset.products}
     cache: dict = stage_cache if stage_cache is not None else {}
     for index in range(dataset.config.candidate_count):
         if cancelled():
@@ -102,20 +108,7 @@ def execute(
             )
             solutions.append((score, index, candidate))
             continue
-        metrics = candidate["stages"]["T4"]["metrics"]
-        capacity = {p["sku"]: p["capacity_units"] for p in candidate["stages"]["T3"]["placements"]}
-        components = [
-            metrics["mean_distance_m"] / diagonal,
-            metrics["mean_wait_s"] / dataset.demand.horizon_s,
-            sum(max(0, value - capacity[sku]) for sku, value in demand.items())
-            / max(1, sum(demand.values())),
-        ]
-        weights = (
-            dataset.config.travel_weight,
-            dataset.config.wait_weight,
-            dataset.config.stock_weight,
-        )
-        score = sum(a * b for a, b in zip(components, weights)) / sum(weights)
+        score, components = integrated_score(sections, candidate["stages"])
         records.append(
             {
                 "candidate": index,

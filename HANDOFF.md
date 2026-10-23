@@ -1,3 +1,88 @@
+# Current handoff - repeated k-fold held-out evaluation (deepmg protocol), 2026-10-23
+
+Request: direction A paper experiments designed after deepmg (pypi.org/project/deepmg):
+repeated stratified k-fold over orders, deepmg-style result files. Design and findings:
+docs/research/EXPERIMENT_DESIGN_DEEPMG.md. Uncommitted; no commit/push authorized.
+
+Implemented: campaign schema 1.1 `evaluation` (kfold/temporal_holdout; seed = repetition),
+`DatasetSpec.facings`, `application/experiments/splits.py` (stratified folds, immutable
+`datasets/<id>/splits/<seed>.json`), `application/evaluation.py` (demand re-estimated from
+training orders; optimization on (1-budget_fraction) budget; fixed decisions replayed and
+independently verified on held-out orders in the same killable worker process; engines never
+see held-out orders because `to_domain` strips `optimization.evaluation`), analysis
+(pairing unit (seed, cv_fold), Wilcoxon, Nadeau-Bengio, A12, bootstrap CI, Friedman/Nemenyi,
+Holm per family, objective-definition guard), reports (fold_results/run_means/status_matrix/
+rankings CSV, pooled multi-campaign analyze), `partition.py` + CLI `split-config`, and
+`deepmg_export.py`: `<report>/results/<prefix>/<prefix>_file_sum[_ok].txt`, `_file_eachfold.txt`,
+`_file_mean_test_objective.txt`, `_file_mean_test_distance.txt`, `_config.json` (repeats the arm
+with identical job keys). Optimization/input schemas regenerated. Inputs and campaign
+manifests without `evaluation` keep their previous canonical form.
+
+Two pre-existing defects found and fixed: (1) SimPy re-raises process failures as
+`type(exc)(*exc.args)`, so every T4 TIMEOUT surfaced as EXECUTION_ERROR (EngineError now
+keeps args=(code, message)); (2) unvalidated int defaults of CampaignSpec job_time_limit_s/
+max_wall_s hashed differently after a JSON round trip (defaults now float).
+Generator finding: default `facings=1` instances are degenerate (all categories fit one shelf,
+identical routes); experiments must use facings >= 4/6.
+
+Environment set up on this checkout: `.venv` (Python 3.12, requirements-lock, editable backend)
+and portable MongoDB 8.0.16 via scripts/start_mongodb.ps1 -InstallPortable (credentials in
+ignored var/mongodb/private.json). core.autocrlf is true here.
+
+Verification (actual commands, from repo root):
+- `.venv/Scripts/python.exe -m pytest backend/tests -q -p no:cacheprovider --basetemp var/pytest-cv-full-05`:
+  196 passed, 1 existing Starlette/httpx deprecation warning (113 s).
+- `ruff check backend`: PASS; `mypy src` (in backend): no issues in 102 files;
+  `scripts/verify_architecture.py --output var/architecture-cv-03.json`: PASS.
+  `ruff check experiments scripts` reports 16 pre-existing findings in untouched files.
+- Pilot `experiments/configs/pilot_cv.json` (2 instances x 4 joint-scored arms x 1 repetition x
+  10 folds = 80 jobs, 60 s/job, budget_fraction 0.25):
+  `experiments/results/20261023-pilot-cv-03` COMPLETED 80/80 SUCCEEDED, all held-out
+  evaluations COMPLETED, 1,382 s. Report and deepmg layout: `experiments/reports/20261023-pilot-cv-03`
+  (8/8 arms `_file_sum_ok`).
+  Superseded, retained: pilot-cv-01 (FAILED at 55/80: source edited during run, drift guard
+  correct); pilot-cv-02 (80 jobs, 3 feedback jobs EXECUTION_ERROR from defect (1)).
+- Pilot observations (one repetition, exploratory, SYNTHETIC): greedy/MILP/multistart sequential
+  arms gave identical plans on both instances; feedback lowered held-out objective
+  (tiny -0.0136, small -0.0055; Wilcoxon p 0.0098/0.0020, Nadeau-Bengio p 0.019/0.0013,
+  Holm-NB 0.153/0.014). Mean wall per job: tiny 2.4-16.8 s, small 4.8-49.2 s (feedback small
+  max 49.7 s of 60 s, budget nearly binding).
+
+Main paper run STARTED 2026-10-23: `scripts/build_paper_configs.py` generated 16 configs
+(4,276 jobs; X2 tiny auto-split into 2 parts) in `experiments/configs/paper/` (index.json).
+Runtime probes before sizing: medium facings=4 and large facings=4 are INFEASIBLE (a category
+exceeds one shelf's 3.8 m); medium f=3 sequential 36-39 s, feedback hits a 225 s budget after
+10 evaluations; large f=2 cannot finish T4 within the 300 s contract cap (kept in X4 with 4 jobs
+to document the limit). Detached runner: `scripts/run_paper_campaigns.py` (pid in
+var/paper-run.pid.json, log var/paper-run.log), order X1, X4, X2, X2b, X5, X6, X3; resumable
+(rerun the same command); results `experiments/results/20261023-paper/<campaign>/`, journal
+`experiments/results/20261023-paper/journal.json`, pooled reports with deepmg layout
+`experiments/reports/20261023-paper/<block>/`. Estimated ~20 h sequential.
+Do NOT edit backend/src Python files until the runner exits (drift guard).
+
+SUPERSEDED by paper-v2 (same day): in run v1 every medium feedback job ended TIMED_OUT at
+302 s, mostly after reaching stage COMPLETE, because the worker allowed only 2 s grace after
+the solver budget for verification/result writing. User chose: add finalization grace and raise
+the cap to 900 s. Changes: `workers/runner.py` `wall_budget(limit) = limit + max(15, 0.1*limit)`;
+`OptimizationInput.time_limit_s` and `CampaignSpec.job_time_limit_s` cap 300 -> 900 (schemas
+regenerated); feedback CLI and ResearchPage.tsx limits 900 (frontend lint/build/Vitest NOT run:
+frontend node_modules absent in this checkout). Verification: 197 pytest passed (basetemp
+var/pytest-cv-full-06), ruff backend+scripts PASS, mypy PASS, architecture PASS (cv-04).
+v1 run stopped by killing runner pid 11652 and its worker children; its partial results stay in
+`experiments/results/20261023-paper/` (X1, X4 tiny/small COMPLETED, X4-medium partial) as
+superseded evidence. Run v2: configs `experiments/configs/paper-v2/` (900 s medium/large,
+split into <=24-job parts to stay below the 4 h campaign wall ceiling; 4,276 jobs), runner
+pid in var/paper-v2-run.pid.json, log var/paper-v2-run.log, results
+`experiments/results/20261023-paper-v2/`, reports `experiments/reports/20261023-paper-v2/<block>/`.
+Resume command: `.venv/Scripts/python.exe scripts/run_paper_campaigns.py`.
+
+STOPPED at user request ("chỉ sinh lại thôi"): configs are generated, the v2 run was stopped
+deliberately (runner pid 5000 and children killed) with paper-x1-exact at 18/150; nothing else
+started. Step-by-step instructions for whoever runs it next:
+docs/research/PAPER_EXPERIMENT_RUNBOOK.md.
+
+---
+
 # Bàn giao hiện hành — 23/10/2026
 
 ## Phạm vi được ủy quyền
