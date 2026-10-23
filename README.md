@@ -37,7 +37,6 @@ Xem [báo cáo và giới hạn](docs/system-audit/FINAL_SYSTEM_AUDIT.md),
 21. [Tái lập nghiên cứu](#phan-21)
 22. [Giới hạn và hướng phát triển](#phan-22)
 23. [Tài liệu nội bộ](#phan-23)
-24. [Hướng dẫn bảo trì và phát triển](#phan-24)
 
 <a id="phan-01"></a>
 
