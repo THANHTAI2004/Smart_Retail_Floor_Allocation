@@ -1,25 +1,26 @@
 # Thực nghiệm nghiên cứu
 
-Runner dùng production durable queue, SQLite riêng, process worker với timeout,
-snapshot/runtime/checksum. Không dùng engine hoặc bằng chứng V4 cũ.
+Campaign runner dùng MongoDB riêng, production durable queue và process worker
+có timeout, memory budget, snapshot/runtime/checksum. Chạy từ thư mục root.
+Output phải là đích mới; không ghi đè kết quả, checkpoint hay scientific artifacts.
 
 ```powershell
-.venv\Scripts\python.exe experiments/run_campaign.py --output experiments/results/my-new-campaign --seeds 11,23,37,53,71
-.venv\Scripts\python.exe experiments/analyze_campaign.py experiments/results/my-new-campaign
+.venv/Scripts/python.exe -m smart_retail.application.experiments.cli run --config experiments/configs/pilot.json --output experiments/results/my-new-pilot
+.venv/Scripts/python.exe -m smart_retail.application.experiments.cli verify experiments/results/my-new-pilot
+.venv/Scripts/python.exe -m smart_retail.application.experiments.cli analyze experiments/results/my-new-pilot --output experiments/reports/my-new-pilot
+.venv/Scripts/python.exe -m smart_retail.application.experiments.cli replay experiments/results/my-new-pilot --output experiments/results/my-new-replay
+.venv/Scripts/python.exe -m smart_retail.application.experiments.cli compare experiments/results/my-new-pilot experiments/results/my-new-replay --output experiments/reports/my-new-comparison.json
 ```
 
-Chạy từ root. Output phải là thư mục mới; không ghi đè kết quả cũ. `--replay
-<input.json>` chạy lại snapshot nếu source/dependency identity khớp.
+`resume` nhận `--config` và `--output` của campaign paused, từ chối source/config
+drift và giữ attempt identity. `verify` chỉ kiểm tra integrity, không chạy solver.
+Chỉ dùng `replay` trong môi trường source/dependency tương thích.
 
-- `results/20261021-research-01`: bị ngắt bởi Windows sharing violation khi đọc
-  progress; giữ nguyên, không coi là chiến dịch hoàn tất.
-- `results/20261021-research-02`: 80 job, 5 seed/nhánh, 75 thành công và 5 first-fit
-  thất bại có chủ đích ở E03. Có configuration, database, snapshot/result/receipt,
-  raw runs, summary và independent audit/paired statistics.
-- `results/20261021-replay-01`: run ID mới, input/result hash giống lượt gốc.
+Có 16 JSON configs bao phủ E01–E15, chưa đồng nghĩa mọi ma trận đã chạy đầy đủ.
+Dữ liệu và holdout đều tổng hợp. Xem [README tổng thể](../README.md),
+[trạng thái nghiên cứu](../docs/research/RESEARCH_STATUS.md),
+[mô hình joint](../docs/research/JOINT_OPTIMIZATION_FORMULATION.md) và
+[kiểm chứng campaign](../docs/system-audit/EXPERIMENT_VALIDATION.md).
 
-E01–E08 hiện là smoke **SYNTHETIC** nhỏ; chưa đủ nghiệm thu robustness,
-scalability hoặc hiệu quả tổng quát. Peak child memory chưa instrument, ghi null.
-Xem [protocol](../docs/research/EXPERIMENT_PROTOCOL.md),
-[tái lập](../docs/research/REPRODUCIBILITY.md),
-[ma trận gate](../docs/research/ACCEPTANCE_MATRIX.md).
+Các kết quả nguyên bản không thuộc phạm vi vận hành hiện hành được định vị tại
+[hồ sơ lưu trữ bên ngoài](../docs/architecture/HISTORICAL_ARCHIVE.md).

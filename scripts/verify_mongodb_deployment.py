@@ -15,10 +15,7 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from uuid import uuid4
 
-from smart_retail.application import projects
 from smart_retail.application.workflow import canonical_hash
-from smart_retail.infrastructure.mongodb.client import connect
-from smart_retail.workers.runner import work_once
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -27,59 +24,6 @@ def free_port():
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", 0))
         return sock.getsockname()[1]
-
-
-def atlas(output, record):
-    uri = os.getenv("MONGODB_ATLAS_URI")
-    if not uri:
-        record.update(status="BLOCKED", blocker="BLOCKED_ATLAS_CREDENTIALS")
-        return 2
-    # Dedicated variable is explicit authorization to write to a fresh namespace;
-    # never reuse the main application's URI/database as an implicit Atlas target.
-    if not uri.startswith("mongodb+srv://") or ".mongodb.net" not in uri.split("?", 1)[0]:
-        raise ValueError("Atlas SRV URI required privately in MONGODB_ATLAS_URI")
-    name = "sr_atlas_verify_" + uuid4().hex[:20]
-    store, factory = connect(uri, database=name)
-    record["database"] = name
-    try:
-        # PyMongo SRV defaults TLS on; explicitly disallow opt-out/insecure TLS.
-        from pymongo.uri_parser import parse_uri
-        options = parse_uri(uri)["options"]
-        if options.get("tls") is False or any(options.get(k) for k in (
-            "tlsInsecure", "tlsAllowInvalidCertificates", "tlsAllowInvalidHostnames")):
-            raise ValueError("Validated TLS is required for Atlas")
-        store.ready()
-        hello = store.database.command("hello")
-        record["tls"] = "SRV TLS enabled with certificate validation; live ping succeeded"
-        record["replica_set_detected"] = bool(hello.get("setName"))
-        project = projects.create_project(store, "Isolated Atlas verification")
-        sample = json.loads((ROOT / "datasets/samples/small_store.json").read_text(encoding="utf-8"))
-        for section, value in sample.items():
-            project = projects.save_section(store, project["id"], section, value, project["revision"])
-        try:
-            projects.save_section(store, project["id"], "demand", sample["demand"], 0)
-            raise AssertionError("Stale revision accepted")
-        except projects.ServiceError as exc:
-            assert exc.status == 409
-        job = projects.enqueue(store, project["id"])
-        assert work_once(factory, output / "artifacts", heartbeat_id="atlas-verifier")
-        final = store.get_run(job["id"])
-        assert final.status == "SUCCEEDED"
-        assert canonical_hash(final.result) == final.result_sha256
-        record["checks"] = ["SRV/DNS/TLS/auth ping", "index creation", "CRUD",
-                            "conditional revision", "atomic queue", "spawned T1-T4", "result SHA"]
-        # Recreate the client for an explicit reconnect/readback check.
-        store.dispose()
-        store, _ = connect(uri, database=name)
-        assert store.get_run(job["id"]).result_sha256 == final.result_sha256
-        record["reconnect"] = "PASS"
-        # Only documents created by this verifier, in its UUID namespace.
-        store.database.optimization_runs.delete_one({"_id": job["id"]})
-        store.database.projects.delete_one({"_id": project["id"]})
-        record.update(status="PASS", test_documents_deleted=True, collections_retained=True)
-        return 0
-    finally:
-        store.dispose()
 
 
 def compose(output, record):
@@ -250,14 +194,14 @@ def compose(output, record):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("target", choices=["atlas", "compose"])
+    parser.add_argument("target", choices=["compose"])
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     record = {"target": args.target, "started_utc": datetime.now(UTC).isoformat(),
               "platform": sys.platform, "status": "FAIL"}
     try:
-        code = atlas(args.output, record) if args.target == "atlas" else compose(args.output, record)
+        code = compose(args.output, record)
     except Exception as exc:
         # PyMongo/DNS/URI exceptions can contain secrets: only publish the type.
         record.update(status="FAIL", error_type=type(exc).__name__)

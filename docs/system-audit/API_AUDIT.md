@@ -1,10 +1,11 @@
 # API validation and surface audit
 
+> Bản tóm lược được biên tập ngày 23/10/2026. Kết quả dưới đây thuộc lần kiểm chứng ngày 22/10/2026, không phải lần chạy mới. Báo cáo nguyên bản và định vị bản lưu: [hồ sơ lưu trữ](../architecture/HISTORICAL_ARCHIVE.md).
+
 Audit `20261022-afbb7971`, performed on 2026-10-22. All paths below are relative to the repository unless stated otherwise.
 
 Evidence root: `var/system-audit/20261022-afbb7971/final/` (abbreviated **E/** below).
-Source SHA-256: `321d73d95a4ba9952f4af622601a02edb04f2ad95e60e5c1ddb569408e8841dc`. Starting Git HEAD: `081253604b329b4fba0a75bfe8c58755d47c3fd7`; changes remain uncommitted by instruction.
-MongoDB Atlas: **OUT_OF_SCOPE**, never a failed or blocked gate. The parent attempt directory retains superseded receipts and before-fix logs; E/../ denotes that parent.
+Source SHA-256: `321d73d95a4ba9952f4af622601a02edb04f2ad95e60e5c1ddb569408e8841dc`. Audit baseline Git HEAD: `081253604b329b4fba0a75bfe8c58755d47c3fd7`; original report retained in the external historical archive.
 
 Real FastAPI requests against a separate native MongoDB database passed. E/api-surface.json includes the complete OpenAPI paths, seven JSON exports, four CSV export/import roundtrips (revision 11), 404 for missing project/unknown section and 422 for unsupported format. Command `.venv/Scripts/python.exe scripts/system_audit_surface.py`, exit 0. It performs no numerical job and never writes the primary database.
 

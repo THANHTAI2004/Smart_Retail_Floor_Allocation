@@ -1,9 +1,0 @@
-{
-  "target": "atlas",
-  "started_utc": "2026-10-22T06:20:26.753090+00:00",
-  "platform": "win32",
-  "status": "BLOCKED",
-  "blocker": "BLOCKED_ATLAS_CREDENTIALS",
-  "ended_utc": "2026-10-22T06:20:26.753090+00:00",
-  "exit_code": 2
-}

@@ -63,8 +63,8 @@ def main():
     browser = read(args.evidence / "browser/results.json")
     gate("ER15", experiments("E01") and experiments("E02") and experiments("E03") and experiments("E04") and experiments("E05") and browser["stats"].get("unexpected", 1) == 0 and checks.get("e2e"), "CLI pilot/main plus actual dashboard campaign/download/figure/replay and input CSV browser demonstration")
     status = "EXPERIMENT_READY_SYNTHETIC" if all(g["status"] == "PASS" for g in gates) else "EXPERIMENT_READINESS_INCOMPLETE"
-    result = {"status": status, "scope": "Declared controlled local Windows/SQLite synthetic experiments; not production or real-world validation", "gates": gates,
-              "runtime": identity, "tolerances": {"absolute": 1e-8, "relative": 1e-9}, "claims_excluded": ["REAL_WORLD_VALIDATED", "PostgreSQL/Compose runtime verified", "Large full T1-T4 scalability established", "Global integrated optimality"]}
+    result = {"status": status, "scope": "Declared controlled local Windows/MongoDB synthetic experiments; not production or real-world validation", "gates": gates,
+              "runtime": identity, "tolerances": {"absolute": 1e-8, "relative": 1e-9}, "claims_excluded": ["REAL_WORLD_VALIDATED", "Container deployment runtime verified", "Large full T1-T4 scalability established", "Global integrated optimality"]}
     if args.output.exists():
         raise FileExistsError(args.output)
     args.output.write_text(json.dumps(result, indent=2)+"\n", encoding="utf-8")

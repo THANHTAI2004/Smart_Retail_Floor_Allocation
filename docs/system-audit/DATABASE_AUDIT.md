@@ -1,12 +1,13 @@
 # MongoDB persistence and isolation
 
+> Bản tóm lược được biên tập ngày 23/10/2026. Kết quả dưới đây thuộc lần kiểm chứng ngày 22/10/2026, không phải lần chạy mới. Báo cáo nguyên bản và định vị bản lưu: [hồ sơ lưu trữ](../architecture/HISTORICAL_ARCHIVE.md).
+
 Audit `20261022-afbb7971`, performed on 2026-10-22. All paths below are relative to the repository unless stated otherwise.
 
 Evidence root: `var/system-audit/20261022-afbb7971/final/` (abbreviated **E/** below).
-Source SHA-256: `321d73d95a4ba9952f4af622601a02edb04f2ad95e60e5c1ddb569408e8841dc`. Starting Git HEAD: `081253604b329b4fba0a75bfe8c58755d47c3fd7`; changes remain uncommitted by instruction.
-MongoDB Atlas: **OUT_OF_SCOPE**, never a failed or blocked gate. The parent attempt directory retains superseded receipts and before-fix logs; E/../ denotes that parent.
+Source SHA-256: `321d73d95a4ba9952f4af622601a02edb04f2ad95e60e5c1ddb569408e8841dc`. Audit baseline Git HEAD: `081253604b329b4fba0a75bfe8c58755d47c3fd7`; original report retained in the external historical archive.
 
-Native CRUD is checked against an owned marker in a separate audit_crud collection (create/read/update/delete, followed by absence); no historical document is deleted. E/api-surface.json records the check. Native authenticated local MongoDB is exercised; no SQL fallback or in-memory persistence is used for acceptance. The facade infrastructure/database.py connects only to infrastructure/mongodb. SQL connection strings are rejected. Tests use `sr_system_audit_afbb7971_...` namespaces; Compose uses its own isolated stack and credentials. Atlas is excluded.
+Native CRUD is checked against an owned marker in a separate audit_crud collection (create/read/update/delete, followed by absence); no historical document is deleted. E/api-surface.json records the check. Native authenticated local MongoDB is exercised; no SQL fallback or in-memory persistence is used for acceptance. The facade infrastructure/database.py connects only to infrastructure/mongodb. SQL connection strings are rejected. Tests use `sr_system_audit_afbb7971_...` namespaces; Compose uses its own isolated stack and credentials.
 
 Collections: projects (embedded seven sections with revision CAS), optimization_runs (immutable snapshot/result, status, lease and hashes), worker_heartbeats, and research_payloads.files/chunks for overflow JSON. `_id` gives unique identity. Indexes cover project creation, project/run chronology, queue status+creation, worker/lease, expired status+lease and worker heartbeat epoch. No TTL index deletes scientific records. The index definitions are infrastructure/mongodb/indexes.py and fresh real index checks appear in persistence tests and E/compose/verification.json.
 

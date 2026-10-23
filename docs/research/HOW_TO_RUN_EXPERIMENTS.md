@@ -103,7 +103,7 @@ thì resume bị từ chối. Xem cấu hình thực tế để dùng đúng tê
 editable với `--no-deps`, `pip check` đạt, replay pilot khớp 19/19 input/result SHA.
 Đây là môi trường Python mới trên cùng máy Windows, chưa phải kiểm chứng hệ điều
 hành hoặc solver khác. Chi tiết và đường dẫn cuối cùng trong
-[kết quả 22/10](RESULTS_20261022.md).
+[external historical archive](../architecture/HISTORICAL_ARCHIVE.md).
 
 Chạy `scripts/start.ps1`, mở http://127.0.0.1:5173/#research. Chọn cấu hình,
 experiment, dataset, số seed và thuật toán theo nhánh; bắt đầu, theo dõi, hủy,

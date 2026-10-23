@@ -1,4 +1,4 @@
-> Current 2026-10-22 additions: seven-section schema 1.1 and explicit migration; exits/zones/connectivity; category soft affinity; SKU facing bounds and shelf compatibility; piecewise arrivals, finite picker pools and nearest/return/exact small-tour routing; persistent content-keyed stage cache and standalone stage execution. See [current model scope](../research/MODEL_SCOPE_20261022.md) and [reproduction guide](../research/HOW_TO_RUN_EXPERIMENTS.md). Earlier baseline descriptions below are retained for context.
+> Current 2026-10-22 additions: seven-section schema 1.1 and explicit migration; exits/zones/connectivity; category soft affinity; SKU facing bounds and shelf compatibility; piecewise arrivals, finite picker pools and nearest/return/exact small-tour routing; persistent content-keyed stage cache and standalone stage execution. See [external historical archive](../architecture/HISTORICAL_ARCHIVE.md) and [reproduction guide](../research/HOW_TO_RUN_EXPERIMENTS.md). Earlier baseline descriptions below are retained for context.
 
 # T1–T4: trách nhiệm, hợp đồng và mức thực hiện
 

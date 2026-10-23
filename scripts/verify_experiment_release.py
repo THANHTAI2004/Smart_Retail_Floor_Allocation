@@ -53,7 +53,7 @@ def main():
     receipt = {"checks": results, "runtime": runtime_identity(),
                "git_head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
                "git_index_sha256": hashlib.sha256((ROOT / ".git/index").read_bytes()).hexdigest(),
-               "scope": "Local Windows/MongoDB synthetic platform; not Compose/Atlas or field validation",
+               "scope": "Local Windows/MongoDB synthetic platform; not container deployment or field validation",
                "files": {p.relative_to(output).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in output.rglob("*") if p.is_file()}}
     (output / "verification.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     if any(r["exit_code"] != 0 for r in results):

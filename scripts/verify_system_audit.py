@@ -226,7 +226,6 @@ def main():
                 "runtime": runtime_identity(),
                 "audit_id": audit["audit_id"],
                 "commands": rows,
-                "atlas": "OUT_OF_SCOPE",
             },
             indent=2,
         ),

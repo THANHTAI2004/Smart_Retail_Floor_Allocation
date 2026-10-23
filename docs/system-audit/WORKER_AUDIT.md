@@ -1,10 +1,11 @@
 # Durable queue and worker audit
 
+> Bản tóm lược được biên tập ngày 23/10/2026. Kết quả dưới đây thuộc lần kiểm chứng ngày 22/10/2026, không phải lần chạy mới. Báo cáo nguyên bản và định vị bản lưu: [hồ sơ lưu trữ](../architecture/HISTORICAL_ARCHIVE.md).
+
 Audit `20261022-afbb7971`, performed on 2026-10-22. All paths below are relative to the repository unless stated otherwise.
 
 Evidence root: `var/system-audit/20261022-afbb7971/final/` (abbreviated **E/** below).
-Source SHA-256: `321d73d95a4ba9952f4af622601a02edb04f2ad95e60e5c1ddb569408e8841dc`. Starting Git HEAD: `081253604b329b4fba0a75bfe8c58755d47c3fd7`; changes remain uncommitted by instruction.
-MongoDB Atlas: **OUT_OF_SCOPE**, never a failed or blocked gate. The parent attempt directory retains superseded receipts and before-fix logs; E/../ denotes that parent.
+Source SHA-256: `321d73d95a4ba9952f4af622601a02edb04f2ad95e60e5c1ddb569408e8841dc`. Audit baseline Git HEAD: `081253604b329b4fba0a75bfe8c58755d47c3fd7`; original report retained in the external historical archive.
 
 Source: workers/runner.py and infrastructure/mongodb/{run_repository,worker_repository}. Application enqueue writes a frozen complete snapshot with project revision, source/dependency identity and checksum. The worker atomically claims a queued row and supervises a spawned numerical process. Stage artifacts and final receipt record input/result hashes, timings, child exit, sampled CPU/RSS, budget, status and errors.
 
