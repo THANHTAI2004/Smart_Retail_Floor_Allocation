@@ -1309,31 +1309,3 @@ ngoài không được biên tập thành kết quả kiểm chứng mới; bả
 phải được đọc cùng ngày, source identity và giới hạn của chính lần chạy đó.
 
 <a id="phan-24"></a>
-
-## XXIV. Hướng dẫn dành cho lập trình viên và Codex
-
-Đọc AGENTS và phần đầu HANDOFF, kiểm tra `git status`, rồi đọc source và tests
-liên quan trước khi sửa. Giữ cấu trúc root, modular monolith và domain SI bất
-biến. HTTP/database không được đi vào numerical engines. Thay objective phải
-thể hiện đơn vị, normalization, weights, fixtures và giới hạn chứng minh.
-
-| Muốn sửa | Bắt đầu từ module | Kiểm chứng liên quan |
-|---|---|---|
-| Input/validation | `contracts/inputs.py`, feature definitions, types | Schema fixtures, contracts và import/export tests |
-| Lưu project | `application/projects.py`, project repository | CAS, reference atomicity, 409/413 |
-| Hình học | `engines/t1_layout`, `engines/navigation.py` | Geometry/topology/property và visual editor |
-| Allocation | `engines/t2_allocation` | Oracle nhỏ và independent assignment replay |
-| Slotting | `engines/t3_slotting` | Capacity/load, overlap, MILP oracle |
-| Simulation/routing | `engines/t4_simulation`, navigation | Route/time/quantity replay và synthetic assumptions |
-| Feedback/joint objective | `application/feedback` | Strict descent, cache invalidation, seed/holdout |
-| Exact/proof | `engines/joint_exact`, `contracts/optimality.py` | Enumeration oracle, tamper tests và verifier |
-| Worker | `workers/runner.py`, MongoDB worker/run repositories | Spawn, timeout, crash, cancellation race/fencing |
-| Campaign/stats | `application/experiments`, configs | Manifest/schema, resume/replay và thống kê suy biến |
-| Giao diện | `frontend/src/app`, `pages`, `features` | Vitest, build, Playwright và kiểm tra hiển thị |
-| Deployment/storage | Dockerfile, Compose, MongoDB infrastructure | Cô lập namespace/volume, restore và runtime checks |
-
-Đồng bộ contracts, generated schemas, frontend types, fixtures và docs khi đổi
-giao diện dữ liệu. Bảo vệ datasets, checkpoints, source/dependency identity và
-kết quả bất biến; đổi source có thể khiến replay cũ bị từ chối hợp lệ. Chọn
-checks theo tác động, ghi lệnh/exit/result/limitations thật trong HANDOFF.
-Không commit, push, reset, clean hoặc thay dữ liệu nếu chưa có ủy quyền tương ứng.
