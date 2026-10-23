@@ -106,7 +106,7 @@ cache và provenance; Persistence là MongoDB/GridFS. Background Worker giám s�
 process con; Reporting and Research Layer tạo campaign, so sánh và báo cáo.
 
 ```mermaid
-flowchart LR
+flowchart TD
   U[Người dùng] --> UI[React và TypeScript]
   UI -->|HTTP lưu và truy vấn| API[FastAPI]
   API --> APP[Application services]
@@ -298,6 +298,7 @@ sẽ dùng mặc định của hợp đồng; đây là dữ liệu tổng hợp
 
 ```mermaid
 classDiagram
+  direction TB
   class Project {
     id
     revision
@@ -620,7 +621,7 @@ quantity bằng implementation kiểm tra riêng ở application experiments.
 | Hybrid | Feedback rồi exact, warm start nếu thuộc miền | Cùng giới hạn miền; cùng time/evaluation budget |
 
 ```mermaid
-flowchart LR
+flowchart TD
   IN[Bảy nhóm dữ liệu] --> DIS[workflow.execute]
   DIS --> BASE[Baseline hoặc multistart]
   DIS --> JOINT[Joint coordinator]
@@ -739,7 +740,7 @@ không phải implementation vật lý hoàn toàn độc lập. Product chỉ �
 luôn giữ `JOINT_GENERAL_OPTIMALITY_NOT_PROVEN` cho bài toán tổng quát.
 
 ```mermaid
-flowchart LR
+flowchart TD
   A[Khởi tạo] --> FB[Feedback trong budget]
   FB --> MEMBER{Incumbent thuộc finite domain?}
   MEMBER -->|Có| WARM[Warm incumbent]
@@ -760,55 +761,36 @@ không được coi là chứng nhận hoàn chỉnh. Xem
 ## XIII. Quy trình thực thi end-to-end
 
 ```mermaid
-sequenceDiagram
-  actor U as Người dùng
-  participant UI as React
-  participant API as FastAPI
-  participant DB as MongoDB
-  participant W as Worker
-  participant C as Process con
-  participant T1 as T1 Layout
-  participant T2 as T2 Allocation
-  participant T3 as T3 Slotting
-  participant T4 as T4 Simulation
-  U->>UI: Nhập và lưu dữ liệu
-  UI->>API: PUT section với expected_revision
-  API->>DB: Validate và CAS aggregate
-  DB-->>UI: Project revision mới qua API
-  UI->>API: Validate rồi POST runs
-  API->>DB: Snapshot, runtime, SHA, QUEUED
-  API-->>UI: HTTP 202 và run ID
-  W->>DB: Atomic claim và lease
-  W->>C: Spawn và kiểm tra identity
-  C->>T1: Layout
-  T1-->>C: Kệ hợp lệ
-  C->>T2: Assignment
-  T2-->>C: Phân bổ hợp lệ
-  C->>T3: Slotting
-  T3-->>C: Planogram hợp lệ
-  C->>T4: Routing và simulation
-  T4-->>C: KPI và journeys
-  loop Trong khi process hoạt động
-    W->>DB: Heartbeat, renew và progress
-    UI->>API: Poll run
-    API->>DB: Đọc trạng thái
-    API-->>UI: Status và stage
-  end
-  alt Hoàn tất
-    C-->>W: Result và artifacts
-    W->>DB: Fenced publish với result SHA
-  else Người dùng hủy
-    UI->>API: POST cancel
-    API->>DB: CANCEL_REQUESTED
-    W->>C: Terminate process
-    W->>DB: CANCELLED nếu còn owner hợp lệ
-  else Timeout hoặc lỗi
-    W->>C: Dừng nếu còn chạy
-    W->>DB: Terminal status và error
-  end
-  UI->>API: Lấy report hoặc POST replay
-  API->>DB: Kiểm tra SHA hoặc enqueue snapshot cũ
-  API-->>UI: Tệp báo cáo hoặc run ID mới
+flowchart TD
+  USER[Người dùng nhập dữ liệu trên React]
+  USER --> SAVE[React gửi PUT section với expected_revision]
+  SAVE --> CAS[FastAPI validate và CAS aggregate trong MongoDB]
+  CAS --> REV[API trả project cùng revision mới cho React]
+  REV --> START[React validate rồi POST runs]
+  START --> SNAP[MongoDB lưu snapshot runtime SHA và QUEUED]
+  SNAP --> ACCEPT[API trả HTTP 202 và run ID]
+  ACCEPT --> CLAIM[Worker atomic claim và nhận lease]
+  CLAIM --> SPAWN[Spawn process con và kiểm tra identity]
+  SPAWN --> T1[T1 Layout trả kệ hợp lệ]
+  T1 --> T2[T2 Allocation trả phân bổ hợp lệ]
+  T2 --> T3[T3 Slotting trả planogram hợp lệ]
+  T3 --> T4[T4 Routing và simulation trả KPI cùng journeys]
+  SPAWN -.-> MONITOR[Trong suốt quá trình tính toán:<br/>worker heartbeat renew và progress<br/>React poll API để đọc status và stage]
+  MONITOR -.-> CANCEL{Có yêu cầu hủy?}
+  CANCEL -->|Có| STOP[API ghi CANCEL_REQUESTED<br/>worker dừng process con]
+  STOP --> CANCELLED[Publish CANCELLED nếu owner còn hợp lệ]
+  CANCEL -->|Không| LIMIT{Timeout hoặc lỗi?}
+  LIMIT -->|Có| ERROR[Dừng child nếu còn chạy<br/>publish terminal status và error]
+  LIMIT -->|Không| MONITOR
+  T4 --> RESULT[Process con ghi result và artifacts]
+  RESULT --> PUBLISH[Worker fenced publish vào MongoDB<br/>kèm result SHA]
+  PUBLISH --> VIEW[React lấy trạng thái và kết quả qua API]
+  CANCELLED --> VIEW
+  ERROR --> VIEW
+  VIEW --> ACTION{Thao tác tiếp theo}
+  ACTION -->|Report| REPORT[API kiểm tra SHA và trả tệp báo cáo]
+  ACTION -->|Replay| REPLAY[API kiểm tra runtime và enqueue snapshot cũ<br/>trả run ID mới cho React]
+  REPLAY -.-> CLAIM
 ```
 
 `projects.save_section/enqueue` thực hiện validation/snapshot;
@@ -827,20 +809,28 @@ supervisor còn làm việc. Process con được tạo bằng multiprocessing `
 Child so runtime identity trước execute; supervisor kiểm tra input SHA trước spawn.
 
 ```mermaid
-stateDiagram-v2
-  [*] --> QUEUED
-  QUEUED --> RUNNING: claim nguyên tử
-  QUEUED --> CANCELLED: hủy khi chưa chạy
-  RUNNING --> CANCEL_REQUESTED: yêu cầu hủy
-  CANCEL_REQUESTED --> CANCELLED: dừng child hoặc hết lease
-  RUNNING --> SUCCEEDED: kết quả hợp lệ và publish
-  RUNNING --> TIMED_OUT: quá wall budget hoặc hết lease
-  RUNNING --> INFEASIBLE: proof theo mô hình
-  RUNNING --> FAILED: lỗi thực thi checksum hoặc resource
-  RUNNING --> LEASE_LOST: supervisor phát hiện mất quyền
+flowchart TD
+  QUEUED[QUEUED] -->|Claim nguyên tử| RUNNING[RUNNING]
+  QUEUED -->|Hủy khi chưa chạy| QUEUED_CANCEL[CANCELLED]
+  RUNNING --> CANCEL{Có yêu cầu hủy?}
+  CANCEL -->|Có| CANCEL_REQUESTED[CANCEL_REQUESTED]
+  CANCEL_REQUESTED -->|Dừng child hoặc hết lease| CANCELLED[CANCELLED]
+  CANCEL -->|Không| DEADLINE{Quá wall budget hoặc hết lease?}
+  DEADLINE -->|Có| TIMED_OUT[TIMED_OUT]
+  DEADLINE -->|Không| PROOF{Có proof vô nghiệm theo mô hình?}
+  PROOF -->|Có| INFEASIBLE[INFEASIBLE]
+  PROOF -->|Không| ERROR{Lỗi thực thi checksum hoặc resource?}
+  ERROR -->|Có| FAILED[FAILED]
+  ERROR -->|Không| OWNER{Supervisor phát hiện mất quyền?}
+  OWNER -->|Có| LEASE_LOST[LEASE_LOST]
+  OWNER -->|Không| COMPLETE{Kết quả hợp lệ sẵn sàng publish?}
+  COMPLETE -->|Có| SUCCEEDED[SUCCEEDED]
+  COMPLETE -->|Chưa| RUNNING
 ```
 
-Sơ đồ dùng trạng thái thực được runner/repository xử lý. Fencing có thể từ chối
+Sơ đồ nhóm các nhánh trạng thái theo chiều dọc để dễ đọc, không biểu thị thứ tự
+kiểm tra điều kiện trong từng vòng giám sát. Các trạng thái đều được
+runner/repository xử lý. Fencing có thể từ chối
 publish của owner cũ; khi đó trạng thái đọc lại từ database là kết quả cuối.
 `LEASE_LOST` là nhánh supervisor có thể đặt; không bảo đảm nó được ghi nếu lease
 đã hết. `RESOURCE_LIMIT`, `SOURCE_DRIFT`, `INPUT_CORRUPT`, `WORKER_LOST` là error
@@ -1222,7 +1212,7 @@ làm hash kết quả thay đổi chỉ vì chạy chậm hơn. Hai hash giống
 khả năng khái quát khoa học; chúng kiểm tra tái lập đúng phạm vi artifact.
 
 ```mermaid
-flowchart LR
+flowchart TD
   CONFIG[Config và dataset manifest] --> SNAP[Snapshot cùng runtime identity]
   SNAP --> RUN[Run có seed cố định]
   RUN --> ART[Result SHA và stage evidence]
