@@ -18,6 +18,7 @@ import time
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
+DATA_ROOT = Path("\\\\?\\" + str(ROOT)) if os.name == "nt" else ROOT
 OUT = ROOT / "var/github-publication"
 TAG = "experiments-2026-10-24"
 REPO = "THANHTAI2004/Smart_Retail_Floor_Allocation"
@@ -53,12 +54,12 @@ def gh(args, env, check=True):
 
 def inventory():
     rows, excluded = [], []
-    for base, dirs, files in os.walk(ROOT / "experiments", followlinks=False):
+    for base, dirs, files in os.walk(DATA_ROOT / "experiments", followlinks=False):
         dirs[:] = sorted(d for d in dirs if d not in {"__pycache__", ".pytest_cache", ".venv", "node_modules"}
                          and not (Path(base) / d).is_symlink())
         for name in sorted(files):
             path = Path(base) / name
-            rel = path.relative_to(ROOT).as_posix()
+            rel = path.relative_to(DATA_ROOT).as_posix()
             if path.is_symlink() or path.is_junction():
                 excluded.append({"path": rel, "reason": "filesystem alias", "target": os.readlink(path)})
                 continue
@@ -67,6 +68,8 @@ def inventory():
                 continue
             st = path.stat()
             rows.append({"path": rel, "size": st.st_size, "mtime_ns": st.st_mtime_ns})
+            if len(rows) % 25000 == 0:
+                save_state(status="INVENTORY", inventoried_files=len(rows))
     # Bounded uncompressed size also bounds the ZIP size below GitHub's 2 GiB.
     groups, group, size = [], [], 0
     for row in rows:
@@ -101,7 +104,7 @@ def make_volume(item):
     with zipfile.ZipFile(path.with_suffix(".zip.partial"), "w", zipfile.ZIP_DEFLATED,
                          compresslevel=1, allowZip64=True) as archive:
         for row in rows:
-            source = ROOT / row["path"]
+            source = DATA_ROOT / row["path"]
             before = source.stat()
             h, size, tail = hashlib.sha256(), 0, b""
             scan = source.suffix.lower() in {".json", ".jsonl", ".txt", ".py", ".ps1", ".yaml", ".yml", ".toml", ".ini", ".cfg", ".md", ".csv", ".log", ".xml"}
