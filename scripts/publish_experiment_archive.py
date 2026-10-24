@@ -145,7 +145,7 @@ def make_volume(item):
                 raise RuntimeError(f"Scientific result changed during archive: {row['path']}")
             manifest.append({"path": row["path"], "bytes": size, "sha256": h.hexdigest(),
                              "live_file_changed": changed})
-        archive.writestr("ARCHIVE_CONTENTS.json", json.dumps(manifest, ensure_ascii=False))
+        archive.writestr(f"archive-manifests/{name}.json", json.dumps(manifest, ensure_ascii=False))
     os.replace(path.with_suffix(".zip.partial"), path)
     # Independently decompress every member and replay its expected SHA256.
     with zipfile.ZipFile(path) as archive:
@@ -186,36 +186,49 @@ def main():
         gh(["release", "create", TAG, "--repo", REPO, "--target", "main", "--draft",
             "--title", "Complete experiment archive - 2026-10-24", "--notes",
             "Full experiment snapshot. Download every ZIP and extract into the repository root. SHA256SUMS and ARCHIVE_MANIFEST.json describe all volumes; each ZIP includes per-file SHA256 checksums. No numerical jobs are rerun by this publication."], env)
-    results = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
-        for result in pool.map(make_volume, enumerate(inv["groups"], 1)):
-            results.append(result)
-            save_state(archived_volumes=len(results), archived_bytes=sum(r["bytes"] for r in results))
-            print(json.dumps({"archived": result["name"], "files": result["files"], "bytes": result["bytes"]}), flush=True)
+    uploaded = 0
+    uploaded_lock = threading.Lock()
+
+    def upload_volume(result):
+        nonlocal uploaded
+        assets = json.loads(gh(["api", f"repos/{REPO}/releases/tags/{TAG}"], env).stdout)["assets"]
+        existing = next((a for a in assets if a["name"] == result["name"]), None)
+        expected = "sha256:" + result["sha256"]
+        if existing and (existing.get("digest") != expected or existing["size"] != result["bytes"]):
+            if existing.get("state") != "starter":
+                raise RuntimeError(f"Remote existing asset differs: {result['name']}")
+            gh(["api", "--method", "DELETE", f"repos/{REPO}/releases/assets/{existing['id']}"], env)
+            existing = None
+        if not existing:
+            for attempt in range(4):
+                upload = gh(["release", "upload", TAG, str(OUT / result["name"]), "--repo", REPO, "--clobber"], env, check=False)
+                if not upload.returncode:
+                    break
+                if attempt == 3:
+                    raise RuntimeError(f"Upload failed: {result['name']}: {upload.stderr[:1000]}")
+                time.sleep(5)
+        with uploaded_lock:
+            uploaded += 1
+            save_state(uploaded_volumes=uploaded)
+            print(json.dumps({"uploaded": result["name"], "count": uploaded}), flush=True)
+
+    results, upload_futures = [], []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as uploads:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+            for result in pool.map(make_volume, enumerate(inv["groups"], 1)):
+                results.append(result)
+                save_state(status="ARCHIVING_AND_UPLOADING", archived_volumes=len(results), archived_bytes=sum(r["bytes"] for r in results))
+                print(json.dumps({"archived": result["name"], "files": result["files"], "bytes": result["bytes"]}), flush=True)
+                upload_futures.append(uploads.submit(upload_volume, result))
+        save_state(status="UPLOADING")
+        for future in upload_futures:
+            future.result()
     manifest = {k: v for k, v in inv.items() if k != "groups"}
     manifest.update(volumes=results, source_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
                     extraction="Extract all experiments-*.zip into the cloned repository root; every ZIP is independent.",
                     snapshot_semantics="Membership fixed at inventory time; live logs bounded at read-start size; each ZIP records actual file hashes. Numerical results must remain unchanged.")
     (OUT / "ARCHIVE_MANIFEST.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     (OUT / "SHA256SUMS").write_text("".join(f"{r['sha256']}  {r['name']}\n" for r in results), encoding="ascii")
-    save_state(status="UPLOADING")
-    for i, result in enumerate(results, 1):
-        # A digest match is required before skipping an existing uploaded asset.
-        assets = json.loads(gh(["api", f"repos/{REPO}/releases/tags/{TAG}"], env).stdout)["assets"]
-        existing = next((a for a in assets if a["name"] == result["name"]), None)
-        expected = "sha256:" + result["sha256"]
-        if existing and (existing.get("digest") != expected or existing["size"] != result["bytes"]):
-            raise RuntimeError(f"Remote existing asset differs: {result['name']}")
-        if not existing:
-            for attempt in range(4):
-                upload = gh(["release", "upload", TAG, str(OUT / result["name"]), "--repo", REPO], env, check=False)
-                if not upload.returncode:
-                    break
-                if attempt == 3:
-                    raise RuntimeError(f"Upload failed: {result['name']}: {upload.stderr[:1000]}")
-                time.sleep(5)
-        save_state(uploaded_volumes=i)
-        print(json.dumps({"uploaded": result["name"], "count": i}), flush=True)
     gh(["release", "upload", TAG, str(OUT / "SHA256SUMS"), str(OUT / "ARCHIVE_MANIFEST.json"), "--repo", REPO, "--clobber"], env)
     remote = json.loads(gh(["api", f"repos/{REPO}/releases/tags/{TAG}"], env).stdout)
     by_name = {a["name"]: a for a in remote["assets"]}
