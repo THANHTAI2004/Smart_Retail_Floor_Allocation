@@ -1,0 +1,7171 @@
+{
+  "assumptions": [
+    "Exploratory paired tests; no population-level efficacy claim",
+    "Pairing unit is (seed, cv_fold); repeated identical units are averaged, not counted as independent",
+    "Repeated k-fold units share training orders: use nadeau_bengio_p, not the naive t-test, for cross-validated comparisons",
+    "Wilcoxon signed-rank drops zero differences; A12 = P(treatment > baseline) + 0.5 P(tie)",
+    "Median-difference CI: percentile bootstrap, 2000 resamples, seed 20261023",
+    "Friedman/Nemenyi rank 1 = smallest value; dataset_means blocks are the inferential level, units blocks are exploratory",
+    "Failure rates include all attempted jobs; solution metrics only exist for valid results",
+    "Completion rate is not a proof of feasibility/infeasibility for unsolved cases",
+    "Holm adjustment is applied separately to each reported test family"
+  ],
+  "comparisons": [
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          59.6348717572072,
+          60.47712824294367
+        ],
+        "maximum": 60.578000000095926,
+        "mean": 60.056000000075436,
+        "median": 59.953000000095926,
+        "minimum": 59.71799999999348,
+        "n": 5,
+        "sd": 0.33916441442890716
+      },
+      "experiment": "E21",
+      "exploratory_p": 2.4412276428210705e-10,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 9.764910571284282e-09,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        59.71799999999348,
+        60.578000000095926
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 177.07046330670954,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          3.2582618754092536,
+          4.6857381246782905
+        ],
+        "maximum": 4.625000000116415,
+        "mean": 3.972000000043772,
+        "median": 3.8760000000474975,
+        "minimum": 3.3280000000959262,
+        "n": 5,
+        "sd": 0.5748238860650206
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.00010239582225980176,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0014335415116372248,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        3.3280000000959262,
+        4.625000000116415
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 6.909942499491894,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.56,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          -0.1554981261949538,
+          0.1794981263570039
+        ],
+        "maximum": 0.20300000009592623,
+        "mean": 0.012000000081025064,
+        "median": 0.04600000008940697,
+        "minimum": -0.12600000004749745,
+        "n": 5,
+        "sd": 0.1348981097287895
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.852033272971743,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.12600000004749745,
+        0.20300000009592623
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 0.08895602840655717,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": 1.0
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          214396731.629413,
+          251095645.97058702
+        ],
+        "maximum": 244740096,
+        "mean": 232746188.8,
+        "median": 235933696,
+        "minimum": 207282176,
+        "n": 5,
+        "sd": 14778118.071500823
+      },
+      "experiment": "E21",
+      "exploratory_p": 3.879953719714431e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.00011251865787171851,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        207282176,
+        244740096
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 15.749379432070201,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          21326414.913877156,
+          23483825.086122844
+        ],
+        "maximum": 23752704,
+        "mean": 22405120,
+        "median": 22302720,
+        "minimum": 21495808,
+        "n": 5,
+        "sd": 868757.6411036624
+      },
+      "experiment": "E21",
+      "exploratory_p": 5.414353177504685e-07,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1.6784494850264522e-05,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        21495808,
+        23752704
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 25.789839352131306,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          4572848.643204648,
+          6235676.156795353
+        ],
+        "maximum": 6135808,
+        "mean": 5404262.4,
+        "median": 5730304,
+        "minimum": 4595712,
+        "n": 5,
+        "sd": 669596.4109437864
+      },
+      "experiment": "E21",
+      "exploratory_p": 5.542177287775451e-05,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0008313265931663177,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        4595712,
+        6135808
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 8.07092498059058,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          -0.8898989750775848,
+          -0.8251492191495693
+        ],
+        "maximum": -0.8254807692307686,
+        "mean": -0.857524097113577,
+        "median": -0.857423971377461,
+        "minimum": -0.8861416361416374,
+        "n": 5,
+        "sd": 0.026073783254441114
+      },
+      "experiment": "E21",
+      "exploratory_p": 2.0488348509275647e-07,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 7.375805463339233e-06,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.8861416361416374,
+        -0.8254807692307686
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -32.88836486617323,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          -0.18065624089696214,
+          -0.13338726749103286
+        ],
+        "maximum": -0.1321235193172624,
+        "mean": -0.1570217541939975,
+        "median": -0.16131112169660933,
+        "minimum": -0.18167174565864586,
+        "n": 5,
+        "sd": 0.01903452684233025
+      },
+      "experiment": "E21",
+      "exploratory_p": 5.08251506580946e-05,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0008132024105295136,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.18167174565864586,
+        -0.1321235193172624
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -8.249312183836482,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          -0.0065904600951427975,
+          -0.006108517732748269
+        ],
+        "maximum": -0.006131832726951281,
+        "mean": -0.006349488913945533,
+        "median": -0.006354901397977009,
+        "minimum": -0.00654604942491574,
+        "n": 5,
+        "sd": 0.0001940711670354155
+      },
+      "experiment": "E21",
+      "exploratory_p": 2.0919893303898891e-07,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 7.375805463339233e-06,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.00654604942491574,
+        -0.006131832726951281
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -32.71732226347066,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          37.61343371836055,
+          45.18656628163945
+        ],
+        "maximum": 43,
+        "mean": 41.4,
+        "median": 43,
+        "minimum": 36,
+        "n": 5,
+        "sd": 3.0495901363953815
+      },
+      "experiment": "E21",
+      "exploratory_p": 7.0152038818909205e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.00017538009704727301,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        36,
+        43
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 13.575594800727824,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          2.0,
+          2.0
+        ],
+        "maximum": 2,
+        "mean": 2,
+        "median": 2,
+        "minimum": 2,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": 1,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        2,
+        2
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          2.0,
+          2.0
+        ],
+        "maximum": 2,
+        "mean": 2,
+        "median": 2,
+        "minimum": 2,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": 1,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        2,
+        2
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "small_f4_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          10.562849625932884,
+          11.230750374042529
+        ],
+        "maximum": 11.202999999979511,
+        "mean": 10.896799999987707,
+        "median": 10.983999999938533,
+        "minimum": 10.530999999959022,
+        "n": 5,
+        "sd": 0.26895389939462455
+      },
+      "experiment": "E21",
+      "exploratory_p": 8.899672475790652e-08,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 3.381875540800448e-06,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        10.530999999959022,
+        11.202999999979511
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 40.51549363855587,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.17566585456313438,
+          0.4183341454312777
+        ],
+        "maximum": 0.4059999999590218,
+        "mean": 0.29699999999720605,
+        "median": 0.3130000000819564,
+        "minimum": 0.1559999999590218,
+        "n": 5,
+        "sd": 0.09771898485387193
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.0024483775746999333,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0220353981722994,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        0.1559999999590218,
+        0.4059999999590218
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 3.039327521068062,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.7,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          -0.19592166114523624,
+          0.30792166120297826
+        ],
+        "maximum": 0.2800000000279397,
+        "mean": 0.056000000028871,
+        "median": 0.125,
+        "minimum": -0.18799999996554106,
+        "n": 5,
+        "sd": 0.2028903644935717
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.570515326919344,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.18799999996554106,
+        0.2800000000279397
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 0.2760111362047717,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": 0.5
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          66482333.47744166,
+          71223548.12255834
+        ],
+        "maximum": 70365184,
+        "mean": 68852940.8,
+        "median": 69595136,
+        "minimum": 65622016,
+        "n": 5,
+        "sd": 1909218.0541497087
+      },
+      "experiment": "E21",
+      "exploratory_p": 1.417419134002575e-07,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 5.244450795809528e-06,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        65622016,
+        70365184
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 36.06342431674962,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          6494992.4107423825,
+          8076937.189257617
+        ],
+        "maximum": 7880704,
+        "mean": 7285964.8,
+        "median": 7368704,
+        "minimum": 6393856,
+        "n": 5,
+        "sd": 637026.1120575828
+      },
+      "experiment": "E21",
+      "exploratory_p": 1.3882839260757628e-05,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0002533851027348398,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        6393856,
+        7880704
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 11.437466474437704,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          4535898.971994876,
+          5892517.028005124
+        ],
+        "maximum": 5808128,
+        "mean": 5214208,
+        "median": 5320704,
+        "minimum": 4497408,
+        "n": 5,
+        "sd": 546290.3241024867
+      },
+      "experiment": "E21",
+      "exploratory_p": 2.8498521027272024e-05,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0004844748574636244,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        4497408,
+        5808128
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 9.544756276923897,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          -3.2709131935280453,
+          -2.7824201398052884
+        ],
+        "maximum": -2.799999999999999,
+        "mean": -3.026666666666667,
+        "median": -3.033333333333334,
+        "minimum": -3.3166666666666664,
+        "n": 5,
+        "sd": 0.19670903498427456
+      },
+      "experiment": "E21",
+      "exploratory_p": 4.2580242277141644e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.00011922467837599661,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -3.3166666666666664,
+        -2.799999999999999
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -15.38651575871249,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.52,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          -0.07346821254718938,
+          0.14524152146696184
+        ],
+        "maximum": 0.14058160280967325,
+        "mean": 0.03588665445988624,
+        "median": 0.05256883838643488,
+        "minimum": -0.09301156181782441,
+        "n": 5,
+        "sd": 0.08807122310485953
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.413765032865052,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.09301156181782441,
+        0.14058160280967325
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 0.4074731018230416,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          -0.023179801375973086,
+          -0.019955760563665333
+        ],
+        "maximum": -0.020132873659739745,
+        "mean": -0.02156778096981921,
+        "median": -0.02166666666666666,
+        "minimum": -0.023489645329319513,
+        "n": 5,
+        "sd": 0.0012982742581615346
+      },
+      "experiment": "E21",
+      "exploratory_p": 3.135883256655699e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 9.407649769967097e-05,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.023489645329319513,
+        -0.020132873659739745
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -16.612653939823932,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          58.64471097896045,
+          59.75528902103956
+        ],
+        "maximum": 60,
+        "mean": 59.2,
+        "median": 59,
+        "minimum": 59,
+        "n": 5,
+        "sd": 0.4472135954999579
+      },
+      "experiment": "E21",
+      "exploratory_p": 7.815402717796269e-10,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 3.048007059940545e-08,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        59,
+        60
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 132.37522426798756,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          2.0,
+          2.0
+        ],
+        "maximum": 2,
+        "mean": 2,
+        "median": 2,
+        "minimum": 2,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": 1,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        2,
+        2
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          2.0,
+          2.0
+        ],
+        "maximum": 2,
+        "mean": 2,
+        "median": 2,
+        "minimum": 2,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": 1,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        2,
+        2
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s101",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          10.970552409798623,
+          13.22984759017381
+        ],
+        "maximum": 12.671999999904074,
+        "mean": 12.100199999986216,
+        "median": 12.626000000047497,
+        "minimum": 10.563000000081956,
+        "n": 5,
+        "sd": 0.9097852493281454
+      },
+      "experiment": "E21",
+      "exploratory_p": 7.612550018046669e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.00017538009704727301,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        10.563000000081956,
+        12.671999999904074
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 13.300061755147079,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.1911663743266654,
+          0.3524336256021816
+        ],
+        "maximum": 0.3589999999385327,
+        "mean": 0.2717999999644235,
+        "median": 0.2809999999590218,
+        "minimum": 0.1869999999180436,
+        "n": 5,
+        "sd": 0.06493997229073696
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.0007259528739545057,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.007985481613499563,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        0.1869999999180436,
+        0.3589999999385327
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 4.185403694777878,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.38,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          -0.22137870951830957,
+          0.09697870952352496
+        ],
+        "maximum": 0.06300000008195639,
+        "mean": -0.0621999999973923,
+        "median": -0.062000000034458935,
+        "minimum": -0.26500000001396984,
+        "n": 5,
+        "sd": 0.12819789391589909
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.33897485985680387,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.26500000001396984,
+        0.06300000008195639
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -0.4851873778690702,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": 0.4375
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          67586427.2833031,
+          81334302.3166969
+        ],
+        "maximum": 78315520,
+        "mean": 74460364.8,
+        "median": 76070912,
+        "minimum": 64876544,
+        "n": 5,
+        "sd": 5536068.9579797685
+      },
+      "experiment": "E21",
+      "exploratory_p": 7.27984955578275e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.00017538009704727301,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        64876544,
+        78315520
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 13.450042867091055,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          5517259.009300655,
+          8980942.590699345
+        ],
+        "maximum": 9469952,
+        "mean": 7249100.8,
+        "median": 6787072,
+        "minimum": 5914624,
+        "n": 5,
+        "sd": 1394774.9094800923
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.0003132944403187297,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0037595332838247565,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        5914624,
+        9469952
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 5.197326644413277,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          3403076.9562428296,
+          6448622.24375717
+        ],
+        "maximum": 6860800,
+        "mean": 4925849.6,
+        "median": 4276224,
+        "minimum": 3870720,
+        "n": 5,
+        "sd": 1226396.7111554076
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.0008506339384304518,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.008506339384304517,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        3870720,
+        6860800
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 4.01652218665792,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          -2.8333139695993124,
+          -2.2933526970673555
+        ],
+        "maximum": -2.2166666666666677,
+        "mean": -2.563333333333334,
+        "median": -2.633333333333333,
+        "minimum": -2.7666666666666684,
+        "n": 5,
+        "sd": 0.21743453676400576
+      },
+      "experiment": "E21",
+      "exploratory_p": 1.2306936907204144e-05,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0002461387381440829,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -2.7666666666666684,
+        -2.2166666666666677
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -11.788988867557261,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.38,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          -0.1813166068536331,
+          0.0852915876608093
+        ],
+        "maximum": 1.8596235662471372e-15,
+        "mean": -0.04801250959641191,
+        "median": 0.0,
+        "minimum": -0.2400625479820614,
+        "n": 5,
+        "sd": 0.10735923522793905
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.37390096630006286,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1,
+      "holm_wilcoxon_p": null,
+      "median_difference_bootstrap_ci95": [
+        -0.2400625479820614,
+        1.8596235662471372e-15
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -0.44721359549995365,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          -0.020138936938682742,
+          -0.01661728927921177
+        ],
+        "maximum": -0.016176279830450557,
+        "mean": -0.018378113108947255,
+        "median": -0.018809523809523804,
+        "minimum": -0.019761904761904765,
+        "n": 5,
+        "sd": 0.0014181161991349992
+      },
+      "experiment": "E21",
+      "exploratory_p": 8.44140731365091e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0001772695535866691,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.019761904761904765,
+        -0.016176279830450557
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -12.959525545337721,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          62.44710978960441,
+          73.55289021039559
+        ],
+        "maximum": 70,
+        "mean": 68,
+        "median": 70,
+        "minimum": 60,
+        "n": 5,
+        "sd": 4.47213595499958
+      },
+      "experiment": "E21",
+      "exploratory_p": 4.46411263338693e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.00012053104110144712,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        60,
+        70
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 15.205262246998569,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          2.0,
+          2.0
+        ],
+        "maximum": 2,
+        "mean": 2,
+        "median": 2,
+        "minimum": 2,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": 1,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        2,
+        2
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          2.244710978960441,
+          3.3552890210395585
+        ],
+        "maximum": 3,
+        "mean": 2.8,
+        "median": 3,
+        "minimum": 2,
+        "n": 5,
+        "sd": 0.4472135954999579
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.00015101140222180048,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.001963148228883406,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        2,
+        3
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 6.260990336999411,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s202",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          11.302009559024105,
+          12.34199044106344
+        ],
+        "maximum": 12.563000000081956,
+        "mean": 11.822000000043772,
+        "median": 11.625,
+        "minimum": 11.562999999965541,
+        "n": 5,
+        "sd": 0.41878514781124615
+      },
+      "experiment": "E21",
+      "exploratory_p": 3.7729948104735634e-07,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1.2450882874562759e-05,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        11.562999999965541,
+        12.563000000081956
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 28.2292723651512,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.18208881187148102,
+          0.4863111881642818
+        ],
+        "maximum": 0.5469999999040738,
+        "mean": 0.3342000000178814,
+        "median": 0.2970000000204891,
+        "minimum": 0.23400000005494803,
+        "n": 5,
+        "sd": 0.12250591816018659
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.0036538642463827503,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.029230913971062002,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        0.23400000005494803,
+        0.5469999999040738
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 2.728031470127732,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.54,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          -0.07576011311722844,
+          0.1449601131909892
+        ],
+        "maximum": 0.18799999996554106,
+        "mean": 0.03460000003688037,
+        "median": 1.1641532182693481e-10,
+        "minimum": -0.03100000007543713,
+        "n": 5,
+        "sd": 0.08888081905713602
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.4331668220462513,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.03100000007543713,
+        0.18799999996554106
+      ],
+      "metric": "wall_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 0.38928534192105224,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": 0.625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          66887347.589596376,
+          79580697.21040364
+        ],
+        "maximum": 77684736,
+        "mean": 73234022.4,
+        "median": 74735616,
+        "minimum": 64389120,
+        "n": 5,
+        "sd": 5111426.939643058
+      },
+      "experiment": "E21",
+      "exploratory_p": 5.658648424021904e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.00014712485902456952,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        64389120,
+        77684736
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 14.327510353716235,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          7324871.771775927,
+          8810091.428224072
+        ],
+        "maximum": 8912896,
+        "mean": 8067481.6,
+        "median": 7987200,
+        "minimum": 7327744,
+        "n": 5,
+        "sd": 598076.3147666024
+      },
+      "experiment": "E21",
+      "exploratory_p": 7.196311717252002e-06,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.00017538009704727301,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        7327744,
+        8912896
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 13.489050478697376,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          5153947.602577241,
+          6395133.9974227585
+        ],
+        "maximum": 6451200,
+        "mean": 5774540.8,
+        "median": 5926912,
+        "minimum": 5218304,
+        "n": 5,
+        "sd": 499807.6760867124
+      },
+      "experiment": "E21",
+      "exploratory_p": 1.3336058038675778e-05,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 0.0002533851027348398,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        5218304,
+        6451200
+      ],
+      "metric": "peak_child_rss_bytes",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": 11.55352563852614,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          -2.6212621189805794,
+          -2.405404547686087
+        ],
+        "maximum": -2.4333333333333336,
+        "mean": -2.513333333333333,
+        "median": -2.500000000000001,
+        "minimum": -2.633333333333333,
+        "n": 5,
+        "sd": 0.08692269873603484
+      },
+      "experiment": "E21",
+      "exploratory_p": 3.4280834876075875e-07,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1.1655483857865798e-05,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -2.633333333333333,
+        -2.4333333333333336
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -28.914580079546024,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_distance_m",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.52,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          -0.07460506854296704,
+          0.045634630059602
+        ],
+        "maximum": 0.013888888888887618,
+        "mean": -0.014485219241682524,
+        "median": 0.0,
+        "minimum": -0.10020387398618597,
+        "n": 5,
+        "sd": 0.04841877463489
+      },
+      "experiment": "E21",
+      "exploratory_p": 0.540152599879544,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.10020387398618597,
+        0.013888888888887618
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -0.2991653413559261,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 1.0
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "mean_wait_s",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          -0.01881359448051169,
+          -0.017132553764940738
+        ],
+        "maximum": -0.01736111111111112,
+        "mean": -0.017973074122726213,
+        "median": -0.017837301587301596,
+        "minimum": -0.018952672200932642,
+        "n": 5,
+        "sd": 0.0006769306019997371
+      },
+      "experiment": "E21",
+      "exploratory_p": 4.820336922089013e-07,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": 1.5425078150684843e-05,
+      "holm_wilcoxon_p": 1,
+      "median_difference_bootstrap_ci95": [
+        -0.018952672200932642,
+        -0.01736111111111112
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": -26.55083707197092,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "metric": "joint_objective",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          70.0,
+          70.0
+        ],
+        "maximum": 70,
+        "mean": 70,
+        "median": 70,
+        "minimum": 70,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": 1,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        70,
+        70
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          2.0,
+          2.0
+        ],
+        "maximum": 2,
+        "mean": 2,
+        "median": 2,
+        "minimum": 2,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": 1,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        2,
+        2
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_evaluations",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 1.0,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          3.0,
+          3.0
+        ],
+        "maximum": 3,
+        "mean": 3,
+        "median": 3,
+        "minimum": 3,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": 1,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        3,
+        3
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "feedback",
+      "wilcoxon_p": 0.0625
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "multistart",
+      "wilcoxon_p": null
+    },
+    {
+      "a12_treatment_greater": 0.5,
+      "baseline": "baseline",
+      "cross_validated": false,
+      "dataset": "tiny_f6_s303",
+      "difference": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "maximum": 0,
+        "mean": 0,
+        "median": 0,
+        "minimum": 0,
+        "n": 5,
+        "sd": 0.0
+      },
+      "experiment": "E21",
+      "exploratory_p": null,
+      "holm_nadeau_bengio_p": null,
+      "holm_p": null,
+      "holm_wilcoxon_p": null,
+      "limitation": "Insufficient independent units or constant differences; no t-test inference",
+      "median_difference_bootstrap_ci95": [
+        0,
+        0
+      ],
+      "metric": "joint_iterations_to_best",
+      "nadeau_bengio_p": null,
+      "paired_effect_dz": null,
+      "paired_units": 5,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "test_to_train_orders": null,
+      "treatment": "seq_milp",
+      "wilcoxon_p": null
+    }
+  ],
+  "rankings": [
+    {
+      "average_ranks": {
+        "baseline": 1.25,
+        "feedback": 4.0,
+        "multistart": 3.0,
+        "seq_milp": 1.75
+      },
+      "blocks": 4,
+      "experiment": "E21",
+      "friedman_p": 0.01119724671514405,
+      "level": "dataset_means",
+      "limitation": "Fewer than five blocks; ranking test has little power",
+      "metric": "wall_s",
+      "nemenyi_cd_0_05": 2.3451944212853166,
+      "nemenyi_different": [
+        [
+          "baseline",
+          "feedback"
+        ]
+      ],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 1.45,
+        "feedback": 4.0,
+        "multistart": 3.0,
+        "seq_milp": 1.55
+      },
+      "blocks": 20,
+      "experiment": "E21",
+      "friedman_p": 1.0894816146419459e-11,
+      "level": "units",
+      "metric": "wall_s",
+      "nemenyi_cd_0_05": 1.0488028292894496,
+      "nemenyi_different": [
+        [
+          "baseline",
+          "feedback"
+        ],
+        [
+          "baseline",
+          "multistart"
+        ],
+        [
+          "feedback",
+          "seq_milp"
+        ],
+        [
+          "multistart",
+          "seq_milp"
+        ]
+      ],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 1.0,
+        "feedback": 4.0,
+        "multistart": 3.0,
+        "seq_milp": 2.0
+      },
+      "blocks": 4,
+      "experiment": "E21",
+      "friedman_p": 0.007383160505359769,
+      "level": "dataset_means",
+      "limitation": "Fewer than five blocks; ranking test has little power",
+      "metric": "peak_child_rss_bytes",
+      "nemenyi_cd_0_05": 2.3451944212853166,
+      "nemenyi_different": [
+        [
+          "baseline",
+          "feedback"
+        ]
+      ],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 1.0,
+        "feedback": 4.0,
+        "multistart": 3.0,
+        "seq_milp": 2.0
+      },
+      "blocks": 20,
+      "experiment": "E21",
+      "friedman_p": 5.878230727906921e-13,
+      "level": "units",
+      "metric": "peak_child_rss_bytes",
+      "nemenyi_cd_0_05": 1.0488028292894496,
+      "nemenyi_different": [
+        [
+          "baseline",
+          "feedback"
+        ],
+        [
+          "baseline",
+          "multistart"
+        ],
+        [
+          "feedback",
+          "seq_milp"
+        ]
+      ],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 3.0,
+        "feedback": 1.0,
+        "multistart": 3.0,
+        "seq_milp": 3.0
+      },
+      "blocks": 4,
+      "experiment": "E21",
+      "friedman_p": 0.007383160505359749,
+      "level": "dataset_means",
+      "limitation": "Fewer than five blocks; ranking test has little power",
+      "metric": "mean_distance_m",
+      "nemenyi_cd_0_05": 2.3451944212853166,
+      "nemenyi_different": [],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 3.0,
+        "feedback": 1.0,
+        "multistart": 3.0,
+        "seq_milp": 3.0
+      },
+      "blocks": 20,
+      "experiment": "E21",
+      "friedman_p": 5.878230727906921e-13,
+      "level": "units",
+      "metric": "mean_distance_m",
+      "nemenyi_cd_0_05": 1.0488028292894496,
+      "nemenyi_different": [
+        [
+          "baseline",
+          "feedback"
+        ],
+        [
+          "feedback",
+          "multistart"
+        ],
+        [
+          "feedback",
+          "seq_milp"
+        ]
+      ],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 2.75,
+        "feedback": 1.75,
+        "multistart": 2.75,
+        "seq_milp": 2.75
+      },
+      "blocks": 4,
+      "experiment": "E21",
+      "friedman_p": 0.3916251762710895,
+      "level": "dataset_means",
+      "limitation": "Fewer than five blocks; ranking test has little power",
+      "metric": "mean_wait_s",
+      "nemenyi_cd_0_05": 2.3451944212853166,
+      "nemenyi_different": [],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 2.55,
+        "feedback": 2.35,
+        "multistart": 2.55,
+        "seq_milp": 2.55
+      },
+      "blocks": 20,
+      "experiment": "E21",
+      "friedman_p": 0.83575592446386,
+      "level": "units",
+      "metric": "mean_wait_s",
+      "nemenyi_cd_0_05": 1.0488028292894496,
+      "nemenyi_different": [],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 3.0,
+        "feedback": 1.0,
+        "multistart": 3.0,
+        "seq_milp": 3.0
+      },
+      "blocks": 4,
+      "experiment": "E21",
+      "friedman_p": 0.007383160505359749,
+      "level": "dataset_means",
+      "limitation": "Fewer than five blocks; ranking test has little power",
+      "metric": "joint_objective",
+      "nemenyi_cd_0_05": 2.3451944212853166,
+      "nemenyi_different": [],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 3.0,
+        "feedback": 1.0,
+        "multistart": 3.0,
+        "seq_milp": 3.0
+      },
+      "blocks": 20,
+      "experiment": "E21",
+      "friedman_p": 5.878230727906921e-13,
+      "level": "units",
+      "metric": "joint_objective",
+      "nemenyi_cd_0_05": 1.0488028292894496,
+      "nemenyi_different": [
+        [
+          "baseline",
+          "feedback"
+        ],
+        [
+          "feedback",
+          "multistart"
+        ],
+        [
+          "feedback",
+          "seq_milp"
+        ]
+      ],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 1.5,
+        "feedback": 4.0,
+        "multistart": 3.0,
+        "seq_milp": 1.5
+      },
+      "blocks": 4,
+      "experiment": "E21",
+      "friedman_p": 0.007383160505359789,
+      "level": "dataset_means",
+      "limitation": "Fewer than five blocks; ranking test has little power",
+      "metric": "joint_evaluations",
+      "nemenyi_cd_0_05": 2.3451944212853166,
+      "nemenyi_different": [
+        [
+          "baseline",
+          "feedback"
+        ],
+        [
+          "feedback",
+          "seq_milp"
+        ]
+      ],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 1.5,
+        "feedback": 4.0,
+        "multistart": 3.0,
+        "seq_milp": 1.5
+      },
+      "blocks": 20,
+      "experiment": "E21",
+      "friedman_p": 5.878230727906921e-13,
+      "level": "units",
+      "metric": "joint_evaluations",
+      "nemenyi_cd_0_05": 1.0488028292894496,
+      "nemenyi_different": [
+        [
+          "baseline",
+          "feedback"
+        ],
+        [
+          "baseline",
+          "multistart"
+        ],
+        [
+          "feedback",
+          "seq_milp"
+        ],
+        [
+          "multistart",
+          "seq_milp"
+        ]
+      ],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 2.0,
+        "feedback": 4.0,
+        "multistart": 2.0,
+        "seq_milp": 2.0
+      },
+      "blocks": 4,
+      "experiment": "E21",
+      "friedman_p": 0.007383160505359749,
+      "level": "dataset_means",
+      "limitation": "Fewer than five blocks; ranking test has little power",
+      "metric": "joint_iterations_to_best",
+      "nemenyi_cd_0_05": 2.3451944212853166,
+      "nemenyi_different": [],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    },
+    {
+      "average_ranks": {
+        "baseline": 2.0,
+        "feedback": 4.0,
+        "multistart": 2.0,
+        "seq_milp": 2.0
+      },
+      "blocks": 20,
+      "experiment": "E21",
+      "friedman_p": 5.878230727906921e-13,
+      "level": "units",
+      "metric": "joint_iterations_to_best",
+      "nemenyi_cd_0_05": 1.0488028292894496,
+      "nemenyi_different": [
+        [
+          "baseline",
+          "feedback"
+        ],
+        [
+          "feedback",
+          "multistart"
+        ],
+        [
+          "feedback",
+          "seq_milp"
+        ]
+      ],
+      "treatments": [
+        "baseline",
+        "feedback",
+        "multistart",
+        "seq_milp"
+      ]
+    }
+  ],
+  "selected_metrics": {
+    "E21": [
+      "joint_evaluations",
+      "joint_iterations_to_best",
+      "joint_objective",
+      "mean_distance_m",
+      "mean_wait_s",
+      "peak_child_rss_bytes",
+      "wall_s"
+    ]
+  },
+  "summary": [
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "small_f4_s101",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.144590513974731,
+            0.14697495073620664
+          ],
+          "maximum": 0.1469619255705292,
+          "mean": 0.14578273235546882,
+          "median": 0.145500196078452,
+          "minimum": 0.14455527213231356,
+          "n": 5,
+          "sd": 0.0009601779406204451
+        },
+        "mean_distance_m": {
+          "ci95": [
+            17.931126916394895,
+            18.244080163602845
+          ],
+          "maximum": 18.23705440900563,
+          "mean": 18.08760353999887,
+          "median": 18.049165175909362,
+          "minimum": 17.926923076923078,
+          "n": 5,
+          "sd": 0.12602171266167064
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.7352224122102863,
+            0.8557290341889997
+          ],
+          "maximum": 0.8736566287081176,
+          "mean": 0.795475723199643,
+          "median": 0.7898921497354032,
+          "minimum": 0.7396558823699342,
+          "n": 5,
+          "sd": 0.048526260789167885
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            157421423.8947613,
+            158409667.3052387
+          ],
+          "maximum": 158437376,
+          "mean": 157915545.6,
+          "median": 157876224,
+          "minimum": 157515776,
+          "n": 5,
+          "sd": 397951.2218712238
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            3.0063651788953965,
+            3.312384821104603
+          ],
+          "maximum": 3.3125,
+          "mean": 3.159375,
+          "median": 3.171875,
+          "minimum": 2.96875,
+          "n": 5,
+          "sd": 0.12322965095706472
+        },
+        "t1_objective": {
+          "ci95": [
+            94.73280783992519,
+            94.73280783992519
+          ],
+          "maximum": 94.73280783992519,
+          "mean": 94.73280783992519,
+          "median": 94.73280783992519,
+          "minimum": 94.73280783992519,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23623314036693382,
+            0.23623314036693382
+          ],
+          "maximum": 0.23623314036693382,
+          "mean": 0.23623314036693382,
+          "median": 0.23623314036693382,
+          "minimum": 0.23623314036693382,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            11984.0,
+            11984.0
+          ],
+          "maximum": 11984.0,
+          "mean": 11984.0,
+          "median": 11984.0,
+          "minimum": 11984.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            3.6982019010086558,
+            3.8457980988926237
+          ],
+          "maximum": 3.843999999924563,
+          "mean": 3.7719999999506397,
+          "median": 3.7339999999385327,
+          "minimum": 3.718999999924563,
+          "n": 5,
+          "sd": 0.05943483828857316
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "baseline"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "small_f4_s101",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            38.61343371836055,
+            46.18656628163945
+          ],
+          "maximum": 44,
+          "mean": 42.4,
+          "median": 44,
+          "minimum": 37,
+          "n": 5,
+          "sd": 3.0495901363953815
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            2.0,
+            2.0
+          ],
+          "maximum": 2,
+          "mean": 2,
+          "median": 2,
+          "minimum": 2,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.13845116385694733,
+            0.14041532302609927
+          ],
+          "maximum": 0.14041587614561346,
+          "mean": 0.1394332434415233,
+          "median": 0.13924355817063797,
+          "minimum": 0.13837751325856365,
+          "n": 5,
+          "sd": 0.0007909382779855707
+        },
+        "mean_distance_m": {
+          "ci95": [
+            17.100034681599446,
+            17.360124204171143
+          ],
+          "maximum": 17.356941838649153,
+          "mean": 17.230079442885295,
+          "median": 17.207391826923075,
+          "minimum": 17.088461538461537,
+          "n": 5,
+          "sd": 0.10473426101906524
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.5975689574493455,
+            0.6793389805619456
+          ],
+          "maximum": 0.6919848830494717,
+          "mean": 0.6384539690056455,
+          "median": 0.6285810280387939,
+          "minimum": 0.6075323630526718,
+          "n": 5,
+          "sd": 0.03292759685023153
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            372480257.30521953,
+            408843211.4947804
+          ],
+          "maximum": 402300928,
+          "mean": 390661734.4,
+          "median": 393449472,
+          "minimum": 365469696,
+          "n": 5,
+          "sd": 14642831.813664896
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            61.13395901570143,
+            62.216040984298566
+          ],
+          "maximum": 62.328125,
+          "mean": 61.675,
+          "median": 61.40625,
+          "minimum": 61.34375,
+          "n": 5,
+          "sd": 0.4357386419202456
+        },
+        "t1_objective": {
+          "ci95": [
+            93.44759832959569,
+            93.44759832959569
+          ],
+          "maximum": 93.44759832959569,
+          "mean": 93.44759832959569,
+          "median": 93.44759832959569,
+          "minimum": 93.44759832959569,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.22510974466681097,
+            0.22510974466681097
+          ],
+          "maximum": 0.22510974466681097,
+          "mean": 0.22510974466681097,
+          "median": 0.22510974466681097,
+          "minimum": 0.22510974466681097,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            11984.0,
+            11984.0
+          ],
+          "maximum": 11984.0,
+          "mean": 11984.0,
+          "median": 11984.0,
+          "minimum": 11984.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            63.438421118701804,
+            64.21757888135036
+          ],
+          "maximum": 64.31200000003446,
+          "mean": 63.82800000002608,
+          "median": 63.79700000002049,
+          "minimum": 63.54700000002049,
+          "n": 5,
+          "sd": 0.313755478042253
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "feedback"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "small_f4_s101",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            3.0,
+            3.0
+          ],
+          "maximum": 3,
+          "mean": 3,
+          "median": 3,
+          "minimum": 3,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.144590513974731,
+            0.14697495073620664
+          ],
+          "maximum": 0.1469619255705292,
+          "mean": 0.14578273235546882,
+          "median": 0.145500196078452,
+          "minimum": 0.14455527213231356,
+          "n": 5,
+          "sd": 0.0009601779406204451
+        },
+        "mean_distance_m": {
+          "ci95": [
+            17.931126916394895,
+            18.244080163602845
+          ],
+          "maximum": 18.23705440900563,
+          "mean": 18.08760353999887,
+          "median": 18.049165175909362,
+          "minimum": 17.926923076923078,
+          "n": 5,
+          "sd": 0.12602171266167064
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.7352224122102863,
+            0.8557290341889997
+          ],
+          "maximum": 0.8736566287081176,
+          "mean": 0.795475723199643,
+          "median": 0.7898921497354032,
+          "minimum": 0.7396558823699342,
+          "n": 5,
+          "sd": 0.048526260789167885
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            179601213.82505485,
+            181040117.37494513
+          ],
+          "maximum": 181268480,
+          "mean": 180320665.6,
+          "median": 180191232,
+          "minimum": 179683328,
+          "n": 5,
+          "sd": 579425.4935199175
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            6.4162690285190385,
+            7.7087309714809615
+          ],
+          "maximum": 7.734375,
+          "mean": 7.0625,
+          "median": 6.921875,
+          "minimum": 6.53125,
+          "n": 5,
+          "sd": 0.5204555921858272
+        },
+        "t1_objective": {
+          "ci95": [
+            94.73280783992519,
+            94.73280783992519
+          ],
+          "maximum": 94.73280783992519,
+          "mean": 94.73280783992519,
+          "median": 94.73280783992519,
+          "minimum": 94.73280783992519,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23623314036693382,
+            0.23623314036693382
+          ],
+          "maximum": 0.23623314036693382,
+          "mean": 0.23623314036693382,
+          "median": 0.23623314036693382,
+          "minimum": 0.23623314036693382,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            11984.0,
+            11984.0
+          ],
+          "maximum": 11984.0,
+          "mean": 11984.0,
+          "median": 11984.0,
+          "minimum": 11984.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            7.043069950112542,
+            8.444930049876282
+          ],
+          "maximum": 8.344000000040978,
+          "mean": 7.743999999994412,
+          "median": 7.60999999998603,
+          "minimum": 7.172000000020489,
+          "n": 5,
+          "sd": 0.5645086359078303
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "multistart"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "small_f4_s101",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.144590513974731,
+            0.14697495073620664
+          ],
+          "maximum": 0.1469619255705292,
+          "mean": 0.14578273235546882,
+          "median": 0.145500196078452,
+          "minimum": 0.14455527213231356,
+          "n": 5,
+          "sd": 0.0009601779406204451
+        },
+        "mean_distance_m": {
+          "ci95": [
+            17.931126916394895,
+            18.244080163602845
+          ],
+          "maximum": 18.23705440900563,
+          "mean": 18.08760353999887,
+          "median": 18.049165175909362,
+          "minimum": 17.926923076923078,
+          "n": 5,
+          "sd": 0.12602171266167064
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.7352224122102863,
+            0.8557290341889997
+          ],
+          "maximum": 0.8736566287081176,
+          "mean": 0.795475723199643,
+          "median": 0.7898921497354032,
+          "minimum": 0.7396558823699342,
+          "n": 5,
+          "sd": 0.048526260789167885
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            162861558.56887373,
+            163778057.43112627
+          ],
+          "maximum": 163696640,
+          "mean": 163319808,
+          "median": 163246080,
+          "minimum": 162783232,
+          "n": 5,
+          "sd": 369060.7376787729
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            3.1798545633908843,
+            3.3388954366091155
+          ],
+          "maximum": 3.359375,
+          "mean": 3.259375,
+          "median": 3.265625,
+          "minimum": 3.203125,
+          "n": 5,
+          "sd": 0.0640434422872475
+        },
+        "t1_objective": {
+          "ci95": [
+            94.73280783992519,
+            94.73280783992519
+          ],
+          "maximum": 94.73280783992519,
+          "mean": 94.73280783992519,
+          "median": 94.73280783992519,
+          "minimum": 94.73280783992519,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23623314036693382,
+            0.23623314036693382
+          ],
+          "maximum": 0.23623314036693382,
+          "mean": 0.23623314036693382,
+          "median": 0.23623314036693382,
+          "minimum": 0.23623314036693382,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            11984.0,
+            11984.0
+          ],
+          "maximum": 11984.0,
+          "mean": 11984.0,
+          "median": 11984.0,
+          "minimum": 11984.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            3.671494004324499,
+            3.8965059957388313
+          ],
+          "maximum": 3.937000000034459,
+          "mean": 3.784000000031665,
+          "median": 3.76500000001397,
+          "minimum": 3.702999999979511,
+          "n": 5,
+          "sd": 0.09060905033078288
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "seq_milp"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.4385029682449546,
+        1.0
+      ],
+      "dataset": "small_f4_s202",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 3,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 3,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.1485813761963938,
+            0.15185904621914706
+          ],
+          "maximum": 0.15098153575761153,
+          "mean": 0.15022021120777043,
+          "median": 0.14986233063353696,
+          "minimum": 0.14981676723216283,
+          "n": 3,
+          "sd": 0.0006597198712554035
+        },
+        "mean_distance_m": {
+          "ci95": [
+            18.426238575541895,
+            18.863731230706982
+          ],
+          "maximum": 18.746642246642246,
+          "mean": 18.64498490312444,
+          "median": 18.596004770423374,
+          "minimum": 18.592307692307696,
+          "n": 3,
+          "sd": 0.0880572468055383
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.786088221047012,
+            0.8972171956493723
+          ],
+          "maximum": 0.8662931756479229,
+          "mean": 0.8416527083481922,
+          "median": 0.8360369698900749,
+          "minimum": 0.8226279795065788,
+          "n": 3,
+          "sd": 0.022367716185118097
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            158571753.06090415,
+            159793942.93909585
+          ],
+          "maximum": 159457280,
+          "mean": 159182848,
+          "median": 159109120,
+          "minimum": 158982144,
+          "n": 3,
+          "sd": 245998.81729796994
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            2.8209627565230364,
+            3.7207039101436306
+          ],
+          "maximum": 3.390625,
+          "mean": 3.2708333333333335,
+          "median": 3.359375,
+          "minimum": 3.0625,
+          "n": 3,
+          "sd": 0.18109727761160113
+        },
+        "t1_objective": {
+          "ci95": [
+            94.73280783992519,
+            94.73280783992519
+          ],
+          "maximum": 94.73280783992519,
+          "mean": 94.73280783992519,
+          "median": 94.73280783992519,
+          "minimum": 94.73280783992519,
+          "n": 3,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23909651149193983,
+            0.23909651149193983
+          ],
+          "maximum": 0.23909651149193983,
+          "mean": 0.23909651149193983,
+          "median": 0.23909651149193983,
+          "minimum": 0.23909651149193983,
+          "n": 3,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            11328.0,
+            11328.0
+          ],
+          "maximum": 11328.0,
+          "mean": 11328.0,
+          "median": 11328.0,
+          "minimum": 11328.0,
+          "n": 3,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            3.84407970966455,
+            4.00058695707476
+          ],
+          "maximum": 3.9540000000270084,
+          "mean": 3.922333333369655,
+          "median": 3.922000000020489,
+          "minimum": 3.8910000000614673,
+          "n": 3,
+          "sd": 0.031501322706448266
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 3,
+      "succeeded": 3,
+      "total": 3,
+      "treatment": "baseline"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s101",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.0737423821585591,
+            0.07751564570741945
+          ],
+          "maximum": 0.07792929139067535,
+          "mean": 0.07562901393298928,
+          "median": 0.07563284638495521,
+          "minimum": 0.07398000575898067,
+          "n": 5,
+          "sd": 0.0015194382515394237
+        },
+        "mean_distance_m": {
+          "ci95": [
+            9.985563015270962,
+            10.461983880435465
+          ],
+          "maximum": 10.507106781186547,
+          "mean": 10.223773447853214,
+          "median": 10.257106781186549,
+          "minimum": 10.007106781186547,
+          "n": 5,
+          "sd": 0.19184774055368903
+        },
+        "mean_wait_s": {
+          "ci95": [
+            -0.015158750172013763,
+            0.34312665075303994
+          ],
+          "maximum": 0.3575115040040984,
+          "mean": 0.1639839502905131,
+          "median": 0.10400226802715622,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.14427631043638306
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            135134307.31733146,
+            136038915.0826685
+          ],
+          "maximum": 136146944,
+          "mean": 135586611.2,
+          "median": 135426048,
+          "minimum": 135237632,
+          "n": 5,
+          "sd": 364272.3662140734
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.4923288198390208,
+            1.7076711801609794
+          ],
+          "maximum": 1.734375,
+          "mean": 1.6,
+          "median": 1.609375,
+          "minimum": 1.515625,
+          "n": 5,
+          "sd": 0.08671523078444755
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23800211196772128,
+            0.23800211196772128
+          ],
+          "maximum": 0.23800211196772128,
+          "mean": 0.23800211196772128,
+          "median": 0.23800211196772128,
+          "minimum": 0.23800211196772128,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            4344.0,
+            4344.0
+          ],
+          "maximum": 4344.0,
+          "mean": 4344.0,
+          "median": 4344.0,
+          "minimum": 4344.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            2.029642295731157,
+            2.2395577042494716
+          ],
+          "maximum": 2.23499999998603,
+          "mean": 2.1345999999903142,
+          "median": 2.125,
+          "minimum": 2.0320000000065193,
+          "n": 5,
+          "sd": 0.08452987636831956
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "baseline"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s101",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            59.64471097896045,
+            60.75528902103956
+          ],
+          "maximum": 61,
+          "mean": 60.2,
+          "median": 60,
+          "minimum": 60,
+          "n": 5,
+          "sd": 0.4472135954999579
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            2.0,
+            2.0
+          ],
+          "maximum": 2,
+          "mean": 2,
+          "median": 2,
+          "minimum": 2,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.05377560097458123,
+            0.054346864951758916
+          ],
+          "maximum": 0.05443964606135584,
+          "mean": 0.05406123296317007,
+          "median": 0.05396617971828855,
+          "minimum": 0.05384713209924093,
+          "n": 5,
+          "sd": 0.00023003967981841407
+        },
+        "mean_distance_m": {
+          "ci95": [
+            7.173511534903509,
+            7.220702027469586
+          ],
+          "maximum": 7.2237734478532145,
+          "mean": 7.197106781186547,
+          "median": 7.19044011451988,
+          "minimum": 7.173773447853214,
+          "n": 5,
+          "sd": 0.01900292375165266
+        },
+        "mean_wait_s": {
+          "ci95": [
+            -0.07193779633719419,
+            0.4716790058379928
+          ],
+          "maximum": 0.49809310681377167,
+          "mean": 0.19987060475039933,
+          "median": 0.1565711064135911,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.21890656528722857
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            201795584.40275413,
+            207083519.59724587
+          ],
+          "maximum": 205791232,
+          "mean": 204439552,
+          "median": 205729792,
+          "minimum": 200859648,
+          "n": 5,
+          "sd": 2129374.453210144
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            11.56169250217551,
+            12.200807497824488
+          ],
+          "maximum": 12.203125,
+          "mean": 11.88125,
+          "median": 11.96875,
+          "minimum": 11.609375,
+          "n": 5,
+          "sd": 0.2573622963110564
+        },
+        "t1_objective": {
+          "ci95": [
+            18.158982171703883,
+            18.158982171703883
+          ],
+          "maximum": 18.158982171703883,
+          "mean": 18.158982171703883,
+          "median": 18.158982171703883,
+          "minimum": 18.158982171703883,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.21769194904909833,
+            0.21769194904909833
+          ],
+          "maximum": 0.21769194904909833,
+          "mean": 0.21769194904909833,
+          "median": 0.21769194904909833,
+          "minimum": 0.21769194904909833,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            4344.0,
+            4344.0
+          ],
+          "maximum": 4344.0,
+          "mean": 4344.0,
+          "median": 4344.0,
+          "minimum": 4344.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            12.69955312976989,
+            13.36324687018615
+          ],
+          "maximum": 13.405999999959022,
+          "mean": 13.03139999997802,
+          "median": 13.015999999945052,
+          "minimum": 12.765999999945052,
+          "n": 5,
+          "sd": 0.2672597986960975
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "feedback"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s101",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            3.0,
+            3.0
+          ],
+          "maximum": 3,
+          "mean": 3,
+          "median": 3,
+          "minimum": 3,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.0737423821585591,
+            0.07751564570741945
+          ],
+          "maximum": 0.07792929139067535,
+          "mean": 0.07562901393298928,
+          "median": 0.07563284638495521,
+          "minimum": 0.07398000575898067,
+          "n": 5,
+          "sd": 0.0015194382515394237
+        },
+        "mean_distance_m": {
+          "ci95": [
+            9.985563015270962,
+            10.461983880435465
+          ],
+          "maximum": 10.507106781186547,
+          "mean": 10.223773447853214,
+          "median": 10.257106781186549,
+          "minimum": 10.007106781186547,
+          "n": 5,
+          "sd": 0.19184774055368903
+        },
+        "mean_wait_s": {
+          "ci95": [
+            -0.015158750172013763,
+            0.34312665075303994
+          ],
+          "maximum": 0.3575115040040984,
+          "mean": 0.1639839502905131,
+          "median": 0.10400226802715622,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.14427631043638306
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            142500629.87624317,
+            143244522.12375683
+          ],
+          "maximum": 143257600,
+          "mean": 142872576,
+          "median": 142794752,
+          "minimum": 142540800,
+          "n": 5,
+          "sd": 299554.5689452925
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.8047325054240508,
+            1.970267494575949
+          ],
+          "maximum": 1.984375,
+          "mean": 1.8875,
+          "median": 1.890625,
+          "minimum": 1.796875,
+          "n": 5,
+          "sd": 0.06665852814906732
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23800211196772128,
+            0.23800211196772128
+          ],
+          "maximum": 0.23800211196772128,
+          "mean": 0.23800211196772128,
+          "median": 0.23800211196772128,
+          "minimum": 0.23800211196772128,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            4344.0,
+            4344.0
+          ],
+          "maximum": 4344.0,
+          "mean": 4344.0,
+          "median": 4344.0,
+          "minimum": 4344.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            2.3809833420975766,
+            2.482216657877464
+          ],
+          "maximum": 2.48499999998603,
+          "mean": 2.43159999998752,
+          "median": 2.437999999965541,
+          "minimum": 2.390999999945052,
+          "n": 5,
+          "sd": 0.0407651812109938
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "multistart"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s101",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.0737423821585591,
+            0.07751564570741945
+          ],
+          "maximum": 0.07792929139067535,
+          "mean": 0.07562901393298928,
+          "median": 0.07563284638495521,
+          "minimum": 0.07398000575898067,
+          "n": 5,
+          "sd": 0.0015194382515394237
+        },
+        "mean_distance_m": {
+          "ci95": [
+            9.985563015270962,
+            10.461983880435465
+          ],
+          "maximum": 10.507106781186547,
+          "mean": 10.223773447853214,
+          "median": 10.257106781186549,
+          "minimum": 10.007106781186547,
+          "n": 5,
+          "sd": 0.19184774055368903
+        },
+        "mean_wait_s": {
+          "ci95": [
+            -0.015158750172013763,
+            0.34312665075303994
+          ],
+          "maximum": 0.3575115040040984,
+          "mean": 0.1639839502905131,
+          "median": 0.10400226802715622,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.14427631043638306
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            140517595.93525377,
+            141084042.4647462
+          ],
+          "maximum": 141045760,
+          "mean": 140800819.2,
+          "median": 140697600,
+          "minimum": 140570624,
+          "n": 5,
+          "sd": 228099.7638297769
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.5937678004822067,
+            1.8437321995177933
+          ],
+          "maximum": 1.84375,
+          "mean": 1.71875,
+          "median": 1.75,
+          "minimum": 1.59375,
+          "n": 5,
+          "sd": 0.10065702130254005
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23800211196772128,
+            0.23800211196772128
+          ],
+          "maximum": 0.23800211196772128,
+          "mean": 0.23800211196772128,
+          "median": 0.23800211196772128,
+          "minimum": 0.23800211196772128,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            4344.0,
+            4344.0
+          ],
+          "maximum": 4344.0,
+          "mean": 4344.0,
+          "median": 4344.0,
+          "minimum": 4344.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            2.0420521431812824,
+            2.3391478568570885
+          ],
+          "maximum": 2.312000000034459,
+          "mean": 2.1906000000191854,
+          "median": 2.25,
+          "minimum": 2.047000000020489,
+          "n": 5,
+          "sd": 0.11963611496572175
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "seq_milp"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s202",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.06978328865308556,
+            0.0720712632842613
+          ],
+          "maximum": 0.07197354709544032,
+          "mean": 0.07092727596867343,
+          "median": 0.07119645524246024,
+          "minimum": 0.0695941889792461,
+          "n": 5,
+          "sd": 0.0009213340462820926
+        },
+        "mean_distance_m": {
+          "ci95": [
+            9.250183723824177,
+            9.564029838548917
+          ],
+          "maximum": 9.540440114519882,
+          "mean": 9.407106781186547,
+          "median": 9.457106781186548,
+          "minimum": 9.207106781186548,
+          "n": 5,
+          "sd": 0.12638125740085937
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.026579262907083734,
+            0.29256382124754154
+          ],
+          "maximum": 0.24815536303283542,
+          "mean": 0.15957154207731264,
+          "median": 0.22529466414746938,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.10710810602757294
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            133888795.87412378,
+            136507824.92587623
+          ],
+          "maximum": 136044544,
+          "mean": 135198310.4,
+          "median": 135487488,
+          "minimum": 133423104,
+          "n": 5,
+          "sd": 1054644.8377102122
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.2579050679944754,
+            1.6233449320055247
+          ],
+          "maximum": 1.640625,
+          "mean": 1.440625,
+          "median": 1.421875,
+          "minimum": 1.28125,
+          "n": 5,
+          "sd": 0.1471573084746388
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.2337484475118805,
+            0.2337484475118805
+          ],
+          "maximum": 0.2337484475118805,
+          "mean": 0.2337484475118805,
+          "median": 0.2337484475118805,
+          "minimum": 0.2337484475118805,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            3912.0,
+            3912.0
+          ],
+          "maximum": 3912.0,
+          "mean": 3912.0,
+          "median": 3912.0,
+          "minimum": 3912.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            1.93586560108193,
+            2.082934398926266
+          ],
+          "maximum": 2.094000000040978,
+          "mean": 2.009400000004098,
+          "median": 1.9839999999385327,
+          "minimum": 1.952999999979511,
+          "n": 5,
+          "sd": 0.059222461977270414
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "baseline"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s202",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            63.44710978960441,
+            74.55289021039559
+          ],
+          "maximum": 71,
+          "mean": 69,
+          "median": 71,
+          "minimum": 61,
+          "n": 5,
+          "sd": 4.47213595499958
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            2.244710978960441,
+            3.3552890210395585
+          ],
+          "maximum": 3,
+          "mean": 2.8,
+          "median": 3,
+          "minimum": 2,
+          "n": 5,
+          "sd": 0.4472135954999579
+        },
+        "joint_objective": {
+          "ci95": [
+            0.05066623746397096,
+            0.05443208825548139
+          ],
+          "maximum": 0.05523468731101647,
+          "mean": 0.052549162859726176,
+          "median": 0.05191074095674595,
+          "minimum": 0.05165169757522965,
+          "n": 5,
+          "sd": 0.001516453242164644
+        },
+        "mean_distance_m": {
+          "ci95": [
+            6.566746612204263,
+            7.120800283502165
+          ],
+          "maximum": 7.24044011451988,
+          "mean": 6.843773447853214,
+          "median": 6.757106781186548,
+          "minimum": 6.707106781186548,
+          "n": 5,
+          "sd": 0.22310934040908648
+        },
+        "mean_wait_s": {
+          "ci95": [
+            -0.026513350241340883,
+            0.24963141520314236
+          ],
+          "maximum": 0.22641064947818276,
+          "mean": 0.11155903248090074,
+          "median": 0.09799703372807755,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.11119947338570024
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            203349123.95582756,
+            215968226.4441724
+          ],
+          "maximum": 213450752,
+          "mean": 209658675.2,
+          "median": 211492864,
+          "minimum": 200777728,
+          "n": 5,
+          "sd": 5081528.701242885
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            11.849949548250102,
+            14.356300451749899
+          ],
+          "maximum": 13.734375,
+          "mean": 13.103125,
+          "median": 13.5,
+          "minimum": 11.328125,
+          "n": 5,
+          "sd": 1.009270989223162
+        },
+        "t1_objective": {
+          "ci95": [
+            17.12765775265182,
+            17.972766239681903
+          ],
+          "maximum": 18.158982171703883,
+          "mean": 17.550211996166862,
+          "median": 17.398019452282607,
+          "minimum": 17.398019452282607,
+          "n": 5,
+          "sd": 0.3403128737938143
+        },
+        "t2_objective": {
+          "ci95": [
+            0.14266152041395574,
+            0.2019559295980421
+          ],
+          "maximum": 0.21502119144236467,
+          "mean": 0.17230872500599892,
+          "median": 0.1616306083969075,
+          "minimum": 0.1616306083969075,
+          "n": 5,
+          "sd": 0.023876994609598003
+        },
+        "t3_objective": {
+          "ci95": [
+            3912.0,
+            3912.0
+          ],
+          "maximum": 3912.0,
+          "mean": 3912.0,
+          "median": 3912.0,
+          "minimum": 3912.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            12.96749669276382,
+            15.251703307216808
+          ],
+          "maximum": 14.765999999945052,
+          "mean": 14.109599999990314,
+          "median": 14.579000000027008,
+          "minimum": 12.547000000020489,
+          "n": 5,
+          "sd": 0.9198167208509728
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "feedback"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s202",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            3.0,
+            3.0
+          ],
+          "maximum": 3,
+          "mean": 3,
+          "median": 3,
+          "minimum": 3,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.06978328865308556,
+            0.0720712632842613
+          ],
+          "maximum": 0.07197354709544032,
+          "mean": 0.07092727596867343,
+          "median": 0.07119645524246024,
+          "minimum": 0.0695941889792461,
+          "n": 5,
+          "sd": 0.0009213340462820926
+        },
+        "mean_distance_m": {
+          "ci95": [
+            9.250183723824177,
+            9.564029838548917
+          ],
+          "maximum": 9.540440114519882,
+          "mean": 9.407106781186547,
+          "median": 9.457106781186548,
+          "minimum": 9.207106781186548,
+          "n": 5,
+          "sd": 0.12638125740085937
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.026579262907083734,
+            0.29256382124754154
+          ],
+          "maximum": 0.24815536303283542,
+          "mean": 0.15957154207731264,
+          "median": 0.22529466414746938,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.10710810602757294
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            141966113.47869888,
+            142928708.9213011
+          ],
+          "maximum": 142893056,
+          "mean": 142447411.2,
+          "median": 142319616,
+          "minimum": 141959168,
+          "n": 5,
+          "sd": 387623.15892010374
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.6761755428719647,
+            1.9050744571280351
+          ],
+          "maximum": 1.9375,
+          "mean": 1.790625,
+          "median": 1.78125,
+          "minimum": 1.6875,
+          "n": 5,
+          "sd": 0.09217425752345391
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.2337484475118805,
+            0.2337484475118805
+          ],
+          "maximum": 0.2337484475118805,
+          "mean": 0.2337484475118805,
+          "median": 0.2337484475118805,
+          "minimum": 0.2337484475118805,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            3912.0,
+            3912.0
+          ],
+          "maximum": 3912.0,
+          "mean": 3912.0,
+          "median": 3912.0,
+          "minimum": 3912.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            2.2539766761222517,
+            2.308423323814791
+          ],
+          "maximum": 2.3119999999180436,
+          "mean": 2.2811999999685213,
+          "median": 2.280999999959022,
+          "minimum": 2.25,
+          "n": 5,
+          "sd": 0.02192487169286687
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "multistart"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s202",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.06978328865308556,
+            0.0720712632842613
+          ],
+          "maximum": 0.07197354709544032,
+          "mean": 0.07092727596867343,
+          "median": 0.07119645524246024,
+          "minimum": 0.0695941889792461,
+          "n": 5,
+          "sd": 0.0009213340462820926
+        },
+        "mean_distance_m": {
+          "ci95": [
+            9.250183723824177,
+            9.564029838548917
+          ],
+          "maximum": 9.540440114519882,
+          "mean": 9.407106781186547,
+          "median": 9.457106781186548,
+          "minimum": 9.207106781186548,
+          "n": 5,
+          "sd": 0.12638125740085937
+        },
+        "mean_wait_s": {
+          "ci95": [
+            0.026579262907083734,
+            0.29256382124754154
+          ],
+          "maximum": 0.24815536303283542,
+          "mean": 0.15957154207731264,
+          "median": 0.22529466414746938,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.10710810602757294
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            139744641.3268573,
+            140503678.6731427
+          ],
+          "maximum": 140541952,
+          "mean": 140124160,
+          "median": 140115968,
+          "minimum": 139763712,
+          "n": 5,
+          "sd": 305653.27954399574
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.3604437835404637,
+            1.6958062164595362
+          ],
+          "maximum": 1.65625,
+          "mean": 1.528125,
+          "median": 1.546875,
+          "minimum": 1.328125,
+          "n": 5,
+          "sd": 0.13504556522707437
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.2337484475118805,
+            0.2337484475118805
+          ],
+          "maximum": 0.2337484475118805,
+          "mean": 0.2337484475118805,
+          "median": 0.2337484475118805,
+          "minimum": 0.2337484475118805,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            3912.0,
+            3912.0
+          ],
+          "maximum": 3912.0,
+          "mean": 3912.0,
+          "median": 3912.0,
+          "minimum": 3912.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            1.8338054135186546,
+            2.060594586494757
+          ],
+          "maximum": 2.047000000020489,
+          "mean": 1.9472000000067056,
+          "median": 1.9849999999860302,
+          "minimum": 1.8290000000270084,
+          "n": 5,
+          "sd": 0.09132469545069495
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "seq_milp"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s303",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.0654497392347966,
+            0.06766706961852073
+          ],
+          "maximum": 0.06789077649430769,
+          "mean": 0.06655840442665867,
+          "median": 0.06670604725934852,
+          "minimum": 0.06570105901463502,
+          "n": 5,
+          "sd": 0.000892886637178736
+        },
+        "mean_distance_m": {
+          "ci95": [
+            8.655529132460822,
+            8.925351096578938
+          ],
+          "maximum": 8.94044011451988,
+          "mean": 8.79044011451988,
+          "median": 8.773773447853214,
+          "minimum": 8.69044011451988,
+          "n": 5,
+          "sd": 0.10865337342004402
+        },
+        "mean_wait_s": {
+          "ci95": [
+            -0.00700406475477916,
+            0.4358842683932605
+          ],
+          "maximum": 0.40112341803546675,
+          "mean": 0.21444010181924067,
+          "median": 0.1596782284844911,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.17834467850752614
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            133958754.03356737,
+            135138615.56643265
+          ],
+          "maximum": 135168000,
+          "mean": 134548684.8,
+          "median": 134574080,
+          "minimum": 133836800,
+          "n": 5,
+          "sd": 475113.047721487
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.2982716329356145,
+            1.5767283670643855
+          ],
+          "maximum": 1.5625,
+          "mean": 1.4375,
+          "median": 1.40625,
+          "minimum": 1.3125,
+          "n": 5,
+          "sd": 0.11213046948755721
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23839704663752195,
+            0.23839704663752195
+          ],
+          "maximum": 0.23839704663752195,
+          "mean": 0.23839704663752195,
+          "median": 0.23839704663752195,
+          "minimum": 0.23839704663752195,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            3960.0,
+            3960.0
+          ],
+          "maximum": 3960.0,
+          "mean": 3960.0,
+          "median": 3960.0,
+          "minimum": 3960.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            2.027524773914295,
+            2.1348752260227473
+          ],
+          "maximum": 2.125,
+          "mean": 2.081199999968521,
+          "median": 2.093999999924563,
+          "minimum": 2.015999999945052,
+          "n": 5,
+          "sd": 0.04322846287874538
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "baseline"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s303",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            71.0,
+            71.0
+          ],
+          "maximum": 71,
+          "mean": 71,
+          "median": 71,
+          "minimum": 71,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            3.0,
+            3.0
+          ],
+          "maximum": 3,
+          "mean": 3,
+          "median": 3,
+          "minimum": 3,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.048221216855207014,
+            0.04894944375265789
+          ],
+          "maximum": 0.04893810429337505,
+          "mean": 0.04858533030393245,
+          "median": 0.048404776353640766,
+          "minimum": 0.048320106633682636,
+          "n": 5,
+          "sd": 0.00029324636073219384
+        },
+        "mean_distance_m": {
+          "ci95": [
+            6.250124584774735,
+            6.30408897759836
+          ],
+          "maximum": 6.3071067811865476,
+          "mean": 6.277106781186547,
+          "median": 6.2737734478532134,
+          "minimum": 6.257106781186547,
+          "n": 5,
+          "sd": 0.021730674684009195
+        },
+        "mean_wait_s": {
+          "ci95": [
+            6.749052804266853e-05,
+            0.3998422746270736
+          ],
+          "maximum": 0.41501230692435437,
+          "mean": 0.19995488257755814,
+          "median": 0.17356711737337682,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.16098348050574052
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            201550413.37785923,
+            214015001.02214074
+          ],
+          "maximum": 211521536,
+          "mean": 207782707.2,
+          "median": 209387520,
+          "minimum": 198963200,
+          "n": 5,
+          "sd": 5019307.824948297
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            12.171289011236505,
+            13.378710988763496
+          ],
+          "maximum": 13.625,
+          "mean": 12.775,
+          "median": 12.640625,
+          "minimum": 12.453125,
+          "n": 5,
+          "sd": 0.48621123720817067
+        },
+        "t1_objective": {
+          "ci95": [
+            17.398019452282607,
+            17.398019452282607
+          ],
+          "maximum": 17.398019452282607,
+          "mean": 17.398019452282607,
+          "median": 17.398019452282607,
+          "minimum": 17.398019452282607,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.16841987613977766,
+            0.16841987613977766
+          ],
+          "maximum": 0.16841987613977766,
+          "mean": 0.16841987613977766,
+          "median": 0.16841987613977766,
+          "minimum": 0.16841987613977766,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            3960.0,
+            3960.0
+          ],
+          "maximum": 3960.0,
+          "mean": 3960.0,
+          "median": 3960.0,
+          "minimum": 3960.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            13.394146986116464,
+            14.412253013908124
+          ],
+          "maximum": 14.625,
+          "mean": 13.903200000012294,
+          "median": 13.75,
+          "minimum": 13.640999999945052,
+          "n": 5,
+          "sd": 0.4099764627405192
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "feedback"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s303",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            3.0,
+            3.0
+          ],
+          "maximum": 3,
+          "mean": 3,
+          "median": 3,
+          "minimum": 3,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.0654497392347966,
+            0.06766706961852073
+          ],
+          "maximum": 0.06789077649430769,
+          "mean": 0.06655840442665867,
+          "median": 0.06670604725934852,
+          "minimum": 0.06570105901463502,
+          "n": 5,
+          "sd": 0.000892886637178736
+        },
+        "mean_distance_m": {
+          "ci95": [
+            8.655529132460822,
+            8.925351096578938
+          ],
+          "maximum": 8.94044011451988,
+          "mean": 8.79044011451988,
+          "median": 8.773773447853214,
+          "minimum": 8.69044011451988,
+          "n": 5,
+          "sd": 0.10865337342004402
+        },
+        "mean_wait_s": {
+          "ci95": [
+            -0.00700406475477916,
+            0.4358842683932605
+          ],
+          "maximum": 0.40112341803546675,
+          "mean": 0.21444010181924067,
+          "median": 0.1596782284844911,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.17834467850752614
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            142299235.55512816,
+            142933097.24487185
+          ],
+          "maximum": 142991360,
+          "mean": 142616166.4,
+          "median": 142499840,
+          "minimum": 142344192,
+          "n": 5,
+          "sd": 255246.8665680345
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.8316062807529403,
+            2.0621437192470595
+          ],
+          "maximum": 2.078125,
+          "mean": 1.946875,
+          "median": 1.953125,
+          "minimum": 1.84375,
+          "n": 5,
+          "sd": 0.09283406735945593
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23839704663752195,
+            0.23839704663752195
+          ],
+          "maximum": 0.23839704663752195,
+          "mean": 0.23839704663752195,
+          "median": 0.23839704663752195,
+          "minimum": 0.23839704663752195,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            3960.0,
+            3960.0
+          ],
+          "maximum": 3960.0,
+          "mean": 3960.0,
+          "median": 3960.0,
+          "minimum": 3960.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            2.243759094694381,
+            2.5870409052784247
+          ],
+          "maximum": 2.655999999959022,
+          "mean": 2.415399999986403,
+          "median": 2.3589999999385327,
+          "minimum": 2.327999999979511,
+          "n": 5,
+          "sd": 0.138234583220842
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "multistart"
+    },
+    {
+      "completion_rate": 1.0,
+      "completion_rate_wilson95": [
+        0.5655175352168251,
+        1.0
+      ],
+      "dataset": "tiny_f6_s303",
+      "experiment": "E21",
+      "failed_or_incomplete": 0,
+      "metrics": {
+        "generalization_gap": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "holdout_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "joint_evaluations": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "maximum": 1,
+          "mean": 1,
+          "median": 1,
+          "minimum": 1,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_iterations_to_best": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "median": 0,
+          "minimum": 0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "joint_objective": {
+          "ci95": [
+            0.0654497392347966,
+            0.06766706961852073
+          ],
+          "maximum": 0.06789077649430769,
+          "mean": 0.06655840442665867,
+          "median": 0.06670604725934852,
+          "minimum": 0.06570105901463502,
+          "n": 5,
+          "sd": 0.000892886637178736
+        },
+        "mean_distance_m": {
+          "ci95": [
+            8.655529132460822,
+            8.925351096578938
+          ],
+          "maximum": 8.94044011451988,
+          "mean": 8.79044011451988,
+          "median": 8.773773447853214,
+          "minimum": 8.69044011451988,
+          "n": 5,
+          "sd": 0.10865337342004402
+        },
+        "mean_wait_s": {
+          "ci95": [
+            -0.00700406475477916,
+            0.4358842683932605
+          ],
+          "maximum": 0.40112341803546675,
+          "mean": 0.21444010181924067,
+          "median": 0.1596782284844911,
+          "minimum": 0.0,
+          "n": 5,
+          "sd": 0.17834467850752614
+        },
+        "peak_child_rss_bytes": {
+          "ci95": [
+            139989363.2840617,
+            140657087.9159383
+          ],
+          "maximum": 140513280,
+          "mean": 140323225.6,
+          "median": 140439552,
+          "minimum": 139870208,
+          "n": 5,
+          "sd": 268882.9799537338
+        },
+        "sampled_child_cpu_s": {
+          "ci95": [
+            1.400203741530818,
+            1.7310462584691821
+          ],
+          "maximum": 1.75,
+          "mean": 1.565625,
+          "median": 1.578125,
+          "minimum": 1.390625,
+          "n": 5,
+          "sd": 0.1332254609205763
+        },
+        "t1_objective": {
+          "ci95": [
+            19.13329117570234,
+            19.13329117570234
+          ],
+          "maximum": 19.13329117570234,
+          "mean": 19.13329117570234,
+          "median": 19.13329117570234,
+          "minimum": 19.13329117570234,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t2_objective": {
+          "ci95": [
+            0.23839704663752195,
+            0.23839704663752195
+          ],
+          "maximum": 0.23839704663752195,
+          "mean": 0.23839704663752195,
+          "median": 0.23839704663752195,
+          "minimum": 0.23839704663752195,
+          "n": 5,
+          "sd": 0.0
+        },
+        "t3_objective": {
+          "ci95": [
+            3960.0,
+            3960.0
+          ],
+          "maximum": 3960.0,
+          "mean": 3960.0,
+          "median": 3960.0,
+          "minimum": 3960.0,
+          "n": 5,
+          "sd": 0.0
+        },
+        "test_mean_distance_m": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_mean_wait_s": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "test_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "train_objective": {
+          "ci95": null,
+          "mean": null,
+          "median": null,
+          "n": 0,
+          "sd": null
+        },
+        "wall_s": {
+          "ci95": [
+            1.9838490264851787,
+            2.2477509735256245
+          ],
+          "maximum": 2.297000000020489,
+          "mean": 2.1158000000054016,
+          "median": 2.093999999924563,
+          "minimum": 2.0160000000614673,
+          "n": 5,
+          "sd": 0.10626946880243611
+        }
+      },
+      "solution_feasibility_rate": 1.0,
+      "solution_feasible_count": 5,
+      "succeeded": 5,
+      "total": 5,
+      "treatment": "seq_milp"
+    }
+  ]
+}

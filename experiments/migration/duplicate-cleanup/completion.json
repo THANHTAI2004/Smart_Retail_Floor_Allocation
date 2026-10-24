@@ -1,0 +1,34 @@
+{
+  "status": "NEEDS_ATTENTION",
+  "primary_worker": {
+    "started_utc": "2026-10-24T11:31:03.253338+00:00",
+    "status": "NEEDS_ATTENTION",
+    "primary": "E:\\Smart_Retail_Floor_Allocation",
+    "source_roots": [
+      "C:\\Users\\admin\\Documents\\SmartRetailBackups",
+      "D:\\Smart_Retail_Floor_Allocation"
+    ],
+    "checked": 730624,
+    "deleted": 721100,
+    "deleted_logical_bytes": 115598572454,
+    "retained": 9524,
+    "errors": 0,
+    "free_before": {
+      "C:/": 45578539008,
+      "D:/": 69347446784,
+      "E:/": 46740787200
+    },
+    "updated_utc": "2026-10-24T12:25:55.402549+00:00",
+    "free_now": {
+      "C:/": 160778809344,
+      "D:/": 36531503104,
+      "E:/": 148122431488
+    },
+    "current_root": "C:\\Users\\admin\\Documents\\SmartRetailBackups",
+    "resumed_utc": "2026-10-24T12:22:51.882910+00:00",
+    "missing_source_roots_skipped": [
+      "D:\\Smart_Retail_Floor_Allocation"
+    ],
+    "error": "Traceback (most recent call last):\n  File \"E:\\Smart_Retail_Floor_Allocation\\experiments\\migration\\cleanup_verified_duplicates.py\", line 196, in <module>\n    try:main()\n        ^^^^^^\n  File \"E:\\Smart_Retail_Floor_Allocation\\experiments\\migration\\cleanup_verified_duplicates.py\", line 187, in main\n    with LOCK:save(True)\n              ^^^^^^^^^^\n  File \"E:\\Smart_Retail_Floor_Allocation\\experiments\\migration\\cleanup_verified_duplicates.py\", line 44, in save\n    p=OUT/'progress.json';t=p.with_suffix('.tmp');t.write_text(json.dumps(STATE,indent=2),encoding='utf-8');t.replace(p)\n                                                                                                            ^^^^^^^^^^^^\n  File \"C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py\", line 1376, in replace\n    os.replace(self, target)\nPermissionError: [WinError 5] Access is denied: 'E:\\\\Smart_Retail_Floor_Allocation\\\\experiments\\\\migration\\\\duplicate-cleanup\\\\progress.tmp' -> 'E:\\\\Smart_Retail_Floor_Allocation\\\\experiments\\\\migration\\\\duplicate-cleanup\\\\progress.json'\n"
+  }
+}

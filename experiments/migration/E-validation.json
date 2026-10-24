@@ -1,0 +1,17 @@
+{
+  "checked_utc": "2026-10-24T09:28:18.432463+00:00",
+  "full_result_artifact_verification": "IN_PROGRESS_IN_FINALIZER",
+  "git_index_unchanged": "8836e4f36df73a84df64d8a5a7e3d7a19106b2dbcf9cc680fcc2888184506760",
+  "native_bson_archive_sha256_matches": 241,
+  "runtime_identity": "FROZEN_BASELINE_MATCH",
+  "tests": 11,
+  "unique_job_coverage": {
+    "executed_unique": 4276,
+    "failed_latest_attempt": 48,
+    "historical_outcomes_preserved": true,
+    "planned": 4276,
+    "succeeded_latest_attempt": 4228,
+    "unexecuted": 0
+  },
+  "working_root": "E:\\Smart_Retail_Floor_Allocation"
+}

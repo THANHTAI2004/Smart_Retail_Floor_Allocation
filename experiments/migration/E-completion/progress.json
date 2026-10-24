@@ -1,0 +1,13 @@
+{
+  "started_utc": "2026-10-24T09:54:01.849266+00:00",
+  "status": "COPY_AND_ENVIRONMENT_COMPLETE",
+  "copied": 57454,
+  "existing_identical": 177850,
+  "verified_bytes": 2128839937,
+  "source_transient_files_gone": [
+    ".git/objects/3a/tmp_obj_huVr7y"
+  ],
+  "ended_utc": "2026-10-24T10:02:34.204161+00:00",
+  "expected_files": 235305,
+  "git_index_unchanged": "787306c7a767f26750a2488f4e04f66935899b64abf438157712111de25e2ac4"
+}

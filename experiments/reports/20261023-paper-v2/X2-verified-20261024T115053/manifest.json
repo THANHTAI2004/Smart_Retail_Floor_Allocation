@@ -1,0 +1,1308 @@
+{
+  "campaigns": [
+    {
+      "campaign": "\\\\?\\E:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261023-paper-v2\\paper-x2-tiny-part01",
+      "configuration": {
+        "cache_policy": "isolated",
+        "data_origin": "SYNTHETIC",
+        "datasets": [
+          {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s101",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 101,
+            "variable_facings": false
+          },
+          {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s202",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 202,
+            "variable_facings": false
+          }
+        ],
+        "evaluation": {
+          "budget_fraction": 0.25,
+          "n_folds": 10,
+          "split": "kfold",
+          "stratify": "dominant_category",
+          "test_size": 0.2
+        },
+        "experiments": [
+          {
+            "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+            "datasets": [
+              "tiny_f6_s101",
+              "tiny_f6_s202"
+            ],
+            "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+            "id": "E18",
+            "metrics": [
+              "test_objective",
+              "train_objective",
+              "generalization_gap",
+              "test_mean_distance_m",
+              "test_mean_wait_s",
+              "wall_s",
+              "peak_child_rss_bytes"
+            ],
+            "question": "Do integrated feedback plans beat sequential pipelines on held-out orders?",
+            "statistical_method": "descriptive_paired_exploratory",
+            "treatments": [
+              {
+                "id": "baseline",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "greedy",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "first_fit"
+                  }
+                }
+              },
+              {
+                "id": "seq_milp",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "multistart",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 3,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "multistart",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "feedback",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "feedback",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "job_time_limit_s": 60.0,
+        "max_jobs": 800,
+        "max_retries": 1,
+        "max_wall_s": 14400.0,
+        "memory_limit_mb": 2048,
+        "name": "paper-x2-tiny-part01",
+        "repetitions": 1,
+        "schema_version": "1.1",
+        "seeds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "workers": 1
+      },
+      "datasets": [
+        {
+          "counts": {
+            "categories": 3,
+            "orders": 20,
+            "products": 12,
+            "shelves": 4
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "tiny_f6_s101",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "99882f1ef49cfef118b388141d195b5cdfc1d4aeb365a1e45023bdaf5ec316c2",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s101",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 101,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        },
+        {
+          "counts": {
+            "categories": 3,
+            "orders": 20,
+            "products": 12,
+            "shelves": 4
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "tiny_f6_s202",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "a5fa0a77047265e8031bfe560bd9550748e4fc5dc096fe671aefa2007d79a23d",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s202",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 202,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        }
+      ],
+      "identity": {
+        "config_sha256": "a7b0c6045ac656f0e1588435d1c1671279ef0ce7ff750e7cd04034a0de887b9b",
+        "created_utc": "2026-10-23T07:02:29.194106+00:00",
+        "free_disk_bytes": 25378099200,
+        "runtime": {
+          "model_versions": {
+            "input_contract": "1.1",
+            "joint": "finite-saa-feedback-1",
+            "t1": "grid-local-search-1.1",
+            "t2": "allocation-affinity-milp-1.1",
+            "t3": "facing-strip-milp-1.1",
+            "t4": "picker-grid-queue-1.1",
+            "workflow": "bounded-candidates-1.1"
+          },
+          "packages": {
+            "annotated-doc": "0.0.5",
+            "annotated-types": "0.8.0",
+            "anyio": "4.15.1",
+            "certifi": "2026.10.19",
+            "click": "8.5.0",
+            "colorama": "0.4.6",
+            "contourpy": "1.4.0",
+            "cycler": "0.12.1",
+            "dnspython": "2.9.0",
+            "fastapi": "0.157.0",
+            "fonttools": "4.67.0",
+            "h11": "0.16.0",
+            "httpcore": "1.0.9",
+            "httpx": "0.28.1",
+            "hypothesis": "6.170.5",
+            "idna": "3.20",
+            "iniconfig": "2.3.1",
+            "kiwisolver": "1.5.1",
+            "librt": "0.16.0",
+            "markupsafe": "3.0.4",
+            "matplotlib": "3.11.2",
+            "mypy": "1.20.2",
+            "mypy_extensions": "1.1.0",
+            "networkx": "3.7",
+            "numpy": "2.5.4",
+            "opentelemetry-api": "1.45.1",
+            "packaging": "26.3",
+            "pathspec": "1.1.1",
+            "pillow": "13.0.0",
+            "pip": "25.0.1",
+            "pluggy": "1.7.0",
+            "pydantic": "2.14.1",
+            "pydantic_core": "2.50.1",
+            "pygments": "2.21.0",
+            "pymongo": "4.18.2",
+            "pyparsing": "3.3.3",
+            "pytest": "9.1.1",
+            "python-dateutil": "3.0.0",
+            "ruff": "0.17.1",
+            "scipy": "1.18.1",
+            "shapely": "2.2.0",
+            "simpy": "4.1.2",
+            "six": "1.17.0",
+            "smart-retail": "0.1.0",
+            "sortedcontainers": "2.4.0",
+            "starlette": "1.9.0",
+            "types-networkx": "3.6.1.20261021",
+            "typing-inspection": "0.4.4",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.5",
+            "uvicorn": "0.54.0"
+          },
+          "python": "3.12.10",
+          "solver": {
+            "name": "HiGHS",
+            "version": "1.12.0"
+          },
+          "source_sha256": "936a428127a02ce5ab694b7cd9a076596444e0905ff609e5efbdd96b92324b4e"
+        },
+        "worker_limit": 1
+      },
+      "validation": {
+        "files": 71382,
+        "status": "PASS"
+      }
+    },
+    {
+      "campaign": "\\\\?\\E:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261023-paper-v2\\paper-x2-tiny-part02",
+      "configuration": {
+        "cache_policy": "isolated",
+        "data_origin": "SYNTHETIC",
+        "datasets": [
+          {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s303",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 303,
+            "variable_facings": false
+          }
+        ],
+        "evaluation": {
+          "budget_fraction": 0.25,
+          "n_folds": 10,
+          "split": "kfold",
+          "stratify": "dominant_category",
+          "test_size": 0.2
+        },
+        "experiments": [
+          {
+            "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+            "datasets": [
+              "tiny_f6_s303"
+            ],
+            "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+            "id": "E18",
+            "metrics": [
+              "test_objective",
+              "train_objective",
+              "generalization_gap",
+              "test_mean_distance_m",
+              "test_mean_wait_s",
+              "wall_s",
+              "peak_child_rss_bytes"
+            ],
+            "question": "Do integrated feedback plans beat sequential pipelines on held-out orders?",
+            "statistical_method": "descriptive_paired_exploratory",
+            "treatments": [
+              {
+                "id": "baseline",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "greedy",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "first_fit"
+                  }
+                }
+              },
+              {
+                "id": "seq_milp",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "multistart",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 3,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "multistart",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "feedback",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "feedback",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "job_time_limit_s": 60.0,
+        "max_jobs": 400,
+        "max_retries": 1,
+        "max_wall_s": 14400.0,
+        "memory_limit_mb": 2048,
+        "name": "paper-x2-tiny-part02",
+        "repetitions": 1,
+        "schema_version": "1.1",
+        "seeds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "workers": 1
+      },
+      "datasets": [
+        {
+          "counts": {
+            "categories": 3,
+            "orders": 20,
+            "products": 12,
+            "shelves": 4
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "tiny_f6_s303",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "32da7fca1271591fbf85f7bebeeb9987589825de4eeee0c4d52a2c9f04d252eb",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s303",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 303,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        }
+      ],
+      "identity": {
+        "config_sha256": "176ff3c5db61e74212076e5ab0672a6af325554a9f9d4162a7cd2ee193cf3d7e",
+        "created_utc": "2026-10-23T07:02:30.431730+00:00",
+        "free_disk_bytes": 25376612352,
+        "runtime": {
+          "model_versions": {
+            "input_contract": "1.1",
+            "joint": "finite-saa-feedback-1",
+            "t1": "grid-local-search-1.1",
+            "t2": "allocation-affinity-milp-1.1",
+            "t3": "facing-strip-milp-1.1",
+            "t4": "picker-grid-queue-1.1",
+            "workflow": "bounded-candidates-1.1"
+          },
+          "packages": {
+            "annotated-doc": "0.0.5",
+            "annotated-types": "0.8.0",
+            "anyio": "4.15.1",
+            "certifi": "2026.10.19",
+            "click": "8.5.0",
+            "colorama": "0.4.6",
+            "contourpy": "1.4.0",
+            "cycler": "0.12.1",
+            "dnspython": "2.9.0",
+            "fastapi": "0.157.0",
+            "fonttools": "4.67.0",
+            "h11": "0.16.0",
+            "httpcore": "1.0.9",
+            "httpx": "0.28.1",
+            "hypothesis": "6.170.5",
+            "idna": "3.20",
+            "iniconfig": "2.3.1",
+            "kiwisolver": "1.5.1",
+            "librt": "0.16.0",
+            "markupsafe": "3.0.4",
+            "matplotlib": "3.11.2",
+            "mypy": "1.20.2",
+            "mypy_extensions": "1.1.0",
+            "networkx": "3.7",
+            "numpy": "2.5.4",
+            "opentelemetry-api": "1.45.1",
+            "packaging": "26.3",
+            "pathspec": "1.1.1",
+            "pillow": "13.0.0",
+            "pip": "25.0.1",
+            "pluggy": "1.7.0",
+            "pydantic": "2.14.1",
+            "pydantic_core": "2.50.1",
+            "pygments": "2.21.0",
+            "pymongo": "4.18.2",
+            "pyparsing": "3.3.3",
+            "pytest": "9.1.1",
+            "python-dateutil": "3.0.0",
+            "ruff": "0.17.1",
+            "scipy": "1.18.1",
+            "shapely": "2.2.0",
+            "simpy": "4.1.2",
+            "six": "1.17.0",
+            "smart-retail": "0.1.0",
+            "sortedcontainers": "2.4.0",
+            "starlette": "1.9.0",
+            "types-networkx": "3.6.1.20261021",
+            "typing-inspection": "0.4.4",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.5",
+            "uvicorn": "0.54.0"
+          },
+          "python": "3.12.10",
+          "solver": {
+            "name": "HiGHS",
+            "version": "1.12.0"
+          },
+          "source_sha256": "936a428127a02ce5ab694b7cd9a076596444e0905ff609e5efbdd96b92324b4e"
+        },
+        "worker_limit": 1
+      },
+      "validation": {
+        "files": 67617,
+        "status": "PASS"
+      }
+    },
+    {
+      "campaign": "\\\\?\\E:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261023-paper-v2\\paper-x2-small",
+      "configuration": {
+        "cache_policy": "isolated",
+        "data_origin": "SYNTHETIC",
+        "datasets": [
+          {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s101",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 101,
+            "variable_facings": false
+          },
+          {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s202",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 202,
+            "variable_facings": false
+          },
+          {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s303",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 303,
+            "variable_facings": false
+          }
+        ],
+        "evaluation": {
+          "budget_fraction": 0.25,
+          "n_folds": 10,
+          "split": "kfold",
+          "stratify": "dominant_category",
+          "test_size": 0.2
+        },
+        "experiments": [
+          {
+            "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+            "datasets": [
+              "small_f4_s101",
+              "small_f4_s202",
+              "small_f4_s303"
+            ],
+            "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+            "id": "E18",
+            "metrics": [
+              "test_objective",
+              "train_objective",
+              "generalization_gap",
+              "test_mean_distance_m",
+              "test_mean_wait_s",
+              "wall_s",
+              "peak_child_rss_bytes"
+            ],
+            "question": "Do integrated feedback plans beat sequential pipelines on held-out orders?",
+            "statistical_method": "descriptive_paired_exploratory",
+            "treatments": [
+              {
+                "id": "baseline",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "greedy",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "first_fit"
+                  }
+                }
+              },
+              {
+                "id": "seq_milp",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "multistart",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 3,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "multistart",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "feedback",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "feedback",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "job_time_limit_s": 60.0,
+        "max_jobs": 600,
+        "max_retries": 1,
+        "max_wall_s": 14400.0,
+        "memory_limit_mb": 2048,
+        "name": "paper-x2-small",
+        "repetitions": 1,
+        "schema_version": "1.1",
+        "seeds": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "workers": 1
+      },
+      "datasets": [
+        {
+          "counts": {
+            "categories": 6,
+            "orders": 100,
+            "products": 48,
+            "shelves": 12
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "small_f4_s101",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "309499d765d58db7793b7591840034b4b4790ed9d7b53952db7798ec26cf22c5",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s101",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 101,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        },
+        {
+          "counts": {
+            "categories": 6,
+            "orders": 100,
+            "products": 48,
+            "shelves": 12
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "small_f4_s202",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "84e3d0d0e15089e738c8c006ddb3be846e4db66cf341eec9d049ea1e612e3882",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s202",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 202,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        },
+        {
+          "counts": {
+            "categories": 6,
+            "orders": 100,
+            "products": 48,
+            "shelves": 12
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "small_f4_s303",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "e589f2b0a892c0404520174ecd2228ce2101065fb1eb34b1e32ff21da7070602",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s303",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 303,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        }
+      ],
+      "identity": {
+        "config_sha256": "e1859c390501cffc64f93301692bd1f5a398a68b20363524d45d01a9ca215195",
+        "created_utc": "2026-10-23T07:02:35.293032+00:00",
+        "free_disk_bytes": 25374359552,
+        "runtime": {
+          "model_versions": {
+            "input_contract": "1.1",
+            "joint": "finite-saa-feedback-1",
+            "t1": "grid-local-search-1.1",
+            "t2": "allocation-affinity-milp-1.1",
+            "t3": "facing-strip-milp-1.1",
+            "t4": "picker-grid-queue-1.1",
+            "workflow": "bounded-candidates-1.1"
+          },
+          "packages": {
+            "annotated-doc": "0.0.5",
+            "annotated-types": "0.8.0",
+            "anyio": "4.15.1",
+            "certifi": "2026.10.19",
+            "click": "8.5.0",
+            "colorama": "0.4.6",
+            "contourpy": "1.4.0",
+            "cycler": "0.12.1",
+            "dnspython": "2.9.0",
+            "fastapi": "0.157.0",
+            "fonttools": "4.67.0",
+            "h11": "0.16.0",
+            "httpcore": "1.0.9",
+            "httpx": "0.28.1",
+            "hypothesis": "6.170.5",
+            "idna": "3.20",
+            "iniconfig": "2.3.1",
+            "kiwisolver": "1.5.1",
+            "librt": "0.16.0",
+            "markupsafe": "3.0.4",
+            "matplotlib": "3.11.2",
+            "mypy": "1.20.2",
+            "mypy_extensions": "1.1.0",
+            "networkx": "3.7",
+            "numpy": "2.5.4",
+            "opentelemetry-api": "1.45.1",
+            "packaging": "26.3",
+            "pathspec": "1.1.1",
+            "pillow": "13.0.0",
+            "pip": "25.0.1",
+            "pluggy": "1.7.0",
+            "pydantic": "2.14.1",
+            "pydantic_core": "2.50.1",
+            "pygments": "2.21.0",
+            "pymongo": "4.18.2",
+            "pyparsing": "3.3.3",
+            "pytest": "9.1.1",
+            "python-dateutil": "3.0.0",
+            "ruff": "0.17.1",
+            "scipy": "1.18.1",
+            "shapely": "2.2.0",
+            "simpy": "4.1.2",
+            "six": "1.17.0",
+            "smart-retail": "0.1.0",
+            "sortedcontainers": "2.4.0",
+            "starlette": "1.9.0",
+            "types-networkx": "3.6.1.20261021",
+            "typing-inspection": "0.4.4",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.5",
+            "uvicorn": "0.54.0"
+          },
+          "python": "3.12.10",
+          "solver": {
+            "name": "HiGHS",
+            "version": "1.12.0"
+          },
+          "source_sha256": "936a428127a02ce5ab694b7cd9a076596444e0905ff609e5efbdd96b92324b4e"
+        },
+        "worker_limit": 1
+      },
+      "validation": {
+        "files": 28298,
+        "status": "PASS"
+      }
+    }
+  ],
+  "files": {
+    "comparisons.csv": "0924f22d96c3324d929193163163584172d2cb35fbfa26a2edddd0b13b6be672",
+    "failures.csv": "da803ce4768bb4b26a9594b78c6dab1d73194997dbb0c322bba59758de3ca4d7",
+    "figures/joint-convergence.png": "7ba78bf1e4d2308641e44eec2bbe3918422443113d5db57960ae88409733cfbb",
+    "figures/joint-convergence.svg": "30a052a60367733cb38eb85fd599f428a15de0dea2ed3c70329cd3db7eecd476",
+    "figures/mean_distance_m.png": "a62f5124b3a466c415794a644792626b0f613d5529f739ab641a9c44cefdb3ac",
+    "figures/mean_distance_m.svg": "49eb748f75536523a9d6042580aac46ad1471124c9e6a61c84485e62ba0f60a4",
+    "figures/mean_wait_s.png": "a4df11fc2a85f7847bf220b0f80f9222cf0bf260304fe616289ad97e798e123e",
+    "figures/mean_wait_s.svg": "2cf4eb9c7e8f4c63669ca74ec4386d22f1d89b480d9c948626a0f6ac46af8ed4",
+    "figures/outcomes.png": "bb9c05a157f544b48f4997e3f4d4d008c8bda25235fea3d5ffd6772254c810a5",
+    "figures/outcomes.svg": "22bf5b04c191f1bf6ec5dee45066ce92991a9cb84121c112ea064a62cdeb634a",
+    "figures/peak_child_rss_bytes.png": "893a47b87163c89a8486b5061fbef12bff409b15a329428adcad863ef9597456",
+    "figures/peak_child_rss_bytes.svg": "9d8301352f4c163387821306f7cc81db49bd207e7c995942bbd4611aa4a43d35",
+    "figures/wall_s.png": "7b6c20f08585a2c1afa76ffb029fc65d4432fe0c29823e3f3eda8462ff1361cc",
+    "figures/wall_s.svg": "e7971ba78ea0c7bb4d20a393940d0764104c5b1832f30d4baf9212360ee6f412",
+    "fold_results.csv": "07791ab5b58636835744b3524db14a9caeb24e4614ec71fa8ea670dadcd93bfd",
+    "joint-comparison.csv": "f1ba00f84f2bfea595400da0878a6b9ed9ef36a8c31a791355bc52ffcd1dfa2b",
+    "joint-examples.json": "a0e183190ef0d42a739fdbcb2d50e173d49506f4570c823c67baf4e1122991c8",
+    "joint-trace.csv": "0c414c195c1b107168993db9a39e99abc4a6683dcdd9d4231275384ba0e9b68b",
+    "rankings.csv": "f19f9bb8e3a81448acf6c591d525e71abca97dc547335a37837b2f7d9893791c",
+    "results.csv": "07791ab5b58636835744b3524db14a9caeb24e4614ec71fa8ea670dadcd93bfd",
+    "results.json": "cfbb0098d3d3fbde91dd450996937064cee8dd5b6aa63a8bddee4e4abd07d6d1",
+    "results/E18_small_f4_s101_baseline_k10_r5_t60s/E18_small_f4_s101_baseline_k10_r5_t60s_config.json": "041050e90a82ec9477d61311bfd9e1943212d846865c3d90fcefeb7851b1e579",
+    "results/E18_small_f4_s101_baseline_k10_r5_t60s/E18_small_f4_s101_baseline_k10_r5_t60s_file_eachfold.txt": "2b4b0866e1623f777948aac8d0270c5a0349d7c832f88475b94638abcd87badb",
+    "results/E18_small_f4_s101_baseline_k10_r5_t60s/E18_small_f4_s101_baseline_k10_r5_t60s_file_mean_test_distance.txt": "c7adc7eae52425eafa9b3de97531c9067a08031d74784f7fd76805bcd8d3c960",
+    "results/E18_small_f4_s101_baseline_k10_r5_t60s/E18_small_f4_s101_baseline_k10_r5_t60s_file_mean_test_objective.txt": "7f8aea44f6281016ee12c56c1d2b99f3198753d57d2fb321f1b1307d508ebfe1",
+    "results/E18_small_f4_s101_baseline_k10_r5_t60s/E18_small_f4_s101_baseline_k10_r5_t60s_file_sum_ok.txt": "dfe7246110f8d4ffa882cc55b9d55573d39fdcfeb0cefcffb8afada25fcca844",
+    "results/E18_small_f4_s101_feedback_k10_r5_t60s/E18_small_f4_s101_feedback_k10_r5_t60s_config.json": "b3679f243050db7b4df14d07456ba488ba9cd3ac7c2654c1094c023a24622f9d",
+    "results/E18_small_f4_s101_feedback_k10_r5_t60s/E18_small_f4_s101_feedback_k10_r5_t60s_file_eachfold.txt": "aec1bdcdb0abff6cba1a453b348f85a5aae3e3a25d5093f7bf9190cd33866df9",
+    "results/E18_small_f4_s101_feedback_k10_r5_t60s/E18_small_f4_s101_feedback_k10_r5_t60s_file_mean_test_distance.txt": "7ad738461ada600554ae7fa28a7038e622e5d6eff1649791a493648a588ff1fe",
+    "results/E18_small_f4_s101_feedback_k10_r5_t60s/E18_small_f4_s101_feedback_k10_r5_t60s_file_mean_test_objective.txt": "2a768bd52a69446b903b9e9d09dc1188b2d255d95c27470acd0b9728038b9a1d",
+    "results/E18_small_f4_s101_feedback_k10_r5_t60s/E18_small_f4_s101_feedback_k10_r5_t60s_file_sum_ok.txt": "13cca59c8a7cd35078c832b84ffa88afa581243bd69fe45f321a50709fd6beed",
+    "results/E18_small_f4_s101_multistart_k10_r5_t60s/E18_small_f4_s101_multistart_k10_r5_t60s_config.json": "6a552696ff31d17aa2533a117949e595921ae61e2c42c1739ffaec19060b82ef",
+    "results/E18_small_f4_s101_multistart_k10_r5_t60s/E18_small_f4_s101_multistart_k10_r5_t60s_file_eachfold.txt": "f24936d2ec8d1b3cb084bbb270c80c95eb5c67b046b050856a26727f2e8ce644",
+    "results/E18_small_f4_s101_multistart_k10_r5_t60s/E18_small_f4_s101_multistart_k10_r5_t60s_file_mean_test_distance.txt": "b1dd3c4448a8d83f5aef40b5b29958a944b2bc56cf9ec3de9c7ded68a7a963e0",
+    "results/E18_small_f4_s101_multistart_k10_r5_t60s/E18_small_f4_s101_multistart_k10_r5_t60s_file_mean_test_objective.txt": "d095fea3172e5c05e80c1b2b9dabc9dd47a0115a361135f8a22753d34db7474b",
+    "results/E18_small_f4_s101_multistart_k10_r5_t60s/E18_small_f4_s101_multistart_k10_r5_t60s_file_sum_ok.txt": "d73d630a39879fe410ca0e4ac0e5966c67501b55f2f8bfce3b5ffd7ba0145a5d",
+    "results/E18_small_f4_s101_seq_milp_k10_r5_t60s/E18_small_f4_s101_seq_milp_k10_r5_t60s_config.json": "6fa2b37ff323ca2ab2d0980d4bab97e762d70ea87f074e323ae4275be76df78c",
+    "results/E18_small_f4_s101_seq_milp_k10_r5_t60s/E18_small_f4_s101_seq_milp_k10_r5_t60s_file_eachfold.txt": "951abd8f93eff7cede37fe30b8c09a3bcfbff0dc1ed0c32df4747f601a4cdb93",
+    "results/E18_small_f4_s101_seq_milp_k10_r5_t60s/E18_small_f4_s101_seq_milp_k10_r5_t60s_file_mean_test_distance.txt": "73093ca368b2950c27efafe32e0c0854b58811a71c1791205344130d5a54cc9c",
+    "results/E18_small_f4_s101_seq_milp_k10_r5_t60s/E18_small_f4_s101_seq_milp_k10_r5_t60s_file_mean_test_objective.txt": "5c43d909ac90bfd6f2fc948df6112859c78a5aca7f200d2d35e738492f71fe69",
+    "results/E18_small_f4_s101_seq_milp_k10_r5_t60s/E18_small_f4_s101_seq_milp_k10_r5_t60s_file_sum_ok.txt": "88463c405ce0e26e5413a7757e3e914cb71b30f42173419485d3ef250675fbde",
+    "results/E18_small_f4_s202_baseline_k10_r5_t60s/E18_small_f4_s202_baseline_k10_r5_t60s_config.json": "ae5f0bd2d50c41c44ee173feaa8ca54f842f614965f471542b1676e5ef46cc01",
+    "results/E18_small_f4_s202_baseline_k10_r5_t60s/E18_small_f4_s202_baseline_k10_r5_t60s_file_eachfold.txt": "d733f1206fefd4ecba525dcb39dd514c171c05e47c3847606f1b53682306ac16",
+    "results/E18_small_f4_s202_baseline_k10_r5_t60s/E18_small_f4_s202_baseline_k10_r5_t60s_file_mean_test_distance.txt": "f94ca07d1fcffb69cd97bc81d3f715aaf55db4b503780f59a2e20b3e2991aaf4",
+    "results/E18_small_f4_s202_baseline_k10_r5_t60s/E18_small_f4_s202_baseline_k10_r5_t60s_file_mean_test_objective.txt": "93f13bfff3390f40af8350f7a02c15767c7b402d25f6c5b0fc6e08fb3deb4d81",
+    "results/E18_small_f4_s202_baseline_k10_r5_t60s/E18_small_f4_s202_baseline_k10_r5_t60s_file_sum_ok.txt": "62ddea17f2b6ed9ca3b13a6cf4609c9ebbcac28d3c806c97870a2c3968831aa0",
+    "results/E18_small_f4_s202_feedback_k10_r5_t60s/E18_small_f4_s202_feedback_k10_r5_t60s_config.json": "e47e2a53b7accf69ba05c6720ac1920d9d0e8c4251053802c59c2659dafb2518",
+    "results/E18_small_f4_s202_feedback_k10_r5_t60s/E18_small_f4_s202_feedback_k10_r5_t60s_file_eachfold.txt": "c8c7fda4782cec8fcff2e0421fac9a106c029aec9d1cc1038aa09a81238128c6",
+    "results/E18_small_f4_s202_feedback_k10_r5_t60s/E18_small_f4_s202_feedback_k10_r5_t60s_file_mean_test_distance.txt": "00243b6120b8e4cdc3a50d194558384cc25b6c4e1ad36e53addd1ad66cf9f485",
+    "results/E18_small_f4_s202_feedback_k10_r5_t60s/E18_small_f4_s202_feedback_k10_r5_t60s_file_mean_test_objective.txt": "6fa513e986870dd25f51290fe4ef4603b3aac9f9c66845b441c09227ac5695c7",
+    "results/E18_small_f4_s202_feedback_k10_r5_t60s/E18_small_f4_s202_feedback_k10_r5_t60s_file_sum.txt": "9e771f202c2c03bd14d8e1be608401d4f51dab13d858809ae85efd0567b1a911",
+    "results/E18_small_f4_s202_multistart_k10_r5_t60s/E18_small_f4_s202_multistart_k10_r5_t60s_config.json": "3f329952377b6f8855c302508e0f33e462ec08f5235c3ce8285373e13ec9ad80",
+    "results/E18_small_f4_s202_multistart_k10_r5_t60s/E18_small_f4_s202_multistart_k10_r5_t60s_file_eachfold.txt": "3364019e105c69a7273c1854bd3d436791365ec27c53890f05ca485fba8542bb",
+    "results/E18_small_f4_s202_multistart_k10_r5_t60s/E18_small_f4_s202_multistart_k10_r5_t60s_file_mean_test_distance.txt": "fb88b2364cf4d66295fe6b16f660507dfd82e4450167afb247dc5f15c06fb04e",
+    "results/E18_small_f4_s202_multistart_k10_r5_t60s/E18_small_f4_s202_multistart_k10_r5_t60s_file_mean_test_objective.txt": "432649f07ed8179cac5b95bbf43b8e7bc04df2f0ab0932a7472d3e9e80ee4686",
+    "results/E18_small_f4_s202_multistart_k10_r5_t60s/E18_small_f4_s202_multistart_k10_r5_t60s_file_sum_ok.txt": "afbc99725fa2d9c7ed763dd3e6afe91e7af4933076f8997c54048ae948d4c208",
+    "results/E18_small_f4_s202_seq_milp_k10_r5_t60s/E18_small_f4_s202_seq_milp_k10_r5_t60s_config.json": "c8a681b796af244dbee306d5a625c003422269fb225e9be8e58a67e2eadc3a1d",
+    "results/E18_small_f4_s202_seq_milp_k10_r5_t60s/E18_small_f4_s202_seq_milp_k10_r5_t60s_file_eachfold.txt": "df63597179d78da44bea306ecbfbfd8aa28f35ce21acd24827288215b9cd64ec",
+    "results/E18_small_f4_s202_seq_milp_k10_r5_t60s/E18_small_f4_s202_seq_milp_k10_r5_t60s_file_mean_test_distance.txt": "33a8d59fc5f9af3567f8bd7193c59229b26d70e01898a1df86eebd7896efedf0",
+    "results/E18_small_f4_s202_seq_milp_k10_r5_t60s/E18_small_f4_s202_seq_milp_k10_r5_t60s_file_mean_test_objective.txt": "5d34580e8da472bf0c5c1ed5db169381fcef3fb21000de92e18edd3402637223",
+    "results/E18_small_f4_s202_seq_milp_k10_r5_t60s/E18_small_f4_s202_seq_milp_k10_r5_t60s_file_sum_ok.txt": "33d86c8095b5e56b75cff06369dd0e5ffa10ce989cc438aafe7fcf567c17fcc0",
+    "results/E18_small_f4_s303_baseline_k10_r5_t60s/E18_small_f4_s303_baseline_k10_r5_t60s_config.json": "9a90bc2c48cb6247c84a8aea9d9f0050750e455908574f3b7fad5608ad1e26f2",
+    "results/E18_small_f4_s303_baseline_k10_r5_t60s/E18_small_f4_s303_baseline_k10_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E18_small_f4_s303_baseline_k10_r5_t60s/E18_small_f4_s303_baseline_k10_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_small_f4_s303_baseline_k10_r5_t60s/E18_small_f4_s303_baseline_k10_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_small_f4_s303_baseline_k10_r5_t60s/E18_small_f4_s303_baseline_k10_r5_t60s_file_sum.txt": "a1ac15c944b63be9549e4116137bfa68352adcde391b6512d96bc8daac3faaf7",
+    "results/E18_small_f4_s303_feedback_k10_r5_t60s/E18_small_f4_s303_feedback_k10_r5_t60s_config.json": "7d3714b009b4346cfb792878215e717bbdf7bab28a741134d39c20d57ff5bc53",
+    "results/E18_small_f4_s303_feedback_k10_r5_t60s/E18_small_f4_s303_feedback_k10_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E18_small_f4_s303_feedback_k10_r5_t60s/E18_small_f4_s303_feedback_k10_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_small_f4_s303_feedback_k10_r5_t60s/E18_small_f4_s303_feedback_k10_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_small_f4_s303_feedback_k10_r5_t60s/E18_small_f4_s303_feedback_k10_r5_t60s_file_sum.txt": "fe8163db95fb0bc9833d42b1d7cf46602e5c23e4b0ed4dba035e14771385390c",
+    "results/E18_small_f4_s303_multistart_k10_r5_t60s/E18_small_f4_s303_multistart_k10_r5_t60s_config.json": "8e598bb4df3bf32510d6ee40b8f32c303ef3b756913b0fed261b14bc416374a9",
+    "results/E18_small_f4_s303_multistart_k10_r5_t60s/E18_small_f4_s303_multistart_k10_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E18_small_f4_s303_multistart_k10_r5_t60s/E18_small_f4_s303_multistart_k10_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_small_f4_s303_multistart_k10_r5_t60s/E18_small_f4_s303_multistart_k10_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_small_f4_s303_multistart_k10_r5_t60s/E18_small_f4_s303_multistart_k10_r5_t60s_file_sum.txt": "2202810f4d5f848814b3e3dfdc1d32ba894bac1da6be8548e0e13e1240d659d5",
+    "results/E18_small_f4_s303_seq_milp_k10_r5_t60s/E18_small_f4_s303_seq_milp_k10_r5_t60s_config.json": "3ea28ff2726561ee1fa5fa4379ea47ad7cf542ef99dca27fd1cd84216d1da1ba",
+    "results/E18_small_f4_s303_seq_milp_k10_r5_t60s/E18_small_f4_s303_seq_milp_k10_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E18_small_f4_s303_seq_milp_k10_r5_t60s/E18_small_f4_s303_seq_milp_k10_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_small_f4_s303_seq_milp_k10_r5_t60s/E18_small_f4_s303_seq_milp_k10_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_small_f4_s303_seq_milp_k10_r5_t60s/E18_small_f4_s303_seq_milp_k10_r5_t60s_file_sum.txt": "fcb9eb5381547eb618f333d7ffef03aa6fddee6fcd92e5a45914755020d53b1c",
+    "results/E18_tiny_f6_s101_baseline_k10_r10_t60s/E18_tiny_f6_s101_baseline_k10_r10_t60s_config.json": "0d5d51cea440cfcf6378d071c8ae4a8d829ceee687a6221c2c5974bf1c8cbef4",
+    "results/E18_tiny_f6_s101_baseline_k10_r10_t60s/E18_tiny_f6_s101_baseline_k10_r10_t60s_file_eachfold.txt": "b0e37d1e265fa15c2b4c55673754dfde64eb7154a52fd7f1db976bb658cb1e1a",
+    "results/E18_tiny_f6_s101_baseline_k10_r10_t60s/E18_tiny_f6_s101_baseline_k10_r10_t60s_file_mean_test_distance.txt": "8b89b199c2ad67cdcebcc37f56f30330a32d2fc6e888faea5f25da672ca690b6",
+    "results/E18_tiny_f6_s101_baseline_k10_r10_t60s/E18_tiny_f6_s101_baseline_k10_r10_t60s_file_mean_test_objective.txt": "067939e1d97a13438a0a9d70eb9354243b062033ad2056f33eeb6e15178c34d0",
+    "results/E18_tiny_f6_s101_baseline_k10_r10_t60s/E18_tiny_f6_s101_baseline_k10_r10_t60s_file_sum_ok.txt": "84e3861e998ba5b794890f9ee7c36498d360118f92a350d0048ce705fb8a25fb",
+    "results/E18_tiny_f6_s101_feedback_k10_r10_t60s/E18_tiny_f6_s101_feedback_k10_r10_t60s_config.json": "a33a7381b4532000cd91502e805cac18e2c492e47744abee2b9ad5226a10cb78",
+    "results/E18_tiny_f6_s101_feedback_k10_r10_t60s/E18_tiny_f6_s101_feedback_k10_r10_t60s_file_eachfold.txt": "a3c3c73194d72f81250ecf6457eb73f8a57373b23c5993ee44325e9a1001feef",
+    "results/E18_tiny_f6_s101_feedback_k10_r10_t60s/E18_tiny_f6_s101_feedback_k10_r10_t60s_file_mean_test_distance.txt": "0c3d3b81b755b623ea48230ea906fdcb05ae2d5dae6b194b1f1daf196af84cb7",
+    "results/E18_tiny_f6_s101_feedback_k10_r10_t60s/E18_tiny_f6_s101_feedback_k10_r10_t60s_file_mean_test_objective.txt": "413534eb3c4a0de7342471b5ed52e8f8c841f4a5cdf4212fdc0e41a86e01c148",
+    "results/E18_tiny_f6_s101_feedback_k10_r10_t60s/E18_tiny_f6_s101_feedback_k10_r10_t60s_file_sum_ok.txt": "6cc9c2bc39fda068f6b538cd81580ab70bd8c7a2450473daa47f356853bcd92c",
+    "results/E18_tiny_f6_s101_multistart_k10_r10_t60s/E18_tiny_f6_s101_multistart_k10_r10_t60s_config.json": "bbeabb49a1b66689e4c9a8417f52885a36d82cae50cba594ba9e086a488c14aa",
+    "results/E18_tiny_f6_s101_multistart_k10_r10_t60s/E18_tiny_f6_s101_multistart_k10_r10_t60s_file_eachfold.txt": "2b5a497489072e30bef9d47fe262cd1da3cc89f13a1a195b11ec33d5db6e00f7",
+    "results/E18_tiny_f6_s101_multistart_k10_r10_t60s/E18_tiny_f6_s101_multistart_k10_r10_t60s_file_mean_test_distance.txt": "0e2fab53771726d90587ff4053d483d847c1be70394506089bf333bae3de6229",
+    "results/E18_tiny_f6_s101_multistart_k10_r10_t60s/E18_tiny_f6_s101_multistart_k10_r10_t60s_file_mean_test_objective.txt": "ccd90afe3e1cc36fed3cb7ced74e6f6de0cda5794f94125c5ec94e2d88678d0e",
+    "results/E18_tiny_f6_s101_multistart_k10_r10_t60s/E18_tiny_f6_s101_multistart_k10_r10_t60s_file_sum_ok.txt": "8fe9882e360d298754a0b5dcb8bc08a7923623b0ae83dd7b2f72ba94278e92a6",
+    "results/E18_tiny_f6_s101_seq_milp_k10_r10_t60s/E18_tiny_f6_s101_seq_milp_k10_r10_t60s_config.json": "6b1f5979564937415351e0f0fdf8acb2fa75bf84650ffddfee449a98eb6c8384",
+    "results/E18_tiny_f6_s101_seq_milp_k10_r10_t60s/E18_tiny_f6_s101_seq_milp_k10_r10_t60s_file_eachfold.txt": "4031caaacc8ecd72c93bf3970f19182637331d2cc33b3004abf3faab7f258f88",
+    "results/E18_tiny_f6_s101_seq_milp_k10_r10_t60s/E18_tiny_f6_s101_seq_milp_k10_r10_t60s_file_mean_test_distance.txt": "6fc7b18e809733e9cfce1fbad9205b617e5ac01b9d0057b63c5c57f7837cfabd",
+    "results/E18_tiny_f6_s101_seq_milp_k10_r10_t60s/E18_tiny_f6_s101_seq_milp_k10_r10_t60s_file_mean_test_objective.txt": "3c6f3bdd5cb42c9d5e69a595c767080d9c9608209744732af84f5e9240b8eafe",
+    "results/E18_tiny_f6_s101_seq_milp_k10_r10_t60s/E18_tiny_f6_s101_seq_milp_k10_r10_t60s_file_sum_ok.txt": "4dc3c80ef0ebe326e4509cad74eba413772a4d1c3c59fa0d506202a87fc14e20",
+    "results/E18_tiny_f6_s202_baseline_k10_r10_t60s/E18_tiny_f6_s202_baseline_k10_r10_t60s_config.json": "e8961fa9c21965abed4e173ced813ae6d74de62889838b025ba703eb91e7340f",
+    "results/E18_tiny_f6_s202_baseline_k10_r10_t60s/E18_tiny_f6_s202_baseline_k10_r10_t60s_file_eachfold.txt": "aab4e46fcd83ac1762efc357033352da6992dd73bc89bcea8ba100c7c5a2959c",
+    "results/E18_tiny_f6_s202_baseline_k10_r10_t60s/E18_tiny_f6_s202_baseline_k10_r10_t60s_file_mean_test_distance.txt": "e473dd3b51d1d782aab1fac29537e82bb68a28b0a1844f1543f9802f2d2cfbe2",
+    "results/E18_tiny_f6_s202_baseline_k10_r10_t60s/E18_tiny_f6_s202_baseline_k10_r10_t60s_file_mean_test_objective.txt": "da4247a1c93a60474a40901ff0618eaddaf9de38050eb05644404fa43c96aaed",
+    "results/E18_tiny_f6_s202_baseline_k10_r10_t60s/E18_tiny_f6_s202_baseline_k10_r10_t60s_file_sum.txt": "df79a1c008f36e77bfc23b9a114cb0e8d904e3431379737a70933747c198e532",
+    "results/E18_tiny_f6_s202_feedback_k10_r10_t60s/E18_tiny_f6_s202_feedback_k10_r10_t60s_config.json": "73f24c6620e9e623f9a6daf3c3ab001807f4f5a0b66d0119dcefe18e85422399",
+    "results/E18_tiny_f6_s202_feedback_k10_r10_t60s/E18_tiny_f6_s202_feedback_k10_r10_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E18_tiny_f6_s202_feedback_k10_r10_t60s/E18_tiny_f6_s202_feedback_k10_r10_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_tiny_f6_s202_feedback_k10_r10_t60s/E18_tiny_f6_s202_feedback_k10_r10_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_tiny_f6_s202_feedback_k10_r10_t60s/E18_tiny_f6_s202_feedback_k10_r10_t60s_file_sum.txt": "cb384794fd914464f883a2e03d8f7e51de1144a5a7f40583a4dfa5cd00497d04",
+    "results/E18_tiny_f6_s202_multistart_k10_r10_t60s/E18_tiny_f6_s202_multistart_k10_r10_t60s_config.json": "a29be0837f4c577567f2f0eee6da059b78d3aa4e0b9dd559a2fe602f15a8164d",
+    "results/E18_tiny_f6_s202_multistart_k10_r10_t60s/E18_tiny_f6_s202_multistart_k10_r10_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E18_tiny_f6_s202_multistart_k10_r10_t60s/E18_tiny_f6_s202_multistart_k10_r10_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_tiny_f6_s202_multistart_k10_r10_t60s/E18_tiny_f6_s202_multistart_k10_r10_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_tiny_f6_s202_multistart_k10_r10_t60s/E18_tiny_f6_s202_multistart_k10_r10_t60s_file_sum.txt": "a8cb40473d6879477d796be75f675356aa5a58ea9554c7e14688e95233c0d119",
+    "results/E18_tiny_f6_s202_seq_milp_k10_r10_t60s/E18_tiny_f6_s202_seq_milp_k10_r10_t60s_config.json": "5b6b45adc7f33a36efaac26df34f1abab8ed12631566c64e478a26ff2c196a7d",
+    "results/E18_tiny_f6_s202_seq_milp_k10_r10_t60s/E18_tiny_f6_s202_seq_milp_k10_r10_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E18_tiny_f6_s202_seq_milp_k10_r10_t60s/E18_tiny_f6_s202_seq_milp_k10_r10_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_tiny_f6_s202_seq_milp_k10_r10_t60s/E18_tiny_f6_s202_seq_milp_k10_r10_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E18_tiny_f6_s202_seq_milp_k10_r10_t60s/E18_tiny_f6_s202_seq_milp_k10_r10_t60s_file_sum.txt": "ddae525cbb7469ca2a0bdfa9dbba3c743b0f93638102a049b6bc9648ba67fccb",
+    "results/E18_tiny_f6_s303_baseline_k10_r10_t60s/E18_tiny_f6_s303_baseline_k10_r10_t60s_config.json": "48d534ddde57f6eb446fd607216d737fb66039f180d9918e1014e8154c94e05b",
+    "results/E18_tiny_f6_s303_baseline_k10_r10_t60s/E18_tiny_f6_s303_baseline_k10_r10_t60s_file_eachfold.txt": "9fc4ccfbc77b8b22d48a33a2f7ddc8a31cf8d5f8fef47887a198aacd333173ca",
+    "results/E18_tiny_f6_s303_baseline_k10_r10_t60s/E18_tiny_f6_s303_baseline_k10_r10_t60s_file_mean_test_distance.txt": "14b1c08fdc80edcd4871ddc97ca0a48893fea8a94aced2e682a76f980d8c062f",
+    "results/E18_tiny_f6_s303_baseline_k10_r10_t60s/E18_tiny_f6_s303_baseline_k10_r10_t60s_file_mean_test_objective.txt": "1f00757ac0c75f8d276f2abb5f0bdf8fdc68c1640821f4fe789a4e5d550b8360",
+    "results/E18_tiny_f6_s303_baseline_k10_r10_t60s/E18_tiny_f6_s303_baseline_k10_r10_t60s_file_sum_ok.txt": "0440e22d5e244077f092fd99a63a8643b8da6f84fa67ac48ad7277f01c52076e",
+    "results/E18_tiny_f6_s303_feedback_k10_r10_t60s/E18_tiny_f6_s303_feedback_k10_r10_t60s_config.json": "44dc018f7735b2c71ff1f0821581cd6313e7e3946581031d8766254da484d8c4",
+    "results/E18_tiny_f6_s303_feedback_k10_r10_t60s/E18_tiny_f6_s303_feedback_k10_r10_t60s_file_eachfold.txt": "148e7003988b2ab8487bfbbbe4614832885127b1e36f0a8d11e44d9c3e510939",
+    "results/E18_tiny_f6_s303_feedback_k10_r10_t60s/E18_tiny_f6_s303_feedback_k10_r10_t60s_file_mean_test_distance.txt": "8fef89a446fad8960185a79af43e7a2f9313e46e7e02e96210339f2a4583977e",
+    "results/E18_tiny_f6_s303_feedback_k10_r10_t60s/E18_tiny_f6_s303_feedback_k10_r10_t60s_file_mean_test_objective.txt": "97c830bd15805085e692fe4447138d9b6ffc67682a1aa3aba5b5877abf1abff5",
+    "results/E18_tiny_f6_s303_feedback_k10_r10_t60s/E18_tiny_f6_s303_feedback_k10_r10_t60s_file_sum_ok.txt": "7688f08b0bcf637361b3c6b696578277cfb05749a7a562b9b1ebff0dc7dc3625",
+    "results/E18_tiny_f6_s303_multistart_k10_r10_t60s/E18_tiny_f6_s303_multistart_k10_r10_t60s_config.json": "0761c421be41a3a807cd3329d9e231a6f55aede1fa0cb8d71089e7cc3ccd715f",
+    "results/E18_tiny_f6_s303_multistart_k10_r10_t60s/E18_tiny_f6_s303_multistart_k10_r10_t60s_file_eachfold.txt": "4326bb27a5f11d533ddb27c12e76afddbdf5ba8482753db249d187e4939469be",
+    "results/E18_tiny_f6_s303_multistart_k10_r10_t60s/E18_tiny_f6_s303_multistart_k10_r10_t60s_file_mean_test_distance.txt": "3c544fd67f2536b0bc2e7a3b93ba0d35a4e4285502556d4a31f7f4294299da29",
+    "results/E18_tiny_f6_s303_multistart_k10_r10_t60s/E18_tiny_f6_s303_multistart_k10_r10_t60s_file_mean_test_objective.txt": "3501b6c39cd8bc8cb406be78b20441db88b1bd38f7adf5f3077bf21d0f775d4c",
+    "results/E18_tiny_f6_s303_multistart_k10_r10_t60s/E18_tiny_f6_s303_multistart_k10_r10_t60s_file_sum_ok.txt": "01f8e8de0ad186b3141cebc1a0352b4206566d9420077ef344f906c74adbb653",
+    "results/E18_tiny_f6_s303_seq_milp_k10_r10_t60s/E18_tiny_f6_s303_seq_milp_k10_r10_t60s_config.json": "3ca10cd94de5d05ca63a628b0b97f54455f25eef39e4a3d12ecec2c57aa7f000",
+    "results/E18_tiny_f6_s303_seq_milp_k10_r10_t60s/E18_tiny_f6_s303_seq_milp_k10_r10_t60s_file_eachfold.txt": "59c61cb6f541ffec509fba026970ab8a542ea01acdb874faf85ec5a153d947ff",
+    "results/E18_tiny_f6_s303_seq_milp_k10_r10_t60s/E18_tiny_f6_s303_seq_milp_k10_r10_t60s_file_mean_test_distance.txt": "987595198d9d2538877935e6e4773b5c92b749e45b36b975a8234d4c77cd26d0",
+    "results/E18_tiny_f6_s303_seq_milp_k10_r10_t60s/E18_tiny_f6_s303_seq_milp_k10_r10_t60s_file_mean_test_objective.txt": "3a1cbe231e906892471ce08bbb5ce83816e099dfe410084d2c1b704bc5042546",
+    "results/E18_tiny_f6_s303_seq_milp_k10_r10_t60s/E18_tiny_f6_s303_seq_milp_k10_r10_t60s_file_sum_ok.txt": "2ba80c071b0dc5ac0692b18e0b6c05a40c6c0046d2e967e6d234f9b38e0b8c77",
+    "run_means.csv": "4270b4575bdec3c10be9bc20e832c1b30ecb45ac9092a48b437ab85560d9044b",
+    "statistics.json": "f401885b66076b023b0654055b12be08c5a80136662f857ef448996693ccb99a",
+    "status_matrix.csv": "cf535aeaab7446ec9c82932b10305cd44f976c76ca8a53fb4621ed0ecd947736",
+    "summary.csv": "e65112a136dd5294ca4364c69059b84f767d64db34d7c847fdf8c4419a53033e",
+    "summary.md": "e0abebbba1859a5135ed612e944c534855a1537d07563201b285884fc3e56704"
+  }
+}

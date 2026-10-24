@@ -1,0 +1,1007 @@
+{
+  "campaigns": [
+    {
+      "campaign": "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261023-paper-v2\\paper-x4-tiny",
+      "configuration": {
+        "cache_policy": "isolated",
+        "data_origin": "SYNTHETIC",
+        "datasets": [
+          {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s101",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 101,
+            "variable_facings": false
+          },
+          {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s202",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 202,
+            "variable_facings": false
+          },
+          {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s303",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 303,
+            "variable_facings": false
+          }
+        ],
+        "experiments": [
+          {
+            "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+            "datasets": [
+              "tiny_f6_s101",
+              "tiny_f6_s202",
+              "tiny_f6_s303"
+            ],
+            "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+            "id": "E21",
+            "metrics": [
+              "joint_objective",
+              "joint_evaluations",
+              "joint_iterations_to_best",
+              "mean_distance_m",
+              "mean_wait_s",
+              "wall_s",
+              "peak_child_rss_bytes"
+            ],
+            "question": "How do wall time, memory and objective scale with instance size under fixed budgets?",
+            "statistical_method": "descriptive_paired_exploratory",
+            "treatments": [
+              {
+                "id": "baseline",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "greedy",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "first_fit"
+                  }
+                }
+              },
+              {
+                "id": "seq_milp",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "multistart",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 3,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "multistart",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "feedback",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "feedback",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "job_time_limit_s": 60.0,
+        "max_jobs": 60,
+        "max_retries": 1,
+        "max_wall_s": 3900.0,
+        "memory_limit_mb": 2048,
+        "name": "paper-x4-tiny",
+        "repetitions": 1,
+        "schema_version": "1.1",
+        "seeds": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "workers": 1
+      },
+      "datasets": [
+        {
+          "counts": {
+            "categories": 3,
+            "orders": 20,
+            "products": 12,
+            "shelves": 4
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "tiny_f6_s101",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "99882f1ef49cfef118b388141d195b5cdfc1d4aeb365a1e45023bdaf5ec316c2",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s101",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 101,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        },
+        {
+          "counts": {
+            "categories": 3,
+            "orders": 20,
+            "products": 12,
+            "shelves": 4
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "tiny_f6_s202",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "a5fa0a77047265e8031bfe560bd9550748e4fc5dc096fe671aefa2007d79a23d",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s202",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 202,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        },
+        {
+          "counts": {
+            "categories": 3,
+            "orders": 20,
+            "products": 12,
+            "shelves": 4
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "tiny_f6_s303",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "32da7fca1271591fbf85f7bebeeb9987589825de4eeee0c4d52a2c9f04d252eb",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 6,
+            "height_scale": 1.0,
+            "id": "tiny_f6_s303",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "tiny",
+            "scenario": "feasible",
+            "seed": 303,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        }
+      ],
+      "identity": {
+        "config_sha256": "36ea5c0fe1b065ff792d3c8d0880dcf620a71efc5e6bf81efe0d4e4ca32b7dcd",
+        "created_utc": "2026-10-23T06:45:11.251678+00:00",
+        "free_disk_bytes": 27531694080,
+        "runtime": {
+          "model_versions": {
+            "input_contract": "1.1",
+            "joint": "finite-saa-feedback-1",
+            "t1": "grid-local-search-1.1",
+            "t2": "allocation-affinity-milp-1.1",
+            "t3": "facing-strip-milp-1.1",
+            "t4": "picker-grid-queue-1.1",
+            "workflow": "bounded-candidates-1.1"
+          },
+          "packages": {
+            "annotated-doc": "0.0.5",
+            "annotated-types": "0.8.0",
+            "anyio": "4.15.1",
+            "certifi": "2026.10.19",
+            "click": "8.5.0",
+            "colorama": "0.4.6",
+            "contourpy": "1.4.0",
+            "cycler": "0.12.1",
+            "dnspython": "2.9.0",
+            "fastapi": "0.157.0",
+            "fonttools": "4.67.0",
+            "h11": "0.16.0",
+            "httpcore": "1.0.9",
+            "httpx": "0.28.1",
+            "hypothesis": "6.170.5",
+            "idna": "3.20",
+            "iniconfig": "2.3.1",
+            "kiwisolver": "1.5.1",
+            "librt": "0.16.0",
+            "markupsafe": "3.0.4",
+            "matplotlib": "3.11.2",
+            "mypy": "1.20.2",
+            "mypy_extensions": "1.1.0",
+            "networkx": "3.7",
+            "numpy": "2.5.4",
+            "opentelemetry-api": "1.45.1",
+            "packaging": "26.3",
+            "pathspec": "1.1.1",
+            "pillow": "13.0.0",
+            "pip": "25.0.1",
+            "pluggy": "1.7.0",
+            "pydantic": "2.14.1",
+            "pydantic_core": "2.50.1",
+            "pygments": "2.21.0",
+            "pymongo": "4.18.2",
+            "pyparsing": "3.3.3",
+            "pytest": "9.1.1",
+            "python-dateutil": "3.0.0",
+            "ruff": "0.17.1",
+            "scipy": "1.18.1",
+            "shapely": "2.2.0",
+            "simpy": "4.1.2",
+            "six": "1.17.0",
+            "smart-retail": "0.1.0",
+            "sortedcontainers": "2.4.0",
+            "starlette": "1.9.0",
+            "types-networkx": "3.6.1.20261021",
+            "typing-inspection": "0.4.4",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.5",
+            "uvicorn": "0.54.0"
+          },
+          "python": "3.12.10",
+          "solver": {
+            "name": "HiGHS",
+            "version": "1.12.0"
+          },
+          "source_sha256": "936a428127a02ce5ab694b7cd9a076596444e0905ff609e5efbdd96b92324b4e"
+        },
+        "worker_limit": 1
+      },
+      "validation": {
+        "files": 9114,
+        "status": "PASS"
+      }
+    },
+    {
+      "campaign": "\\\\?\\D:\\Smart_Retail_Floor_Allocation\\experiments\\results\\20261023-paper-v2\\paper-x4-small",
+      "configuration": {
+        "cache_policy": "isolated",
+        "data_origin": "SYNTHETIC",
+        "datasets": [
+          {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s101",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 101,
+            "variable_facings": false
+          },
+          {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s202",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 202,
+            "variable_facings": false
+          },
+          {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s303",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 303,
+            "variable_facings": false
+          }
+        ],
+        "experiments": [
+          {
+            "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+            "datasets": [
+              "small_f4_s101",
+              "small_f4_s202",
+              "small_f4_s303"
+            ],
+            "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+            "id": "E21",
+            "metrics": [
+              "joint_objective",
+              "joint_evaluations",
+              "joint_iterations_to_best",
+              "mean_distance_m",
+              "mean_wait_s",
+              "wall_s",
+              "peak_child_rss_bytes"
+            ],
+            "question": "How do wall time, memory and objective scale with instance size under fixed budgets?",
+            "statistical_method": "descriptive_paired_exploratory",
+            "treatments": [
+              {
+                "id": "baseline",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "greedy",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "first_fit"
+                  }
+                }
+              },
+              {
+                "id": "seq_milp",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "sequential",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "multistart",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 3,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "multistart",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              },
+              {
+                "id": "feedback",
+                "overrides": {
+                  "optimization": {
+                    "algorithm": "milp",
+                    "candidate_count": 1,
+                    "joint": {
+                      "max_actions": 24,
+                      "max_evaluations": 80,
+                      "max_iterations": 3,
+                      "mode": "feedback",
+                      "objective": {
+                        "scales": [
+                          100,
+                          100,
+                          1,
+                          1
+                        ],
+                        "weights": [
+                          1,
+                          0.2,
+                          0.1,
+                          0.1
+                        ]
+                      },
+                      "scenario_seed_policy": "job_seed_offsets",
+                      "scenario_seeds": [
+                        0,
+                        101
+                      ]
+                    },
+                    "slotting_algorithm": "milp"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "job_time_limit_s": 60.0,
+        "max_jobs": 60,
+        "max_retries": 1,
+        "max_wall_s": 3900.0,
+        "memory_limit_mb": 2048,
+        "name": "paper-x4-small",
+        "repetitions": 1,
+        "schema_version": "1.1",
+        "seeds": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "workers": 1
+      },
+      "datasets": [
+        {
+          "counts": {
+            "categories": 6,
+            "orders": 100,
+            "products": 48,
+            "shelves": 12
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "small_f4_s101",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "309499d765d58db7793b7591840034b4b4790ed9d7b53952db7798ec26cf22c5",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s101",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 101,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        },
+        {
+          "counts": {
+            "categories": 6,
+            "orders": 100,
+            "products": 48,
+            "shelves": 12
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "small_f4_s202",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "84e3d0d0e15089e738c8c006ddb3be846e4db66cf341eec9d049ea1e612e3882",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s202",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 202,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        },
+        {
+          "counts": {
+            "categories": 6,
+            "orders": 100,
+            "products": 48,
+            "shelves": 12
+          },
+          "created_on": "2026-10-22",
+          "data_origin": "SYNTHETIC",
+          "dataset_id": "small_f4_s303",
+          "generator": "structured_store_v1",
+          "limitations": [
+            "Not representative of a real store",
+            "Feasibility subject to solver model and budget",
+            "Category assignment mode: free"
+          ],
+          "rights": "Locally generated synthetic research data",
+          "sha256": "e589f2b0a892c0404520174ecd2228ce2101065fb1eb34b1e32ff21da7070602",
+          "source": "Deterministic Python random generator, no field observations",
+          "spec": {
+            "category_assignment": "free",
+            "facings": 4,
+            "height_scale": 1.0,
+            "id": "small_f4_s303",
+            "input_file_sha256": null,
+            "input_path": null,
+            "levels": 2,
+            "scale": "small",
+            "scenario": "feasible",
+            "seed": 303,
+            "variable_facings": false
+          },
+          "units": {
+            "length": "m",
+            "mass": "kg",
+            "time": "s"
+          },
+          "version": "1.0"
+        }
+      ],
+      "identity": {
+        "config_sha256": "cc93ed74056f13ffc4f6202d694aac90c6e71d1964eddeaaf18a60e742375a0c",
+        "created_utc": "2026-10-23T06:52:43.143323+00:00",
+        "free_disk_bytes": 26618552320,
+        "runtime": {
+          "model_versions": {
+            "input_contract": "1.1",
+            "joint": "finite-saa-feedback-1",
+            "t1": "grid-local-search-1.1",
+            "t2": "allocation-affinity-milp-1.1",
+            "t3": "facing-strip-milp-1.1",
+            "t4": "picker-grid-queue-1.1",
+            "workflow": "bounded-candidates-1.1"
+          },
+          "packages": {
+            "annotated-doc": "0.0.5",
+            "annotated-types": "0.8.0",
+            "anyio": "4.15.1",
+            "certifi": "2026.10.19",
+            "click": "8.5.0",
+            "colorama": "0.4.6",
+            "contourpy": "1.4.0",
+            "cycler": "0.12.1",
+            "dnspython": "2.9.0",
+            "fastapi": "0.157.0",
+            "fonttools": "4.67.0",
+            "h11": "0.16.0",
+            "httpcore": "1.0.9",
+            "httpx": "0.28.1",
+            "hypothesis": "6.170.5",
+            "idna": "3.20",
+            "iniconfig": "2.3.1",
+            "kiwisolver": "1.5.1",
+            "librt": "0.16.0",
+            "markupsafe": "3.0.4",
+            "matplotlib": "3.11.2",
+            "mypy": "1.20.2",
+            "mypy_extensions": "1.1.0",
+            "networkx": "3.7",
+            "numpy": "2.5.4",
+            "opentelemetry-api": "1.45.1",
+            "packaging": "26.3",
+            "pathspec": "1.1.1",
+            "pillow": "13.0.0",
+            "pip": "25.0.1",
+            "pluggy": "1.7.0",
+            "pydantic": "2.14.1",
+            "pydantic_core": "2.50.1",
+            "pygments": "2.21.0",
+            "pymongo": "4.18.2",
+            "pyparsing": "3.3.3",
+            "pytest": "9.1.1",
+            "python-dateutil": "3.0.0",
+            "ruff": "0.17.1",
+            "scipy": "1.18.1",
+            "shapely": "2.2.0",
+            "simpy": "4.1.2",
+            "six": "1.17.0",
+            "smart-retail": "0.1.0",
+            "sortedcontainers": "2.4.0",
+            "starlette": "1.9.0",
+            "types-networkx": "3.6.1.20261021",
+            "typing-inspection": "0.4.4",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.5",
+            "uvicorn": "0.54.0"
+          },
+          "python": "3.12.10",
+          "solver": {
+            "name": "HiGHS",
+            "version": "1.12.0"
+          },
+          "source_sha256": "936a428127a02ce5ab694b7cd9a076596444e0905ff609e5efbdd96b92324b4e"
+        },
+        "worker_limit": 1
+      },
+      "validation": {
+        "files": 2101,
+        "status": "PASS"
+      }
+    }
+  ],
+  "files": {
+    "comparisons.csv": "bd3b46063b3ef9c11f2e0ba514dd3338fa58bb6895a2f852330b2e1d9f0dd930",
+    "failures.csv": "5f7a302cd4f5237891b7dddd7aae85f79bf60b684986736dc690f32dafd8f6a5",
+    "figures/joint-convergence.png": "058d9c972dc4de19549b3b5b855557aa11e9fa32fe6bdb08bd42736a1bf80322",
+    "figures/joint-convergence.svg": "a2c01905d96916eeed1a76cc0de12196f0a1f69df663cdc72faa2a1bcec07afd",
+    "figures/mean_distance_m.png": "ee3658e19c57e6115d2605def4dc5af81d7f7bfa0326bfb14cc682d81730adb7",
+    "figures/mean_distance_m.svg": "fb3d4bde501e0d217c75f53013a28c65e2122678d4be22d3ed180d8f4d75e91b",
+    "figures/mean_wait_s.png": "959292460a62029dcd517c9776cc013063702322939b2698240ac03aa0b05fcb",
+    "figures/mean_wait_s.svg": "f020d73f1e5260f7cd729a81334ab5e285b3a7c38441f95f6ddb6d9f76683c3e",
+    "figures/outcomes.png": "35798cd986e695d23003139f533dedac6e9154bc101da1a7ac1fa397b0a26009",
+    "figures/outcomes.svg": "1852d37f5ca185b95848d1d63fd8dccd9bd3c18421457897bfd49da3ec801d8b",
+    "figures/peak_child_rss_bytes.png": "4e3f2911d41816518e305e80a2928489bb086c9616671a6bb298c90188e7c2dc",
+    "figures/peak_child_rss_bytes.svg": "ec2ae8cab5a5442be8e75c92aad817527a28a53814c5e0c005c337a0ee6daa77",
+    "figures/wall_s.png": "9cf4e78eb88e8dcf0d13d214582445c8611cc4450ebf36d32f59cea4e2081031",
+    "figures/wall_s.svg": "49a317a112e0f9f4e666f224598cd62c6851ab455ef1c154e4b75ca44a4f89ca",
+    "joint-comparison.csv": "d8570e3533dc37b4873591f78642fc71d1410cc7d62a2976d3be81085cc1186a",
+    "joint-examples.json": "34c4e759fad132eb1ec776458cf13a2d697c471ffda4c220f8f0bb0f18926c78",
+    "joint-trace.csv": "8f24999d8de0f247cf8121a94287f87cc8ce255f10233d9bff0e9cc950e8352f",
+    "rankings.csv": "4e91d5acb1ccfbd908143b3ab5f7536d9e3c97904a5c817ba708e72be5853858",
+    "results.csv": "efa032224c041d1defdbef4b575e90d8f6c9c0fa79b8df31b7da576b57971461",
+    "results.json": "76de309b76ac32872564e417dfc70e4361785ff22febdcab9be455694428a8ca",
+    "results/E21_small_f4_s101_baseline_nocv_r5_t60s/E21_small_f4_s101_baseline_nocv_r5_t60s_config.json": "9d54d788cbb1c77d156c4cf02a3245cf89b8beac44cf5807fec2c2c089d8726f",
+    "results/E21_small_f4_s101_baseline_nocv_r5_t60s/E21_small_f4_s101_baseline_nocv_r5_t60s_file_eachfold.txt": "66deb213afd38b4d9340e33d4efeb9632d7a6c174859f3958dbfb1d8e576fd03",
+    "results/E21_small_f4_s101_baseline_nocv_r5_t60s/E21_small_f4_s101_baseline_nocv_r5_t60s_file_mean_test_distance.txt": "1b6d2eca64dd1572db06f0ddff46af5aae311be09cfa3b907822c0785e7639d2",
+    "results/E21_small_f4_s101_baseline_nocv_r5_t60s/E21_small_f4_s101_baseline_nocv_r5_t60s_file_mean_test_objective.txt": "1b6d2eca64dd1572db06f0ddff46af5aae311be09cfa3b907822c0785e7639d2",
+    "results/E21_small_f4_s101_baseline_nocv_r5_t60s/E21_small_f4_s101_baseline_nocv_r5_t60s_file_sum_ok.txt": "ee8410294ae6e12f29ad36c0cd4c810272e6e47f6f2e301fe79d50dc04f3abbf",
+    "results/E21_small_f4_s101_feedback_nocv_r5_t60s/E21_small_f4_s101_feedback_nocv_r5_t60s_config.json": "f9ea5d4bb51daa8301a0906a56c26a91178a248de08e05825acdb35080be9f74",
+    "results/E21_small_f4_s101_feedback_nocv_r5_t60s/E21_small_f4_s101_feedback_nocv_r5_t60s_file_eachfold.txt": "d8798dd6e646a4440dbaa656801ff48d9622b7ebff41c66d274ec6cd5b85f6fa",
+    "results/E21_small_f4_s101_feedback_nocv_r5_t60s/E21_small_f4_s101_feedback_nocv_r5_t60s_file_mean_test_distance.txt": "bcf77dee2c0487a4331698a906d1a33e747a9aaa89a9095325bb5ae505c3b0d0",
+    "results/E21_small_f4_s101_feedback_nocv_r5_t60s/E21_small_f4_s101_feedback_nocv_r5_t60s_file_mean_test_objective.txt": "bcf77dee2c0487a4331698a906d1a33e747a9aaa89a9095325bb5ae505c3b0d0",
+    "results/E21_small_f4_s101_feedback_nocv_r5_t60s/E21_small_f4_s101_feedback_nocv_r5_t60s_file_sum_ok.txt": "dd89af064bf6719c3959f1d4ed2341a6f6fc51fe4b9c6d78b88e7d7143e5e9ae",
+    "results/E21_small_f4_s101_multistart_nocv_r5_t60s/E21_small_f4_s101_multistart_nocv_r5_t60s_config.json": "22565b27685c93fd9ec4f1541a37ef0753a993a0b0d672bcb1512021764b52ee",
+    "results/E21_small_f4_s101_multistart_nocv_r5_t60s/E21_small_f4_s101_multistart_nocv_r5_t60s_file_eachfold.txt": "fb35a74cdc527cc126407c87a3fe9d3fd26fcc977f457af009f7a1d43c626acd",
+    "results/E21_small_f4_s101_multistart_nocv_r5_t60s/E21_small_f4_s101_multistart_nocv_r5_t60s_file_mean_test_distance.txt": "ee91e780122efc864ce803c107be467108efb6e0fba64c818d45e1e2beb5c1b2",
+    "results/E21_small_f4_s101_multistart_nocv_r5_t60s/E21_small_f4_s101_multistart_nocv_r5_t60s_file_mean_test_objective.txt": "ee91e780122efc864ce803c107be467108efb6e0fba64c818d45e1e2beb5c1b2",
+    "results/E21_small_f4_s101_multistart_nocv_r5_t60s/E21_small_f4_s101_multistart_nocv_r5_t60s_file_sum_ok.txt": "156c6751abca6f297fd71ffe43eef31158dae646e346008aebd0d408b676ba95",
+    "results/E21_small_f4_s101_seq_milp_nocv_r5_t60s/E21_small_f4_s101_seq_milp_nocv_r5_t60s_config.json": "198dd4bf28522828d6c22e0f413f8a96cc478667f150e3ed4146877eab82e5da",
+    "results/E21_small_f4_s101_seq_milp_nocv_r5_t60s/E21_small_f4_s101_seq_milp_nocv_r5_t60s_file_eachfold.txt": "5a88417de6ba9c1b121400467354697d7c88ff194070fed742fa95360954e1c1",
+    "results/E21_small_f4_s101_seq_milp_nocv_r5_t60s/E21_small_f4_s101_seq_milp_nocv_r5_t60s_file_mean_test_distance.txt": "5d37f9f518dfc92f157e027055a6f691552f581277fe8d6b41a10e439706861f",
+    "results/E21_small_f4_s101_seq_milp_nocv_r5_t60s/E21_small_f4_s101_seq_milp_nocv_r5_t60s_file_mean_test_objective.txt": "5d37f9f518dfc92f157e027055a6f691552f581277fe8d6b41a10e439706861f",
+    "results/E21_small_f4_s101_seq_milp_nocv_r5_t60s/E21_small_f4_s101_seq_milp_nocv_r5_t60s_file_sum_ok.txt": "5502f49b80e88a7a1b52c9460b33dc3ece29b1724210e39698ee1c6b5383ef3f",
+    "results/E21_small_f4_s202_baseline_nocv_r5_t60s/E21_small_f4_s202_baseline_nocv_r5_t60s_config.json": "727a83948567e44a352c07bdb44651119c4d3d5d39c98824d3f8d336e46c98bc",
+    "results/E21_small_f4_s202_baseline_nocv_r5_t60s/E21_small_f4_s202_baseline_nocv_r5_t60s_file_eachfold.txt": "fa849c84a3dd2ee149eaa37fd4009d1b09b94ed8aeba912bf46c90760a2c710d",
+    "results/E21_small_f4_s202_baseline_nocv_r5_t60s/E21_small_f4_s202_baseline_nocv_r5_t60s_file_mean_test_distance.txt": "cca5f9c3c9ac11a557aa29c5539ff07fe2f859335587f4a60861efd6f745221a",
+    "results/E21_small_f4_s202_baseline_nocv_r5_t60s/E21_small_f4_s202_baseline_nocv_r5_t60s_file_mean_test_objective.txt": "cca5f9c3c9ac11a557aa29c5539ff07fe2f859335587f4a60861efd6f745221a",
+    "results/E21_small_f4_s202_baseline_nocv_r5_t60s/E21_small_f4_s202_baseline_nocv_r5_t60s_file_sum.txt": "dd43e6298226d3c091a9abb2b502957daaaa7e480fbb40fa3c5fb5a9dee95f56",
+    "results/E21_small_f4_s202_feedback_nocv_r5_t60s/E21_small_f4_s202_feedback_nocv_r5_t60s_config.json": "8c0c8c592b8fe8707086d0c5e904222ce815cd97937d2053e278beb820d9b846",
+    "results/E21_small_f4_s202_feedback_nocv_r5_t60s/E21_small_f4_s202_feedback_nocv_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E21_small_f4_s202_feedback_nocv_r5_t60s/E21_small_f4_s202_feedback_nocv_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s202_feedback_nocv_r5_t60s/E21_small_f4_s202_feedback_nocv_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s202_feedback_nocv_r5_t60s/E21_small_f4_s202_feedback_nocv_r5_t60s_file_sum.txt": "8e022d64829f7db82a8d08e4acb56e9a749d8632f9b1b76966399c919bc66cdf",
+    "results/E21_small_f4_s202_multistart_nocv_r5_t60s/E21_small_f4_s202_multistart_nocv_r5_t60s_config.json": "5bb5f472ffc4a1998538f930c9041ea0f83fc02009bd30c17b40b917d9e84b8d",
+    "results/E21_small_f4_s202_multistart_nocv_r5_t60s/E21_small_f4_s202_multistart_nocv_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E21_small_f4_s202_multistart_nocv_r5_t60s/E21_small_f4_s202_multistart_nocv_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s202_multistart_nocv_r5_t60s/E21_small_f4_s202_multistart_nocv_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s202_multistart_nocv_r5_t60s/E21_small_f4_s202_multistart_nocv_r5_t60s_file_sum.txt": "d5bc280e81de146a9768c2db143c1955cacf3be511a650820fcccea8d00e2c6d",
+    "results/E21_small_f4_s202_seq_milp_nocv_r5_t60s/E21_small_f4_s202_seq_milp_nocv_r5_t60s_config.json": "f85f6dd6a3782084a98a10927bfe4861a60976e89246a714e075a37426a62532",
+    "results/E21_small_f4_s202_seq_milp_nocv_r5_t60s/E21_small_f4_s202_seq_milp_nocv_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E21_small_f4_s202_seq_milp_nocv_r5_t60s/E21_small_f4_s202_seq_milp_nocv_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s202_seq_milp_nocv_r5_t60s/E21_small_f4_s202_seq_milp_nocv_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s202_seq_milp_nocv_r5_t60s/E21_small_f4_s202_seq_milp_nocv_r5_t60s_file_sum.txt": "3bc6b85b6e9d920937b36e7a3582b6f407a1d4b3072056060656982694e63a36",
+    "results/E21_small_f4_s303_baseline_nocv_r5_t60s/E21_small_f4_s303_baseline_nocv_r5_t60s_config.json": "a46e1fed59d4b6c5e7e59e4e70ec55c293989dbbeea81eeeaaaa6020387448fd",
+    "results/E21_small_f4_s303_baseline_nocv_r5_t60s/E21_small_f4_s303_baseline_nocv_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E21_small_f4_s303_baseline_nocv_r5_t60s/E21_small_f4_s303_baseline_nocv_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s303_baseline_nocv_r5_t60s/E21_small_f4_s303_baseline_nocv_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s303_baseline_nocv_r5_t60s/E21_small_f4_s303_baseline_nocv_r5_t60s_file_sum.txt": "c7a7a8c7647760608342336ca0b3f493b2b8ce6da2b50d0de19945f2cbf469c1",
+    "results/E21_small_f4_s303_feedback_nocv_r5_t60s/E21_small_f4_s303_feedback_nocv_r5_t60s_config.json": "2d8831ebb6029ba04ed28758a9992adc18937d847983af87bad311e3fa83f843",
+    "results/E21_small_f4_s303_feedback_nocv_r5_t60s/E21_small_f4_s303_feedback_nocv_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E21_small_f4_s303_feedback_nocv_r5_t60s/E21_small_f4_s303_feedback_nocv_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s303_feedback_nocv_r5_t60s/E21_small_f4_s303_feedback_nocv_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s303_feedback_nocv_r5_t60s/E21_small_f4_s303_feedback_nocv_r5_t60s_file_sum.txt": "cc7738ca5e53224443e1c30a70a690a3aba90f96190d69419eccaa32420d7afd",
+    "results/E21_small_f4_s303_multistart_nocv_r5_t60s/E21_small_f4_s303_multistart_nocv_r5_t60s_config.json": "b0d235fa5925463d50c11bc3a8e6a11d5134c75e00f9ebc8e45efeb9b809f245",
+    "results/E21_small_f4_s303_multistart_nocv_r5_t60s/E21_small_f4_s303_multistart_nocv_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E21_small_f4_s303_multistart_nocv_r5_t60s/E21_small_f4_s303_multistart_nocv_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s303_multistart_nocv_r5_t60s/E21_small_f4_s303_multistart_nocv_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s303_multistart_nocv_r5_t60s/E21_small_f4_s303_multistart_nocv_r5_t60s_file_sum.txt": "b4ca42a42057546c63237f8ddb5a6356a5066940d61694953fcf8e11453a226c",
+    "results/E21_small_f4_s303_seq_milp_nocv_r5_t60s/E21_small_f4_s303_seq_milp_nocv_r5_t60s_config.json": "2c0aa162fc7ddfb1ce454be2cc9222dae8a434f1e632506d15edd02a27ee29d2",
+    "results/E21_small_f4_s303_seq_milp_nocv_r5_t60s/E21_small_f4_s303_seq_milp_nocv_r5_t60s_file_eachfold.txt": "cba8823589855ebbecbf53598de57b3e2fbd15b85712a35194fb9b6c8b0c693d",
+    "results/E21_small_f4_s303_seq_milp_nocv_r5_t60s/E21_small_f4_s303_seq_milp_nocv_r5_t60s_file_mean_test_distance.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s303_seq_milp_nocv_r5_t60s/E21_small_f4_s303_seq_milp_nocv_r5_t60s_file_mean_test_objective.txt": "3c2234e4405ef70bdfa176ad6c51ce22f095e5b9ce9b0e2f595f3a82732c9745",
+    "results/E21_small_f4_s303_seq_milp_nocv_r5_t60s/E21_small_f4_s303_seq_milp_nocv_r5_t60s_file_sum.txt": "eb020b570a7978b6159af2c80c01d7bf0c3c40e3cf224fd02a3551154c0f637c",
+    "results/E21_tiny_f6_s101_baseline_nocv_r5_t60s/E21_tiny_f6_s101_baseline_nocv_r5_t60s_config.json": "fdb2167c919742e2118bc89c811617c3ff6dae809ab57b96c8721fd7dde8780e",
+    "results/E21_tiny_f6_s101_baseline_nocv_r5_t60s/E21_tiny_f6_s101_baseline_nocv_r5_t60s_file_eachfold.txt": "3f13603f2e235c34737b9c0d69e52b8a97c225003b1da43ceb991b71fe3d99f4",
+    "results/E21_tiny_f6_s101_baseline_nocv_r5_t60s/E21_tiny_f6_s101_baseline_nocv_r5_t60s_file_mean_test_distance.txt": "fc6fa7372fad6aae3ecd17d2eeb9f98ea9e724182f62c70699e78a98307d20e4",
+    "results/E21_tiny_f6_s101_baseline_nocv_r5_t60s/E21_tiny_f6_s101_baseline_nocv_r5_t60s_file_mean_test_objective.txt": "fc6fa7372fad6aae3ecd17d2eeb9f98ea9e724182f62c70699e78a98307d20e4",
+    "results/E21_tiny_f6_s101_baseline_nocv_r5_t60s/E21_tiny_f6_s101_baseline_nocv_r5_t60s_file_sum_ok.txt": "176b1a1fd922d1bf7b7a208c92b1a0f5fcf6a5be39c8b54c1ddc0b01f395e65a",
+    "results/E21_tiny_f6_s101_feedback_nocv_r5_t60s/E21_tiny_f6_s101_feedback_nocv_r5_t60s_config.json": "a5af48ce6460a6830fb89b37ce5964346e3ed30c94f3ee9837a4165902f96f9a",
+    "results/E21_tiny_f6_s101_feedback_nocv_r5_t60s/E21_tiny_f6_s101_feedback_nocv_r5_t60s_file_eachfold.txt": "8c32a10b37c78e4a83796609445d07637e309d538ff7582e81d8fd15b50599c3",
+    "results/E21_tiny_f6_s101_feedback_nocv_r5_t60s/E21_tiny_f6_s101_feedback_nocv_r5_t60s_file_mean_test_distance.txt": "6a9993b06bcdc9e5e70a2daa313be379f0e5ac48d0f159bdcb43cdad7babd93c",
+    "results/E21_tiny_f6_s101_feedback_nocv_r5_t60s/E21_tiny_f6_s101_feedback_nocv_r5_t60s_file_mean_test_objective.txt": "6a9993b06bcdc9e5e70a2daa313be379f0e5ac48d0f159bdcb43cdad7babd93c",
+    "results/E21_tiny_f6_s101_feedback_nocv_r5_t60s/E21_tiny_f6_s101_feedback_nocv_r5_t60s_file_sum_ok.txt": "e5baac9b3f14425c00f340e23abd97583c21b59dc87848d48b4f14501a446c48",
+    "results/E21_tiny_f6_s101_multistart_nocv_r5_t60s/E21_tiny_f6_s101_multistart_nocv_r5_t60s_config.json": "613ca8d225b5d7aec0c10a1ff5643f962705f0a3769d0cf21a5042aa159799c1",
+    "results/E21_tiny_f6_s101_multistart_nocv_r5_t60s/E21_tiny_f6_s101_multistart_nocv_r5_t60s_file_eachfold.txt": "b9781f02355e9790f362439998a43736acbbd0e290c4a375695d94e2391b1de5",
+    "results/E21_tiny_f6_s101_multistart_nocv_r5_t60s/E21_tiny_f6_s101_multistart_nocv_r5_t60s_file_mean_test_distance.txt": "26c9a5b3120c1c5bb79790f73a54f4fa842087438f6d36852ecb043115b8fc03",
+    "results/E21_tiny_f6_s101_multistart_nocv_r5_t60s/E21_tiny_f6_s101_multistart_nocv_r5_t60s_file_mean_test_objective.txt": "26c9a5b3120c1c5bb79790f73a54f4fa842087438f6d36852ecb043115b8fc03",
+    "results/E21_tiny_f6_s101_multistart_nocv_r5_t60s/E21_tiny_f6_s101_multistart_nocv_r5_t60s_file_sum_ok.txt": "e0da5d82b5707eae7b9bdf866a6b7669fce53c563ec1c4193685955fed21f9db",
+    "results/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s_config.json": "d8c2226fa0942a9a2959701831e80ad2aab07c3520f0eb224e7e704087cf3921",
+    "results/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s_file_eachfold.txt": "53b6025a1cf48c4643421f01e1838a301238367d65acfadfbe2290e35dca2cac",
+    "results/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s_file_mean_test_distance.txt": "6616bd9b255e0c3192b9b37772eb88b3b7afb1e25576825b25d76fa6be42ae14",
+    "results/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s_file_mean_test_objective.txt": "6616bd9b255e0c3192b9b37772eb88b3b7afb1e25576825b25d76fa6be42ae14",
+    "results/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s/E21_tiny_f6_s101_seq_milp_nocv_r5_t60s_file_sum_ok.txt": "dd5f7e4f1543e6f874ec6279184fab69862e75c3a36d87afcef2e7ffb6056b1b",
+    "results/E21_tiny_f6_s202_baseline_nocv_r5_t60s/E21_tiny_f6_s202_baseline_nocv_r5_t60s_config.json": "c944fd22d4d3ad6b854e80b2bac6bb38ddbfca3de500656e4784c0950c74831e",
+    "results/E21_tiny_f6_s202_baseline_nocv_r5_t60s/E21_tiny_f6_s202_baseline_nocv_r5_t60s_file_eachfold.txt": "2f10e9a529f3aca10b4e8f54dcf0e29a31d66ceff06579b96e950edc74f13bb6",
+    "results/E21_tiny_f6_s202_baseline_nocv_r5_t60s/E21_tiny_f6_s202_baseline_nocv_r5_t60s_file_mean_test_distance.txt": "24ad65b8fe2f3426d53ac55250ac5aa0769219642548dcbac0b72de0b70355c0",
+    "results/E21_tiny_f6_s202_baseline_nocv_r5_t60s/E21_tiny_f6_s202_baseline_nocv_r5_t60s_file_mean_test_objective.txt": "24ad65b8fe2f3426d53ac55250ac5aa0769219642548dcbac0b72de0b70355c0",
+    "results/E21_tiny_f6_s202_baseline_nocv_r5_t60s/E21_tiny_f6_s202_baseline_nocv_r5_t60s_file_sum_ok.txt": "26ac0c0b56f1a3a98fd77ebf3b1f6a8c4b1b1dd98f1c71847ab13bf59e6234c5",
+    "results/E21_tiny_f6_s202_feedback_nocv_r5_t60s/E21_tiny_f6_s202_feedback_nocv_r5_t60s_config.json": "85b9d43e32f1336e6cb91bcf77d6905543f0a00c212f41a261443792a9c3ce88",
+    "results/E21_tiny_f6_s202_feedback_nocv_r5_t60s/E21_tiny_f6_s202_feedback_nocv_r5_t60s_file_eachfold.txt": "520a6498e3dda5feaa9dfb521f38b5200c0efeb15b317dfc00091904889b15ae",
+    "results/E21_tiny_f6_s202_feedback_nocv_r5_t60s/E21_tiny_f6_s202_feedback_nocv_r5_t60s_file_mean_test_distance.txt": "7f2e4b115a34bc2b32c2aa882b90db16940b24e2194d84e5cd43d62e9e1b3856",
+    "results/E21_tiny_f6_s202_feedback_nocv_r5_t60s/E21_tiny_f6_s202_feedback_nocv_r5_t60s_file_mean_test_objective.txt": "7f2e4b115a34bc2b32c2aa882b90db16940b24e2194d84e5cd43d62e9e1b3856",
+    "results/E21_tiny_f6_s202_feedback_nocv_r5_t60s/E21_tiny_f6_s202_feedback_nocv_r5_t60s_file_sum_ok.txt": "9d1d45c25b2f701e4f2e1144f31e9f312148060df6a06bc9dd83a038204842ed",
+    "results/E21_tiny_f6_s202_multistart_nocv_r5_t60s/E21_tiny_f6_s202_multistart_nocv_r5_t60s_config.json": "ed9e4bec6932100405fc934e40ad28676883eb2a7424dca632eec80c9badb736",
+    "results/E21_tiny_f6_s202_multistart_nocv_r5_t60s/E21_tiny_f6_s202_multistart_nocv_r5_t60s_file_eachfold.txt": "a484ad24453a785d199f76fe7561e3d3ea63bf0fff752569b379e3021fe1edf4",
+    "results/E21_tiny_f6_s202_multistart_nocv_r5_t60s/E21_tiny_f6_s202_multistart_nocv_r5_t60s_file_mean_test_distance.txt": "153c2ea4bd8ea1fa02551161b0ccdc7b951fea8750454476adf703cb2dc59520",
+    "results/E21_tiny_f6_s202_multistart_nocv_r5_t60s/E21_tiny_f6_s202_multistart_nocv_r5_t60s_file_mean_test_objective.txt": "153c2ea4bd8ea1fa02551161b0ccdc7b951fea8750454476adf703cb2dc59520",
+    "results/E21_tiny_f6_s202_multistart_nocv_r5_t60s/E21_tiny_f6_s202_multistart_nocv_r5_t60s_file_sum_ok.txt": "cdd522a1e70049068f7e821ba1aea50402f753b83e74f7c6d69bc5914b33baca",
+    "results/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s_config.json": "243fc89e6780d401ad7fce0d7b967e6247e60b4c3c73164e99a5e0eb72c45f2a",
+    "results/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s_file_eachfold.txt": "4b06135bf2554a19f222b6b2b5667a19e76cc2c773b247edc2a9bbd232c4544a",
+    "results/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s_file_mean_test_distance.txt": "c03a09a10a3c08c750e71bf35c88e799fe066f0ec2532e8694fceb3545d5b56f",
+    "results/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s_file_mean_test_objective.txt": "c03a09a10a3c08c750e71bf35c88e799fe066f0ec2532e8694fceb3545d5b56f",
+    "results/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s/E21_tiny_f6_s202_seq_milp_nocv_r5_t60s_file_sum_ok.txt": "12ef5c2b9d021cecd669d9e3ff1faa54c1b85584060e84324eb99e4b5ded778a",
+    "results/E21_tiny_f6_s303_baseline_nocv_r5_t60s/E21_tiny_f6_s303_baseline_nocv_r5_t60s_config.json": "111b77d1783e546f1d54d8e0c30e9ab5f2508d9bbe8d9adbe58e6480f35cb1cf",
+    "results/E21_tiny_f6_s303_baseline_nocv_r5_t60s/E21_tiny_f6_s303_baseline_nocv_r5_t60s_file_eachfold.txt": "8741fd41eca91860ff5b88e7cbc7eb9cbb4d9e74bb8e4e496a7cac7fbd548e92",
+    "results/E21_tiny_f6_s303_baseline_nocv_r5_t60s/E21_tiny_f6_s303_baseline_nocv_r5_t60s_file_mean_test_distance.txt": "970a02c2e8917712fa137ac61841c2d9d187e7efcc438fa174ca9f1f600c8cb7",
+    "results/E21_tiny_f6_s303_baseline_nocv_r5_t60s/E21_tiny_f6_s303_baseline_nocv_r5_t60s_file_mean_test_objective.txt": "970a02c2e8917712fa137ac61841c2d9d187e7efcc438fa174ca9f1f600c8cb7",
+    "results/E21_tiny_f6_s303_baseline_nocv_r5_t60s/E21_tiny_f6_s303_baseline_nocv_r5_t60s_file_sum_ok.txt": "93b87dc4c1f03b51bdf89bcf23add5843baea0df25cd9ee58d83753e32328519",
+    "results/E21_tiny_f6_s303_feedback_nocv_r5_t60s/E21_tiny_f6_s303_feedback_nocv_r5_t60s_config.json": "9786dec8a0b8bc93948b1f7612ffdc77a2ac0db481cad3561dce74bfe15ab336",
+    "results/E21_tiny_f6_s303_feedback_nocv_r5_t60s/E21_tiny_f6_s303_feedback_nocv_r5_t60s_file_eachfold.txt": "c18ea396c6b526e5f1bbf622433ef291187b3872584edc4d09b1f12a72f08676",
+    "results/E21_tiny_f6_s303_feedback_nocv_r5_t60s/E21_tiny_f6_s303_feedback_nocv_r5_t60s_file_mean_test_distance.txt": "b9cc2505254d5596b127b1b578058e5c3265b3d494b206c44d9117c6fddfb831",
+    "results/E21_tiny_f6_s303_feedback_nocv_r5_t60s/E21_tiny_f6_s303_feedback_nocv_r5_t60s_file_mean_test_objective.txt": "b9cc2505254d5596b127b1b578058e5c3265b3d494b206c44d9117c6fddfb831",
+    "results/E21_tiny_f6_s303_feedback_nocv_r5_t60s/E21_tiny_f6_s303_feedback_nocv_r5_t60s_file_sum_ok.txt": "d2c55ae5b5053642fcb9046d76527c94a91dd53f9b227a2d7ced81bd865d3607",
+    "results/E21_tiny_f6_s303_multistart_nocv_r5_t60s/E21_tiny_f6_s303_multistart_nocv_r5_t60s_config.json": "e79964a7bf03f92b525f562257f6a08937ecd76c840a692047ba93b65bc0d8ba",
+    "results/E21_tiny_f6_s303_multistart_nocv_r5_t60s/E21_tiny_f6_s303_multistart_nocv_r5_t60s_file_eachfold.txt": "811589b129a7cc225432905df4bd5b1543e678ffbf6936555518bc81bb73f83e",
+    "results/E21_tiny_f6_s303_multistart_nocv_r5_t60s/E21_tiny_f6_s303_multistart_nocv_r5_t60s_file_mean_test_distance.txt": "191f552ee4e4b99c3d90d3366f860ecfa21a6566878168f214477866d7dfbb30",
+    "results/E21_tiny_f6_s303_multistart_nocv_r5_t60s/E21_tiny_f6_s303_multistart_nocv_r5_t60s_file_mean_test_objective.txt": "191f552ee4e4b99c3d90d3366f860ecfa21a6566878168f214477866d7dfbb30",
+    "results/E21_tiny_f6_s303_multistart_nocv_r5_t60s/E21_tiny_f6_s303_multistart_nocv_r5_t60s_file_sum_ok.txt": "a057b6c0c3a66b19dc6548bbbeffdea492297f2546c61d74191d89605eeb3ee4",
+    "results/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s_config.json": "3ef865ea8bee7971879a4187a8a48609781699ac6497d4d2b549dfb420d7eba6",
+    "results/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s_file_eachfold.txt": "f18613182a3a8da15ae474b282542fbf0238135d9e38bdf0c55931523d324f6f",
+    "results/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s_file_mean_test_distance.txt": "57125c85a9abab35530fc76b8fcec7d86d99542aaf0e5662dcf60094bdab690d",
+    "results/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s_file_mean_test_objective.txt": "57125c85a9abab35530fc76b8fcec7d86d99542aaf0e5662dcf60094bdab690d",
+    "results/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s/E21_tiny_f6_s303_seq_milp_nocv_r5_t60s_file_sum_ok.txt": "9e7681722bee32c19492879ba4c351363e4ef3b40941a364a0fb7f5d9969d47f",
+    "run_means.csv": "a910802f34c67a04b19209eb668112fa2c3ada8f1dd198a66a797e0eed316e76",
+    "statistics.json": "332056fd54acd05113142d945b18349711a01376921981066504c0b5f11b3bb6",
+    "status_matrix.csv": "e0db41f11893c873a6c5515ee5e532fdf2ffa7f32c658a68f9de6a90f01909db",
+    "summary.csv": "92584e82b9e50b021c07fe7551305934bcdf54792ad2d846d4af6813a82d36f4",
+    "summary.md": "1bfc153bb0b371304ecfbb5230d5cf32c62a8c28c0d3363ab1f9f837316195ec"
+  }
+}

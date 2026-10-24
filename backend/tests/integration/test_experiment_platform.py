@@ -5,7 +5,7 @@ import time
 import pytest
 from pydantic import ValidationError
 
-from smart_retail.application.experiments.campaign import run
+from smart_retail.application.experiments.campaign import initialize, run
 from smart_retail.application.experiments.cli import compare
 from smart_retail.application.experiments.generators import generate
 from smart_retail.application.experiments.reports import report
@@ -189,6 +189,37 @@ def test_persistent_cache_invalidation_and_tampering(sample, tmp_path):
     with pytest.raises(EngineError) as error:
         _candidate(sample, deadline=time.monotonic() + 10, cache=cache)
     assert error.value.code == "CACHE_CORRUPT"
+
+
+def test_pooled_joint_report_retains_every_campaign(tmp_path):
+    import csv
+
+    configuration = spec().model_dump(mode="json")
+    configuration["experiments"][0]["treatments"][0]["overrides"] = {
+        "optimization": {"joint": {"mode": "sequential"}, "stop_after_stage": "T4"}
+    }
+    roots = []
+    for seed in (11, 23):
+        root = tmp_path / f"campaign-{seed}"
+        request = CampaignSpec.model_validate({**configuration, "seeds": [seed]})
+        assert run(request, root)["status"] == "COMPLETED"
+        roots.append(root)
+    output = tmp_path / "pooled"
+    assert report(roots, output)["records"] == 2
+    with (output / "joint-comparison.csv").open(encoding="utf-8", newline="") as stream:
+        comparisons = list(csv.DictReader(stream))
+    with (output / "joint-trace.csv").open(encoding="utf-8", newline="") as stream:
+        traces = list(csv.DictReader(stream))
+    assert {int(row["seed"]) for row in comparisons} == {11, 23}
+    assert {row["job_key"] for row in traces} == {row["job_key"] for row in comparisons}
+    assert (output / "figures" / "joint-convergence.svg").is_file()
+    [exported] = list((output / "results").glob("*/*_config.json"))
+    replay = CampaignSpec.model_validate(read(exported))
+    assert replay.seeds == [11, 23]
+    initialize(replay, tmp_path / "replay-plan")
+    assert {j["key"] for j in read(tmp_path / "replay-plan" / "plan.json")["jobs"]} == {
+        row["job_key"] for row in comparisons
+    }
 
 
 def test_campaign_contract_rejects_invalid_refs_and_parallel_workers():

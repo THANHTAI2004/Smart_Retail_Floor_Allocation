@@ -1,0 +1,30 @@
+{
+  "status": "NEEDS_ATTENTION",
+  "primary_worker": {
+    "started_utc": "2026-10-24T11:31:03.253338+00:00",
+    "status": "NEEDS_ATTENTION",
+    "primary": "E:\\Smart_Retail_Floor_Allocation",
+    "source_roots": [
+      "C:\\Users\\admin\\Documents\\SmartRetailBackups",
+      "D:\\Smart_Retail_Floor_Allocation"
+    ],
+    "checked": 658432,
+    "deleted": 648908,
+    "deleted_logical_bytes": 111817476681,
+    "retained": 9524,
+    "errors": 0,
+    "free_before": {
+      "C:/": 45578539008,
+      "D:/": 69347446784,
+      "E:/": 46740787200
+    },
+    "updated_utc": "2026-10-24T12:03:29.082881+00:00",
+    "free_now": {
+      "C:/": 157285007360,
+      "D:/": 69347446784,
+      "E:/": 46383054848
+    },
+    "current_root": "C:\\Users\\admin\\Documents\\SmartRetailBackups",
+    "error": "Traceback (most recent call last):\n  File \"E:\\Smart_Retail_Floor_Allocation\\experiments\\migration\\cleanup_verified_duplicates.py\", line 177, in <module>\n    try:main()\n        ^^^^^^\n  File \"E:\\Smart_Retail_Floor_Allocation\\experiments\\migration\\cleanup_verified_duplicates.py\", line 168, in main\n    with LOCK:save(True)\n              ^^^^^^^^^^\n  File \"E:\\Smart_Retail_Floor_Allocation\\experiments\\migration\\cleanup_verified_duplicates.py\", line 36, in save\n    STATE['free_now']={x:shutil.disk_usage(x).free for x in ['C:/','D:/','E:/']}\n                         ^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\shutil.py\", line 1385, in disk_usage\n    total, free = nt._getdiskusage(path)\n                  ^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [WinError 21] The device is not ready\n"
+  }
+}

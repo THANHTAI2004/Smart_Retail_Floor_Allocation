@@ -16,7 +16,7 @@ from smart_retail.application.experiments.campaign import run
 from smart_retail.application.experiments.reports import report
 from smart_retail.contracts.experiments import CampaignSpec
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 CONFIGS = ROOT / "experiments" / "configs" / "paper-v2"
 RESULTS = ROOT / "experiments" / "results" / "20261023-paper-v2"
 REPORTS = ROOT / "experiments" / "reports" / "20261023-paper-v2"

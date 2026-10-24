@@ -1,0 +1,93 @@
+{
+  "cache_policy": "isolated",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "category_assignment": "free",
+      "facings": 6,
+      "height_scale": 1.0,
+      "id": "tiny_f6_s101",
+      "input_file_sha256": null,
+      "input_path": null,
+      "levels": 2,
+      "scale": "tiny",
+      "scenario": "feasible",
+      "seed": 101,
+      "variable_facings": false
+    }
+  ],
+  "experiments": [
+    {
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "datasets": [
+        "tiny_f6_s101"
+      ],
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "id": "E21",
+      "metrics": [
+        "joint_objective",
+        "joint_evaluations",
+        "joint_iterations_to_best",
+        "mean_distance_m",
+        "mean_wait_s",
+        "wall_s",
+        "peak_child_rss_bytes"
+      ],
+      "question": "How do wall time, memory and objective scale with instance size under fixed budgets?",
+      "statistical_method": "descriptive_paired_exploratory",
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "max_actions": 24,
+                "max_evaluations": 80,
+                "max_iterations": 3,
+                "mode": "sequential",
+                "objective": {
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ],
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ]
+                },
+                "scenario_seed_policy": "job_seed_offsets",
+                "scenario_seeds": [
+                  0,
+                  101
+                ]
+              },
+              "slotting_algorithm": "milp"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "job_time_limit_s": 60.0,
+  "max_jobs": 5,
+  "max_retries": 1,
+  "max_wall_s": 3900.0,
+  "memory_limit_mb": 2048,
+  "name": "paper-x4-tiny-E21-tiny_f6_s101-seq_milp-E21-tiny_f6_s101-seq_milp",
+  "repetitions": 1,
+  "schema_version": "1.1",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "workers": 1
+}

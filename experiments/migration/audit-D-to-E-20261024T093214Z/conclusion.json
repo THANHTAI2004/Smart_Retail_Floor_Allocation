@@ -1,0 +1,52 @@
+{
+  "conclusion": "Core source/config/docs and canonical experiment file presence are complete; not a full raw clone. Long-path fixtures, unreferenced loose Git objects and copied venv launchers remain.",
+  "tracked_files": {
+    "tracked_files_checked": 1784,
+    "identical_sha256": 1782,
+    "missing_on_E": [],
+    "different_content": [
+      ".gitignore",
+      "HANDOFF.md"
+    ],
+    "checked_by_top_level": {
+      ".dockerignore": 1,
+      ".env.example": 1,
+      ".github": 1,
+      ".gitignore": 1,
+      "AGENTS.md": 1,
+      "HANDOFF.md": 1,
+      "README.md": 1,
+      "backend": 131,
+      "configs": 1,
+      "datasets": 19,
+      "docker-compose.yml": 1,
+      "docs": 337,
+      "experiments": 1207,
+      "frontend": 60,
+      "scripts": 21
+    }
+  },
+  "missing_long_path_files": 5481,
+  "missing_long_path_bytes": 69930056,
+  "missing_loose_git_files": 229824,
+  "missing_loose_git_bytes": 2058909881,
+  "git_semantic_audit": {
+    "D_refs": 6,
+    "E_refs": 6,
+    "missing_refs_on_E": {},
+    "changed_refs": {},
+    "D_reachable_objects": 50967,
+    "E_reachable_objects": 50967,
+    "missing_reachable_objects_on_E": 0,
+    "missing_reachable_examples": [],
+    "missing_loose_objects_required_by_refs": 0,
+    "missing_loose_objects_not_required_by_refs": 229824
+  },
+  "no_external_E_directory_links": true,
+  "all_long_path_errors_resolved": true,
+  "limitations": [
+    "Directory reparse points are recorded and not recursively traversed; their canonical local directories are inventoried separately.",
+    "Complete file presence and size comparison; SHA256 comparison covers source/config/docs/assets, not every large experiment artifact or cached dependency.",
+    "Live E finalizer may add/modify reports, logs, status and backup files during the audit."
+  ]
+}

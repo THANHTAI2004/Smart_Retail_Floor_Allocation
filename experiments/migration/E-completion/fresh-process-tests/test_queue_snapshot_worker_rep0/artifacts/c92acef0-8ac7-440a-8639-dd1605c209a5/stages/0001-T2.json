@@ -1,0 +1,171 @@
+{
+  "stage": "T2",
+  "cache_key": "23cb4e5cfeea3b8f1f755c4b5aad5ddfeb4d6485ae03a1f8f6836db02c65e9fc",
+  "inputs": {
+    "shelves": {
+      "shelves": [
+        {
+          "id": "S01",
+          "width_m": 2.0,
+          "depth_m": 0.6,
+          "height_m": 1.8,
+          "levels": [
+            {
+              "id": "L1",
+              "width_m": 1.9,
+              "depth_m": 0.55,
+              "height_m": 0.5,
+              "max_load_kg": 80.0
+            },
+            {
+              "id": "L2",
+              "width_m": 1.9,
+              "depth_m": 0.55,
+              "height_m": 0.5,
+              "max_load_kg": 80.0
+            }
+          ],
+          "x": 1.0,
+          "y": 1.0,
+          "rotation": 0,
+          "faces": 1,
+          "kind": "gondola",
+          "locked": false
+        },
+        {
+          "id": "S02",
+          "width_m": 2.0,
+          "depth_m": 0.6,
+          "height_m": 1.8,
+          "levels": [
+            {
+              "id": "L1",
+              "width_m": 1.9,
+              "depth_m": 0.55,
+              "height_m": 0.5,
+              "max_load_kg": 80.0
+            },
+            {
+              "id": "L2",
+              "width_m": 1.9,
+              "depth_m": 0.55,
+              "height_m": 0.5,
+              "max_load_kg": 80.0
+            }
+          ],
+          "x": 4.0,
+          "y": 1.0,
+          "rotation": 0,
+          "faces": 1,
+          "kind": "gondola",
+          "locked": false
+        }
+      ],
+      "status": "FEASIBLE_GRID_BASELINE",
+      "algorithm": "grid",
+      "objective": 9.709921284684974
+    },
+    "categories": {
+      "schema_version": "1.1",
+      "data_origin": "SYNTHETIC",
+      "items": [
+        {
+          "id": "DRINK",
+          "name": "\u0110\u1ed3 u\u1ed1ng",
+          "priority": 1.0,
+          "demand": 80.0,
+          "required_width_m": 2.0,
+          "fixed_shelf_id": null,
+          "near": [],
+          "separate": [],
+          "distance_m": 3.0,
+          "affinity": {}
+        },
+        {
+          "id": "FOOD",
+          "name": "Th\u1ef1c ph\u1ea9m",
+          "priority": 1.0,
+          "demand": 60.0,
+          "required_width_m": 2.0,
+          "fixed_shelf_id": null,
+          "near": [],
+          "separate": [],
+          "distance_m": 3.0,
+          "affinity": {}
+        }
+      ]
+    },
+    "floor": {
+      "schema_version": "1.1",
+      "data_origin": "SYNTHETIC",
+      "units": "m",
+      "boundary": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          12.0,
+          0.0
+        ],
+        [
+          12.0,
+          9.0
+        ],
+        [
+          0.0,
+          9.0
+        ]
+      ],
+      "entrance": [
+        0.0,
+        4.5
+      ],
+      "obstacles": [
+        [
+          [
+            9.0,
+            6.0
+          ],
+          [
+            10.0,
+            6.0
+          ],
+          [
+            10.0,
+            7.0
+          ],
+          [
+            9.0,
+            7.0
+          ]
+        ]
+      ],
+      "min_aisle_m": 0.8,
+      "grid_m": 0.5,
+      "exits": [],
+      "pickup_points": [],
+      "zones": [],
+      "require_connected_aisles": false
+    },
+    "algorithm": "milp",
+    "distance_weight": 1.0,
+    "affinity_weight": 1.0,
+    "decision": null
+  },
+  "output": {
+    "status": "OPTIMAL",
+    "assignment": {
+      "DRINK": "S01",
+      "FOOD": "S02"
+    },
+    "objective": 0.31336529816073866,
+    "objective_units": "dimensionless demand-weighted entrance distance / floor diagonal",
+    "algorithm": "milp",
+    "mip_gap": 0.0
+  },
+  "output_sha256": "cfdc4539fb045f4c6fa27e3e5a48f571befb0a49969e9fb87bd0fcd3b142d7a4",
+  "cache_hit": false,
+  "elapsed_s": 0.03200000000651926,
+  "recorded_utc": "2026-10-24T09:56:34.108754+00:00"
+}

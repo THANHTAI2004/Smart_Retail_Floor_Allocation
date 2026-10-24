@@ -1,0 +1,24 @@
+# deepmg-style summary	E21	tiny_f6_s101	feedback
+# campaign	paper-x4-tiny-E21-tiny_f6_s101-feedback
+# question	How do wall time, memory and objective scale with instance size under fixed budgets?
+# dataset	{"category_assignment": "free", "facings": 6, "height_scale": 1.0, "id": "tiny_f6_s101", "input_file_sha256": null, "input_path": null, "levels": 2, "scale": "tiny", "scenario": "feasible", "seed": 101, "variable_facings": false}
+# treatment	{"optimization": {"algorithm": "milp", "candidate_count": 1, "joint": {"max_actions": 24, "max_evaluations": 80, "max_iterations": 3, "mode": "feedback", "objective": {"scales": [100, 100, 1, 1], "weights": [1, 0.2, 0.1, 0.1]}, "scenario_seed_policy": "job_seed_offsets", "scenario_seeds": [0, 101]}, "slotting_algorithm": "milp"}}
+# evaluation	null
+# seeds	[1, 2, 3, 4, 5]	repetitions	1
+# job_time_limit_s	60.0	memory_limit_mb	2048
+# planned	5	attempted	5
+seed	repetition	cv_fold	status	evaluation_status	train_orders	test_orders	train_objective	test_objective	generalization_gap	test_mean_distance_m	test_mean_wait_s	mean_distance_m	mean_wait_s	wall_s	run_id
+1	0	NA	SUCCEEDED	NA	NA	NA	NA	NA	NA	NA	NA	7.190440115	0.1565711064	13.016	9ba1b3d4-a197-4e65-b338-e5f4540247a0
+2	0	NA	SUCCEEDED	NA	NA	NA	NA	NA	NA	NA	NA	7.207106781	0	13.172	9409ab3a-6d39-4d4a-941d-8cf198670efa
+3	0	NA	SUCCEEDED	NA	NA	NA	NA	NA	NA	NA	NA	7.173773448	0.3446888105	12.797	da804ce1-7e87-4809-99ee-497e8842b15a
+4	0	NA	SUCCEEDED	NA	NA	NA	NA	NA	NA	NA	NA	7.190440115	0.4980931068	13.406	6e7de0c4-f08c-4b44-879e-679591237193
+5	0	NA	SUCCEEDED	NA	NA	NA	NA	NA	NA	NA	NA	7.223773448	0	12.766	41492061-b774-414f-aa30-151562c4883e
+summary	n	mean	sd
+train_objective	0	NA	NA
+test_objective	0	NA	NA
+generalization_gap	0	NA	NA
+test_mean_distance_m	0	NA	NA
+test_mean_wait_s	0	NA	NA
+wall_s	5	13.0314	0.2672597987
+succeeded	5	NA	NA
+total_time_s	NA	65.157	NA

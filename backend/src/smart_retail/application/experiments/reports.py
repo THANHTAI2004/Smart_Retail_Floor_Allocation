@@ -147,8 +147,7 @@ def report(root: Path | list[Path], output: Path):
         fig.savefig(figures / "outcomes.png")
         fig.savefig(figures / "outcomes.svg")
         plt.close(fig)
-    for r in roots:
-        export_joint(r, output, per_root[r], table)
+    export_joint(roots, output, per_root, table)
     body = ["# Synthetic experiment report", ""]
     for r, configuration in zip(roots, configurations):
         checkpoint = read(r / "checkpoint.json")

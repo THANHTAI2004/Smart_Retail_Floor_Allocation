@@ -1,0 +1,44 @@
+{
+  "status": "OPERATIONAL_PATHS_RELOCATED",
+  "checked_utc": "2026-10-24T09:26:26.471112+00:00",
+  "project_root": "E:\\Smart_Retail_Floor_Allocation",
+  "previous_project_untouched": "D:\\Smart_Retail_Floor_Allocation",
+  "scientific_artifacts": "UNCHANGED",
+  "index_sha256_before_and_after": "8836e4f36df73a84df64d8a5a7e3d7a19106b2dbcf9cc680fcc2888184506760",
+  "external_snapshot": "C:\\Users\\admin\\Documents\\SmartRetailBackups\\20261024-E-relocation",
+  "changes": [
+    {
+      "alias": "E:\\Smart_Retail_Floor_Allocation\\experiments",
+      "target": "E:\\Smart_Retail_Floor_Allocation\\thuc_nghiem"
+    },
+    {
+      "alias": "E:\\Smart_Retail_Floor_Allocation\\docs\\research",
+      "target": "E:\\Smart_Retail_Floor_Allocation\\thuc_nghiem\\docs\\research"
+    },
+    {
+      "alias": "E:\\Smart_Retail_Floor_Allocation\\scripts\\paper_progress",
+      "target": "E:\\Smart_Retail_Floor_Allocation\\thuc_nghiem\\scripts\\paper_progress"
+    },
+    {
+      "alias": "E:\\Smart_Retail_Floor_Allocation\\var\\continue-20261023-01",
+      "target": "E:\\Smart_Retail_Floor_Allocation\\thuc_nghiem\\runtime\\var\\continue-20261023-01"
+    },
+    {
+      "alias": "E:\\Smart_Retail_Floor_Allocation\\var\\paper-parallel",
+      "target": "E:\\Smart_Retail_Floor_Allocation\\thuc_nghiem\\runtime\\var\\paper-parallel"
+    },
+    {
+      "alias": "E:\\Smart_Retail_Floor_Allocation\\var\\paper-unattended",
+      "target": "E:\\Smart_Retail_Floor_Allocation\\thuc_nghiem\\runtime\\var\\paper-unattended"
+    },
+    {
+      "alias": "E:\\Smart_Retail_Floor_Allocation\\var\\paper-watcher-backup-probe",
+      "target": "E:\\Smart_Retail_Floor_Allocation\\thuc_nghiem\\runtime\\var\\paper-watcher-backup-probe"
+    },
+    {
+      "editable_install": "E:\\Smart_Retail_Floor_Allocation\\.venv\\Lib\\site-packages\\__editable__.smart_retail-0.1.0.pth",
+      "old_root": "D:\\Smart_Retail_Floor_Allocation",
+      "new_root": "E:\\Smart_Retail_Floor_Allocation"
+    }
+  ]
+}

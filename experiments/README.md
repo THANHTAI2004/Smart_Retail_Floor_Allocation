@@ -1,5 +1,10 @@
 # Thực nghiệm nghiên cứu
 
+Thư mục chính duy nhất hiện tại là `E:\Smart_Retail_Floor_Allocation\experiments`.
+Toàn bộ nội dung trước đây ở `thuc_nghiem` đã được đổi tên vào đây. Xem
+[vị trí dữ liệu và hướng dẫn chạy](VI_TRI_DU_LIEU.md). Các đường dẫn lịch sử
+trong artifact, biên nhận và báo cáo cũ được giữ nguyên để bảo toàn checksum.
+
 Campaign runner dùng MongoDB riêng, production durable queue và process worker
 có timeout, memory budget, snapshot/runtime/checksum. Chạy từ thư mục root.
 Output phải là đích mới; không ghi đè kết quả, checkpoint hay scientific artifacts.

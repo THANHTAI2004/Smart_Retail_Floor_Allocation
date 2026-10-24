@@ -11,7 +11,7 @@ from smart_retail.application.experiments.storage import read, verify_integrity
 from smart_retail.contracts.inputs import SECTIONS
 from smart_retail.infrastructure.provenance import runtime_identity
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 
 
 def main():

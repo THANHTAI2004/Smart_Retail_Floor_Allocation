@@ -26,7 +26,7 @@ from smart_retail.infrastructure.database import connect
 from smart_retail.infrastructure.provenance import runtime_identity
 from smart_retail.workers.runner import work_once
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 
 
 def write(path: Path, value) -> None:

@@ -1,0 +1,14 @@
+﻿path,bytes,mtime_ns,category
+thuc_nghiem/scripts/__pycache__/paper_recovery.cpython-312.pyc,11710,1792834022326512000,generated_cache
+thuc_nghiem/scripts/__pycache__/paper_resource_guard.cpython-312.pyc,5225,1792834023612788900,generated_cache
+thuc_nghiem/runtime/var/paper-unattended/E-finalizer.err.log,0,1792834053064245000,experiment_runtime
+thuc_nghiem/runtime/var/paper-unattended/E-finalizer.out.log,0,1792834053064245000,experiment_runtime
+thuc_nghiem/runtime/external/progress/E-server.err.log,0,1792834053072765800,experiment_runtime
+thuc_nghiem/runtime/external/progress/E-server.out.log,0,1792834053071761800,experiment_runtime
+thuc_nghiem/migration/audit_D_to_E.py,6758,1792834334048281900,migration_receipts
+thuc_nghiem/migration/E-relocation.json,2021,1792833986471112500,migration_receipts
+thuc_nghiem/migration/E-validation.json,611,1792834098432463500,migration_receipts
+thuc_nghiem/migration/relocate_to_E.py,4836,1792833985440085200,migration_receipts
+thuc_nghiem/migration/audit-D-to-E-20261024T093214Z/tracked-files-audit.json,522,1792834485495290000,migration_receipts
+.ruff_cache/0.17.1/11642424528344419271,244,1792834024591332000,generated_cache
+.ruff_cache/0.17.1/14121674889866305308,196,1792834024591332000,generated_cache

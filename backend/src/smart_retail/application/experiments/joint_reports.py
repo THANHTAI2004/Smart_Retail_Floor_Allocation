@@ -5,11 +5,11 @@ from pathlib import Path
 from smart_retail.application.experiments.storage import read, write
 
 
-def export(root: Path, output: Path, rows, table):
+def export(roots: list[Path], output: Path, per_root: dict[Path, list], table):
     traces = []
     comparisons = []
     examples = {}
-    for record in rows:
+    for root, record in ((root, record) for root in roots for record in per_root[root]):
         if "proof_status" not in record:
             continue
         result = read(root / "artifacts" / record["run_id"] / "result.json")

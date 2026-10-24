@@ -1,0 +1,296 @@
+{
+  "statuses": {
+    "CLOSED_LOOP_FEEDBACK_READY": true,
+    "JOINT_EXACT_SMALL_INSTANCE_CERTIFIED": true,
+    "JOINT_GENERAL_OPTIMALITY_NOT_PROVEN": true
+  },
+  "gates": [
+    {
+      "gate": "JO01",
+      "status": "PASS",
+      "evidence": "Explicit finite domains and fixed scenario objective; formulation; contract/reference proofs",
+      "limitation": ""
+    },
+    {
+      "gate": "JO02",
+      "status": "PASS",
+      "evidence": "Frozen content-sealed snapshot and mutation/rollback regression; JOINT_STATE artifacts",
+      "limitation": ""
+    },
+    {
+      "gate": "JO03",
+      "status": "PASS",
+      "evidence": "Real simulated visits/picks/queue diagnostics with declared attribution proxies",
+      "limitation": ""
+    },
+    {
+      "gate": "JO04",
+      "status": "PASS",
+      "evidence": "Real valid T1 edits and independent constraint replay; action traces",
+      "limitation": ""
+    },
+    {
+      "gate": "JO05",
+      "status": "PASS",
+      "evidence": "Real valid T2 edits and independent constraint replay; action traces",
+      "limitation": ""
+    },
+    {
+      "gate": "JO06",
+      "status": "PASS",
+      "evidence": "Real valid T3 edits and independent constraint replay; action traces",
+      "limitation": ""
+    },
+    {
+      "gate": "JO07",
+      "status": "PASS",
+      "evidence": "Observed unchanged upstream and changed downstream content keys for actual T1/T2/T3/T4 edits",
+      "limitation": ""
+    },
+    {
+      "gate": "JO08",
+      "status": "PASS",
+      "evidence": "Multiple actual improving E11 iterations and strict-descent tests",
+      "limitation": "Local convergence only within examined, possibly truncated neighborhood"
+    },
+    {
+      "gate": "JO09",
+      "status": "PASS",
+      "evidence": "Rollback, iteration/evaluation limits, actual process cancellation/RSS/wall supervision regressions",
+      "limitation": ""
+    },
+    {
+      "gate": "JO10",
+      "status": "PASS",
+      "evidence": "Every successful recorded job independently replays official physical and route witnesses",
+      "limitation": ""
+    },
+    {
+      "gate": "JO11",
+      "status": "PASS",
+      "evidence": "Hand-authored four-state oracle, 128-state model, one-state/tie/infeasible tests",
+      "limitation": "Finite explicitly listed decision domains only"
+    },
+    {
+      "gate": "JO12",
+      "status": "PASS",
+      "evidence": "Complete certificates, validated UB and valid zero LB for partial search; timeout tests",
+      "limitation": "Exact comparison of serialized numerical simulation observations, not real arithmetic"
+    },
+    {
+      "gate": "JO13",
+      "status": "PASS",
+      "evidence": "Resealed tampering rejection plus independent offline verifier receipt",
+      "limitation": "Verifier shares official model physics/simulation; separately enumerates and selects minimum"
+    },
+    {
+      "gate": "JO14",
+      "status": "PASS",
+      "evidence": "Local plateau distinguished from strictly better exact finite solution in E13",
+      "limitation": ""
+    },
+    {
+      "gate": "JO15",
+      "status": "PASS",
+      "evidence": "Executed E11-E15, immutable identities, report hashes and failure-preserving records",
+      "limitation": "E14 bounded Small-scale sweep; E15 synthetic holdout only; three independent job seeds per arm"
+    },
+    {
+      "gate": "JO16",
+      "status": "PASS",
+      "evidence": "Real browser campaign/proof/convergence/decision views and trace/certificate exports",
+      "limitation": ""
+    },
+    {
+      "gate": "JO17",
+      "status": "PASS",
+      "evidence": "Fresh full release commands, source identity, immutable receipt hashes",
+      "limitation": ""
+    },
+    {
+      "gate": "JO18",
+      "status": "PASS",
+      "evidence": "15/15 exact scientific-result and input hashes in separate pinned Python environment",
+      "limitation": "Same Windows machine; no cross-platform/real-store validation"
+    }
+  ],
+  "campaigns": [
+    {
+      "name": "effectiveness",
+      "checkpoint": {
+        "completed": 9,
+        "ended_utc": "2026-10-22T04:07:53.258777+00:00",
+        "not_executed": 0,
+        "planned": 9,
+        "spent_wall_s": 45.13999999995576,
+        "status": "COMPLETED"
+      },
+      "integrity": {
+        "status": "PASS",
+        "files": 1395
+      },
+      "report_hashes": true,
+      "source_matches": true
+    },
+    {
+      "name": "ablation",
+      "checkpoint": {
+        "completed": 15,
+        "ended_utc": "2026-10-22T04:09:15.286313+00:00",
+        "not_executed": 0,
+        "planned": 15,
+        "spent_wall_s": 76.48400000005495,
+        "status": "COMPLETED"
+      },
+      "integrity": {
+        "status": "PASS",
+        "files": 2130
+      },
+      "report_hashes": true,
+      "source_matches": true
+    },
+    {
+      "name": "certification",
+      "checkpoint": {
+        "completed": 15,
+        "ended_utc": "2026-10-22T04:06:52.066411+00:00",
+        "not_executed": 0,
+        "planned": 15,
+        "spent_wall_s": 55.09399999998277,
+        "status": "COMPLETED"
+      },
+      "integrity": {
+        "status": "PASS",
+        "files": 1110
+      },
+      "report_hashes": true,
+      "source_matches": true
+    },
+    {
+      "name": "scalability",
+      "checkpoint": {
+        "completed": 18,
+        "ended_utc": "2026-10-22T04:12:32.466046+00:00",
+        "not_executed": 0,
+        "planned": 18,
+        "spent_wall_s": 190.15600000001723,
+        "status": "COMPLETED"
+      },
+      "integrity": {
+        "status": "PASS",
+        "files": 2235
+      },
+      "report_hashes": true,
+      "source_matches": true
+    },
+    {
+      "name": "holdout",
+      "checkpoint": {
+        "completed": 6,
+        "ended_utc": "2026-10-22T04:13:15.242342+00:00",
+        "not_executed": 0,
+        "planned": 6,
+        "spent_wall_s": 35.74999999994179,
+        "status": "COMPLETED"
+      },
+      "integrity": {
+        "status": "PASS",
+        "files": 1332
+      },
+      "report_hashes": true,
+      "source_matches": true
+    },
+    {
+      "name": "certification-128",
+      "checkpoint": {
+        "completed": 6,
+        "ended_utc": "2026-10-22T04:15:19.967490+00:00",
+        "not_executed": 0,
+        "planned": 6,
+        "spent_wall_s": 119.1720000000787,
+        "status": "COMPLETED"
+      },
+      "integrity": {
+        "status": "PASS",
+        "files": 6876
+      },
+      "report_hashes": true,
+      "source_matches": true
+    }
+  ],
+  "release": "docs\\research\\evidence\\20261022-joint-release-01",
+  "all_gates_pass": true,
+  "runtime": {
+    "source_sha256": "1530dc2f0dac05656d19894bf597349970a2c9e540ed0806cdc1b05aa69e6568",
+    "python": "3.12.10",
+    "solver": {
+      "name": "HiGHS",
+      "version": "1.12.0"
+    },
+    "model_versions": {
+      "input_contract": "1.1",
+      "t1": "grid-local-search-1.1",
+      "t2": "allocation-affinity-milp-1.1",
+      "t3": "facing-strip-milp-1.1",
+      "t4": "picker-grid-queue-1.1",
+      "workflow": "bounded-candidates-1.1",
+      "joint": "finite-saa-feedback-1"
+    },
+    "packages": {
+      "alembic": "1.20.0",
+      "annotated-doc": "0.0.5",
+      "annotated-types": "0.8.0",
+      "anyio": "4.15.1",
+      "certifi": "2026.10.19",
+      "click": "8.5.0",
+      "colorama": "0.4.6",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "fastapi": "0.157.0",
+      "fonttools": "4.67.0",
+      "h11": "0.16.0",
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "hypothesis": "6.170.5",
+      "idna": "3.20",
+      "iniconfig": "2.3.1",
+      "kiwisolver": "1.5.1",
+      "librt": "0.16.0",
+      "mako": "1.4.3",
+      "markupsafe": "3.0.4",
+      "matplotlib": "3.11.2",
+      "mypy": "1.20.2",
+      "mypy_extensions": "1.1.0",
+      "networkx": "3.7",
+      "numpy": "2.5.4",
+      "opentelemetry-api": "1.45.1",
+      "packaging": "26.3",
+      "pathspec": "1.1.1",
+      "pillow": "13.0.0",
+      "pip": "25.0.1",
+      "pluggy": "1.7.0",
+      "psycopg": "3.3.6",
+      "psycopg-binary": "3.3.6",
+      "pydantic": "2.14.1",
+      "pydantic_core": "2.50.1",
+      "pygments": "2.21.0",
+      "pyparsing": "3.3.3",
+      "pytest": "9.1.1",
+      "python-dateutil": "3.0.0",
+      "ruff": "0.17.1",
+      "scipy": "1.18.1",
+      "shapely": "2.2.0",
+      "simpy": "4.1.2",
+      "six": "1.17.0",
+      "smart-retail": "0.1.0",
+      "sortedcontainers": "2.4.0",
+      "sqlalchemy": "2.1.5",
+      "starlette": "1.9.0",
+      "types-networkx": "3.6.1.20261021",
+      "typing-inspection": "0.4.4",
+      "typing_extensions": "4.16.0",
+      "tzdata": "2026.5",
+      "uvicorn": "0.54.0"
+    }
+  }
+}

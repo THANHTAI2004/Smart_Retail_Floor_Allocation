@@ -28,3 +28,15 @@ coverage.xml
 # Generated campaign runs are retained locally with fingerprints/manifests.
 # Configs, source, datasets, reports and acceptance evidence remain versioned.
 /experiments/results/*/
+
+# Canonical experiments artifacts remain local; configs, scripts and reports are reviewable.
+/experiments/runtime/
+/experiments/databases/
+/experiments/.migration-staging/
+/experiments/migration/receipts/
+/experiments/backups/
+
+# Large migration inventories/logs are distributed with the experiment release.
+/experiments/migration/audit-D-to-E-20261024T093214Z/D-inventory.json
+/experiments/migration/audit-D-to-E-20261024T093214Z/E-inventory.json
+/experiments/migration/duplicate-cleanup/file-actions.jsonl

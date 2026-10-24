@@ -13,7 +13,7 @@ from pathlib import Path
 from smart_retail.application.experiments.partition import partition
 from smart_retail.contracts.experiments import planned_jobs
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 OUT = ROOT / "experiments" / "configs" / "paper-v2"
 LONG_LIMIT_S = 900
 # Worst case per 900 s job ~990 s with grace; keep every part below the 4 h campaign ceiling.

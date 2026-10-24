@@ -109,10 +109,27 @@ def export(roots: list[Path], output: Path, rows: list[dict], configurations: li
     planned: dict[tuple, int] = defaultdict(int)
     origin: dict[tuple, dict] = {}
     for root, configuration in zip(roots, configurations):
+        keys = set()
         for job in read(root / "plan.json")["jobs"]:
             key = (job["experiment"], job["dataset"], job["treatment"])
             planned[key] += 1
-            origin[key] = configuration
+            keys.add(key)
+        for key in keys:
+            current = arm_config(configuration, *key, planned[key])
+            if key not in origin:
+                origin[key] = current
+                continue
+            previous = origin[key]
+            variable = {"name", "seeds", "max_jobs", "max_wall_s"}
+            if {k: v for k, v in previous.items() if k not in variable} != {
+                k: v for k, v in current.items() if k not in variable
+            }:
+                raise ValueError("Pooled arm configurations differ beyond seed partitions")
+            origin[key] = {
+                **previous,
+                "seeds": sorted(set(previous["seeds"]) | set(current["seeds"])),
+                "max_wall_s": min(14400.0, previous["max_wall_s"] + current["max_wall_s"]),
+            }
     arms: dict[tuple, list[dict]] = defaultdict(list)
     for row in rows:
         arms[row["experiment"], row["dataset"], row["treatment"]].append(row)

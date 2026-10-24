@@ -1,0 +1,9 @@
+{
+  "archive": "thuc_nghiem\\migration\\backup-probe-verified-v2\\paper-results.zip",
+  "entries": 2,
+  "files": {
+    "thuc_nghiem/migration/backup-probe-source/binary.bin": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83",
+    "thuc_nghiem/migration/backup-probe-source/sample.txt": "28570255a18face351d5e97290ac173bc3d67c9180af5ea8d35e2962688c915f"
+  },
+  "readback": "PASS"
+}

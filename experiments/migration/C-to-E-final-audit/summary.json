@@ -1,0 +1,180 @@
+{
+  "checked_utc": "2026-10-24T10:29:52.331985+00:00",
+  "campaigns": 20,
+  "campaign_files": 741446,
+  "campaign_bytes": 116474954599,
+  "campaign_issues": [],
+  "runtime_files": 632,
+  "runtime_issues": [
+    {
+      "path": "E:\\Smart_Retail_Floor_Allocation\\experiments\\runtime\\external\\progress\\process.json",
+      "status": "SIZE_CHANGED",
+      "expected": 113,
+      "actual": 184
+    }
+  ],
+  "root_runtime_files": [
+    {
+      "file": "clone_databases.py",
+      "exists": true,
+      "sha256_matches": true
+    },
+    {
+      "file": "recover_disk_job.py",
+      "exists": true,
+      "sha256_matches": true
+    },
+    {
+      "file": "relocate.py",
+      "exists": true,
+      "sha256_matches": true
+    },
+    {
+      "file": "relocate_fast.py",
+      "exists": true,
+      "sha256_matches": true
+    },
+    {
+      "file": "relocation.json",
+      "exists": true,
+      "sha256_matches": true
+    }
+  ],
+  "source_C_parent_manifests": [
+    {
+      "file": "paper-x1-exact.sha256.json",
+      "bytes": 2244684,
+      "sha256": "202a12799326895e46dc45c5d1705e8ff2d8490e45a0233106f267f43c7ca9b3",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x2-small.sha256.json",
+      "bytes": 3049,
+      "sha256": "40a27b872f3d3e99aa7b275fa9c15fd4a36ccac88e7081506b88bd096ef10948",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x2-tiny-part01.sha256.json",
+      "bytes": 1274516,
+      "sha256": "89baa962a94526d5227ce6212d4226fb6ba522b64a994661e20a48531cbb053f",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x2-tiny-part02.sha256.json",
+      "bytes": 1276776,
+      "sha256": "d5e2c9a6c3c4daa960c3df44348e82d25f697635069cf79dd19bce5c11d149ad",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x2b-medium-part01.sha256.json",
+      "bytes": 1100,
+      "sha256": "7bb10ee06617bb8de971b342ed215544b42a8e6794bd4c2fac027ccdffb688f2",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x2b-medium-part02.sha256.json",
+      "bytes": 1009,
+      "sha256": "0adffbe8df95af694153ad00be2585ccc137fa4510f69a944856c28311884771",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x2b-medium-part03.sha256.json",
+      "bytes": 1009,
+      "sha256": "c96260d520b9f82fb59df99d8940013c5ccbd0ec318c901077ba90d16c4844ac",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x2b-small.sha256.json",
+      "bytes": 8537,
+      "sha256": "1d60c4b404d6b230b94bc07af110eeafd11cc3d066d37ca5f17551e25bde0ac2",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x2b-tiny.sha256.json",
+      "bytes": 9442,
+      "sha256": "c2a5af28ff9d910a3bc8d9abef4d1753f75039f2edf13916b7a6927865256ab6",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x3-small.sha256.json",
+      "bytes": 7157,
+      "sha256": "e4851ac04c53e8492e3208e61139c55ef1cd629e15f10a26fe2b00cea62c7fa1",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x3-tiny.sha256.json",
+      "bytes": 7097,
+      "sha256": "87ad3ff57b82c007381823615cff9832e0f9ed0581aacf11821e82fce50e2390",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x4-large.sha256.json",
+      "bytes": 15548,
+      "sha256": "4eb56ff41f5c043974cc664619f154b446b2ff19dbfb65dd9ec52afb3d5a1705",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x4-medium-part01.sha256.json",
+      "bytes": 491947,
+      "sha256": "c2c6fdc82d952e755bc16fe0e15fd86a6d4611d5afa389bb8b1f7ff7801f52ea",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x4-medium-part02.sha256.json",
+      "bytes": 537205,
+      "sha256": "b89c43b5ad725f469429e2fce225c09f0f580f51dd13b2b5ac8c0bd4c7f17e09",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x4-medium-part03.sha256.json",
+      "bytes": 459790,
+      "sha256": "926c9c7b6892039e4a85ad63dd322ad7136a05f5a94b8d5fdc95f9701001c949",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x4-small.sha256.json",
+      "bytes": 1298862,
+      "sha256": "d02612d6259e16b7de7fb230a5195c11ec47d01bde04e39a2e39390347b28282",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x4-tiny.sha256.json",
+      "bytes": 1908393,
+      "sha256": "09ac4d1c492968f2b30f9204a1c58860309b7d9dd5688cfcb91c7c1ec5786af1",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x5-ablation.sha256.json",
+      "bytes": 2769,
+      "sha256": "25162177b084557fec403d22abe08fb881ba30b412d2944ff3485780deff3eaa",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x6-sensitivity-1.sha256.json",
+      "bytes": 2748,
+      "sha256": "5ade294708dac216354d4fd4148ad6f935f1fcbb19ef3a1ad064986ccc0bb9c3",
+      "copied_now": true
+    },
+    {
+      "file": "paper-x6-sensitivity-2.sha256.json",
+      "bytes": 2748,
+      "sha256": "bdcd1a074284cb4fb65f65525f1c7e2bb11117930eb4c3dcdc9c87bef16cf974",
+      "copied_now": true
+    }
+  ],
+  "missing_files": [],
+  "size_changes": [
+    {
+      "path": "E:\\Smart_Retail_Floor_Allocation\\experiments\\runtime\\external\\progress\\process.json",
+      "status": "SIZE_CHANGED",
+      "expected": 113,
+      "actual": 184
+    }
+  ],
+  "method": "Fresh E file presence/size against SHA256-verified C-to-D receipt manifests; no fresh full-byte hash of all 108 GiB on E. Root manifests and standalone runtime files compared by SHA256.",
+  "original_C_backups": "PRESERVED",
+  "total_original_C_files_accounted_for": 742103,
+  "original_C_logical_bytes_accounted_for": 116567224410,
+  "restored_parent_checksum_manifests": 20,
+  "mutable_runtime_difference": "Only progress/process.json differs in size, reflecting the new live E process metadata."
+}

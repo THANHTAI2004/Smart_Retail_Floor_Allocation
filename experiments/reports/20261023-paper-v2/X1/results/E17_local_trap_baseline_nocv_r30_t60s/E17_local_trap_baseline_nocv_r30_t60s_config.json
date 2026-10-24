@@ -1,0 +1,116 @@
+{
+  "cache_policy": "isolated",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "category_assignment": "free",
+      "facings": 1,
+      "height_scale": 1.0,
+      "id": "local_trap",
+      "input_file_sha256": "180f37faff85472d6a485fc91b688156885ce2417c7971f08eece5c9df01fd51",
+      "input_path": "datasets/joint/local-trap.json",
+      "levels": 2,
+      "scale": "tiny",
+      "scenario": "feasible",
+      "seed": 101,
+      "variable_facings": false
+    }
+  ],
+  "experiments": [
+    {
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "datasets": [
+        "local_trap"
+      ],
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "id": "E17",
+      "metrics": [
+        "joint_objective",
+        "joint_evaluations",
+        "joint_iterations_to_best",
+        "mean_distance_m",
+        "mean_wait_s",
+        "wall_s",
+        "peak_child_rss_bytes"
+      ],
+      "question": "Do accepted plans pass independent replay and how far are heuristics from the finite exact optimum?",
+      "statistical_method": "descriptive_paired_exploratory",
+      "treatments": [
+        {
+          "id": "baseline",
+          "overrides": {
+            "optimization": {
+              "candidate_count": 1,
+              "joint": {
+                "max_actions": 24,
+                "max_evaluations": 80,
+                "max_iterations": 3,
+                "mode": "sequential",
+                "objective": {
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ],
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ]
+                },
+                "scenario_seed_policy": "job_seed_offsets",
+                "scenario_seeds": [
+                  0,
+                  101
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "job_time_limit_s": 60.0,
+  "max_jobs": 30,
+  "max_retries": 1,
+  "max_wall_s": 9750.0,
+  "memory_limit_mb": 2048,
+  "name": "paper-x1-exact-E17-local_trap-baseline-E17-local_trap-baseline",
+  "repetitions": 1,
+  "schema_version": "1.1",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "workers": 1
+}

@@ -1,0 +1,26 @@
+{
+  "tracked_files_checked": 1784,
+  "identical_sha256": 1782,
+  "missing_on_E": [],
+  "different_content": [
+    ".gitignore",
+    "HANDOFF.md"
+  ],
+  "checked_by_top_level": {
+    ".dockerignore": 1,
+    ".env.example": 1,
+    ".github": 1,
+    ".gitignore": 1,
+    "AGENTS.md": 1,
+    "HANDOFF.md": 1,
+    "README.md": 1,
+    "backend": 131,
+    "configs": 1,
+    "datasets": 19,
+    "docker-compose.yml": 1,
+    "docs": 337,
+    "experiments": 1207,
+    "frontend": 60,
+    "scripts": 21
+  }
+}

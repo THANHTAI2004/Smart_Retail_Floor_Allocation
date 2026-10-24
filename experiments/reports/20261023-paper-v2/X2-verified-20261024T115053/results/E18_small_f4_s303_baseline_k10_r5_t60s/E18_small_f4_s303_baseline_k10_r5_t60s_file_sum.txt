@@ -1,0 +1,19 @@
+# deepmg-style summary	E18	small_f4_s303	baseline
+# campaign	paper-x2-small-E18-small_f4_s303-baseline
+# question	Do integrated feedback plans beat sequential pipelines on held-out orders?
+# dataset	{"category_assignment": "free", "facings": 4, "height_scale": 1.0, "id": "small_f4_s303", "input_file_sha256": null, "input_path": null, "levels": 2, "scale": "small", "scenario": "feasible", "seed": 303, "variable_facings": false}
+# treatment	{"optimization": {"algorithm": "greedy", "candidate_count": 1, "joint": {"max_actions": 24, "max_evaluations": 80, "max_iterations": 3, "mode": "sequential", "objective": {"scales": [100, 100, 1, 1], "weights": [1, 0.2, 0.1, 0.1]}, "scenario_seed_policy": "job_seed_offsets", "scenario_seeds": [0, 101]}, "slotting_algorithm": "first_fit"}}
+# evaluation	{"budget_fraction": 0.25, "n_folds": 10, "split": "kfold", "stratify": "dominant_category", "test_size": 0.2}
+# seeds	[1, 2, 3, 4, 5]	repetitions	1
+# job_time_limit_s	60.0	memory_limit_mb	2048
+# planned	50	attempted	0
+seed	repetition	cv_fold	status	evaluation_status	train_orders	test_orders	train_objective	test_objective	generalization_gap	test_mean_distance_m	test_mean_wait_s	mean_distance_m	mean_wait_s	wall_s	run_id
+summary	n	mean	sd
+train_objective	0	NA	NA
+test_objective	0	NA	NA
+generalization_gap	0	NA	NA
+test_mean_distance_m	0	NA	NA
+test_mean_wait_s	0	NA	NA
+wall_s	0	NA	NA
+succeeded	0	NA	NA
+total_time_s	NA	0	NA

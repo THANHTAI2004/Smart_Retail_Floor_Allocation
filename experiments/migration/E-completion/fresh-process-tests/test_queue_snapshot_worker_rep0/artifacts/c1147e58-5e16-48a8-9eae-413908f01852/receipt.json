@@ -1,0 +1,16 @@
+{
+  "run_id": "c1147e58-5e16-48a8-9eae-413908f01852",
+  "status": "SUCCEEDED",
+  "stage": "COMPLETE",
+  "input_sha256": "a03c71f32b1ab87c5744b64a1a7a2f47bbe164fbb49921d4b340efc68b758cb7",
+  "result_sha256": "4911c0d86bf8d13964c18af1fd207c712835f8381c525c4aa521796fc21021c6",
+  "error": null,
+  "child_exit": 0,
+  "started_utc": "2026-10-24T09:56:34.815490+00:00",
+  "ended_utc": "2026-10-24T09:56:37.146421+00:00",
+  "wall_s": 2.3280000000959262,
+  "peak_child_rss_bytes": 107286528,
+  "sampled_child_cpu_s": 1.4375,
+  "resource_samples": 20,
+  "memory_limit_mb": 2048
+}
