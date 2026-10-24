@@ -9,8 +9,15 @@ experiments-2026-10-24 draft release and its uploaded assets, and untrack the
 entire root experiments/ directory while preserving every local file. Added a
 root-anchored .gitignore rule to prevent accidental future staging. Git history
 is retained; removing this folder from main does not purge older commits.
-Next step: verify release deletion, push the exclusion commit, confirm remote
-main has no root experiments/ directory and no publication process remains.
+Release 422727820 deletion verified by authenticated HTTP 404; its four uploaded
+ZIP assets were removed with it. No matching remote tag existed. Exclusion commit
+0e908377 pushed successfully. Git now tracks zero entries in root experiments/;
+all 1805 formerly tracked local entries remain (1803 regular files and two
+pre-existing broken pytest aliases, verified with lexists). No publisher/upload
+process remains. The publication entrypoint now refuses to start while status is
+CANCELLED_BY_USER; this refusal was freshly tested without changing that status.
+No runtime application source or experiment result was changed by this reversal.
+Next step: keep experiments/ local unless the user explicitly changes this scope.
 
 2026-10-24 GitHub publication explicitly authorized, including raw experiments.
 Primary checkout E:/Smart_Retail_Floor_Allocation; owner/credential identity

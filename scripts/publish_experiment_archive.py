@@ -259,6 +259,9 @@ def main():
 
 
 if __name__ == "__main__":
+    previous_status = OUT / "status.json"
+    if previous_status.exists() and json.loads(previous_status.read_text(encoding="utf-8")).get("status") == "CANCELLED_BY_USER":
+        raise SystemExit("Experiment publication was cancelled by the user; no upload was started.")
     try:
         main()
     except BaseException as exc:
