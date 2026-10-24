@@ -1,3 +1,0 @@
-baseline,dataset,difference,experiment,exploratory_p,holm_p,limitation,metric,paired_effect_dz,seeds,treatment
-baseline,impossible,"{""n"": 0, ""mean"": null, ""median"": null, ""sd"": null, ""ci95"": null}",E02,,,Insufficient independent seeds or constant differences; no test inference,wall_s,,[],milp
-baseline,impossible,"{""n"": 0, ""mean"": null, ""median"": null, ""sd"": null, ""ci95"": null}",E02,,,Insufficient independent seeds or constant differences; no test inference,t2_objective,,[],milp

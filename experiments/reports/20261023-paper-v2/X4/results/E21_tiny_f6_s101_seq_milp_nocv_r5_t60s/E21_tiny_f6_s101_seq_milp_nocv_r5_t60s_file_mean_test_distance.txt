@@ -1,6 +1,0 @@
-seed	repetition	folds_ok	mean	sd	time_s
-1	0	0	NA	NA	2.312
-2	0	0	NA	NA	2.25
-3	0	0	NA	NA	2.266
-4	0	0	NA	NA	2.078
-5	0	0	NA	NA	2.047

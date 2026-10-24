@@ -40,3 +40,6 @@ coverage.xml
 /experiments/migration/audit-D-to-E-20261024T093214Z/D-inventory.json
 /experiments/migration/audit-D-to-E-20261024T093214Z/E-inventory.json
 /experiments/migration/duplicate-cleanup/file-actions.jsonl
+
+# User decision 2026-10-24: retain experiments locally, exclude the entire root folder from Git.
+/experiments/

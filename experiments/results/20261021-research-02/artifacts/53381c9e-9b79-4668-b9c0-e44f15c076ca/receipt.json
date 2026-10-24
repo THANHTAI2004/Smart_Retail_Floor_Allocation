@@ -1,9 +1,0 @@
-{
-  "run_id": "53381c9e-9b79-4668-b9c0-e44f15c076ca",
-  "status": "SUCCEEDED",
-  "stage": "COMPLETE",
-  "input_sha256": "a78bb1ffb6200b3579e03bbff642707bf6d6f5ba418a13c22f7e1f12c937cb4c",
-  "result_sha256": "dbb623afc34df5e8be8fbda0ecbced8313b014d5248f9398d5df5bc7d8a50715",
-  "error": null,
-  "child_exit": 0
-}

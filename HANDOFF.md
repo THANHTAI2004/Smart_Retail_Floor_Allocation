@@ -1,5 +1,17 @@
 # Current handoff - paper experiments restarted on this checkout, 2026-10-23
 
+LATEST 2026-10-24: user cancelled the full experiment publication and requested
+all project files EXCEPT the root experiments/ directory on GitHub. This replaces
+the earlier full-archive instruction below. Stopped only publication Python/gh
+processes; numerical finalizer, application services and original E data remain
+untouched. Publication status is CANCELLED_BY_USER. Remove the newly created
+experiments-2026-10-24 draft release and its uploaded assets, and untrack the
+entire root experiments/ directory while preserving every local file. Added a
+root-anchored .gitignore rule to prevent accidental future staging. Git history
+is retained; removing this folder from main does not purge older commits.
+Next step: verify release deletion, push the exclusion commit, confirm remote
+main has no root experiments/ directory and no publication process remains.
+
 2026-10-24 GitHub publication explicitly authorized, including raw experiments.
 Primary checkout E:/Smart_Retail_Floor_Allocation; owner/credential identity
 THANHTAI2004 freshly verified using Git Credential Manager and authenticated API.

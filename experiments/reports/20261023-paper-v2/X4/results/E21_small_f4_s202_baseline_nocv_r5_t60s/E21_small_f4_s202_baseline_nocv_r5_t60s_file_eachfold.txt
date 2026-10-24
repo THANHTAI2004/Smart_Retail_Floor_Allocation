@@ -1,4 +1,0 @@
-seed	repetition	cv_fold	status	evaluation_status	train_orders	test_orders	train_objective	test_objective	generalization_gap	test_mean_distance_m	test_mean_wait_s	mean_distance_m	mean_wait_s	wall_s	run_id
-1	0	NA	SUCCEEDED	NA	NA	NA	NA	NA	NA	NA	NA	18.59230769	0.8226279795	3.891	472d2797-c49b-4a01-b99f-dff300eb3138
-2	0	NA	SUCCEEDED	NA	NA	NA	NA	NA	NA	NA	NA	18.74664225	0.8662931756	3.922	c7a67b71-ee1b-4a7f-a108-9deda0a349bc
-3	0	NA	SUCCEEDED	NA	NA	NA	NA	NA	NA	NA	NA	18.59600477	0.8360369699	3.954	298d87ae-0ac5-4191-bcd5-16f156bcca42

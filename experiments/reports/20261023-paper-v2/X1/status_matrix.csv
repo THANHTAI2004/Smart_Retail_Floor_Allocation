@@ -1,6 +1,0 @@
-count,dataset,evaluation_status,experiment,status,treatment
-30,local_trap,,E17,SUCCEEDED,baseline
-30,local_trap,,E17,SUCCEEDED,exact
-30,local_trap,,E17,SUCCEEDED,feedback
-30,local_trap,,E17,SUCCEEDED,hybrid
-30,local_trap,,E17,SUCCEEDED,multistart
