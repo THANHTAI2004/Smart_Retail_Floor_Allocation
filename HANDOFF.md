@@ -1,5 +1,24 @@
 # Current handoff - paper experiments restarted on this checkout, 2026-10-23
 
+2026-10-24 GitHub publication explicitly authorized, including raw experiments.
+Primary checkout E:/Smart_Retail_Floor_Allocation; owner/credential identity
+THANHTAI2004 freshly verified using Git Credential Manager and authenticated API.
+Original local commit 65c1d35e is recoverable at
+refs/archive/pre-publication-20261024; the original index is copied to ignored
+var/github-publication/index.before-publication. Three >100 MiB migration
+inventories/logs are preserved on disk and moved from the proposed Git tree to
+the complete experiments release payload, because ordinary GitHub blobs cannot
+accept them. No original scientific files were edited or deleted.
+Fresh verification: backend Ruff PASS; source diff whitespace check PASS;
+test_experiment_platform.py: 29 passed, 1 existing Starlette deprecation warning
+in 71.67 s. Generated SVG whitespace is retained to preserve report artifacts.
+Full experiment archive/publication runs via scripts/publish_experiment_archive.py.
+Check var/github-publication/status.json and stdout/stderr logs for actual state;
+do not claim full upload until COMPLETE and all remote asset digests match.
+Release target: experiments-2026-10-24 in the existing owner repository. It stays
+draft until independent ZIP replay and remote SHA256/size verification finish.
+Next step: push main, complete the archive upload, verify the published release.
+
 2026-10-24 cleanup recovery: primary worker paused at 648908 deleted files because
 disk_usage raised WinError21 (device not ready) while sampling volume free space.
 E application/data remained accessible. D:/Smart_Retail_Floor_Allocation is now
