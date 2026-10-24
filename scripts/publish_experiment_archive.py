@@ -24,6 +24,8 @@ TAG = "experiments-2026-10-24"
 REPO = "THANHTAI2004/Smart_Retail_Floor_Allocation"
 GH = ROOT / "var/github-tools/gh/bin/gh.exe"
 LOCK = threading.Lock()
+ACTIVE_LOCK = threading.Lock()
+ACTIVE: dict = {}
 STATE: dict = {}
 SECRET = re.compile(rb"(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|mongodb(?:\+srv)?://[^\s/:<>\"']+:[^\s@<>\"']+@)")
 
@@ -145,6 +147,10 @@ def make_volume(item):
                 raise RuntimeError(f"Scientific result changed during archive: {row['path']}")
             manifest.append({"path": row["path"], "bytes": size, "sha256": h.hexdigest(),
                              "live_file_changed": changed})
+            if len(manifest) % 500 == 0:
+                with ACTIVE_LOCK:
+                    ACTIVE[name] = {"files": len(manifest), "bytes": sum(r["bytes"] for r in manifest)}
+                    save_state(active_volumes=dict(ACTIVE))
         archive.writestr(f"archive-manifests/{name}.json", json.dumps(manifest, ensure_ascii=False))
     os.replace(path.with_suffix(".zip.partial"), path)
     # Independently decompress every member and replay its expected SHA256.
@@ -162,12 +168,19 @@ def make_volume(item):
     if result["bytes"] >= 2 * 1024**3:
         raise RuntimeError(f"Archive exceeds GitHub asset limit: {name}")
     receipt.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    with ACTIVE_LOCK:
+        ACTIVE.pop(name, None)
+        save_state(active_volumes=dict(ACTIVE))
     return result
 
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    save_state(status="INVENTORY", release_tag=TAG, repository=REPO)
+    if os.name == "nt":
+        import ctypes
+        ctypes.windll.kernel32.SetThreadExecutionState(0x80000001)
+    workers = int(os.environ.get("EXPERIMENT_ARCHIVE_WORKERS", "8"))
+    save_state(status="INVENTORY", release_tag=TAG, repository=REPO, pid=os.getpid(), archive_workers=workers)
     inv_path = OUT / "inventory.json"
     inv = json.loads(inv_path.read_text(encoding="utf-8")) if inv_path.exists() else inventory()
     save_state(status="ARCHIVING", files=inv["files"], source_bytes=inv["bytes"],
@@ -215,10 +228,10 @@ def main():
 
     results, upload_futures = [], []
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as uploads:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
             for result in pool.map(make_volume, enumerate(inv["groups"], 1)):
                 results.append(result)
-                save_state(status="ARCHIVING_AND_UPLOADING", archived_volumes=len(results), archived_bytes=sum(r["bytes"] for r in results))
+                save_state(status="ARCHIVING_AND_UPLOADING", archived_volumes=len(results), archived_files=sum(r["files"] for r in results), archived_bytes=sum(r["bytes"] for r in results))
                 print(json.dumps({"archived": result["name"], "files": result["files"], "bytes": result["bytes"]}), flush=True)
                 upload_futures.append(uploads.submit(upload_volume, result))
         save_state(status="UPLOADING")
