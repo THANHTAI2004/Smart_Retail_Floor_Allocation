@@ -186,12 +186,13 @@ def main():
         gh(["release", "create", TAG, "--repo", REPO, "--target", "main", "--draft",
             "--title", "Complete experiment archive - 2026-10-24", "--notes",
             "Full experiment snapshot. Download every ZIP and extract into the repository root. SHA256SUMS and ARCHIVE_MANIFEST.json describe all volumes; each ZIP includes per-file SHA256 checksums. No numerical jobs are rerun by this publication."], env)
+    release_api = json.loads(gh(["release", "view", TAG, "--repo", REPO, "--json", "apiUrl"], env).stdout)["apiUrl"]
     uploaded = 0
     uploaded_lock = threading.Lock()
 
     def upload_volume(result):
         nonlocal uploaded
-        assets = json.loads(gh(["api", f"repos/{REPO}/releases/tags/{TAG}"], env).stdout)["assets"]
+        assets = json.loads(gh(["api", release_api], env).stdout)["assets"]
         existing = next((a for a in assets if a["name"] == result["name"]), None)
         expected = "sha256:" + result["sha256"]
         if existing and (existing.get("digest") != expected or existing["size"] != result["bytes"]):
@@ -230,7 +231,7 @@ def main():
     (OUT / "ARCHIVE_MANIFEST.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     (OUT / "SHA256SUMS").write_text("".join(f"{r['sha256']}  {r['name']}\n" for r in results), encoding="ascii")
     gh(["release", "upload", TAG, str(OUT / "SHA256SUMS"), str(OUT / "ARCHIVE_MANIFEST.json"), "--repo", REPO, "--clobber"], env)
-    remote = json.loads(gh(["api", f"repos/{REPO}/releases/tags/{TAG}"], env).stdout)
+    remote = json.loads(gh(["api", release_api], env).stdout)
     by_name = {a["name"]: a for a in remote["assets"]}
     for result in results:
         asset = by_name[result["name"]]
