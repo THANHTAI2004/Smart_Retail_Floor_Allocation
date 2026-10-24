@@ -33,7 +33,14 @@ def save_state(**updates):
         STATE.update(updates, updated_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
         temp = OUT / "status.tmp"
         temp.write_text(json.dumps(STATE, indent=2), encoding="utf-8")
-        os.replace(temp, OUT / "status.json")
+        for attempt in range(100):
+            try:
+                os.replace(temp, OUT / "status.json")
+                break
+            except PermissionError:
+                if attempt == 99:
+                    raise
+                time.sleep(0.05)
 
 
 def digest(path):
@@ -54,9 +61,19 @@ def gh(args, env, check=True):
 
 def inventory():
     rows, excluded = [], []
-    for base, dirs, files in os.walk(DATA_ROOT / "experiments", followlinks=False):
-        dirs[:] = sorted(d for d in dirs if d not in {"__pycache__", ".pytest_cache", ".venv", "node_modules"}
-                         and not (Path(base) / d).is_symlink())
+    def walk_error(error):
+        raise error
+    for base, dirs, files in os.walk(DATA_ROOT / "experiments", followlinks=False, onerror=walk_error):
+        retained_dirs = []
+        for name in sorted(dirs):
+            folder = Path(base) / name
+            if name in {"__pycache__", ".pytest_cache", ".venv", "node_modules"}:
+                excluded.append({"path": folder.relative_to(DATA_ROOT).as_posix(), "reason": "generated environment/cache directory"})
+            elif folder.is_symlink() or folder.is_junction():
+                excluded.append({"path": folder.relative_to(DATA_ROOT).as_posix(), "reason": "filesystem alias", "target": os.readlink(folder)})
+            else:
+                retained_dirs.append(name)
+        dirs[:] = retained_dirs
         for name in sorted(files):
             path = Path(base) / name
             rel = path.relative_to(DATA_ROOT).as_posix()
