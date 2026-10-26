@@ -1,2 +1,0 @@
-seed	repetition	folds_ok	mean	sd	time_s
-1	0	10	5.773773448	0.546523807	166.968

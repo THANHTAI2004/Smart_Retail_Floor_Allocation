@@ -6,6 +6,14 @@ paper-v3); trạng thái mới nhất ở mục đầu [HANDOFF.md](../../HANDOF
 
 ## 0. Tình trạng khi bàn giao
 
+**Mốc mới 23/10/2026, 13:35 UTC+7:** người dùng đã yêu cầu chạy tiếp. Lượt chính
+đã khởi động tại checkout hiện tại; xem mục đầu HANDOFF và
+[biên bản tiếp tục](CONTINUATION_20261023.md). Dữ liệu thô của 18 job trong bảng
+lịch sử dưới đây không có trên máy này, nên lượt hiện tại chạy từ đầu vào thư mục
+paper-v2 còn trống. Không khởi động thêm runner khi tiến trình hiện tại còn sống.
+Kiểm chứng mới sau sửa báo cáo gộp: **198 pytest, 4 Vitest, lint/build frontend,
+Ruff/mypy/architecture đều đạt**. Bảng dưới là trạng thái trước mốc chạy lại.
+
 | Hạng mục | Trạng thái |
 |---|---|
 | Code paper-v3 (multistart sửa lỗi, random_search, annealing, ngân sách theo lượt đánh giá, hiệu chỉnh tải, `order_rate`, X1 hai pha với exact trên miền hợp nghiệm heuristic, phân tích theo instance) | Xong, **chưa commit** |
@@ -168,6 +176,23 @@ không resume được với cùng cấu hình; cần tách nhỏ hơn và chạ
 - Nếu sửa mã nguồn giữa chừng (sửa lỗi), các campaign đã xong và chưa xong có danh tính khác nhau
   và **không gộp được** trong cùng báo cáo (`Campaigns differ in source/dependency identity`).
   Khi đó chạy lại toàn bộ vào thư mục kết quả mới (đổi `RESULTS`/`REPORTS` trong runner).
-- Không commit/push khi chưa được chủ dự án cho phép (AGENTS.md). `experiments/results/*/`
-  bị `.gitignore` bỏ qua (dữ liệu thô vài GB); `experiments/reports/` thì không. Nên sao lưu
-  `experiments/results/paper-v3` ra ngoài repo sau khi chạy xong.
+- Không commit/push khi chưa được chủ dự án cho phép (AGENTS.md). Theo quyết định 24/10/2026, toàn
+  bộ thư mục `experiments/` (kể cả configs, results, reports) không đưa lên Git (`.gitignore`), chỉ
+  lưu trên máy. Nên sao lưu `experiments/` ra ngoài repo sau khi chạy xong.
+
+Ghi chú vận hành lịch sử của đợt paper-v2 (giữ nguyên từ origin/main):
+
+> Cập nhật vận hành 2026-10-23 21:34 UTC+7: theo yêu cầu người dùng, giới hạn
+> hiện tại là 3 campaign đồng thời, tự hạ và giữ ở mức 2 khi áp lực RAM/CPU
+> kéo dài hoặc xuất hiện lỗi tài nguyên mới. X2 và X2b được chạy xen kẽ để
+> dùng suất thứ ba; X3 vẫn chạy sau cùng. Suất thứ ba chạy từng job để có
+> thể thu hồi sau job hiện tại mà không hủy nó. Xem `HANDOFF.md` và
+> `var/paper-parallel/concurrency.json` cho ngưỡng, trạng thái và giới hạn.
+> Các mô tả chạy 2 campaign bên dưới là lịch sử trước lần chuyển này.
+
+> Cập nhật 2026-10-24: đã mở đợt chạy bù riêng cho các job chưa chạy do hết
+> tổng thời gian campaign và các job lỗi. Đầu vào và thời gian từng job giữ nguyên;
+> thời gian campaign bổ sung được ghi trong `var/paper-parallel/recovery/index.json`.
+> X6 và phần chạy bù chạy trước X3. Kết quả gốc, kết quả chạy lại và các fold đi
+> kèm được phân biệt rõ; không cộng lượt trùng vào tổng 4.276 job.
+

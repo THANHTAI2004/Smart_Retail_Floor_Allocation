@@ -24,7 +24,7 @@ from smart_retail.application.experiments.calibration import calibrate
 from smart_retail.application.experiments.partition import partition
 from smart_retail.contracts.experiments import DatasetSpec, planned_jobs
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 OUT = ROOT / "experiments" / "configs" / "paper-v3"
 CONFIGS = ROOT / "experiments" / "configs"
 OBJECTIVE = {"weights": [1, 0.2, 0.1, 0.1], "scales": [100, 100, 1, 1]}

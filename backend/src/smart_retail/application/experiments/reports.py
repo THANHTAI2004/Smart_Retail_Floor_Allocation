@@ -90,13 +90,11 @@ def report(root: Path | list[Path], output: Path):
     for configuration in configurations:
         for e in configuration["experiments"]:
             selected[e["id"]] = sorted(set(selected.get(e["id"], [])) | set(e["metrics"]))
-    scales = {d["id"]: d["scale"] for c in configurations for d in c.get("datasets", [])}
-    statistics = analyze(rows, selected, scales)
+    statistics = analyze(rows, selected)
     write(output / "results.json", rows, immutable=True)
     write(output / "statistics.json", statistics, immutable=True)
     table(output / "results.csv", rows)
     table(output / "comparisons.csv", statistics["comparisons"])
-    table(output / "instance_comparisons.csv", statistics["instance_comparisons"])
     table(output / "rankings.csv", statistics["rankings"])
     table(output / "failures.csv", [r for r in rows if r["status"] != "SUCCEEDED"])
     table(output / "summary.csv", statistics["summary"])
@@ -149,7 +147,7 @@ def report(root: Path | list[Path], output: Path):
         fig.savefig(figures / "outcomes.png")
         fig.savefig(figures / "outcomes.svg")
         plt.close(fig)
-    export_joint([(r, per_root[r]) for r in roots], output, table)
+    export_joint(roots, output, per_root, table)
     body = ["# Synthetic experiment report", ""]
     for r, configuration in zip(roots, configurations):
         checkpoint = read(r / "checkpoint.json")

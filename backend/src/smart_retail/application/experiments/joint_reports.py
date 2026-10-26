@@ -5,12 +5,11 @@ from pathlib import Path
 from smart_retail.application.experiments.storage import read, write
 
 
-def export(pairs: list[tuple[Path, list]], output: Path, table):
-    """One set of joint artifacts for all pooled campaigns ((root, records) pairs)."""
+def export(roots: list[Path], output: Path, per_root: dict[Path, list], table):
     traces = []
     comparisons = []
     examples = {}
-    for root, record in ((root, record) for root, rows in pairs for record in rows):
+    for root, record in ((root, record) for root in roots for record in per_root[root]):
         if "proof_status" not in record:
             continue
         result = read(root / "artifacts" / record["run_id"] / "result.json")

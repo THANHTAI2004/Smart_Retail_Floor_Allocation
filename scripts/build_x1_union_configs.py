@@ -23,7 +23,7 @@ from smart_retail.application.experiments.finite_spaces import union_space
 from smart_retail.application.experiments.storage import verify_integrity
 from smart_retail.contracts.experiments import planned_jobs
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 RESULTS = ROOT / "experiments" / "results" / "paper-v3"
 PHASE1 = "paper-x1-tiny"
 NAME = "paper-x1-tiny-exact"
