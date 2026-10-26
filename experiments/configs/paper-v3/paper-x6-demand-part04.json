@@ -1,0 +1,898 @@
+{
+  "schema_version": "1.1",
+  "name": "paper-x6-demand-part04",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "id": "small_f4_s204",
+      "scale": "small",
+      "seed": 204,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 4,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 300,
+      "order_interval_s": 16.85,
+      "picker_count": 2
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E23",
+      "question": "Sensitivity: pickers = 1; does feedback keep its held-out effect?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s204"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            },
+            "demand": {
+              "picker_count": 1
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            },
+            "demand": {
+              "picker_count": 1
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E24",
+      "question": "Sensitivity: pickers = 2; does feedback keep its held-out effect?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s204"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            },
+            "demand": {
+              "picker_count": 2
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            },
+            "demand": {
+              "picker_count": 2
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E25",
+      "question": "Sensitivity: pickers = 4; does feedback keep its held-out effect?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s204"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            },
+            "demand": {
+              "picker_count": 4
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            },
+            "demand": {
+              "picker_count": 4
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E26",
+      "question": "Sensitivity: customers = 15; does feedback keep its held-out effect?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s204"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            },
+            "demand": {
+              "customers": 15
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            },
+            "demand": {
+              "customers": 15
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E27",
+      "question": "Sensitivity: customers = 30; does feedback keep its held-out effect?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s204"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            },
+            "demand": {
+              "customers": 30
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            },
+            "demand": {
+              "customers": 30
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E28",
+      "question": "Sensitivity: customers = 60; does feedback keep its held-out effect?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s204"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            },
+            "demand": {
+              "customers": 60
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            },
+            "demand": {
+              "customers": 60
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E29",
+      "question": "Sensitivity: wait_weight = 0.0; does feedback keep its held-out effect?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s204"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.0,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.0,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E30",
+      "question": "Sensitivity: wait_weight = 0.2; does feedback keep its held-out effect?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s204"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E31",
+      "question": "Sensitivity: wait_weight = 1.0; does feedback keep its held-out effect?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s204"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    1.0,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    1.0,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    }
+  ],
+  "seeds": [
+    1
+  ],
+  "repetitions": 1,
+  "job_time_limit_s": 600.0,
+  "memory_limit_mb": 2048,
+  "max_wall_s": 10890.0,
+  "max_jobs": 18,
+  "max_retries": 1,
+  "workers": 1,
+  "cache_policy": "isolated",
+  "evaluation": {
+    "split": "temporal_holdout",
+    "n_folds": 10,
+    "test_size": 0.2,
+    "budget_fraction": 0.25,
+    "stratify": "dominant_category"
+  }
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "block": "X1",
+    "config": "paper-x1-exact.json",
+    "jobs": 150,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part01.json",
+    "jobs": 800,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part02.json",
+    "jobs": 400,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small.json",
+    "jobs": 600,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X2b",
+    "config": "paper-x2b-tiny.json",
+    "jobs": 400,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X2b",
+    "config": "paper-x2b-small.json",
+    "jobs": 400,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X2b",
+    "config": "paper-x2b-medium-part01.json",
+    "jobs": 24,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X2b",
+    "config": "paper-x2b-medium-part02.json",
+    "jobs": 24,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X2b",
+    "config": "paper-x2b-medium-part03.json",
+    "jobs": 24,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-tiny.json",
+    "jobs": 200,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-small.json",
+    "jobs": 200,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-tiny.json",
+    "jobs": 60,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-small.json",
+    "jobs": 60,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-medium-part01.json",
+    "jobs": 20,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-medium-part02.json",
+    "jobs": 20,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-medium-part03.json",
+    "jobs": 20,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-large.json",
+    "jobs": 4,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation.json",
+    "jobs": 150,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-sensitivity-1.json",
+    "jobs": 360,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-sensitivity-2.json",
+    "jobs": 360,
+    "job_time_limit_s": 60.0
+  }
+]

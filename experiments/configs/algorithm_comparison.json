@@ -1,0 +1,217 @@
+{
+  "schema_version": "1.0",
+  "name": "algorithm_comparison",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "id": "tiny",
+      "scale": "tiny",
+      "seed": 101,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null
+    },
+    {
+      "id": "small",
+      "scale": "small",
+      "seed": 101,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null
+    },
+    {
+      "id": "medium",
+      "scale": "medium",
+      "seed": 101,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null
+    },
+    {
+      "id": "large",
+      "scale": "large",
+      "seed": 101,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null
+    },
+    {
+      "id": "facings",
+      "scale": "tiny",
+      "seed": 101,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": true,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null
+    },
+    {
+      "id": "low_shelf",
+      "scale": "tiny",
+      "seed": 101,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "levels": 1,
+      "height_scale": 0.8,
+      "input_path": null,
+      "input_file_sha256": null
+    },
+    {
+      "id": "routing",
+      "scale": "tiny",
+      "seed": 101,
+      "scenario": "feasible",
+      "category_assignment": "fixed",
+      "variable_facings": false,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E02",
+      "question": "How do greedy and MILP allocation compare under identical budgets?",
+      "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+      "datasets": [
+        "tiny"
+      ],
+      "treatments": [
+        {
+          "id": "baseline",
+          "overrides": {
+            "optimization": {
+              "algorithm": "greedy",
+              "stop_after_stage": "T2"
+            }
+          }
+        },
+        {
+          "id": "milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "stop_after_stage": "T2"
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "wall_s",
+        "t2_objective"
+      ],
+      "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E03",
+      "question": "Does optimized facing allocation increase physically replayed capacity?",
+      "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+      "datasets": [
+        "facings"
+      ],
+      "treatments": [
+        {
+          "id": "baseline",
+          "overrides": {
+            "optimization": {
+              "slotting_algorithm": "first_fit",
+              "stop_after_stage": "T3"
+            }
+          }
+        },
+        {
+          "id": "milp",
+          "overrides": {
+            "optimization": {
+              "slotting_algorithm": "milp",
+              "stop_after_stage": "T3"
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "wall_s",
+        "t3_objective"
+      ],
+      "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+      "statistical_method": "descriptive_paired_exploratory"
+    },
+    {
+      "id": "E04",
+      "question": "How do nearest, return and exact small-tour routing affect travel?",
+      "hypothesis": "Every accepted witness has zero independent constraint violations; treatment effects are evaluated rather than assumed.",
+      "datasets": [
+        "routing"
+      ],
+      "treatments": [
+        {
+          "id": "baseline",
+          "overrides": {
+            "demand": {
+              "routing_policy": "nearest"
+            }
+          }
+        },
+        {
+          "id": "return",
+          "overrides": {
+            "demand": {
+              "routing_policy": "return"
+            }
+          }
+        },
+        {
+          "id": "exact",
+          "overrides": {
+            "demand": {
+              "routing_policy": "exact"
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "wall_s",
+        "mean_distance_m",
+        "mean_wait_s"
+      ],
+      "acceptance": "Zero independent replay violations; retain all failed and resource-limited outcomes.",
+      "statistical_method": "descriptive_paired_exploratory"
+    }
+  ],
+  "seeds": [
+    11,
+    23,
+    37,
+    53,
+    71
+  ],
+  "repetitions": 1,
+  "job_time_limit_s": 20.0,
+  "memory_limit_mb": 1024,
+  "max_wall_s": 1200.0,
+  "max_jobs": 160,
+  "max_retries": 1,
+  "workers": 1,
+  "cache_policy": "isolated"
+}

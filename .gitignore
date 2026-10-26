@@ -42,4 +42,6 @@ coverage.xml
 /experiments/migration/duplicate-cleanup/file-actions.jsonl
 
 # User decision 2026-10-24: retain experiments locally, exclude the entire root folder from Git.
-/experiments/
+# User decision 2026-10-26: campaign configs are shared so collaborators run the same experiments.
+/experiments/*
+!/experiments/configs/
