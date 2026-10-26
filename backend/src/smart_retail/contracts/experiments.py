@@ -19,6 +19,18 @@ class DatasetSpec(Contract):
     height_scale: float = Field(default=1, ge=0.5, le=2)
     input_path: str | None = Field(default=None, max_length=500)
     input_file_sha256: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+    # Load calibration (paper-v3). None keeps the original generator and canonical form.
+    orders: int | None = Field(default=None, ge=2, le=20000)
+    order_interval_s: float | None = Field(default=None, gt=0, le=86400)
+    picker_count: int | None = Field(default=None, ge=1, le=100)
+
+    @model_serializer(mode="wrap")
+    def omit_absent_calibration(self, handler):
+        data = handler(self)
+        for key in ("orders", "order_interval_s", "picker_count"):
+            if data.get(key) is None:
+                data.pop(key, None)
+        return data
 
     @model_validator(mode="after")
     def imported_identity(self) -> Self:
@@ -43,6 +55,16 @@ class EvaluationSpec(Contract):
     test_size: float = Field(default=0.2, gt=0, lt=1)
     budget_fraction: float = Field(default=0.25, ge=0.05, le=0.5)
     stratify: Literal["dominant_category"] = "dominant_category"
+    # "population": rescale subset order times to the full order arrival rate, so a
+    # 1/k test fold is not simulated at 1/k of the load. None keeps sampled timestamps.
+    order_rate: Literal["population"] | None = None
+
+    @model_serializer(mode="wrap")
+    def omit_absent_order_rate(self, handler):
+        data = handler(self)
+        if data.get("order_rate") is None:
+            data.pop("order_rate", None)
+        return data
 
     @property
     def folds(self) -> int:
@@ -65,6 +87,7 @@ class ExperimentSpec(Contract):
             "t3_objective",
             "t1_objective",
             "joint_objective", "joint_evaluations", "joint_iterations_to_best", "holdout_objective",
+            "joint_evaluations_to_best",
             "train_objective",
             "test_objective",
             "test_mean_distance_m",

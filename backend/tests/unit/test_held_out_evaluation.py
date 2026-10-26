@@ -331,3 +331,114 @@ def test_folds_are_distinct_pairing_units_with_corrected_inference():
     assert comparison["holm_nadeau_bengio_p"] == comparison["nadeau_bengio_p"]
     assert comparison["a12_treatment_greater"] > 0.5
     assert comparison["wilcoxon_p"] is not None
+
+
+def test_load_calibration_fields_keep_old_canonical_form_and_drive_generator():
+    from smart_retail.application.experiments.splits import arrival_rate
+
+    plain = DatasetSpec(id="tiny", scale="tiny", facings=6)
+    assert {"orders", "order_interval_s", "picker_count"}.isdisjoint(plain.model_dump())
+    assert "order_rate" not in KFOLD.model_dump()
+    assert generate(plain)[0] == generate(DatasetSpec(**plain.model_dump()))[0]
+    spec = plain.model_copy(update={"orders": 150, "order_interval_s": 12.5, "picker_count": 3})
+    data = generate(spec)[0]
+    assert len(data["orders"]["orders"]) == 150
+    assert data["demand"]["picker_count"] == 3
+    assert 1 / arrival_rate(data["orders"]["orders"]) == pytest.approx(12.5, rel=0.25)
+    # Same products as the uncalibrated instance; only order times and counts change.
+    assert data["products"] == generate(plain)[0]["products"]
+
+
+def test_population_order_rate_keeps_fold_load_equal_to_full_load():
+    from smart_retail.application.experiments.splits import arrival_rate
+
+    data = generate(
+        DatasetSpec(id="tiny", scale="tiny", facings=6, orders=150, order_interval_s=12.5)
+    )[0]
+    population = arrival_rate(data["orders"]["orders"])
+    spec = EvaluationSpec(split="kfold", n_folds=5, order_rate="population")
+    plan = split_orders(data, spec, 11)
+    job = apply_split(data, plan, 0, spec)
+    test_orders = job["optimization"]["evaluation"]["orders"]["orders"]
+    assert len(test_orders) == 30
+    assert arrival_rate(test_orders) == pytest.approx(population)
+    assert arrival_rate(job["orders"]["orders"]) == pytest.approx(population)
+    sampled = apply_split(data, plan, 0, KFOLD.model_copy(update={"n_folds": 5}))
+    assert arrival_rate(sampled["optimization"]["evaluation"]["orders"]["orders"]) < population / 3
+
+
+def test_calibration_reaches_target_picker_utilization():
+    from smart_retail.application.experiments.calibration import calibrate
+
+    overrides = {"optimization": {"algorithm": "milp", "slotting_algorithm": "milp"}}
+    spec, evidence = calibrate(
+        DatasetSpec(id="tiny", scale="tiny", facings=6, orders=150), overrides, target=0.7
+    )
+    assert evidence["within_tolerance"]
+    assert abs(evidence["achieved_utilization"] - 0.7) <= 0.05
+    assert spec.order_interval_s == evidence["order_interval_s"] and spec.picker_count == 2
+    again, _ = calibrate(
+        DatasetSpec(id="tiny", scale="tiny", facings=6, orders=150), overrides, target=0.7
+    )
+    assert again == spec
+
+
+def test_instance_level_comparison_uses_seq_milp_reference_and_scales():
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    rows = []
+    for index, dataset in enumerate(["tiny_a", "tiny_b", "tiny_c", "small_a", "small_b"]):
+        for arm, value in (("baseline", 2.0), ("seq_milp", 1.0), ("feedback", 0.8 - index * 0.01)):
+            for seed in (1, 2):
+                for fold in (0, 1):
+                    rows.append(
+                        {
+                            "experiment": "E30",
+                            "dataset": dataset,
+                            "treatment": arm,
+                            "seed": seed,
+                            "cv_fold": fold,
+                            "status": "SUCCEEDED",
+                            "test_objective": value + 0.001 * fold,
+                        }
+                    )
+    scales = {d: d.split("_")[0] for d in {r["dataset"] for r in rows}}
+    records = instance_comparisons(rows, lambda _: ["test_objective"], scales)
+    feedback = {r["scale"]: r for r in records if r["treatment"] == "feedback"}
+    assert set(feedback) == {"tiny", "small", "all"}
+    assert all(r["reference"] == "seq_milp" for r in records)
+    assert feedback["all"]["instances"] == 5 and feedback["all"]["treatment_lower"] == 5
+    # Exact test with 5 instances cannot go below 2 / 2**5.
+    assert feedback["all"]["wilcoxon_exact_p"] == pytest.approx(0.0625)
+    assert feedback["all"]["smallest_attainable_p"] == pytest.approx(0.0625)
+    assert feedback["tiny"]["relative_change_of_means"] == pytest.approx(-0.2 - 0.01 / 1.0005, rel=0.05)
+    assert all(r["holm_wilcoxon_exact_p"] >= r["wilcoxon_exact_p"] for r in records)
+
+
+def test_instance_comparison_adds_exact_reference_for_union_gap():
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    rows = [
+        {
+            "experiment": "E41",
+            "dataset": f"tiny_{index}",
+            "treatment": arm,
+            "seed": seed,
+            "status": "SUCCEEDED",
+            "joint_objective": value - 0.001 * index,
+        }
+        for index in range(6)
+        for seed in (1, 2)
+        for arm, value in (("seq_milp", 1.0), ("feedback", 0.8), ("exact", 0.75))
+    ]
+    records = instance_comparisons(rows, lambda _: ["joint_objective"])
+    gaps = {(r["reference"], r["treatment"]): r for r in records}
+    assert set(gaps) == {
+        ("seq_milp", "feedback"),
+        ("seq_milp", "exact"),
+        ("exact", "feedback"),
+        ("exact", "seq_milp"),
+    }
+    gap = gaps["exact", "feedback"]
+    assert gap["instances"] == 6 and gap["treatment_lower"] == 0
+    assert gap["relative_change_of_means"] > 0

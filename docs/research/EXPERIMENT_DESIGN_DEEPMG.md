@@ -1,7 +1,8 @@
 # Thiết kế thực nghiệm cho bài báo (hướng A, theo phương pháp deepmg)
 
 Ngày: 2026-10-23. Trạng thái: **ĐÃ CÀI ĐẶT hạ tầng (mục 7.1–7.5)**, pilot 7.6 xem
-mục 9. Các khối X1–X6 chưa chạy.
+mục 9. paper-v2 đã chạy và được đánh giá; thiết kế chạy chính hiện hành là **paper-v3,
+mục 10** (chưa chạy).
 
 Nguồn phương pháp: deepmg 1.0.33 (Met2Img, Thanh-Hai Nguyen),
 <https://pypi.org/project/deepmg/>. deepmg là framework *phân loại* metagenomics;
@@ -182,6 +183,13 @@ trên tập thử COMPLETED, tổng 1.382 s. Kết quả theo bố cục deepmg 
 | small_f4 | baseline / seq_milp / multistart | 0,1336 | 14,270 | 4,8–8,5 / 8,6 |
 | small_f4 | feedback | 0,1281 | 13,498 | 49,2 / 49,7 |
 
+**Lỗi đã sửa ngày 26/10/2026 — multistart trước đó không có hiệu lực.** Instance sinh tự động
+có `layout_mode: "fixed"`, nên `variant` của T1 bị ép về 0 và 3 ứng viên joint multistart
+giống hệt nhau (vì vậy pilot và paper-v2 có multistart = seq_milp trên 813/813 cặp). Từ bản
+sửa, mỗi variant ≥ 1 là random walk có seed trên vị trí kệ, mỗi bước kiểm tra hình học
+(`application/feedback/restarts.py`), sau đó T2/T3 tối ưu lại. Số liệu multistart cũ ở
+dưới và trong paper-v2 không còn đại diện cho phương án này.
+
 So feedback với baseline trên 10 fold (thăm dò, một lượt):
 
 | Instance | Chỉ số | Chênh TB | Bootstrap CI95 trung vị | Wilcoxon p | Nadeau–Bengio p | Holm-NB | A12 |
@@ -205,3 +213,42 @@ Nhận xét dùng để chốt thiết kế:
 - Lượt chạy bị thay thế, vẫn giữ lại: `pilot-cv-01` (dừng ở 55/80 vì mã nguồn bị sửa
   trong lúc chạy, cơ chế chống drift hoạt động đúng); `pilot-cv-02` (3 job feedback lỗi
   EXECUTION_ERROR do lỗi SimPy/`EngineError`, đã sửa trước pilot-cv-03).
+
+## 10. paper-v3 (2026-10-26): sửa thiết kế sau đánh giá paper-v2
+
+Nguồn: đánh giá của chủ dự án `Ket_qua_thuc_nghiem_lan_1.docx` (8 vấn đề). paper-v3 thay
+paper-v2 làm thiết kế chạy chính; kết quả paper-v2 chỉ còn là bằng chứng thăm dò và **không
+gộp** với paper-v3 (khác mã nguồn và định nghĩa thực nghiệm). Cấu hình:
+`experiments/configs/paper-v3/` (sinh bằng `scripts/build_paper_configs.py`), cách chạy:
+[PAPER_EXPERIMENT_RUNBOOK.md](PAPER_EXPERIMENT_RUNBOOK.md).
+
+| # | Vấn đề paper-v2 | Thay đổi paper-v3 |
+|---|---|---|
+| 1 | Không có baseline cùng ngân sách; multistart trùng seq_milp 813/813 cặp | Lỗi multistart: instance sinh tự động có `layout_mode: "fixed"` nên variant T1 bị ép về 0. Sửa bằng restart ngẫu nhiên có seed trên vị trí kệ (`application/feedback/restarts.py`). Thêm 2 mode joint: `random_search` (restart độc lập tới hết ngân sách) và `annealing` (cùng neighborhood với feedback nhưng chọn bước ngẫu nhiên đều, nhận bước xấu theo Metropolis, T0 = 1% điểm ban đầu, làm nguội hình học về 1% T0). So sánh feedback với annealing tách được giá trị của chẩn đoán T4 khỏi giá trị của việc tìm kiếm thêm |
+| 2 | Feedback bị trần thời gian cắt, phụ thuộc tốc độ máy | Ngân sách = số lượt đánh giá (`max_evaluations`), bằng nhau giữa random_search/annealing/feedback trong cùng quy mô: Tiny 40, Small 30, Medium 16. Trần thời gian/job (300/600/900 s) chỉ là giới hạn an toàn. Kết quả có `joint.incumbent_curve` (lượt, giây, điểm mỗi lần cải thiện) và `joint_evaluations_to_best` |
+| 3 | Ablation trái câu chuyện tích hợp; T1-only và combined đều chạm trần | X5 chạy lại trên 5 instance Small, 5 fold, mọi biến thể feedback cùng 30 lượt |
+| 4 | T4 chỉ ở 2 chế độ cực đoan (ρ 0,11–0,37 hoặc ≈1) | Hiệu chỉnh tải theo quy mô (`application/experiments/calibration.py`): đo thời gian phục vụ picker ở tải nhẹ trên nghiệm tuần tự, chọn khoảng cách đơn Poisson cho ρ mục tiêu 0,75; đạt 0,751 / 0,752 / 0,777 (Tiny/Small/Medium, xem `calibration.json`). X6 thêm mức tải ρ≈0,5 và ≈0,9 |
+| 5 | Tập kiểm tra quá nhỏ (2–10 đơn/fold) | Tiny 150, Small 300, Medium 500 đơn; 5 fold → 30/60/100 đơn mỗi fold kiểm tra. `EvaluationSpec.order_rate="population"` co giãn thời gian đặt đơn của mỗi fold về tốc độ đến của toàn bộ đơn, nên fold 1/5 không bị mô phỏng ở 1/5 tải |
+| 6 | Tỷ lệ % gộp dễ hiểu nhầm; tên baseline không thống nhất | `instance_comparisons.csv`: đơn vị là instance, tham chiếu `seq_milp`, Wilcoxon chính xác, tách theo quy mô và gộp, Holm toàn bảng, có cột p nhỏ nhất có thể. Id `seq_milp` dùng thống nhất ở mọi khối; X2 có 10 instance mỗi quy mô (p tối thiểu 0,002) |
+| 7 | X1 chỉ 1 fixture, không có seq_milp | X1 hai pha trên 10 instance Tiny sinh tự động (thí nghiệm E41, 2 seed). Pha 1: seq_milp, random_search, annealing, feedback. Pha 2 (khối X1b, `scripts/build_x1_union_configs.py`, runner tự gọi): mỗi instance một miền hữu hạn **dạng gói** = các layout khác nhau × các allocation (phân bổ + xếp SKU) khác nhau × các chính sách đi lại lấy từ mọi nghiệm pha 1 (`FiniteSpace.layouts`/`allocations`, `application/experiments/finite_spaces.py`); exact duyệt hết và có chứng chỉ. Mọi nghiệm heuristic thuộc miền nên khoảng cách heuristic − exact ≥ 0; `instance_comparisons.csv` có thêm tham chiếu `exact` |
+| 8 | Lệch so với thiết kế | X6 chạy trên Small. Large chỉ chạy phương án tuần tự với tải chưa hiệu chỉnh và được tuyên bố **ngoài phạm vi** kết luận về feedback. Medium dùng holdout thời gian (4 instance) vì 5 fold × 16 lượt × 39 s/lượt vượt ngân sách tính toán |
+
+Quyết định cần chủ dự án xác nhận trước khi chạy:
+
+- Feedback trong paper-v3 dùng `policy="first_improvement"` (paper-v2: `best_improvement`).
+  Với ngân sách 16–40 lượt, một vòng best-improvement 24 hành động gần như dùng hết ngân sách
+  cho một bước. Nếu muốn giữ định nghĩa cũ, đổi tham số này trong `arms()` của script và sinh lại.
+- Mục tiêu ρ = 0,75 và các ngân sách theo quy mô là lựa chọn thiết kế, ghi trong script.
+
+Giới hạn còn lại (phải ghi trong bài):
+
+- Exact ở X1 chỉ tối ưu trong **miền hợp các nghiệm heuristic** đã khai báo, không phải tối ưu
+  toàn cục. Cận dưới toàn cục (phương án B) đã được xem xét: vị trí kệ chỉ bị ràng buộc cách lối
+  vào 0,5 m nên cận hợp lệ cho quãng đường chỉ khoảng 1–2 m/hành trình so với 7–14 m thực tế,
+  tức cận khoảng cách ≥ 75–90%, không đủ thông tin để đưa vào bài.
+- Hiệu chỉnh tải dựa trên nghiệm tuần tự của một instance tham chiếu mỗi quy mô; ρ thực tế của
+  từng job nằm trong `picker_utilization`.
+- Toàn bộ dữ liệu vẫn là SYNTHETIC.
+
+Ước tính chạy (đo 26/10, một worker): Tiny ~1 s/lượt, Small ~6 s/lượt, Medium ~39 s/lượt;
+tổng 1.416 job (+20 job X1b) khoảng 28 giờ.

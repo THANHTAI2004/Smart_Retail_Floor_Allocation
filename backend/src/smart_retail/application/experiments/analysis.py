@@ -24,6 +24,7 @@ METRICS = (
     "joint_objective",
     "joint_evaluations",
     "joint_iterations_to_best",
+    "joint_evaluations_to_best",
     "holdout_objective",
     "train_objective",
     "test_objective",
@@ -35,6 +36,8 @@ OBJECTIVE_METRICS = {"train_objective", "test_objective", "generalization_gap"}
 BOOTSTRAP_RESAMPLES = 2000
 BOOTSTRAP_SEED = 20261023
 TOLERANCE = 1e-10
+# Instance-level reference: the strongest sequential pipeline when present.
+REFERENCE_ARMS = ("seq_milp", "baseline")
 
 
 def describe(values):
@@ -159,7 +162,91 @@ def friedman_nemenyi(blocks: list[list[float]], arms: list[str], level: str) -> 
     return record
 
 
-def analyze(rows, selected_metrics: dict[str, list[str]] | None = None):
+def exact_wilcoxon_p(differences):
+    """Two-sided exact signed-rank p over nonzero differences; None if all are zero."""
+    nonzero = [d for d in differences if abs(d) > TOLERANCE]
+    if not nonzero:
+        return None
+    return float(wilcoxon(nonzero, method="exact").pvalue)
+
+
+def instance_comparisons(rows, metrics_of, scales: dict[str, str] | None = None):
+    """Instance-level inference: each instance contributes one paired mean per arm.
+
+    Per instance, arm values are averaged over the (seed, cv_fold) units shared with the
+    reference arm (seq_milp, else baseline). When an ``exact`` arm exists (X1), every arm
+    is also compared with it: the gap to the certified optimum of the declared space.
+    Folds and seeds of one instance are not independent, so the instance is the unit of
+    the exact Wilcoxon test. Results are reported per scale and pooled; Holm runs over
+    the whole table.
+    """
+    scales = scales or {}
+    records = []
+    for experiment in sorted({r["experiment"] for r in rows}):
+        arms = sorted({r["treatment"] for r in rows if r["experiment"] == experiment})
+        references = [a for a in REFERENCE_ARMS if a in arms][:1]
+        # X1: the certified optimum of the declared space is a second reference (the gap).
+        if "exact" in arms:
+            references.append("exact")
+        datasets = sorted({r["dataset"] for r in rows if r["experiment"] == experiment})
+        for reference, metric in (
+            (reference, metric) for reference in references for metric in metrics_of(experiment)
+        ):
+            pairs: dict[str, dict[str, tuple[float, float]]] = defaultdict(dict)
+            for dataset in datasets:
+                values, _ = unit_values(rows, experiment, dataset, metric)
+                base = values.get(reference, {})
+                for arm in arms:
+                    common = base.keys() & values.get(arm, {}).keys()
+                    if arm != reference and common:
+                        pairs[arm][dataset] = (
+                            statistics.mean(base[u] for u in common),
+                            statistics.mean(values[arm][u] for u in common),
+                        )
+            for arm, by_dataset in sorted(pairs.items()):
+                if mixed_objectives(rows, experiment, (reference, arm), metric):
+                    continue
+                groups: dict[str, list[str]] = defaultdict(list)
+                for dataset in by_dataset:
+                    groups[scales.get(dataset, "unknown")].append(dataset)
+                if len(groups) > 1:
+                    groups["all"] = list(by_dataset)
+                for scale, members in sorted(groups.items()):
+                    a = [by_dataset[d][0] for d in members]
+                    b = [by_dataset[d][1] for d in members]
+                    differences = [y - x for x, y in zip(a, b)]
+                    relative = [(y - x) / x for x, y in zip(a, b) if abs(x) > TOLERANCE]
+                    records.append(
+                        {
+                            "experiment": experiment,
+                            "metric": metric,
+                            "scale": scale,
+                            "reference": reference,
+                            "treatment": arm,
+                            "instances": len(members),
+                            "treatment_lower": sum(d < -TOLERANCE for d in differences),
+                            "ties": sum(abs(d) <= TOLERANCE for d in differences),
+                            "reference_mean": statistics.mean(a),
+                            "treatment_mean": statistics.mean(b),
+                            "relative_change_of_means": (statistics.mean(b) - statistics.mean(a))
+                            / statistics.mean(a)
+                            if abs(statistics.mean(a)) > TOLERANCE
+                            else None,
+                            "relative_change_per_instance": describe(relative),
+                            "wilcoxon_exact_p": exact_wilcoxon_p(differences),
+                            "smallest_attainable_p": 2 / 2 ** len(members),
+                            "holm_wilcoxon_exact_p": None,
+                        }
+                    )
+    holm(records, "wilcoxon_exact_p", "holm_wilcoxon_exact_p")
+    return records
+
+
+def analyze(
+    rows,
+    selected_metrics: dict[str, list[str]] | None = None,
+    scales: dict[str, str] | None = None,
+):
     groups = defaultdict(list)
     for row in rows:
         groups[row["experiment"], row["dataset"], row["treatment"]].append(row)
@@ -312,6 +399,7 @@ def analyze(rows, selected_metrics: dict[str, list[str]] | None = None):
         "selected_metrics": selected_metrics,
         "summary": summary,
         "comparisons": comparisons,
+        "instance_comparisons": instance_comparisons(rows, chosen, scales),
         "rankings": rankings,
         "assumptions": [
             "Exploratory paired tests; no population-level efficacy claim",
@@ -323,5 +411,6 @@ def analyze(rows, selected_metrics: dict[str, list[str]] | None = None):
             "Failure rates include all attempted jobs; solution metrics only exist for valid results",
             "Completion rate is not a proof of feasibility/infeasibility for unsolved cases",
             "Holm adjustment is applied separately to each reported test family",
+            "instance_comparisons: the instance is the inferential unit (mean over shared seed/fold units), reference arm seq_milp else baseline, exact two-sided Wilcoxon, reported per scale and pooled",
         ],
     }

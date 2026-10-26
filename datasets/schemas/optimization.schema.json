@@ -52,6 +52,8 @@
           "enum": [
             "sequential",
             "multistart",
+            "random_search",
+            "annealing",
             "feedback",
             "exact",
             "hybrid"
@@ -165,6 +167,20 @@
           ],
           "title": "Policy",
           "type": "string"
+        },
+        "annealing_initial_temperature": {
+          "default": 0.01,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Annealing Initial Temperature",
+          "type": "number"
+        },
+        "annealing_final_ratio": {
+          "default": 0.01,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Annealing Final Ratio",
+          "type": "number"
         },
         "finite_space": {
           "anyOf": [

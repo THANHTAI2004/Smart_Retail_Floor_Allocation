@@ -313,3 +313,115 @@ def test_corrupted_domain_rows_are_invalid_model_not_infeasibility():
     sections["optimization"]["joint"]["finite_space"] = bad
     with pytest.raises(EngineError, match="exactly every"):
         execute(sections)
+
+
+def test_multistart_restarts_differ_on_generated_fixed_layout():
+    from smart_retail.application.experiments.generators import generate, merge
+    from smart_retail.contracts.experiments import DatasetSpec
+
+    tiny = generate(DatasetSpec(id="tiny", scale="tiny", facings=6))[0]
+    assert tiny["shelves"]["layout_mode"] == "fixed"
+    joint = {
+        "objective": {"weights": [1, 0.2, 0.1, 0.1], "scales": [100, 100, 1, 1]},
+        "scenario_seeds": [0, 101],
+        "scenario_seed_policy": "job_seed_offsets",
+        "max_evaluations": 10,
+        "mode": "multistart",
+    }
+    sections = merge(
+        copy.deepcopy(tiny),
+        {"optimization": {"joint": joint, "candidate_count": 3, "seed": 7, "time_limit_s": 60}},
+    )
+    result = execute(copy.deepcopy(sections))
+    candidates = result["integrated"]["candidates"]
+    poses = [
+        tuple(sorted((s["id"], s["x"], s["y"], s["rotation"]) for s in c["stages"]["T1"]["shelves"]))
+        for c in candidates
+    ]
+    assert len(candidates) == 3
+    # Variant 0 is the sequential plan; restarts must explore other shelf layouts.
+    assert len(set(poses)) == 3
+    selected = result["integrated"]["selected_candidate"]
+    assert candidates[selected]["score"] == min(c["score"] for c in candidates)
+    restarts = [e for e in result["joint"]["trace"] if e.get("action") == "MULTISTART_RESTART"]
+    assert len(restarts) == 2
+    again = execute(copy.deepcopy(sections))
+    assert again["joint"]["best"]["decisions"] == result["joint"]["best"]["decisions"]
+
+
+@pytest.mark.parametrize("mode", ["random_search", "annealing", "feedback"])
+def test_equal_evaluation_budget_modes_spend_budget_and_report_anytime_curve(mode):
+    from smart_retail.application.experiments.generators import generate, merge
+    from smart_retail.contracts.experiments import DatasetSpec
+
+    tiny = generate(DatasetSpec(id="tiny", scale="tiny", facings=6))[0]
+    joint = {
+        "objective": {"weights": [1, 0.2, 0.1, 0.1], "scales": [100, 100, 1, 1]},
+        "scenario_seeds": [0, 101],
+        "scenario_seed_policy": "job_seed_offsets",
+        "max_iterations": 100,
+        "max_actions": 6,
+        "max_evaluations": 8,
+        "patience": 20,
+        "mode": mode,
+    }
+    sections = merge(
+        copy.deepcopy(tiny), {"optimization": {"joint": joint, "seed": 5, "time_limit_s": 120}}
+    )
+    result = execute(copy.deepcopy(sections))
+    joint_result = result["joint"]
+    assert joint_result["evaluations"] == 8
+    assert joint_result["status"] == "EVALUATION_LIMIT"
+    curve = joint_result["incumbent_curve"]
+    assert curve[0]["evaluation"] == 1
+    assert all(a["score"] > b["score"] for a, b in zip(curve, curve[1:]))
+    assert curve[-1]["score"] == joint_result["best"]["score"]
+    assert joint_result["evaluations_to_best"] == curve[-1]["evaluation"]
+    scores = [c["score"] for c in result["integrated"]["candidates"]]
+    assert joint_result["best"]["score"] == min(scores)
+    if mode == "annealing":
+        assert any(e.get("reason") == "METROPOLIS" for e in joint_result["trace"])
+    again = execute(copy.deepcopy(sections))["joint"]
+    assert again["best"]["decisions"] == joint_result["best"]["decisions"]
+
+
+def test_union_space_contains_heuristic_solutions_and_certifies_recombination():
+    from smart_retail.application.experiments.finite_spaces import union_space
+    from smart_retail.application.experiments.generators import generate, merge
+    from smart_retail.application.feedback.coordinator import member
+    from smart_retail.contracts.experiments import DatasetSpec
+    from smart_retail.contracts.optimality import FiniteSpace
+
+    tiny = generate(DatasetSpec(id="tiny", scale="tiny", facings=6))[0]
+    base = {
+        "objective": {"weights": [1, 0.2, 0.1, 0.1], "scales": [100, 100, 1, 1]},
+        "scenario_seeds": [0, 101],
+        "scenario_seed_policy": "job_seed_offsets",
+        "max_evaluations": 12,
+        "max_iterations": 100,
+        "max_actions": 6,
+        "policy": "first_improvement",
+    }
+
+    def run(**joint):
+        sections = merge(
+            copy.deepcopy(tiny),
+            {"optimization": {"joint": {**base, **joint}, "seed": 3, "time_limit_s": 120}},
+        )
+        return execute(sections)["joint"]
+
+    sources = [run(mode="sequential"), run(mode="feedback"), run(mode="annealing")]
+    decisions = [s["best"]["decisions"] for s in sources]
+    space, info = union_space(decisions)
+    assert info["states"] == info["layouts"] * info["allocations"] * len(space["routing_policies"])
+    assert union_space(decisions + decisions)[0] == space
+    model = FiniteSpace.model_validate(space)
+    assert all(member(d, model) for d in decisions)
+    exact = run(mode="exact", finite_space=space, max_evaluations=info["states"])
+    assert exact["proof_status"] == "GLOBAL_OPTIMAL_CERTIFIED"
+    assert exact["verification"]["status"] == "PASS"
+    assert exact["certificate"]["total_states"] == info["states"]
+    assert all(exact["best"]["score"] <= s["best"]["score"] + 1e-12 for s in sources)
+    # Spaces without bundles keep the pre-existing canonical form.
+    legacy = json.loads((ROOT / "datasets/joint/local-trap-space.json").read_text())
+    assert "layouts" not in FiniteSpace.model_validate(legacy).model_dump(mode="json")

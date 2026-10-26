@@ -298,6 +298,7 @@ def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: i
                     record.update(
                         joint_objective=(joint.get("best") or {}).get("score"),
                         joint_evaluations=joint["evaluations"],
+                        joint_evaluations_to_best=joint.get("evaluations_to_best"),
                         joint_iterations_to_best=max(
                             (e.get("iteration", 0) for e in joint["trace"] if e.get("accepted")),
                             default=0,

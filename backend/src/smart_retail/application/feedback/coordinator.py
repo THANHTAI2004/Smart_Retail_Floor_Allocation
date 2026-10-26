@@ -1,6 +1,8 @@
 """Bounded strict-descent closed loop and certified finite-model orchestration."""
 
 import copy
+import math
+import random
 import time
 from fractions import Fraction
 
@@ -8,6 +10,7 @@ from smart_retail.application.feedback.bootstrap import initialize
 from smart_retail.application.feedback.diagnostics import analyze
 from smart_retail.application.feedback.evaluator import evaluate, exact_score
 from smart_retail.application.feedback.neighborhood import actions
+from smart_retail.application.feedback.restarts import restart
 from smart_retail.application.feedback.state import FeedbackSnapshot
 from smart_retail.application.stage_workflow import canonical_hash
 from smart_retail.contracts.feedback import JointConfig
@@ -15,7 +18,11 @@ from smart_retail.contracts.inputs import to_domain
 from smart_retail.domain.models import EngineError
 from smart_retail.engines.joint_exact.formulation import compile_space
 from smart_retail.engines.joint_exact.solver import digest, solve
+from smart_retail.engines.joint_exact.verifier import inside
 from smart_retail.engines.joint_exact.verifier import verify as verify_certificate
+
+# Consecutive already-evaluated proposals before a stochastic search stops.
+DUPLICATE_LIMIT = 50
 
 
 def identity(sections, config):
@@ -35,12 +42,18 @@ def identity(sections, config):
 
 def validate_space(config, sections):
     space, domains, count = compile_space(config.finite_space)
-    required = [
-        (space.poses, {s["id"] for s in sections["shelves"]["items"]}),
-        (space.assignments, {c["id"] for c in sections["categories"]["items"]}),
-        (space.placements, {p["sku"] for p in sections["products"]["items"]}),
-    ]
-    if any(set(values) != keys for values, keys in required):
+    shelves = {s["id"] for s in sections["shelves"]["items"]}
+    categories = {c["id"] for c in sections["categories"]["items"]}
+    skus = {p["sku"] for p in sections["products"]["items"]}
+    layouts = [set(o) for o in space.layouts] if space.layouts is not None else [set(space.poses)]
+    allocations = (
+        [(set(o["assignment"]), {r["sku"] for r in o["placements"]}) for o in space.allocations]
+        if space.allocations is not None
+        else [(set(space.assignments), set(space.placements))]
+    )
+    if any(keys != shelves for keys in layouts) or any(
+        assigned != categories or placed != skus for assigned, placed in allocations
+    ):
         raise EngineError(
             "INVALID_MODEL", "Finite domains must cover exactly every shelf/category/SKU"
         )
@@ -51,12 +64,7 @@ def validate_space(config, sections):
 
 
 def member(decision, space):
-    return (
-        all(list(v) in [list(p) for p in space.poses[k]] for k, v in decision["poses"].items())
-        and all(v in space.assignments[k] for k, v in decision["assignment"].items())
-        and all(p in space.placements[p["sku"]] for p in decision["placements"])
-        and decision["routing_policy"] in space.routing_policies
-    )
+    return inside(decision, space)
 
 
 def resolved_config(sections):
@@ -95,6 +103,7 @@ def optimize(
     trace: list[dict] = []
     snapshots: list[FeedbackSnapshot] = []
     archive = []
+    curve: list[dict] = []
     seen = set()
     evaluations = 0
     best = None
@@ -137,6 +146,15 @@ def optimize(
         )
         snapshot = FeedbackSnapshot.capture(state)
         snapshots.append(snapshot)
+        if not curve or exact_score(state) < Fraction(*curve[-1]["score_fraction"]):
+            curve.append(
+                {
+                    "evaluation": evaluations,
+                    "elapsed_s": time.monotonic() - began,
+                    "score": state["score"],
+                    "score_fraction": state["score_fraction"],
+                }
+            )
         observer(
             "JOINT_STATE",
             snapshot.sha256,
@@ -146,6 +164,83 @@ def optimize(
             time.monotonic() - began,
         )
         return snapshot.read()
+
+    def anneal(incumbent):
+        """Simulated annealing over the feedback neighborhood with uniform, unguided moves.
+
+        Same decision edits, evaluator and budget as feedback, but the move is drawn
+        uniformly (layer, then edit) instead of ranked by T4 evidence, and worse moves
+        are accepted by the Metropolis rule. Already evaluated decisions are skipped.
+        """
+        rng = random.Random(data.config.seed * 1000003)
+        wide = config.model_copy(update={"max_actions": 10**9})
+        current = incumbent
+        steps = max(1, config.max_evaluations - evaluations)
+        temperature = config.annealing_initial_temperature * max(incumbent["score"], 1e-12)
+        cooling = config.annealing_final_ratio ** (1 / steps)
+        pool: list[dict] = []
+        pool_for = None
+        stale = 0
+        while evaluations < config.max_evaluations:
+            if pool_for != current["id"]:
+                pool = actions(current, analyze(current, sections), sections, wide)
+                pool_for = current["id"]
+            if not pool:
+                return incumbent, "NEIGHBORHOOD_EXHAUSTED"
+            layer = rng.choice(sorted({a["layer"] for a in pool}))
+            action = rng.choice([a for a in pool if a["layer"] == layer])
+            key = canonical_hash(action["decisions"])
+            if key in seen:
+                stale += 1
+                if stale >= DUPLICATE_LIMIT:
+                    return incumbent, "NEIGHBORHOOD_EXHAUSTED"
+                continue
+            stale = 0
+            seen.add(key)
+            try:
+                candidate = assess(action["decisions"])
+            except EngineError as exc:
+                if exc.code in ("TIMEOUT", "CANCELLED"):
+                    return incumbent, exc.code
+                if exc.code in ("CACHE_CORRUPT", "SOURCE_DRIFT"):
+                    raise
+                event(
+                    {
+                        "status": "FAILED",
+                        "iteration": evaluations,
+                        "action": action["type"],
+                        "layer": action["layer"],
+                        "accepted": False,
+                        "reason": exc.code,
+                    }
+                )
+                temperature *= cooling
+                continue
+            archive.append(candidate)
+            delta = candidate["score"] - current["score"]
+            accepted = delta < 0 or rng.random() < math.exp(-delta / temperature)
+            event(
+                {
+                    "status": "EVALUATING",
+                    "iteration": evaluations,
+                    "action": action["type"],
+                    "layer": action["layer"],
+                    "parent_id": current["id"],
+                    "candidate_id": candidate["id"],
+                    "before": current["score"],
+                    "after": candidate["score"],
+                    "temperature": temperature,
+                    "accepted": accepted,
+                    "reason": "METROPOLIS",
+                    "changed": action["changed"],
+                }
+            )
+            if accepted:
+                current = candidate
+            if exact_score(candidate) < exact_score(incumbent):
+                incumbent = candidate
+            temperature *= cooling
+        return incumbent, "EVALUATION_LIMIT"
 
     event(
         {
@@ -183,10 +278,58 @@ def optimize(
                 "score": best["score"],
             }
         )
-        if config.mode == "multistart":
-            for variant in range(1, min(data.config.candidate_count, config.max_evaluations)):
+        if config.mode in ("multistart", "random_search"):
+            initial = best
+            # multistart: candidate_count plans; random_search: restarts until the evaluation budget.
+            termination = "COMPLETED" if config.mode == "multistart" else "EVALUATION_LIMIT"
+            variant, duplicates = 0, 0
+            while True:
+                variant += 1
+                if config.mode == "multistart" and variant >= min(
+                    data.config.candidate_count, config.max_evaluations
+                ):
+                    break
+                if config.mode == "random_search" and evaluations >= config.max_evaluations:
+                    break
+                # T1 grid variants are ignored for fixed layouts, so restarts edit poses directly.
+                decision, changed = restart(initial, sections, data.config.seed, variant)
+                if decision is None:
+                    event(
+                        {
+                            "status": "FAILED",
+                            "action": "MULTISTART_RESTART",
+                            "variant": variant,
+                            "reason": "RESTART_UNAVAILABLE",
+                        }
+                    )
+                    termination = "RESTART_UNAVAILABLE"
+                    break
+                if canonical_hash(decision) in seen:
+                    event(
+                        {
+                            "status": "FAILED",
+                            "action": "MULTISTART_RESTART",
+                            "variant": variant,
+                            "reason": "DUPLICATE",
+                        }
+                    )
+                    duplicates += 1
+                    if duplicates >= DUPLICATE_LIMIT:
+                        termination = "NEIGHBORHOOD_EXHAUSTED"
+                        break
+                    continue
+                seen.add(canonical_hash(decision))
+                event(
+                    {
+                        "status": "EVALUATING",
+                        "action": "MULTISTART_RESTART",
+                        "layer": "T1",
+                        "variant": variant,
+                        "changed": changed,
+                    }
+                )
                 try:
-                    candidate = assess(None, variant)
+                    candidate = assess(decision)
                 except EngineError as exc:
                     if exc.code in ("TIMEOUT", "CANCELLED"):
                         termination = exc.code
@@ -196,8 +339,8 @@ def optimize(
                 archive.append(candidate)
                 if exact_score(candidate) < exact_score(best):
                     best = candidate
-            else:
-                termination = "COMPLETED"
+        elif config.mode == "annealing":
+            best, termination = anneal(best)
         elif config.mode == "sequential":
             termination = "COMPLETED"
         else:
@@ -409,6 +552,12 @@ def optimize(
         },
         "initial_score": archive[0]["score"] if archive else None,
         "evaluations": evaluations,
+        # Anytime profile: evaluation count and elapsed time at each new best evaluated state.
+        "incumbent_curve": curve,
+        "evaluations_to_best": next(
+            (c["evaluation"] for c in curve if best and c["score_fraction"] == best["score_fraction"]),
+            None,
+        ),
         "state_snapshots": [
             {"sha256": s.sha256, "candidate_id": s.read()["id"]} for s in snapshots
         ],

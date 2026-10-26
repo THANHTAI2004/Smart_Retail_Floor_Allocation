@@ -39,7 +39,13 @@ a completed campaign should be analyzed or replayed instead.
 ## Inputs and controls
 
 `optimization.joint` is optional. Omitting it preserves the sequential/multistart
-workflow. Its `mode` selects sequential, multistart, feedback, exact or hybrid.
+workflow. Its `mode` selects sequential, multistart, random_search, annealing,
+feedback, exact or hybrid. Multistart and random_search evaluate seeded random walks
+of geometry-valid shelf-pose edits (T2/T3 re-optimized); random_search continues until
+`max_evaluations`. Annealing samples the feedback neighborhood uniformly and accepts
+worse moves by the Metropolis rule (`annealing_initial_temperature` relative to the
+initial score, geometric cooling to `annealing_final_ratio`) until `max_evaluations`.
+Every joint result reports `incumbent_curve` and `evaluations_to_best`.
 Feedback implements deterministic first- or best-improvement strict descent.
 Use `layers` to ablate T1/T2/T3; optional T4 changes routing policy. Configure
 `max_iterations`, `max_evaluations`, `max_actions`, `patience`, `target`,

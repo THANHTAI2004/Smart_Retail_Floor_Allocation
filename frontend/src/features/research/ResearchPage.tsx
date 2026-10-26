@@ -90,7 +90,7 @@ export function ResearchPage() {
       <h2>Chạy thí nghiệm</h2>
       <div className="form-grid">
         <label>Optimization mode<select aria-label="Optimization mode" value={jointMode} onChange={(e) => setJointMode(e.target.value)}>
-          <option value="preset">Use campaign design</option><option value="sequential">Sequential</option><option value="multistart">Multistart</option><option value="feedback">Closed-Loop Feedback</option><option value="exact">Exact Joint — requires declared finite space</option><option value="hybrid">Hybrid — requires declared finite space</option>
+          <option value="preset">Use campaign design</option><option value="sequential">Sequential</option><option value="multistart">Multistart</option><option value="random_search">Random Search — equal evaluation budget</option><option value="annealing">Simulated Annealing — equal evaluation budget</option><option value="feedback">Closed-Loop Feedback</option><option value="exact">Exact Joint — requires declared finite space</option><option value="hybrid">Hybrid — requires declared finite space</option>
         </select></label>
         <label>Cấu hình campaign<select aria-label="Cấu hình campaign" value={configId} onChange={(e) => { setConfigId(e.target.value); setExperimentId("all"); }}>
           {configs.map((c) => <option key={c.id} value={c.id}>{c.id}</option>)}</select></label>

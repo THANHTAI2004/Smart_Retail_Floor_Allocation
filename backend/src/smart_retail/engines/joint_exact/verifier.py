@@ -8,6 +8,33 @@ from smart_retail.engines.joint_exact.formulation import compile_space
 from smart_retail.engines.joint_exact.solver import digest, leaf
 
 
+def inside(decision, space) -> bool:
+    """Membership of a decision in per-key and/or bundled finite domains."""
+    poses = {k: list(v) for k, v in decision["poses"].items()}
+    if space.layouts is not None:
+        layout_ok = any(poses == {k: list(v) for k, v in o.items()} for o in space.layouts)
+    else:
+        layout_ok = set(poses) == set(space.poses) and all(
+            v in [list(p) for p in space.poses[k]] for k, v in poses.items()
+        )
+    rows = sorted(decision["placements"], key=lambda r: r["sku"])
+    if space.allocations is not None:
+        allocation_ok = any(
+            decision["assignment"] == o["assignment"]
+            and rows == sorted(o["placements"], key=lambda r: r["sku"])
+            for o in space.allocations
+        )
+    else:
+        allocation_ok = (
+            set(decision["assignment"]) == set(space.assignments)
+            and {r["sku"] for r in rows} == set(space.placements)
+            and len(rows) == len(space.placements)
+            and all(v in space.assignments[k] for k, v in decision["assignment"].items())
+            and all(row in space.placements[row["sku"]] for row in rows)
+        )
+    return layout_ok and allocation_ok and decision["routing_policy"] in space.routing_policies
+
+
 def verify(certificate, evaluate, *, identity, deadline=float("inf"), cancelled=lambda: False):
     try:
         payload = {k: v for k, v in certificate.items() if k != "artifact_sha256"}
@@ -45,6 +72,11 @@ def verify(certificate, evaluate, *, identity, deadline=float("inf"), cancelled=
                     decision[kind] = value
                 elif kind == "placements":
                     decision[kind].append(dict(value))
+                elif kind == "layout":
+                    decision["poses"] = dict(value)
+                elif kind == "allocation":
+                    decision["assignment"] = dict(value["assignment"])
+                    decision["placements"].extend(dict(row) for row in value["placements"])
                 else:
                     decision[kind][key] = value
             try:
@@ -65,19 +97,7 @@ def verify(certificate, evaluate, *, identity, deadline=float("inf"), cancelled=
         ub = certificate["upper_bound_fraction"]
         if ub is not None:
             decision = certificate["incumbent"]
-            if (
-                set(decision["poses"]) != set(space.poses)
-                or set(decision["assignment"]) != set(space.assignments)
-                or {r["sku"] for r in decision["placements"]} != set(space.placements)
-                or len(decision["placements"]) != len(space.placements)
-                or not all(
-                    list(v) in [list(p) for p in space.poses[k]]
-                    for k, v in decision["poses"].items()
-                )
-                or not all(v in space.assignments[k] for k, v in decision["assignment"].items())
-                or not all(row in space.placements[row["sku"]] for row in decision["placements"])
-                or decision["routing_policy"] not in space.routing_policies
-            ):
+            if not inside(decision, space):
                 raise ValueError("Incumbent is outside the finite model")
             witness = evaluate(certificate["incumbent"])
             if witness["score_fraction"] != ub:

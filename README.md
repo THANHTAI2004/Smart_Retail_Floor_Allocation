@@ -719,7 +719,9 @@ quantity bằng implementation kiểm tra riêng ở application experiments.
 | Chế độ | Cơ chế tìm kiếm | Phạm vi chứng minh và giới hạn |
 |---|---|---|
 | Sequential | Một pipeline T1→T2→T3→T4 | Nghiệm từng tầng không suy ra joint optimal |
-| Multistart | Nhiều variant, đánh giá đủ chuỗi, chọn tốt nhất | Chỉ các candidates đã thử; tối đa `candidate_count` |
+| Multistart | Nhiều variant, đánh giá đủ chuỗi, chọn tốt nhất; ở joint mode, variant ≥ 1 là random walk hợp lệ hình học trên vị trí kệ (seed = `seed`, variant), T2/T3 tối ưu lại | Chỉ các candidates đã thử; tối đa `candidate_count` |
+| Random search | Restart ngẫu nhiên có seed trên vị trí kệ tới hết `max_evaluations` | Baseline cùng ngân sách đánh giá; không chứng minh tối ưu |
+| Annealing | Cùng neighborhood với feedback, chọn bước ngẫu nhiên đều, nhận bước xấu theo Metropolis | Baseline cùng ngân sách; tách giá trị chẩn đoán T4 khỏi việc tìm kiếm thêm |
 | Feedback | KPI T4 sinh sửa quyết định, strict descent | Có thể hội tụ cục bộ trong neighborhood đã xét |
 | Exact | Cartesian enumeration miền tường minh | Chứng minh finite/SAA nếu đủ lá và verifier PASS |
 | Hybrid | Feedback rồi exact, warm start nếu thuộc miền | Cùng giới hạn miền; cùng time/evaluation budget |

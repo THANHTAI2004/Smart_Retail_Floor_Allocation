@@ -1,4 +1,109 @@
-# Current handoff - repeated k-fold held-out evaluation (deepmg protocol), 2026-10-23
+# Current handoff - paper-v3: all fixes from the paper-v2 review, 2026-10-26
+
+Request: review Ket_qua_thuc_nghiem_lan_1.docx (user's paper-v2 assessment), then "sữa hết đi"
+(fix everything); do NOT run experiments yet. Uncommitted; no commit/push authorized.
+Design and issue-by-issue mapping: docs/research/EXPERIMENT_DESIGN_DEEPMG.md section 10;
+how to run: docs/research/PAPER_EXPERIMENT_RUNBOOK.md (rewritten for paper-v3).
+
+Milestone 3 - X1 option A (user: "làm X1 theo A + B (sẽ sinh lại cấu hình X1)"):
+- FiniteSpace bundles: `layouts` (whole pose sets) and `allocations` (assignment + all SKU
+  rows) as single domains (contracts/optimality.py, formulation.py, verifier.py with an
+  independent assembly and `inside()` membership; coordinator validate_space/member). Spaces
+  without bundles dump unchanged (local-trap digest preserved, tested).
+- `finite_spaces.union_space` replaces the neighborhood space. X1 is two-phase: phase 1
+  `paper-x1-tiny` (E41, 10 tiny instances, seeds 1-2: seq_milp, random_search, annealing,
+  feedback); phase 2 block X1b = one campaign per instance with exact over distinct layouts x
+  allocations x policies of all phase-1 best solutions (scripts/build_x1_union_configs.py,
+  state cap 400). The runner builds X1b after X1 completes (journaled BUILT/NOT_BUILT) and
+  pools X1 + X1b into one report. Hybrid dropped from X1-tiny (needs the space up front).
+- analysis: when an `exact` arm exists, instance_comparisons also uses reference `exact`
+  (heuristic gap to the certified union optimum).
+- Pre-existing defect fixed: pooled reports of >1 joint campaign failed with FileExistsError
+  on joint-comparison.csv (joint_reports.export now writes once for all campaigns).
+- Option B (global lower bound) analysed, not implemented: shelves only need 0.5 m clearance
+  from the entrance, so a valid distance bound is ~1-2 m/journey vs 7-14 m observed (gap
+  bound >= 75-90%); documented in the design doc section 10.
+- Smoke (integration, not a paper experiment): var/x1-smoke-02, tiny_f6_s5001, seed 1, budget 6:
+  phase 1 COMPLETED 3/3, X1b built (2 states), exact GLOBAL_OPTIMAL_CERTIFIED 0.064524 <=
+  feedback 0.064524 = gap 0, annealing/seq_milp 0.064901; pooled report written. A first
+  attempt (var/x1-smoke-01) hung because the scratch script lacked a __main__ guard for spawn
+  workers; its two processes were stopped.
+- Verification: pytest backend 207 passed (basetemp var/pytest-x1-full-01, 210 s, MongoDB
+  local); ruff (backend + 3 paper scripts) PASS; mypy 105 files PASS; architecture PASS
+  (var/architecture-x1-01.json). paper-v3 configs regenerated: 1,416 jobs (+20 X1b later);
+  479 templates validated.
+
+Milestone 2 (after the multistart fix below):
+- Joint modes `random_search` and `annealing` (contracts/feedback.py, coordinator.py) with
+  equal `max_evaluations` budgets; `joint.incumbent_curve` and `joint.evaluations_to_best`
+  in every joint result; campaign metric `joint_evaluations_to_best`.
+- Load calibration: DatasetSpec `orders`, `order_interval_s` (Poisson order arrivals, separate
+  RNG stream so products/lines are unchanged), `picker_count`; generator horizon capped at
+  86,400 s; `application/experiments/calibration.py` targets picker utilization.
+- `EvaluationSpec.order_rate="population"` (splits.py `arrival_rate`/`rescale`): k-fold subsets
+  are time-rescaled to the population order rate (a 1/k fold was simulated at 1/k load).
+- `application/experiments/finite_spaces.py`: declared 162-state neighborhood space per
+  generated tiny instance for X1 exact/hybrid.
+- analysis.py `instance_comparisons` (instance unit, seq_milp reference, exact Wilcoxon, per
+  scale + pooled, Holm), written as `instance_comparisons.csv` by reports.py.
+- All new contract fields are omitted when None: paper-v2 and other existing configs dump
+  byte-identically (checked: 37 configs, 0 mismatches). Schemas regenerated (additive diff only).
+- scripts/build_paper_configs.py rewritten for paper-v3; scripts/run_paper_campaigns.py points
+  to configs/results/reports `paper-v3`. Frontend: two mode options in ResearchPage.tsx.
+- Configs generated: `experiments/configs/paper-v3/` (70 campaign files, index.json,
+  calibration.json; 1,456 jobs). Calibration: tiny 12.58 s -> utilization 0.751, small 16.85 s
+  -> 0.752, medium 23.37 s -> 0.777. All 499 dataset x treatment templates validated through
+  contracts, split and to_domain (scratch script, not committed).
+- Open decision for the owner: feedback uses `policy="first_improvement"` in paper-v3 (v2 used
+  best_improvement) because 24-action best-improvement sweeps exhaust 16-40 evaluation budgets.
+- Probes (not experiments): per-evaluation cost tiny ~1 s, small ~6 s, medium ~39 s; estimate
+  ~29 h for paper-v3. X1 probe: exact optimum inside the declared space (~0.10) is worse than
+  feedback outside it (0.077), so X1 cannot measure the gap to a global optimum.
+
+Verification milestone 2 (2026-10-26, repo root, MongoDB local running):
+- `.venv/Scripts/python.exe -m pytest backend/tests -q -p no:cacheprovider --basetemp var/pytest-v3-full-01`:
+  206 passed, 1 existing Starlette/httpx warning (171 s).
+- ruff (backend/pyproject.toml) on backend + both paper scripts PASS; mypy src 105 files PASS
+  (one arg-type error in generators.py fixed first); verify_architecture
+  `--output var/architecture-v3-01.json` PASS (105 Python, 40 frontend modules).
+- NOT run: frontend ESLint/build/Vitest (`frontend/node_modules` absent).
+
+Next: owner confirms the open decision and authorizes the run; then start the runner per the
+runbook section 3 (no backend/src edits while it runs).
+
+Milestone 1 - multistart fix:
+
+Root cause of "multistart identical to seq_milp on 813/813 pairs": generated instances use
+`layout_mode: "fixed"` (`application/experiments/generators.py`), and `stage_workflow.py`
+forces the T1 `variant` to 0 for fixed layouts, so all joint multistart candidates were the
+same plan. Feedback moved shelves anyway via explicit `poses` decisions, so paper-v2 compared
+a layout-editing arm against arms that could not edit layout.
+Fix: new `application/feedback/restarts.py` (seeded random walk of geometry-valid move/rotate/
+swap edits on unlocked shelf poses, seed = job seed * 1000003 + variant; T2/T3 re-optimized;
+topology still checked on evaluation). `coordinator.py` multistart now evaluates these
+restarts, emitting `MULTISTART_RESTART` trace events (FAILED with RESTART_UNAVAILABLE/
+DUPLICATE when none). Non-joint `workflow.py` multistart unchanged. README/design doc updated.
+All paper-v2 and pilot multistart numbers are superseded for this arm.
+
+Verification (2026-10-26, repo root):
+- New test `test_multistart_restarts_differ_on_generated_fixed_layout` failed before the fix
+  (1 distinct layout of 3) and passes after.
+- `.venv/Scripts/python.exe -m pytest backend/tests -q -p no:cacheprovider --basetemp var/pytest-ms-full-03`:
+  198 passed, 1 existing Starlette/httpx warning (166 s) with local MongoDB started by
+  scripts/start_mongodb.ps1 (an earlier run without MongoDB: 165 passed, 4 failed, 29 skipped).
+- ruff (backend/pyproject.toml) PASS; mypy src 103 files PASS;
+  `scripts/verify_architecture.py --output var/architecture-ms-01.json` PASS.
+- Probe only (not an experiment): tiny_f6 / small_f4, seeds 1-3, candidate_count 3: all
+  restarts feasible; selected restart improves on candidate 0 in 5/6 cases; 0.8 s / 6 s.
+
+Next (from the review, not started): equal-budget baseline counted in evaluations (random
+search/SA on poses), evaluation-count budgets instead of wall seconds, re-run X5 ablation,
+calibrate T4 arrival rate to utilization 0.6-0.85, more orders per test fold, then a small
+pilot before regenerating paper configs.
+
+---
+
+# Previous handoff - repeated k-fold held-out evaluation (deepmg protocol), 2026-10-23
 
 Request: direction A paper experiments designed after deepmg (pypi.org/project/deepmg):
 repeated stratified k-fold over orders, deepmg-style result files. Design and findings:

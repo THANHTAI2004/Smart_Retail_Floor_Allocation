@@ -100,6 +100,48 @@
           ],
           "default": null,
           "title": "Input File Sha256"
+        },
+        "orders": {
+          "anyOf": [
+            {
+              "maximum": 20000,
+              "minimum": 2,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Orders"
+        },
+        "order_interval_s": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 86400,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Order Interval S"
+        },
+        "picker_count": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Picker Count"
         }
       },
       "required": [
@@ -146,6 +188,19 @@
           "default": "dominant_category",
           "title": "Stratify",
           "type": "string"
+        },
+        "order_rate": {
+          "anyOf": [
+            {
+              "const": "population",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Order Rate"
         }
       },
       "required": [
@@ -212,6 +267,7 @@
               "joint_evaluations",
               "joint_iterations_to_best",
               "holdout_objective",
+              "joint_evaluations_to_best",
               "train_objective",
               "test_objective",
               "test_mean_distance_m",

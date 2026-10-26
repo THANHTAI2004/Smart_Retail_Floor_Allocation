@@ -12,16 +12,18 @@ from collections import defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
 
+from build_x1_union_configs import build_union, phase1_roots
+
 from smart_retail.application.experiments.campaign import run
 from smart_retail.application.experiments.reports import report
 from smart_retail.contracts.experiments import CampaignSpec
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIGS = ROOT / "experiments" / "configs" / "paper-v2"
-RESULTS = ROOT / "experiments" / "results" / "20261023-paper-v2"
-REPORTS = ROOT / "experiments" / "reports" / "20261023-paper-v2"
+CONFIGS = ROOT / "experiments" / "configs" / "paper-v3"
+RESULTS = ROOT / "experiments" / "results" / "paper-v3"
+REPORTS = ROOT / "experiments" / "reports" / "paper-v3"
 JOURNAL = RESULTS / "journal.json"
-ORDER = ["X1", "X4", "X2", "X2b", "X5", "X6", "X3"]
+ORDER = ["X1", "X1b", "X4", "X2", "X5", "X6", "X3"]
 
 
 def now():
@@ -33,14 +35,36 @@ def record(journal, entry):
     JOURNAL.write_text(json.dumps(journal, indent=2) + "\n", encoding="utf-8")
 
 
+def load_blocks():
+    blocks = defaultdict(list)
+    for row in json.loads((CONFIGS / "index.json").read_text(encoding="utf-8")):
+        blocks[row["block"]].append(row["config"])
+    return blocks
+
+
+def prepare_union(journal):
+    """Build X1b once every phase-1 X1 campaign is COMPLETED (journaled either way)."""
+    entry = {"block": "X1b", "action": "build_union", "started_utc": now()}
+    try:
+        entry["configs"] = build_union(phase1_roots(RESULTS), CONFIGS)
+        entry["status"] = "BUILT"
+    except SystemExit as exc:
+        entry.update(status="NOT_BUILT", reason=str(exc))
+    except Exception as exc:  # noqa: BLE001 - journal every failure, continue with next block
+        entry.update(status="BUILD_ERROR", error=f"{type(exc).__name__}: {exc}", trace=traceback.format_exc())
+    entry["ended_utc"] = now()
+    record(journal, entry)
+    print(f"[{now()}] X1b union configs: {entry['status']}", flush=True)
+
+
 def main():
     RESULTS.mkdir(parents=True, exist_ok=True)
     journal = json.loads(JOURNAL.read_text(encoding="utf-8")) if JOURNAL.exists() else []
-    index = json.loads((CONFIGS / "index.json").read_text(encoding="utf-8"))
-    blocks = defaultdict(list)
-    for row in index:
-        blocks[row["block"]].append(row["config"])
     for block in ORDER:
+        blocks = load_blocks()
+        if block == "X1b" and not blocks["X1b"]:
+            prepare_union(journal)
+            blocks = load_blocks()
         for name in blocks[block]:
             spec = CampaignSpec.model_validate(
                 json.loads((CONFIGS / name).read_text(encoding="utf-8"))
@@ -61,9 +85,12 @@ def main():
             entry["ended_utc"] = now()
             record(journal, entry)
             print(f"[{now()}] {name}: {entry['status']}", flush=True)
+    blocks = load_blocks()
+    # Heuristic (X1) and exact-on-union (X1b) jobs share experiment ids and seeds: pool them.
+    blocks["X1"] = blocks["X1"] + blocks.pop("X1b", [])
     for block in ORDER:
         target = REPORTS / block
-        if target.exists():
+        if block == "X1b" or target.exists():
             continue
         roots = [
             RESULTS / json.loads((CONFIGS / name).read_text(encoding="utf-8"))["name"]

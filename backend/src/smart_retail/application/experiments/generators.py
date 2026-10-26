@@ -4,6 +4,7 @@ import hashlib
 import json
 import math
 import random
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from smart_retail.application.workflow import canonical_hash
@@ -13,6 +14,7 @@ from smart_retail.contracts.migration import normalize
 from smart_retail.infrastructure.database import ROOT
 
 DATASET_ROOT = ROOT / "datasets"
+EPOCH = datetime(2026, 10, 22, tzinfo=UTC)
 
 SIZES = {
     "tiny": (4, 3, 12, 20),
@@ -58,6 +60,7 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
         }
     rng = random.Random(spec.seed)
     shelf_count, category_count, sku_count, order_count = SIZES[spec.scale]
+    order_count = spec.orders or order_count
     cols = math.ceil(math.sqrt(shelf_count))
     rows = math.ceil(shelf_count / cols)
     width, height = cols * 3 + 4, rows * 2.5 + 4
@@ -122,10 +125,22 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
     if spec.category_assignment == "free":
         for category in categories:
             category.pop("fixed_shelf_id")
-    orders = [
-        {"id": f"O{i}", "placed_at": f"2026-10-22T00:{i % 60:02d}:00+00:00", "due_s": 600}
-        for i in range(order_count)
-    ]
+    if spec.order_interval_s is None:
+        orders = [
+            {"id": f"O{i}", "placed_at": f"2026-10-22T00:{i % 60:02d}:00+00:00", "due_s": 600}
+            for i in range(order_count)
+        ]
+    else:
+        # Poisson order arrivals at the calibrated mean interval; separate stream keeps
+        # products and order lines identical to the uncalibrated instance.
+        arrivals = random.Random(spec.seed * 7919 + 1)
+        clock, last_order_s = 0.0, 0.0
+        orders = []
+        for i in range(order_count):
+            last_order_s = round(clock, 3)
+            placed = EPOCH + timedelta(seconds=last_order_s)
+            orders.append({"id": f"O{i}", "placed_at": placed.isoformat(), "due_s": 600})
+            clock += arrivals.expovariate(1 / spec.order_interval_s)
     lines = [
         {"order_id": order["id"], "sku": sku, "quantity": rng.randint(1, 3)}
         for order in orders
@@ -152,6 +167,11 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
         "orders": {"orders": orders, "order_lines": lines},
         "optimization": {"seed": spec.seed, "time_limit_s": 15, "max_iterations": 50000},
     }
+    if spec.picker_count is not None:
+        data["demand"]["picker_count"] = spec.picker_count
+    if spec.order_interval_s is not None:
+        # Contract cap 86,400 s; later orders are truncated by T4 like any arrival.
+        data["demand"]["horizon_s"] = min(86400, max(3600, math.ceil(last_order_s) + 1))
     if spec.scenario == "infeasible":
         data["categories"]["items"][0]["required_width_m"] = 1_000_000
     if spec.scenario == "high_load":

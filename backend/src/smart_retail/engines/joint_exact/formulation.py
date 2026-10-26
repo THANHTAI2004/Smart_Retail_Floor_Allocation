@@ -19,6 +19,11 @@ def compile_space(raw):
             if not options:
                 raise EngineError("INVALID_MODEL", "Empty decision domain")
             domains.append((kind, key, options))
+    # Bundles are single domains whose option fixes a whole layer.
+    if space.layouts is not None:
+        domains.append(("layout", "layouts", space.layouts))
+    if space.allocations is not None:
+        domains.append(("allocation", "allocations", space.allocations))
     domains.append(("routing_policy", "policy", space.routing_policies))
     count = math.prod(len(options) for _, _, options in domains)
     if count > space.max_states:
@@ -35,6 +40,11 @@ def assemble(domains, values):
             decision[kind] = value
         elif kind == "placements":
             decision[kind].append(dict(value))
+        elif kind == "layout":
+            decision["poses"] = dict(value)
+        elif kind == "allocation":
+            decision["assignment"] = dict(value["assignment"])
+            decision["placements"].extend(dict(row) for row in value["placements"])
         else:
             decision[kind][key] = value
     return decision

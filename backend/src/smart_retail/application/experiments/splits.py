@@ -18,6 +18,29 @@ def dominant_category(lines: list[dict], category_of: dict[str, str]) -> str:
     return min(units, key=lambda key: (-units[key], key))
 
 
+def arrival_rate(orders: list[dict]) -> float | None:
+    """Orders per second over the placed_at span; None when the span is empty."""
+    times = sorted(datetime.fromisoformat(o["placed_at"]).timestamp() for o in orders)
+    span = times[-1] - times[0] if times else 0
+    return (len(times) - 1) / span if span > 0 else None
+
+
+def rescale(orders: list[dict], target_rate: float | None) -> None:
+    """Scale placed_at offsets in place so the subset arrives at ``target_rate``.
+
+    A random 1/k fold keeps the population span, so without this it is simulated at
+    1/k of the load; a contiguous temporal block already has the population rate.
+    """
+    rate = arrival_rate(orders)
+    if rate is None or target_rate is None:
+        return
+    start = min(datetime.fromisoformat(o["placed_at"]) for o in orders)
+    factor = rate / target_rate
+    for order in orders:
+        offset = datetime.fromisoformat(order["placed_at"]) - start
+        order["placed_at"] = (start + offset * factor).isoformat()
+
+
 def split_orders(sections: dict, spec: EvaluationSpec, seed: int) -> dict:
     """Partition order IDs; the same (orders, spec, seed) always yields the same folds."""
     orders = sections["orders"]["orders"]
@@ -81,11 +104,15 @@ def apply_split(sections: dict, plan: dict, fold: int, spec: EvaluationSpec) -> 
         raise ValueError("Treatment overrides changed the orders that the split was planned on")
     entry = plan["folds"][fold]
 
+    population_rate = arrival_rate(sections["orders"]["orders"])
+
     def subset(identifiers: list[str]) -> dict:
         chosen = set(identifiers)
         section = copy.deepcopy(sections["orders"])
         section["orders"] = [o for o in section["orders"] if o["id"] in chosen]
         section["order_lines"] = [x for x in section["order_lines"] if x["order_id"] in chosen]
+        if spec.order_rate == "population":
+            rescale(section["orders"], population_rate)
         return section
 
     data = estimate_demand(sections, subset(entry["train"]), plan["population_orders"])

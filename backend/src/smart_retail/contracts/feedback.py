@@ -19,7 +19,9 @@ class Objective(BaseModel):
 
 class JointConfig(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
-    mode: Literal["sequential", "multistart", "feedback", "exact", "hybrid"] = "feedback"
+    mode: Literal[
+        "sequential", "multistart", "random_search", "annealing", "feedback", "exact", "hybrid"
+    ] = "feedback"
     scenario_seeds: list[int] = Field(default=[11], min_length=1, max_length=10)
     scenario_seed_policy: Literal["fixed", "job_seed_offsets"] = "fixed"
     holdout_seeds: list[int] = Field(default_factory=list, max_length=10)
@@ -32,6 +34,9 @@ class JointConfig(BaseModel):
     tolerance: float = Field(default=1e-9, ge=0, le=0.1)
     target: float | None = Field(default=None, ge=0)
     policy: Literal["first_improvement", "best_improvement"] = "best_improvement"
+    # Annealing: T0 relative to the initial score; geometric cooling to T0 * final_ratio.
+    annealing_initial_temperature: float = Field(default=0.01, gt=0, le=1)
+    annealing_final_ratio: float = Field(default=0.01, gt=0, le=1)
     finite_space: dict | None = None
     verify_certificate: bool = True
 
