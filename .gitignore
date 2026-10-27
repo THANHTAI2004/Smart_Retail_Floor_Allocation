@@ -25,11 +25,11 @@ coverage.xml
 *.pem
 *.key
 
-# Generated campaign runs are retained locally with fingerprints/manifests.
-# Configs, source, datasets, reports and acceptance evidence remain versioned.
-/experiments/results/*/
+# Generated experiment outcomes, reports and runtime data remain local.
+/experiments/results/
+/experiments/reports/
 
-# Canonical experiments artifacts remain local; configs, scripts and reports are reviewable.
+# Canonical experiment runtime artifacts remain local.
 /experiments/runtime/
 /experiments/databases/
 /experiments/.migration-staging/
@@ -41,7 +41,13 @@ coverage.xml
 /experiments/migration/audit-D-to-E-20261024T093214Z/E-inventory.json
 /experiments/migration/duplicate-cleanup/file-actions.jsonl
 
-# User decision 2026-10-24: retain experiments locally, exclude the entire root folder from Git.
-# User decision 2026-10-26: campaign configs are shared so collaborators run the same experiments.
+# User decision 2026-10-27: share source/configs/docs, exclude experiment outcomes.
 /experiments/*
 !/experiments/configs/
+!/experiments/docs/
+!/experiments/scripts/
+!/experiments/visualization/
+!/experiments/*.py
+!/experiments/*.md
+# Summary evidence generated from completed phase-1 runs is an experiment outcome.
+/experiments/configs/**/x1-union-spaces.json

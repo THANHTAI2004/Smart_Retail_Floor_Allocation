@@ -1,0 +1,332 @@
+[
+  {
+    "block": "X1",
+    "config": "paper-x1-trap.json",
+    "jobs": 150,
+    "job_time_limit_s": 60.0
+  },
+  {
+    "block": "X1",
+    "config": "paper-x1-tiny-part01.json",
+    "jobs": 40,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X1",
+    "config": "paper-x1-tiny-part02.json",
+    "jobs": 40,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part01.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part02.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part03.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part04.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part05.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part06.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part07.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part08.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part09.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part10.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part11.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part12.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part13.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part14.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part15.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part16.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part17.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part18.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part19.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part20.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part01.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part02.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part03.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part04.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part05.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part06.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part07.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part08.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part09.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part10.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-medium-part01.json",
+    "jobs": 10,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-medium-part02.json",
+    "jobs": 10,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-tiny-part01.json",
+    "jobs": 40,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-tiny-part02.json",
+    "jobs": 40,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-tiny-part03.json",
+    "jobs": 20,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-small-part01.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-small-part02.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-tiny.json",
+    "jobs": 9,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-small.json",
+    "jobs": 9,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-medium.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-large.json",
+    "jobs": 4,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part01.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part02.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part03.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part04.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part05.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part01.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part02.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part03.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part04.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part05.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-load.json",
+    "jobs": 20,
+    "job_time_limit_s": 600.0
+  }
+]

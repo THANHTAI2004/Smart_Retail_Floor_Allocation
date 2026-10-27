@@ -1,0 +1,97 @@
+{
+  "target_utilization": 0.75,
+  "scales": {
+    "tiny": {
+      "dataset": "tiny_reference",
+      "target_utilization": 0.75,
+      "tolerance": 0.05,
+      "picker_count": 2,
+      "order_interval_s": 12.58,
+      "achieved_utilization": 0.7513351773911633,
+      "within_tolerance": true,
+      "rounds": [
+        {
+          "order_interval_s": 333.33,
+          "picker_utilization": 0.027200705664176605,
+          "mean_service_s": 20.990766761719648,
+          "mean_picker_wait_s": 0.0,
+          "late_orders": 0
+        },
+        {
+          "order_interval_s": 13.99,
+          "picker_utilization": 0.6742139830473568,
+          "mean_service_s": 22.061083192044823,
+          "mean_picker_wait_s": 5.568411404933004,
+          "late_orders": 0
+        },
+        {
+          "order_interval_s": 12.58,
+          "picker_utilization": 0.7513351773911633,
+          "mean_service_s": 22.14854135209366,
+          "mean_picker_wait_s": 7.681945626149653,
+          "late_orders": 0
+        }
+      ],
+      "assumption": "Measured on the sequential plan of this instance; optimized plans change service time"
+    },
+    "small": {
+      "dataset": "small_reference",
+      "target_utilization": 0.75,
+      "tolerance": 0.05,
+      "picker_count": 2,
+      "order_interval_s": 16.85,
+      "achieved_utilization": 0.7517605107099209,
+      "within_tolerance": true,
+      "rounds": [
+        {
+          "order_interval_s": 166.67,
+          "picker_utilization": 0.07549946092091975,
+          "mean_service_s": 28.825902222527738,
+          "mean_picker_wait_s": 0.013617777294590875,
+          "late_orders": 0
+        },
+        {
+          "order_interval_s": 19.22,
+          "picker_utilization": 0.6575994708353333,
+          "mean_service_s": 29.046599720243016,
+          "mean_picker_wait_s": 7.713892953268394,
+          "late_orders": 0
+        },
+        {
+          "order_interval_s": 16.85,
+          "picker_utilization": 0.7517605107099209,
+          "mean_service_s": 29.126065556738098,
+          "mean_picker_wait_s": 14.021873354911774,
+          "late_orders": 0
+        }
+      ],
+      "assumption": "Measured on the sequential plan of this instance; optimized plans change service time"
+    },
+    "medium": {
+      "dataset": "medium_reference",
+      "target_utilization": 0.75,
+      "tolerance": 0.05,
+      "picker_count": 2,
+      "order_interval_s": 23.37,
+      "achieved_utilization": 0.7774684595134222,
+      "within_tolerance": true,
+      "rounds": [
+        {
+          "order_interval_s": 100.0,
+          "picker_utilization": 0.18157658751631273,
+          "mean_service_s": 35.053613886614365,
+          "mean_picker_wait_s": 0.77636349535858,
+          "late_orders": 0
+        },
+        {
+          "order_interval_s": 23.37,
+          "picker_utilization": 0.7774684595134222,
+          "mean_service_s": 35.16593169704357,
+          "mean_picker_wait_s": 24.629849785612613,
+          "late_orders": 0
+        }
+      ],
+      "assumption": "Measured on the sequential plan of this instance; optimized plans change service time"
+    }
+  }
+}

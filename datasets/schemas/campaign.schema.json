@@ -391,21 +391,28 @@
     "job_time_limit_s": {
       "default": 15.0,
       "exclusiveMinimum": 0,
-      "maximum": 900,
+      "maximum": 1800,
       "title": "Job Time Limit S",
       "type": "number"
     },
     "memory_limit_mb": {
+      "anyOf": [
+        {
+          "maximum": 8192,
+          "minimum": 128,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
       "default": 1024,
-      "maximum": 8192,
-      "minimum": 128,
-      "title": "Memory Limit Mb",
-      "type": "integer"
+      "title": "Memory Limit Mb"
     },
     "max_wall_s": {
       "default": 600.0,
       "exclusiveMinimum": 0,
-      "maximum": 14400,
+      "maximum": 28800,
       "title": "Max Wall S",
       "type": "number"
     },

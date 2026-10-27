@@ -197,7 +197,7 @@ def test_worker_wall_budget_leaves_finalization_grace():
     assert wall_budget(900) == 990
     assert OptimizationInput(time_limit_s=900).time_limit_s == 900
     with pytest.raises(ValidationError):
-        OptimizationInput(time_limit_s=901)
+        OptimizationInput(time_limit_s=1801)
 
 
 def test_inputs_without_evaluation_keep_their_canonical_form():

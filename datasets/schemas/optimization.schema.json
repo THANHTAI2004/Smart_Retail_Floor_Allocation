@@ -429,7 +429,7 @@
     "time_limit_s": {
       "default": 30,
       "exclusiveMinimum": 0,
-      "maximum": 900,
+      "maximum": 1800,
       "title": "Time Limit S",
       "type": "number"
     },
@@ -522,11 +522,18 @@
       "type": "string"
     },
     "memory_limit_mb": {
+      "anyOf": [
+        {
+          "maximum": 8192,
+          "minimum": 128,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
       "default": 2048,
-      "maximum": 8192,
-      "minimum": 128,
-      "title": "Memory Limit Mb",
-      "type": "integer"
+      "title": "Memory Limit Mb"
     }
   },
   "title": "OptimizationInput",

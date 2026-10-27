@@ -1,0 +1,1117 @@
+{
+  "cache_policy": "isolated",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "category_assignment": "free",
+      "facings": 6,
+      "height_scale": 1.0,
+      "id": "tiny_f6_s5009",
+      "input_file_sha256": null,
+      "input_path": null,
+      "levels": 2,
+      "order_interval_s": 12.58,
+      "orders": 150,
+      "picker_count": 2,
+      "scale": "tiny",
+      "scenario": "feasible",
+      "seed": 5009,
+      "variable_facings": false
+    }
+  ],
+  "experiments": [
+    {
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "datasets": [
+        "tiny_f6_s5009"
+      ],
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "id": "E41",
+      "metrics": [
+        "joint_objective",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "mean_distance_m",
+        "mean_wait_s",
+        "wall_s",
+        "peak_child_rss_bytes"
+      ],
+      "question": "Gap between heuristics and the certified optimum of the union of their own solutions",
+      "statistical_method": "descriptive_paired_exploratory",
+      "treatments": [
+        {
+          "id": "exact",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "finite_space": {
+                  "allocations": [
+                    {
+                      "assignment": {
+                        "C0": "S2",
+                        "C1": "S0",
+                        "C2": "S2"
+                      },
+                      "placements": [
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P0",
+                          "width_m": 0.507,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P1",
+                          "width_m": 0.3276,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P10",
+                          "width_m": 0.3222,
+                          "x_m": 1.0614000000000001
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P11",
+                          "width_m": 0.3024,
+                          "x_m": 1.467
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P2",
+                          "width_m": 0.4494,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P3",
+                          "width_m": 0.29279999999999995,
+                          "x_m": 0.4494
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P4",
+                          "width_m": 0.3372,
+                          "x_m": 0.3276
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P5",
+                          "width_m": 0.4074,
+                          "x_m": 0.507
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P6",
+                          "width_m": 0.375,
+                          "x_m": 0.7422
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P7",
+                          "width_m": 0.39660000000000006,
+                          "x_m": 0.6648000000000001
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P8",
+                          "width_m": 0.37920000000000004,
+                          "x_m": 0.9144
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P9",
+                          "width_m": 0.3498,
+                          "x_m": 1.1172
+                        }
+                      ]
+                    },
+                    {
+                      "assignment": {
+                        "C0": "S1",
+                        "C1": "S1",
+                        "C2": "S3"
+                      },
+                      "placements": [
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P0",
+                          "width_m": 0.507,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P1",
+                          "width_m": 0.3276,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P10",
+                          "width_m": 0.3222,
+                          "x_m": 0.8442000000000001
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P11",
+                          "width_m": 0.3024,
+                          "x_m": 1.236
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P2",
+                          "width_m": 0.4494,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P3",
+                          "width_m": 0.29279999999999995,
+                          "x_m": 0.3276
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P4",
+                          "width_m": 0.3372,
+                          "x_m": 0.507
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P5",
+                          "width_m": 0.4074,
+                          "x_m": 0.4494
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P6",
+                          "width_m": 0.375,
+                          "x_m": 0.6204
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P7",
+                          "width_m": 0.39660000000000006,
+                          "x_m": 0.9954
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P8",
+                          "width_m": 0.37920000000000004,
+                          "x_m": 0.8568
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S1",
+                          "sku": "P9",
+                          "width_m": 0.3498,
+                          "x_m": 1.392
+                        }
+                      ]
+                    },
+                    {
+                      "assignment": {
+                        "C0": "S0",
+                        "C1": "S2",
+                        "C2": "S2"
+                      },
+                      "placements": [
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P0",
+                          "width_m": 0.507,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P1",
+                          "width_m": 0.3276,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P10",
+                          "width_m": 0.3222,
+                          "x_m": 0.777
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P11",
+                          "width_m": 0.3024,
+                          "x_m": 1.5204
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P2",
+                          "width_m": 0.4494,
+                          "x_m": 0.3276
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P3",
+                          "width_m": 0.29279999999999995,
+                          "x_m": 0.507
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P4",
+                          "width_m": 0.3372,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P5",
+                          "width_m": 0.4074,
+                          "x_m": 0.3372
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P6",
+                          "width_m": 0.375,
+                          "x_m": 0.7998
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P7",
+                          "width_m": 0.39660000000000006,
+                          "x_m": 0.7445999999999999
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P8",
+                          "width_m": 0.37920000000000004,
+                          "x_m": 1.1412
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P9",
+                          "width_m": 0.3498,
+                          "x_m": 1.1747999999999998
+                        }
+                      ]
+                    },
+                    {
+                      "assignment": {
+                        "C0": "S0",
+                        "C1": "S2",
+                        "C2": "S0"
+                      },
+                      "placements": [
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P0",
+                          "width_m": 0.507,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P1",
+                          "width_m": 0.3276,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P10",
+                          "width_m": 0.3222,
+                          "x_m": 1.0614000000000001
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P11",
+                          "width_m": 0.3024,
+                          "x_m": 1.467
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P2",
+                          "width_m": 0.4494,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P3",
+                          "width_m": 0.29279999999999995,
+                          "x_m": 0.4494
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P4",
+                          "width_m": 0.3372,
+                          "x_m": 0.3276
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P5",
+                          "width_m": 0.4074,
+                          "x_m": 0.507
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P6",
+                          "width_m": 0.375,
+                          "x_m": 0.7422
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S2",
+                          "sku": "P7",
+                          "width_m": 0.39660000000000006,
+                          "x_m": 0.6648000000000001
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P8",
+                          "width_m": 0.37920000000000004,
+                          "x_m": 0.9144
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P9",
+                          "width_m": 0.3498,
+                          "x_m": 1.1172
+                        }
+                      ]
+                    },
+                    {
+                      "assignment": {
+                        "C0": "S3",
+                        "C1": "S0",
+                        "C2": "S3"
+                      },
+                      "placements": [
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P0",
+                          "width_m": 0.507,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P1",
+                          "width_m": 0.3276,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P10",
+                          "width_m": 0.3222,
+                          "x_m": 1.0614000000000001
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P11",
+                          "width_m": 0.3024,
+                          "x_m": 1.467
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P2",
+                          "width_m": 0.4494,
+                          "x_m": 0.0
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P3",
+                          "width_m": 0.29279999999999995,
+                          "x_m": 0.4494
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P4",
+                          "width_m": 0.3372,
+                          "x_m": 0.3276
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P5",
+                          "width_m": 0.4074,
+                          "x_m": 0.507
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P6",
+                          "width_m": 0.375,
+                          "x_m": 0.7422
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S0",
+                          "sku": "P7",
+                          "width_m": 0.39660000000000006,
+                          "x_m": 0.6648000000000001
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L0",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P8",
+                          "width_m": 0.37920000000000004,
+                          "x_m": 0.9144
+                        },
+                        {
+                          "capacity_units": 24,
+                          "depth_units": 4,
+                          "face": 0,
+                          "facings": 6,
+                          "layers": 1,
+                          "level_id": "L1",
+                          "load_kg": 4.800000000000001,
+                          "orientation": 0,
+                          "shelf_id": "S3",
+                          "sku": "P9",
+                          "width_m": 0.3498,
+                          "x_m": 1.1172
+                        }
+                      ]
+                    }
+                  ],
+                  "layouts": [
+                    {
+                      "S0": [
+                        2.0,
+                        2.0,
+                        0
+                      ],
+                      "S1": [
+                        5.0,
+                        2.0,
+                        0
+                      ],
+                      "S2": [
+                        1.0,
+                        4.5,
+                        0
+                      ],
+                      "S3": [
+                        4.0,
+                        5.0,
+                        0
+                      ]
+                    },
+                    {
+                      "S0": [
+                        4.5,
+                        2.5,
+                        0
+                      ],
+                      "S1": [
+                        2.0,
+                        4.5,
+                        0
+                      ],
+                      "S2": [
+                        1.5,
+                        2.0,
+                        0
+                      ],
+                      "S3": [
+                        5.0,
+                        4.5,
+                        0
+                      ]
+                    },
+                    {
+                      "S0": [
+                        0.5,
+                        3.0,
+                        0
+                      ],
+                      "S1": [
+                        5.0,
+                        2.0,
+                        0
+                      ],
+                      "S2": [
+                        2.0,
+                        4.5,
+                        0
+                      ],
+                      "S3": [
+                        5.0,
+                        4.5,
+                        0
+                      ]
+                    },
+                    {
+                      "S0": [
+                        1.5,
+                        4.5,
+                        0
+                      ],
+                      "S1": [
+                        5.0,
+                        2.0,
+                        90
+                      ],
+                      "S2": [
+                        2.0,
+                        2.0,
+                        90
+                      ],
+                      "S3": [
+                        5.0,
+                        4.5,
+                        0
+                      ]
+                    },
+                    {
+                      "S0": [
+                        2.0,
+                        2.0,
+                        0
+                      ],
+                      "S1": [
+                        5.0,
+                        2.0,
+                        0
+                      ],
+                      "S2": [
+                        2.0,
+                        4.5,
+                        0
+                      ],
+                      "S3": [
+                        5.0,
+                        4.5,
+                        0
+                      ]
+                    },
+                    {
+                      "S0": [
+                        2.0,
+                        2.0,
+                        90
+                      ],
+                      "S1": [
+                        5.0,
+                        2.0,
+                        90
+                      ],
+                      "S2": [
+                        5.0,
+                        4.5,
+                        0
+                      ],
+                      "S3": [
+                        0.5,
+                        4.5,
+                        0
+                      ]
+                    }
+                  ],
+                  "routing_policies": [
+                    "nearest"
+                  ]
+                },
+                "max_evaluations": 30,
+                "mode": "exact",
+                "objective": {
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ],
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ]
+                },
+                "scenario_seed_policy": "job_seed_offsets",
+                "scenario_seeds": [
+                  0,
+                  101
+                ]
+              },
+              "slotting_algorithm": "milp"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "job_time_limit_s": 1800.0,
+  "max_jobs": 2,
+  "max_retries": 1,
+  "max_wall_s": 3620.0,
+  "memory_limit_mb": null,
+  "name": "paper-x1-tiny-exact-tiny_f6_s5009",
+  "repetitions": 1,
+  "schema_version": "1.1",
+  "seeds": [
+    1,
+    2
+  ],
+  "workers": 1
+}

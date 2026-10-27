@@ -100,9 +100,9 @@ export function ResearchPage() {
           {datasets.map((d) => <option key={d.id} value={d.id}>{d.id}</option>)}</select></label>
         <label>Số seed độc lập<input type="number" min={1} max={10} value={seedCount} onChange={(e) => setSeedCount(Number(e.target.value))} /></label>
         <label>Seed bắt đầu<input type="number" min={0} max={2147483637} value={firstSeed} onChange={(e) => setFirstSeed(Number(e.target.value))} /></label>
-        <label>Giới hạn mỗi job (s)<input type="number" min={0.1} max={900} step={0.1} value={timeLimit} onChange={(e) => setTimeLimit(Number(e.target.value))} /></label>
+        <label>Giới hạn mỗi job (s)<input type="number" min={0.1} max={1800} step={0.1} value={timeLimit} onChange={(e) => setTimeLimit(Number(e.target.value))} /></label>
       </div>
-      {config && <p>Ngân sách mỗi job: {timeLimit} s · Giới hạn RSS: {config.memory_limit_mb} MiB · Một worker · Campaign: {config.max_wall_s} s.</p>}
+      {config && <p>Ngân sách mỗi job: {timeLimit} s · Giới hạn RSS: {config.memory_limit_mb === null ? "Không giới hạn" : `${config.memory_limit_mb} MiB`} · Một worker · Campaign: {config.max_wall_s} s.</p>}
       <details open={jsonOpen} onToggle={(e) => setJsonOpen(e.currentTarget.open)}><summary>Thuật toán từng tầng và cấu hình đầy đủ</summary>
         {config?.experiments.filter((e) => experimentId === "all" || e.id === experimentId).flatMap((e) => e.treatments.map((t) => {
           const id = `${e.id}/${t.id}`;
@@ -126,7 +126,7 @@ export function ResearchPage() {
         }))}
         <pre style={{ overflow: "auto", maxHeight: 300 }}>{JSON.stringify(config, null, 2)}</pre>
       </details>
-      <button className="primary" disabled={busy || !config || seedCount < 1 || seedCount > 10 || timeLimit <= 0 || timeLimit > 900 || firstSeed < 0} onClick={() => void start()}>Bắt đầu campaign</button>
+      <button className="primary" disabled={busy || !config || seedCount < 1 || seedCount > 10 || timeLimit <= 0 || timeLimit > 1800 || firstSeed < 0} onClick={() => void start()}>Bắt đầu campaign</button>
     </section>
     <section className="panel">
       <h2>Campaign và kết quả thực tế</h2>
