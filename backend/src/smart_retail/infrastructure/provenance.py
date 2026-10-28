@@ -23,7 +23,7 @@ def runtime_identity() -> dict:
             "input_contract": "1.1",
             "t1": "grid-local-search-1.1",
             "t2": "allocation-affinity-milp-1.1",
-            "t3": "facing-strip-milp-1.1",
+            "t3": "facing-strip-milp-1.2-first-fit-repair",
             "t4": "picker-grid-queue-1.1",
             "workflow": "bounded-candidates-1.1",
             "joint": "finite-saa-feedback-1",

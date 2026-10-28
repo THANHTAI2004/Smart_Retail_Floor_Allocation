@@ -609,6 +609,16 @@ không overlap và tổng load **qua mọi mặt cùng tầng** không vượt `
 First-fit xếp SKU theo demand giảm dần và chọn vị trí đầu tiên vừa; nó dùng số
 lớp/sâu tối đa ở lựa chọn đó nên có thể thất bại dù một lựa chọn khác khả thi.
 
+Từ bản sửa ngày 27/10/2026, khi first-fit thất bại, T3 thử sắp lại toàn bộ SKU
+trên đúng kệ bị kẹt bằng tìm kiếm xác định có quay lui, tối đa 20.000 trạng thái
+và 64 SKU/kệ, đồng thời tuân thủ deadline và yêu cầu hủy. Giữ nguyên assignment,
+facings và chính sách lấy số lớp/sâu tối đa; không nới kích thước/tải trọng và
+không gọi MILP. Nghiệm qua kiểm tra độc lập được ghi `FEASIBLE_FIRST_FIT_REPAIRED`;
+các ca first-fit thành công ngay vẫn là `FEASIBLE_FIRST_FIT`. Hết ngân sách tìm
+kiếm vẫn là thất bại heuristic, không chứng minh vô nghiệm. Đây là thay đổi
+baseline: bằng chứng chạy lại cần danh tính mã nguồn riêng, không thay kết quả
+trong báo cáo paper-v3 cũ.
+
 MILP liệt kê các option hữu hạn theo shelf/face/level/orientation/facings/layers/
 depth. Biến nhị phân $z_{po}$ chọn đúng một option/SKU, với tổng width mỗi strip
 và tổng tải mỗi tầng bị chặn. Code minimize chi phí âm, tương đương:
@@ -1076,7 +1086,7 @@ high_load, volatile và uneven. Dataset scale được khai báo như sau:
 Campaign manifest quy định dataset, experiment question/hypothesis, treatments,
 seeds, repetitions, resource budgets và acceptance. Treatment deep-merge overrides
 vào dataset. Mỗi tổ hợp experiment × dataset × treatment × seed × repetition là
-một job. Tối đa 1.000 jobs trong plan, một worker, giới hạn wall campaign 14.400 s;
+một job. Tối đa 1.000 jobs trong plan, một worker, giới hạn wall campaign 28.800 s;
 `max_jobs` có thể ngăn hoàn thành cả plan nếu cấu hình thấp hơn kích thước plan.
 
 ```mermaid

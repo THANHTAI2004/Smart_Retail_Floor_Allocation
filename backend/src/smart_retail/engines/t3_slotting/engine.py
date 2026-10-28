@@ -1,4 +1,4 @@
-"""T3 physical, deterministic first-fit baseline with orientations and load checks."""
+"""T3 first-fit with bounded shelf repacking after a constructive dead end."""
 
 import math
 import time
@@ -6,6 +6,7 @@ from collections.abc import Callable
 from typing import TypedDict
 
 from smart_retail.domain.models import EngineError, Planogram, Product, Shelf, ShelfLevel
+from smart_retail.engines.t3_slotting.repair import repack
 from smart_retail.engines.t3_slotting.validation import violations
 
 
@@ -37,12 +38,15 @@ def solve(
     }
     shared_load = {(s.id, level.id): 0.0 for s in shelves for level in s.levels}
     placements: list[dict] = []
+    repaired_shelves: set[str] = set()
     for product in sorted(products, key=lambda p: (-p.demand, p.sku)):
         if cancelled():
             raise EngineError("CANCELLED", "T3 cancelled")
         if time.monotonic() >= deadline:
             raise EngineError("TIMEOUT", "T3 first-fit budget exhausted")
         shelf_id = assignment.get(product.category_id)
+        if shelf_id in repaired_shelves:
+            continue
         placed = False
         for (sid, face, lid), slot in slots.items():
             if sid != shelf_id:
@@ -96,16 +100,28 @@ def solve(
             if placed:
                 break
         if not placed:
-            raise EngineError(
-                "SLOTTING_FAILED",
-                f"SKU {product.sku} cannot be placed by first-fit within dimensions, facings and load limits; infeasibility is not proven",
+            failed_shelf = next((s for s in shelves if s.id == shelf_id), None)
+            repaired = None if failed_shelf is None else repack(
+                failed_shelf,
+                tuple(p for p in products if assignment.get(p.category_id) == shelf_id),
+                deadline=deadline,
+                cancelled=cancelled,
             )
+            if repaired is None:
+                raise EngineError(
+                    "SLOTTING_FAILED",
+                    f"SKU {product.sku} cannot be placed by first-fit or bounded shelf repair "
+                    "within dimensions, facings and load limits; infeasibility is not proven",
+                )
+            placements = [row for row in placements if row["shelf_id"] != shelf_id] + repaired
+            assert failed_shelf is not None
+            repaired_shelves.add(failed_shelf.id)
     errors = violations(shelves, products, assignment, tuple(placements))
     if errors:
         raise EngineError("INVALID_SOLUTION", "; ".join(errors))
     by_sku = {p.sku: p for p in products}
     return Planogram(
         tuple(placements),
-        "FEASIBLE_FIRST_FIT",
+        "FEASIBLE_FIRST_FIT_REPAIRED" if repaired_shelves else "FEASIBLE_FIRST_FIT",
         objective=sum(by_sku[p["sku"]].demand * p["capacity_units"] for p in placements),
     )

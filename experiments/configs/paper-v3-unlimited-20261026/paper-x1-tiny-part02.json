@@ -1,0 +1,261 @@
+{
+  "schema_version": "1.1",
+  "name": "paper-x1-tiny-part02",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "id": "tiny_f6_s5006",
+      "scale": "tiny",
+      "seed": 5006,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 6,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 150,
+      "order_interval_s": 12.58,
+      "picker_count": 2
+    },
+    {
+      "id": "tiny_f6_s5007",
+      "scale": "tiny",
+      "seed": 5007,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 6,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 150,
+      "order_interval_s": 12.58,
+      "picker_count": 2
+    },
+    {
+      "id": "tiny_f6_s5008",
+      "scale": "tiny",
+      "seed": 5008,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 6,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 150,
+      "order_interval_s": 12.58,
+      "picker_count": 2
+    },
+    {
+      "id": "tiny_f6_s5009",
+      "scale": "tiny",
+      "seed": 5009,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 6,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 150,
+      "order_interval_s": 12.58,
+      "picker_count": 2
+    },
+    {
+      "id": "tiny_f6_s5010",
+      "scale": "tiny",
+      "seed": 5010,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 6,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 150,
+      "order_interval_s": 12.58,
+      "picker_count": 2
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E41",
+      "question": "Gap between heuristics and the certified optimum of the union of their own solutions",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "tiny_f6_s5006",
+        "tiny_f6_s5007",
+        "tiny_f6_s5008",
+        "tiny_f6_s5009",
+        "tiny_f6_s5010"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 40,
+                "mode": "sequential"
+              }
+            }
+          }
+        },
+        {
+          "id": "random_search",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 40,
+                "mode": "random_search"
+              }
+            }
+          }
+        },
+        {
+          "id": "annealing",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 40,
+                "mode": "annealing"
+              }
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 40,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "joint_objective",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "mean_distance_m",
+        "mean_wait_s",
+        "wall_s",
+        "peak_child_rss_bytes"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    }
+  ],
+  "seeds": [
+    1,
+    2
+  ],
+  "repetitions": 1,
+  "job_time_limit_s": 300.0,
+  "memory_limit_mb": null,
+  "max_wall_s": 12200.0,
+  "max_jobs": 40,
+  "max_retries": 1,
+  "workers": 1,
+  "cache_policy": "isolated"
+}

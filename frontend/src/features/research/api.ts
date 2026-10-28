@@ -2,7 +2,7 @@ export interface ResearchSpec {
   name: string; seeds: number[];
   datasets: { id: string; scale: string; seed: number; scenario?: string }[];
   experiments: { id: string; datasets: string[]; treatments: { id: string; overrides: Record<string, unknown> }[] }[];
-  job_time_limit_s: number; memory_limit_mb: number; max_wall_s: number;
+  job_time_limit_s: number; memory_limit_mb: number | null; max_wall_s: number;
 }
 export interface Campaign {
   id: string; status: string; completed?: number; planned?: number; not_executed?: number;

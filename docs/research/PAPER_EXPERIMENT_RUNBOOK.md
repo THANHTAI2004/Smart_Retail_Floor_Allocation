@@ -1,5 +1,65 @@
 # Hướng dẫn chạy thực nghiệm bài báo (hướng A)
 
+## Sửa T3 sau hai lần retry — 27/10/2026
+
+Lượt chính hoàn tất 1.436 job, có 9 lỗi baseline `SLOTTING_FAILED`; hai lượt retry
+với đầu vào và mã nguồn cũ đều lặp lỗi (18/18). Bản sửa thêm bước sắp lại kệ có
+giới hạn sau khi first-fit thất bại (20.000 trạng thái, 64 SKU/kệ, cùng deadline,
+assignment, facings, kích thước và tải trọng). Trạng thái thành công sửa được là
+`FEASIBLE_FIRST_FIT_REPAIRED`; không chuyển baseline sang MILP.
+
+Chạy lại đúng các job lỗi dưới mã nguồn mới, vào thư mục mới chưa tồn tại:
+
+```powershell
+.\.venv\Scripts\python.exe -u scripts\replay_failed_campaign_jobs.py --source experiments/results/paper-v3-unlimited-time2-20261026 --output experiments/results/paper-v3-t3-repair-20261027
+```
+
+Script đối chiếu plan và đầu vào vật lý (trừ danh tính runtime) với bản gốc, chạy
+qua durable queue/worker và kiểm tra toàn vẹn từng campaign. Biên nhận nằm trong
+`replay-ledger.json` tại output. Đây là bằng chứng khôi phục 9 ca lỗi bằng baseline
+đã đổi, không phải 9 kết quả có thể chèn vào báo cáo 1.436 job cũ. Muốn công bố so
+sánh toàn bộ dưới mã nguồn mới phải thiết kế/chạy lại các phương án cùng danh tính.
+
+Đã kiểm chứng lúc 07:40 ngày 27/10: **9/9 SUCCEEDED**, **9/9 kiểm tra độc lập PASS**,
+**9/9 đánh giá tập thử COMPLETED**, 4 campaign sửa lỗi có toàn vẹn PASS. Đối chiếu
+đầu vào vật lý giữ nguyên; 73 manifest gốc/retry và Git index không thay đổi.
+Biên nhận tổng: `var/t3-repair/acceptance.json`; bảng từng job:
+`var/t3-repair/recovered-jobs.csv`.
+
+## Cấu hình vận hành hiện tại — 26/10/2026
+
+Chủ dự án đã chọn tăng timeout **gấp đôi**: 60/300/600/900 giây thành
+120/600/1.200/1.800 giây mỗi job; tổng thời gian từng campaign cũng gấp đôi,
+tối đa 28.800 giây (8 giờ). Worker cho thêm max(15 giây, 10% ngân sách) để
+hoàn tất và ghi kết quả: trần tương ứng 135/660/1.320/1.980 giây. Ngân sách
+số lượt đánh giá, seeds, các phương án và quy tắc điều phối không đổi.
+
+Theo yêu cầu mới của chủ dự án: bỏ giới hạn RSS từng job (`memory_limit_mb: null`),
+chạy tối đa 3 campaign đồng thời. Kiểm tra RAM toàn máy mỗi 5 giây: trên 90% giảm
+xuống 2 campaign, dưới 80% tăng lại 3; từ 80% đến 90% giữ mức hiện tại. Campaign
+thứ ba chạy từng job; khi giảm mức, job đang chạy được hoàn tất rồi mới nhường suất.
+Không áp thêm ngưỡng CPU. Mỗi campaign vẫn có một worker và giữ giới hạn thời gian.
+
+Runner mới: `scripts/run_paper_adaptive.py`. Cấu hình sao chép riêng tại
+`experiments/configs/paper-v3-unlimited-time2-20261026/`; kết quả và báo cáo lần lượt tại
+`experiments/results/paper-v3-unlimited-time2-20261026/` và
+`experiments/reports/paper-v3-unlimited-time2-20261026/`. Trạng thái điều phối tại
+`var/paper-v3-adaptive-time2/status.json`, lịch sử chuyển mức tại `journal.json` cùng thư mục.
+Không khởi động đồng thời runner tuần tự ở mục 3 với runner mới.
+
+Lượt có giới hạn 2.048 MB được giữ nguyên trong `experiments/results/paper-v3/`;
+lượt không giới hạn RAM nhưng timeout cũ giữ tại `experiments/results/paper-v3-unlimited-20261026/`.
+Thay đổi hợp đồng RAM làm đổi danh tính mã nguồn; lượt mới chạy lại vào thư mục riêng,
+không gộp kết quả của hai lượt. X1b vẫn tự dựng sau X1, dùng cùng chế độ không giới hạn.
+Tạo `var/paper-v3-adaptive-time2/stop.request` để ngừng nhận campaign/job tiếp theo và đợi
+phần đang chạy kết thúc. Muốn tiếp tục, bỏ tệp yêu cầu dừng rồi chạy lại cùng lệnh:
+
+```powershell
+.\.venv\Scripts\python.exe -u scripts\run_paper_adaptive.py --configs experiments/configs/paper-v3-unlimited-time2-20261026 --results experiments/results/paper-v3-unlimited-time2-20261026 --reports experiments/reports/paper-v3-unlimited-time2-20261026 --state var/paper-v3-adaptive-time2 --generated-time-multiplier 2
+```
+
+Phần hướng dẫn tuần tự và các mốc lịch sử bên dưới được giữ lại để đối chiếu.
+
 Cập nhật: 2026-10-26 (paper-v3). Tài liệu này dành cho người chạy tiếp thực nghiệm. Thiết kế
 và lý do nằm ở [EXPERIMENT_DESIGN_DEEPMG.md](EXPERIMENT_DESIGN_DEEPMG.md) (mục 10 cho
 paper-v3); trạng thái mới nhất ở mục đầu [HANDOFF.md](../../HANDOFF.md).

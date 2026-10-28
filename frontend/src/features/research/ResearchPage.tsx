@@ -102,7 +102,7 @@ export function ResearchPage() {
         <label>Seed bắt đầu<input type="number" min={0} max={2147483637} value={firstSeed} onChange={(e) => setFirstSeed(Number(e.target.value))} /></label>
         <label>Giới hạn mỗi job (s)<input type="number" min={0.1} max={3600} step={0.1} value={timeLimit} onChange={(e) => setTimeLimit(Number(e.target.value))} /></label>
       </div>
-      {config && <p>Ngân sách mỗi job: {timeLimit} s · Giới hạn RSS: {config.memory_limit_mb} MiB · Một worker · Campaign: {config.max_wall_s} s.</p>}
+      {config && <p>Ngân sách mỗi job: {timeLimit} s · Giới hạn RSS: {config.memory_limit_mb === null ? "Không giới hạn" : `${config.memory_limit_mb} MiB`} · Một worker · Campaign: {config.max_wall_s} s.</p>}
       <details open={jsonOpen} onToggle={(e) => setJsonOpen(e.currentTarget.open)}><summary>Thuật toán từng tầng và cấu hình đầy đủ</summary>
         {config?.experiments.filter((e) => experimentId === "all" || e.id === experimentId).flatMap((e) => e.treatments.map((t) => {
           const id = `${e.id}/${t.id}`;

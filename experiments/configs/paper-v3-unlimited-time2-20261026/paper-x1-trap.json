@@ -1,0 +1,412 @@
+{
+  "schema_version": "1.1",
+  "name": "paper-x1-trap",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "id": "local_trap",
+      "scale": "tiny",
+      "seed": 101,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 1,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": "datasets/joint/local-trap.json",
+      "input_file_sha256": "180f37faff85472d6a485fc91b688156885ce2417c7971f08eece5c9df01fd51"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E17",
+      "question": "Do accepted plans pass independent replay and how far are heuristics from the finite exact optimum?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "local_trap"
+      ],
+      "treatments": [
+        {
+          "id": "baseline",
+          "overrides": {
+            "optimization": {
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_iterations": 3,
+                "max_evaluations": 80,
+                "max_actions": 24,
+                "mode": "sequential"
+              }
+            }
+          }
+        },
+        {
+          "id": "multistart",
+          "overrides": {
+            "optimization": {
+              "candidate_count": 3,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_iterations": 3,
+                "max_evaluations": 80,
+                "max_actions": 24,
+                "mode": "multistart"
+              }
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_iterations": 3,
+                "max_evaluations": 80,
+                "max_actions": 24,
+                "mode": "feedback"
+              }
+            }
+          }
+        },
+        {
+          "id": "exact",
+          "overrides": {
+            "optimization": {
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_iterations": 3,
+                "max_evaluations": 80,
+                "max_actions": 24,
+                "mode": "exact",
+                "finite_space": {
+                  "poses": {
+                    "S1": [
+                      [
+                        2,
+                        3,
+                        0
+                      ]
+                    ]
+                  },
+                  "assignments": {
+                    "A": [
+                      "S1"
+                    ]
+                  },
+                  "placements": {
+                    "P1": [
+                      {
+                        "sku": "P1",
+                        "shelf_id": "S1",
+                        "level_id": "L1",
+                        "face": 0,
+                        "x_m": 0.0,
+                        "width_m": 0.2,
+                        "orientation": 0,
+                        "facings": 1,
+                        "layers": 1,
+                        "depth_units": 1,
+                        "capacity_units": 1,
+                        "load_kg": 1
+                      },
+                      {
+                        "sku": "P1",
+                        "shelf_id": "S1",
+                        "level_id": "L1",
+                        "face": 1,
+                        "x_m": 0.0,
+                        "width_m": 0.2,
+                        "orientation": 0,
+                        "facings": 1,
+                        "layers": 1,
+                        "depth_units": 1,
+                        "capacity_units": 1,
+                        "load_kg": 1
+                      }
+                    ],
+                    "P2": [
+                      {
+                        "sku": "P2",
+                        "shelf_id": "S1",
+                        "level_id": "L1",
+                        "face": 0,
+                        "x_m": 0.2,
+                        "width_m": 0.2,
+                        "orientation": 0,
+                        "facings": 1,
+                        "layers": 1,
+                        "depth_units": 1,
+                        "capacity_units": 1,
+                        "load_kg": 1
+                      },
+                      {
+                        "sku": "P2",
+                        "shelf_id": "S1",
+                        "level_id": "L1",
+                        "face": 1,
+                        "x_m": 0.2,
+                        "width_m": 0.2,
+                        "orientation": 0,
+                        "facings": 1,
+                        "layers": 1,
+                        "depth_units": 1,
+                        "capacity_units": 1,
+                        "load_kg": 1
+                      }
+                    ]
+                  },
+                  "routing_policies": [
+                    "nearest"
+                  ],
+                  "max_states": 256
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "hybrid",
+          "overrides": {
+            "optimization": {
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_iterations": 3,
+                "max_evaluations": 80,
+                "max_actions": 24,
+                "mode": "hybrid",
+                "finite_space": {
+                  "poses": {
+                    "S1": [
+                      [
+                        2,
+                        3,
+                        0
+                      ]
+                    ]
+                  },
+                  "assignments": {
+                    "A": [
+                      "S1"
+                    ]
+                  },
+                  "placements": {
+                    "P1": [
+                      {
+                        "sku": "P1",
+                        "shelf_id": "S1",
+                        "level_id": "L1",
+                        "face": 0,
+                        "x_m": 0.0,
+                        "width_m": 0.2,
+                        "orientation": 0,
+                        "facings": 1,
+                        "layers": 1,
+                        "depth_units": 1,
+                        "capacity_units": 1,
+                        "load_kg": 1
+                      },
+                      {
+                        "sku": "P1",
+                        "shelf_id": "S1",
+                        "level_id": "L1",
+                        "face": 1,
+                        "x_m": 0.0,
+                        "width_m": 0.2,
+                        "orientation": 0,
+                        "facings": 1,
+                        "layers": 1,
+                        "depth_units": 1,
+                        "capacity_units": 1,
+                        "load_kg": 1
+                      }
+                    ],
+                    "P2": [
+                      {
+                        "sku": "P2",
+                        "shelf_id": "S1",
+                        "level_id": "L1",
+                        "face": 0,
+                        "x_m": 0.2,
+                        "width_m": 0.2,
+                        "orientation": 0,
+                        "facings": 1,
+                        "layers": 1,
+                        "depth_units": 1,
+                        "capacity_units": 1,
+                        "load_kg": 1
+                      },
+                      {
+                        "sku": "P2",
+                        "shelf_id": "S1",
+                        "level_id": "L1",
+                        "face": 1,
+                        "x_m": 0.2,
+                        "width_m": 0.2,
+                        "orientation": 0,
+                        "facings": 1,
+                        "layers": 1,
+                        "depth_units": 1,
+                        "capacity_units": 1,
+                        "load_kg": 1
+                      }
+                    ]
+                  },
+                  "routing_policies": [
+                    "nearest"
+                  ],
+                  "max_states": 256
+                }
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "joint_objective",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "mean_distance_m",
+        "mean_wait_s",
+        "wall_s",
+        "peak_child_rss_bytes"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    }
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "repetitions": 1,
+  "job_time_limit_s": 120.0,
+  "memory_limit_mb": null,
+  "max_wall_s": 19500.0,
+  "max_jobs": 150,
+  "max_retries": 1,
+  "workers": 1,
+  "cache_policy": "isolated"
+}

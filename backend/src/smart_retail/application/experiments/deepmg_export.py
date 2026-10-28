@@ -128,7 +128,7 @@ def export(roots: list[Path], output: Path, rows: list[dict], configurations: li
             origin[key] = {
                 **previous,
                 "seeds": sorted(set(previous["seeds"]) | set(current["seeds"])),
-                "max_wall_s": min(14400.0, previous["max_wall_s"] + current["max_wall_s"]),
+                "max_wall_s": min(28800.0, previous["max_wall_s"] + current["max_wall_s"]),
             }
     arms: dict[tuple, list[dict]] = defaultdict(list)
     for row in rows:

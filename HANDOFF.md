@@ -69,6 +69,705 @@ uncalibrated instances; screen_margin 0.02 is a declared assumption; runtime est
 Next: owner reviews feedback_v4 settings and authorizes the paper-v4 run (runbook section 2), with
 MongoDB running; then rerun the MongoDB integration tests.
 
+Merge 2026-10-28 with origin/main 96f354d (2026-10-27: first-fit repair, unlimited-memory option,
+job cap 1800 s / campaign 28800 s): kept job cap 3600 s, took memory_limit_mb None and max_wall_s
+28800; test_extended_timeouts.py bounds moved to 3601; schemas regenerated after the merge.
+Note: the 2026-10-27 section below was written on the machine that ran paper-v3.
+
+# Current handoff - authorized source publication scope, 2026-10-27
+
+User explicitly requested committing/pushing everything except experiment results.
+Publication includes all current source, tests, JSON schemas, experiment configs,
+README/runbook/handoff and previously ignored experiments source/docs/visualization.
+Updated .gitignore to share those source paths while retaining experiments/results,
+experiments/reports, var, runtime/databases/backups/cache/logs locally. Generated
+x1-union-spaces.json summaries are excluded; finite exact configurations remain inputs.
+No result tree or local data is deleted. Prior source changes are intentionally included.
+
+Before staging: fetched origin; HEAD/origin/main divergence 0/0. Backend source hash
+still equals the verified 9/9 T3 repair acceptance receipt (no code changes since
+that verification). Publication checks: git diff --check, staged scope/size/secret
+inspection and remote HEAD comparison after push. Do not present historical test
+counts as fresh tests in this publication turn. Commit/push are explicitly authorized;
+outcome receipt will be recorded locally under var/git-publication-20261027/.
+
+---
+
+# Current handoff - nine persistent T3 failures repaired and replayed, 2026-10-27
+
+User explicitly requested source fixes based on the two failed retry rounds. Fresh
+comparison confirmed 9 main failures + 18 additional failures, all deterministic
+baseline SLOTTING_FAILED at T3. Only four synthetic instances affected; fixed category
+assignment, dimensions, facings and loads were preserved. Root cause: demand-first
+first-fit fragments two 1.9 m strips; total required widths are 3.6964-3.7924 m on
+3.8 m of capacity. A width-only reorder recovered only 4/9 in diagnostic probes.
+This was constructive search failure, not proven infeasibility or insufficient RAM/time.
+
+Source repair: engines/t3_slotting/repair.py implements deterministic width-ordered
+backtracking on the single failed shelf, max 20000 nodes / 64 products; respects
+cancellation/deadline, allowed kinds, orientations, fixed facings, maximum layers/depth,
+per-face widths and shared per-level loads. engine.py invokes it only on first-fit
+failure and replaces that shelf's partial placements. Normal first-fit successes retain
+the original path/status. New status FEASIBLE_FIRST_FIT_REPAIRED makes the repair explicit;
+no MILP fallback, assignment edits or relaxed physical constraints. Independent replay
+still validates every placement. Runtime T3 model version bumped to
+facing-strip-milp-1.2-first-fit-repair. No schema shape changed.
+
+Added 9 recorded physical regression witnesses in datasets/samples/t3_first_fit_fragmentation.json
+and unit regressions for bounded search, cancellation, deadline, unchanged success path
+and shared loads across faces. Before source repair: all 9 reproduction tests FAILED;
+after: all 9 PASS. Full backend + adaptive tests: 227 passed, 1 existing Starlette/httpx
+warning, 141.84 s (var/t3-repair/pytest-full). Initial mypy found two local variable typing
+issues; fixed by renaming the optional shelf and adding a narrowing assertion (no algorithm
+change). Final T3/planogram/engine tests: 38 passed, 0.86 s (pytest-final-unit-v2), including
+a strengthened shared-load witness. Final mypy PASS 106 files, Ruff PASS, architecture
+PASS 106 Python / 40 frontend modules (var/t3-repair/architecture-final.json). Frontend
+not changed or re-tested in this repair. git diff --check PASS.
+
+Ran scripts/replay_failed_campaign_jobs.py through production durable queue and killable
+workers, same original plans/configs/job budgets/seeds/folds and physical snapshots,
+current source identity. Newly initialized plans narrowed to only the original failed
+job keys before any jobs ran; full plan/selection receipts retained. Output:
+experiments/results/paper-v3-t3-repair-20261027/ (4 campaigns). Fresh acceptance 07:40 UTC+7:
+9/9 SUCCEEDED, all planogram statuses FEASIBLE_FIRST_FIT_REPAIRED, all independent
+validation PASS, all held-out evaluation COMPLETED, all 4 campaign integrity checks PASS.
+Recoveries: small_f4_s102 folds 1/2/3/4 (4), small_f4_s110 folds 0/1/3 (3),
+small_f4_s9101 fold 0 (1), small_f4_s9109 fold 0 (1).
+Source SHA256: 9a373584ba102f19750ac958366d872ec3586d802c38852078f8974274a7deb7;
+ledger runtime equals current runtime at final verification. Physical inputs compare
+identically after stripping only _runtime. Original 73 main/retry integrity manifests
+and Git index bytes remain unchanged. Existing dirty work preserved; no staging/commit/push.
+
+Verified external pre-change snapshot: C:/Users/admin/SmartRetailBackups/t3-repair-20261027-072927.
+Receipts: var/t3-repair/{before-evidence.json,acceptance.json,recovered-jobs.csv}; full
+replay details in experiments/results/paper-v3-t3-repair-20261027/replay-ledger.json.
+README and runbook describe the new baseline and boundedness. Original 1436-job reports
+remain 1427 successes + 9 failures; never splice these 9 new-source results into the old
+scientific comparison. This completes recovery of the requested 9 jobs, not acceptance
+of a new full research campaign. A future same-source comparative campaign is separate scope.
+
+Actual commands: python -m pytest backend/tests/unit/test_first_fit_repair.py (9 failures
+before fix); python -m pytest backend/tests scripts/tests/test_paper_adaptive.py -q
+-p no:cacheprovider --basetemp var/t3-repair/pytest-full; python -m pytest
+backend/tests/unit/test_first_fit_repair.py backend/tests/unit/test_planogram_replay.py
+backend/tests/unit/test_engines.py -q -p no:cacheprovider --basetemp
+var/t3-repair/pytest-final-unit-v2; python -m mypy --config-file backend/pyproject.toml
+backend/src/smart_retail; python scripts/verify_architecture.py --output
+var/t3-repair/architecture-final.json; python -u scripts/replay_failed_campaign_jobs.py
+--source experiments/results/paper-v3-unlimited-time2-20261026
+--output experiments/results/paper-v3-t3-repair-20261027.
+
+---
+
+# Current handoff - paper-v3 doubled-timeout run COMPLETED, 2026-10-27
+
+Fresh status read at 2026-10-27 07:22 UTC+7: all 1436 planned jobs recorded across
+65 campaigns, all checkpoints COMPLETED, no incomplete started campaigns. 1427
+SUCCEEDED with independent validation PASS; 9 FAILED / SLOTTING_FAILED / NO_SOLUTION,
+all baseline at T3 (X2: 7, X3: 2). These first-fit failures are not proof of
+infeasibility. Zero recorded timeout or RAM-limit failures. No failed jobs rerun.
+
+Last campaign completed 2026-10-27 02:15:49 UTC+7; runner verified integrity and
+reported X1 (pooled X1/X1b), X4, X2, X5, X6 and X3, finishing 03:34:06 UTC+7.
+Launcher PID 23068 no longer alive. finished.json is COMPLETED. Refreshed stale
+status.json from RUNNING/empty active to COMPLETED using finished.json; preserved
+previous status in var/paper-v3-adaptive-time2/status-before-completion-refresh.json.
+The resource measurements in the final status are historical samples, not live RAM.
+
+Block records: X1 230/230 succeeded; X1b 20/20; X4 31/31; X2 770/770 attempted,
+763 succeeded + 7 failed; X5 125/125 succeeded; X6 110/110; X3 150/150 attempted,
+148 succeeded + 2 failed. Adaptive scheduler journal confirms automatic reduction
+to 2 at 2026-10-26 16:10:10 UTC+7 and restoration to 3 at 16:52:41 UTC+7.
+
+Actual read-only verification: parsed every config index entry/checkpoint/record,
+counted validation/error statuses, checked finished marker and runner process,
+read report journal and confirmed results.json/statistics.json in all six report
+folders. Did not rerun the runner's final full integrity pass (already journaled
+VERIFIED_REPORTED for all six groups) or any application tests this status turn.
+Report artifact counts: X1 381, X2 627, X3 527, X4 171, X5 152, X6 577 files.
+One matplotlib tight_layout UserWarning in stderr: margins could not accommodate
+all plot decorations. Reports exist, but publication figure layout is not visually
+accepted. No scientific superiority/effectiveness conclusion assessed in this turn.
+
+Results: experiments/results/paper-v3-unlimited-time2-20261026/;
+reports: experiments/reports/paper-v3-unlimited-time2-20261026/;
+receipts/logs: var/paper-v3-adaptive-time2/. Prior partial runs remain intact.
+Next: inspect instance_comparisons.csv, status_matrix.csv and figures before using
+numbers in the paper; report 9 baseline failures explicitly. No source edits,
+reruns, service restarts, staging, commit or push during this status check.
+
+---
+
+# Current handoff - paper-v3 main and bounded retries completed, 2026-10-27
+
+Main runner finished 2026-10-27 03:34:06 UTC+7. All 1436 original jobs executed:
+1427 SUCCEEDED, 9 FAILED (all baseline SLOTTING_FAILED at T3; heuristic failure,
+not proven infeasibility). All 65 campaigns have integrity PASS receipts; final
+runner VERIFIED_REPORTED journal confirms X1 (pooled with X1b), X4, X2, X5, X6, X3.
+Reports: experiments/reports/paper-v3-unlimited-time2-20261026/.
+
+After verified runner/worker exit, ran var/paper_v3_retry.py sequentially using
+production durable queue and killable worker processes. Original specs retained;
+newly initialized retry plans selected only failed job keys. Regenerated plan/input
+hashes, runtime/config identity and final normalized record input hashes all matched
+originals. Two additional attempts per failed job: 18 retries, all 18 FAILED with
+SLOTTING_FAILED, zero recovered, nine persistent failures. Eight retry campaigns
+integrity PASS, original integrity manifests unchanged. Original job count stays1436.
+Results: experiments/results/paper-v3-unlimited-time2-20261026-retries/attempt-1
+and attempt-2. Master ledger: var/paper-v3-retry/ledger.json.
+
+An initial retry helper preflight incorrectly compared pre-normalization plan hashes
+to runtime-stamped record hashes; it stopped before launching any jobs. Corrected
+the helper to compare plan-to-plan before execution and record-to-record after;
+all18 actual retry input hashes matched originals. No backend source edits.
+
+Final evidence: var/paper-v3-monitor/20261027-034525/summary.json, jobs.csv,
+retry-results.csv, retry-ledger.json and logs. Main stderr has a Matplotlib
+joint-convergence tight_layout warning; plots were not visually reviewed. Do not
+claim all jobs succeeded or retry fixed the first-fit limitation. Any algorithm
+change requires a new source identity/experiment design decision. No commit/push
+or index mutation. Monitoring automation confirmed PAUSED after bounded retries completed.
+
+---
+
+# Current handoff - doubled timeouts, adaptive 3/2, unlimited RAM, 2026-10-26
+
+User explicitly chose doubling both job and campaign timeouts. Job budgets are now
+120/600/1200/1800 s instead of 60/300/600/900; worker wall caps are respectively
+135/660/1320/1980 s, retaining max(15 s, 10%) finalization grace. Campaign max_wall_s
+is doubled per config, hard maximum now 28800 s (8 h). Evaluation counts, seeds,
+objective, treatments and RAM admission policy are unchanged. No per-job RSS cutoff.
+
+Stopped only the owned adaptive runner tree, launcher PID 26800, before modifying
+backend contracts (new source identity). Previous unlimited run retains 92 recorded
+outcomes at experiments/results/paper-v3-unlimited-20261026. Preserved original capped
+run too. Active children were terminated during transition; these partial runs must
+not be pooled with the new run. Verified external source/docs snapshot and record
+hash manifests: C:/Users/admin/SmartRetailBackups/timeout-increase-20261026-102548.
+
+Updated input/campaign time bounds, synchronized optimization/campaign JSON schemas,
+frontend bounds, README and runbook, and pooled deepmg campaign budget cap. Copied all
+55 configs to experiments/configs/paper-v3-unlimited-time2-20261026 and verified only
+job_time_limit_s/max_wall_s differ (both exactly x2); still 1416 jobs plus X1b later.
+Adaptive runner --generated-time-multiplier 2 also doubles newly generated X1b budgets
+and keeps index metadata synchronized. Original configs/results remain unchanged.
+
+Started launcher PID 23068 at 2026-10-26 10:29:40 UTC+7, command:
+.venv/Scripts/python.exe -u scripts/run_paper_adaptive.py
+--configs experiments/configs/paper-v3-unlimited-time2-20261026
+--results experiments/results/paper-v3-unlimited-time2-20261026
+--reports experiments/reports/paper-v3-unlimited-time2-20261026
+--state var/paper-v3-adaptive-time2 --generated-time-multiplier 2
+PID receipt/log/status/journal now in var/paper-v3-adaptive-time2/ (old state path is
+historical). Observed 3 active campaigns, RAM 65%, 12 SUCCEEDED records, empty stderr.
+Live immutable inputs show 600 s for tiny phase-1; campaign configs show trap 120 s,
+tiny 600 s; campaign caps 19500/24400 s. Evidence is launch verification, not completion.
+
+Fresh checks: mypy PASS 105 files; architecture PASS 105 Python/40 frontend;
+frontend lint/build PASS, Vitest 4 passed; Ruff PASS; git diff --check PASS. Full backend
+plus adaptive test run: 214 passed and 1 failed (139.05 s) because a pre-existing test
+still rejected 901 s. Updated that obsolete expectation to reject 1801 s; reran the
+entire held-out unit module, new timeout contract tests and adaptive test: 28 passed,
+1 existing Starlette/httpx warning, 2.31 s. Backend application source did not change
+after the full test execution; no claim of a second full-suite green run.
+Commands: python -m pytest backend/tests scripts/tests/test_paper_adaptive.py -q
+-p no:cacheprovider --basetemp var/pytest-timeout2-20261026; then python -m pytest
+backend/tests/unit/test_held_out_evaluation.py backend/tests/contracts/test_extended_timeouts.py
+scripts/tests/test_paper_adaptive.py -q -p no:cacheprovider
+--basetemp var/pytest-timeout2-boundary-20261026. New tests cover 1800 s acceptance,
+1801 s rejection, 28800/28801 s campaign bounds, roundtrip and 1980 s worker wall budget.
+
+Next: monitor the NEW state/results paths, retain 3->2 above 90% RAM and 2->3 below
+80%, sample every 5 s and yield optional third slot at job boundaries. Do not change
+backend/src or pull source mid-run. Verify integrity/reports after completion.
+No staging, commit or push. Prior handoff sections below are historical.
+
+Monitoring milestone 2026-10-26 10:45 UTC+7: ran
+`.venv/Scripts/python.exe var/paper_v3_monitor.py` (read-only campaign inspection).
+Snapshot: 179/1436 planned jobs SUCCEEDED, zero recorded job/operational errors,
+2 jobs in progress; trap COMPLETED 150/150, tiny parts 15/40 and 14/40.
+X1b 20 jobs remain provisional pending union construction. Reconstructed all
+1416 currently configured job keys; exported CSV/JSON and empty retry queue to
+var/paper-v3-monitor/20261026-104538/. Integrity verify trap PASS (11585 files).
+Verified live launcher 23068 creation time/command line and child campaign processes;
+runner stderr empty. RAM 65%, admission slots 3 but only two unfinished X1 campaigns.
+Updated 30-minute heartbeat to current time2 paths; no retries needed/launched.
+Historical 152/92 outcomes excluded. Next: continue monitoring X1 completion, union
+build and later blocks; do not change running backend source or overwrite results.
+
+Monitoring milestone 2026-10-26T11:17:22.348542+07:00:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; refreshed live rows after
+checksum collection. 238/1436 SUCCEEDED, zero job/operational errors.
+X1 COMPLETED 230/230; X1b union configs built, exact phase running.
+All 1436 configured job keys unique and exported with status in
+var/paper-v3-monitor/20261026-111441/. Integrity PASS on trap, both tiny phase-1
+campaigns and exact tiny seeds 5001-5003 (6 campaigns). Verified launcher 23068
+command/creation time, child processes, three live worker leases; stderr empty.
+No retries needed/launched; next monitor X1b then X4. No backend source changes.
+
+Monitoring milestone 2026-10-26 11:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; snapshot collected
+11:44:54-11:45:25. 273/1436 SUCCEEDED; zero job/operational errors.
+X1 230/230 and X1b 20/20 COMPLETED; X4 active, tiny/small completed.
+Evidence and all 1436 unique job statuses: var/paper-v3-monitor/20261026-114454/.
+Verified newly completed campaigns via checksum; prior PASS receipts explicitly
+labeled PREVIOUS_PASS_NOT_RERUN in summary (no new checksum claim for them).
+Live launcher 23068 identity/creation time verified; stderr empty. Medium worker
+RUNNING with live lease; large worker SUCCEEDED awaiting campaign record/finalization
+at health observation, so expired lease on that terminal run is not a worker fault.
+No retries needed/launched. Next: monitor X4 finalization and transition to X2.
+Only var monitoring helper and this handoff updated; running backend unchanged.
+
+Monitoring milestone 2026-10-26 12:15 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 12:14:41-12:14:53.
+280/1436 SUCCEEDED, zero recorded job/operational errors.
+X1/X1b remain completed; X4-large completed 4/4, medium still active.
+Evidence: var/paper-v3-monitor/20261026-121441/ (1436 unique job keys, CSV/JSON,
+PID command/creation evidence, empty stderr, worker-health and retry ledger).
+Launcher 23068 alive; medium active job RUNNING, live lease, elapsed 312 s at health
+observation (within configured 1800 s job budget). No retry launched/needed.
+New checksum check for completed X4-large PASS; older PASS receipts labeled historical.
+Next monitor medium completion and transition to X2; do not change running source.
+
+Monitoring milestone 2026-10-26 12:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collected 12:44:40-12:45:02.
+362/1436 SUCCEEDED; 0 recorded job errors;
+0 operational errors. X4 now completed; X2 active.
+Evidence: var/paper-v3-monitor/20261026-124440/, with 1436 unique job rows,
+process command/creation identity, stderr, worker-health and retry ledger.
+Launcher 23068 alive. Worker observed RUNNING/PENDING with live lease during slot
+transition; no claim of stalled worker from missing supervisor at launch boundary.
+New completed-campaign checksum results in summary; prior PASS receipts explicitly
+historical. No retries launched. Next continue monitoring X2 and newly recorded errors.
+
+Monitoring milestone 2026-10-26 13:18 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; sequential collection
+13:14:43-13:17:46. 485/1436 SUCCEEDED, 0 recorded job
+errors, 0 operational errors. X2 continues; X1/X1b/X4 complete.
+Evidence: var/paper-v3-monitor/20261026-131443/ (1436 unique job keys, CSV/JSON,
+PID/command/creation identity, empty stderr, worker-health and retry ledger).
+Launcher 23068 verified alive. Observed three worker leases live (two RUNNING,
+one SUCCEEDED finalizing). New checksum checks for X2 tiny parts 03-06 PASS;
+older checks explicitly recorded as historical receipts, not rerun.
+No retries needed/launched. Next monitor X2 progression and failure queue;
+source/configs/results unchanged. Counts are sequential observations, not atomic.
+
+Monitoring milestone 2026-10-26 13:49 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; sequential collection
+13:44:46-13:48:44. 614/1436 SUCCEEDED, 0 recorded job
+errors, 0 operational errors. X2 active; X1/X1b/X4 complete.
+Evidence: var/paper-v3-monitor/20261026-134446/ (1436 unique job rows, CSV/JSON,
+launcher command/creation time, empty stderr, worker-health and retry ledger).
+Launcher 23068 verified alive. Observed running workers with live leases and
+supervisor evidence. New completed checksum checks PASS as listed in summary;
+older PASS receipts explicitly historical, not rerun. No retries needed/launched.
+Next monitor X2 progression and failure queue. Counts are sequential observations;
+source/configs/results unchanged, no Git index mutation.
+
+Monitoring milestone 2026-10-26 14:17 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; sequential collection
+14:14:45-14:16:39. 697/1436 SUCCEEDED, 0 recorded job
+errors, 0 operational errors. X2 active; X1/X1b/X4 complete.
+Evidence: var/paper-v3-monitor/20261026-141445/ with 1436 unique job rows,
+launcher command/creation evidence, empty stderr, worker health and retry ledger.
+Launcher 23068 verified alive. Three observed leases live (two RUNNING,
+one SUCCEEDED finalizing). Newly completed X2 tiny parts 13-15 checksum PASS;
+previous PASS receipts explicitly historical, not rerun. No retries needed/launched.
+Next continue X2 monitoring, retaining original results and running source identity.
+
+Monitoring milestone 2026-10-26 14:50 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; sequential collection
+14:44:44-14:49:48. 817/1436 recorded outcomes: 813 SUCCEEDED,
+4 errors; 0 operational errors. X2 active; X1/X1b/X4 complete.
+New 4 FAILED baseline jobs in paper-x2-small-part02, small_f4_s102 seed 1,
+folds 1-4, error SLOTTING_FAILED at T3 (P5/P35/P24/P24 respectively).
+First-fit packing failure is not proven infeasibility. Original records preserved;
+4 jobs queued WAITING_MAIN_RUNNER in retry-ledger.json, no retry launched.
+Evidence: var/paper-v3-monitor/20261026-144444/ with 1436 unique job rows,
+error details/statistics, process identity and worker health. Launcher 23068 alive,
+observed RUNNING workers with live leases; stderr empty. Newly completed campaigns
+checksum PASS as listed in summary; historical PASS receipts explicitly labeled.
+Next monitor X2 and error queue; after main runner ends, retry only failed jobs into
+separate output, preserve protocol/identity and cap at 2 additional attempts/job.
+No source/config/result replacement or Git index mutation.
+
+Monitoring milestone 2026-10-26 15:15 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 15:14:46-15:15:05.
+832/1436 recorded outcomes, 828 SUCCEEDED,
+4 job errors, 0 new versus prior check; 0 operational errors.
+X2 active, prior X1/X1b/X4 complete. Evidence and 1436 unique job rows:
+var/paper-v3-monitor/20261026-151446/. Error first_seen carried forward, retry
+ledger remains WAITING_MAIN_RUNNER; no retries launched. Launcher 23068 alive,
+command/creation verified, stderr empty. Medium term health: RUNNING worker has
+live lease; SUCCEEDED job with expired lease is terminal finalization, not failure.
+Checksum status explicitly distinguishes new checks from historical PASS receipts.
+Next continue X2/error monitoring; retry only failed jobs after main runner ends.
+No source/config/result replacement or Git index mutation.
+
+Monitoring milestone 2026-10-26 15:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 15:44:45-15:45:08.
+860/1436 recorded outcomes: 856 SUCCEEDED,
+4 job errors, 0 new versus prior check; 0 operational errors.
+X2 active, X1/X1b/X4 complete. Evidence: var/paper-v3-monitor/20261026-154445/
+with 1436 unique job rows, error history/statistics, pending retry ledger and
+worker health. Launcher 23068 command/creation verified; 3 observed RUNNING
+workers with live leases, stderr empty. Checksum verification results and historical
+receipts distinguished in summary. No retry launched while main runner active.
+Next monitor X2 small campaigns, preserve inputs/results/source and retry failed
+jobs separately after main runner ends. No Git index mutation.
+
+Monitoring milestone 2026-10-26 16:16 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 16:14:49-16:15:22.
+894/1436 recorded outcomes: 890 SUCCEEDED,
+4 job errors, 0 new versus prior check; 0 operational errors.
+X2 active; X1/X1b/X4 complete. RAM observed 95%, policy correctly reduced slots
+to 2, active small parts 05/06; both RUNNING with live leases and supervisor evidence.
+Launcher 23068 command/creation verified; stderr empty. Evidence and 1436 unique
+job rows: var/paper-v3-monitor/20261026-161449/. Newly completed campaign checksum
+checks PASS as listed, historical receipts labeled. Retry queue WAITING_MAIN_RUNNER,
+no retry launched while main active. Next monitor RAM recovery, X2 and failure queue.
+No source/config/result replacement or Git index mutation.
+
+Monitoring milestone 2026-10-26 16:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 16:44:46-16:45:01.
+903/1436 recorded outcomes: 899 SUCCEEDED,
+4 job errors, 0 new versus prior check; 0 operational errors.
+X2 active; X1/X1b/X4 complete. RAM 90%, slots remain 2 under hysteresis (restore
+3 below 80%); active small parts 05/06, live leases, elapsed 177/75 s at health check.
+Launcher 23068 command/creation verified; stderr empty. Evidence and 1436 unique
+job rows: var/paper-v3-monitor/20261026-164446/. Integrity receipts in summary;
+retry queue WAITING_MAIN_RUNNER, no retry launched. Next monitor RAM/X2/failures.
+No source/config/result replacement or Git index mutation.
+
+Monitoring milestone 2026-10-26 17:15 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 17:14:50-17:15:05.
+925/1436 recorded outcomes: 921 SUCCEEDED,
+4 job errors, 0 new versus prior check; 0 operational errors.
+RAM recovered to 69%, slots restored to 3, active small parts 06/04/07.
+Launcher 23068 command/creation verified; all 3 observed workers RUNNING with live
+leases, stderr empty. Evidence: var/paper-v3-monitor/20261026-171450/ with 1436
+unique job rows, errors/first_seen history, pending retry ledger and checksum receipts.
+No retry launched while main runner active; original source/config/results preserved.
+Next monitor X2 progression and errors, then retry failed jobs separately after main.
+
+Monitoring milestone 2026-10-26 17:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 17:44:46-17:45:01.
+956/1436 recorded outcomes: 952 SUCCEEDED,
+4 job errors, 0 new versus prior check; 0 operational errors.
+X2 active; RAM 71%, slots 3, active small parts 08/04/07. Launcher 23068 command/
+creation verified; all 3 observed workers RUNNING with live leases, stderr empty.
+Evidence: var/paper-v3-monitor/20261026-174446/, 1436 unique job rows, error history,
+retry ledger, worker health and checksum receipts. No retry launched while main active.
+Next monitor X2 and pending failures; original source/config/results preserved.
+
+Monitoring milestone 2026-10-26 18:15 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 18:14:49-18:15:05.
+982/1436 recorded outcomes: 978 SUCCEEDED,
+4 job errors, 0 new versus prior check; 0 operational errors.
+X2 active; RAM 68%, slots 3, active small parts 08/09/07. Launcher 23068 command/
+creation verified; observed RUNNING worker live lease and 2 SUCCEEDED finalizations,
+no expired-terminal-lease fault inferred; stderr empty. Evidence:
+var/paper-v3-monitor/20261026-181449/, 1436 unique job rows, error history,
+retry ledger and checksum receipts. No retry launched while main active.
+Next monitor X2 progression/failures; original source/config/results preserved.
+
+Monitoring milestone 2026-10-26 18:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 18:44:47-18:45:11.
+1013/1436 recorded outcomes: 1006 SUCCEEDED,
+7 job errors, 3 new versus prior check; 0 operational errors.
+X2 active, now medium part01 started; RAM 70%, slots 3. Launcher 23068 command/
+creation verified; 2 observed workers RUNNING with live leases and 1 SUCCEEDED
+finalization, stderr empty. Evidence: var/paper-v3-monitor/20261026-184447/
+with 1436 unique job rows, error history, pending retry ledger and checksum receipts.
+No retries launched while main runner active. Next monitor medium/remaining small
+campaigns and retry failed jobs separately after main ends; source/results preserved.
+
+Monitoring milestone 2026-10-26 19:15 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 19:15:02-19:15:15.
+1030/1436 recorded outcomes: 1023 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X2 active (both medium parts plus small part10), RAM 71%, slots 3.
+Launcher 23068 command/creation verified, 3 observed workers RUNNING with live
+leases/supervisors; stderr empty. Evidence: var/paper-v3-monitor/20261026-191502/
+with 1436 unique job rows, error history/statistics, pending retry ledger and checksum
+receipts. No retries launched while main runner active. Next monitor X2 tail and
+transition to X5; preserve source/configs/results and Git index.
+
+Monitoring milestone 2026-10-26 19:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 19:44:49-19:44:58.
+1042/1436 recorded outcomes: 1035 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X2 small part10 complete, both medium campaigns remain. RAM 68%, slots 3 but
+only 2 campaign processes. Launcher 23068 command/creation verified; both observed
+jobs SUCCEEDED awaiting campaign finalization, expired terminal leases not faults.
+Evidence: var/paper-v3-monitor/20261026-194449/ with 1436 unique job rows,
+errors/history, retry queue and checksum receipts; stderr empty. No retries launched.
+Next monitor medium completion/transition X5; preserve source/config/results/index.
+
+Monitoring milestone 2026-10-26 20:16 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 20:14:59-20:15:13.
+1048/1436 recorded outcomes: 1041 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X2 both medium campaigns active, RAM 61%, slots 3 but 2 campaign processes.
+Launcher 23068 command/creation verified. Observed medium02 RUNNING/live lease
+(elapsed 390 s); medium01 job SUCCEEDED awaiting record, expired terminal lease
+not a worker fault. Evidence: var/paper-v3-monitor/20261026-201459/ with 1436
+unique job rows, errors/history, pending retry ledger and checksum receipts.
+Stderr empty; no retries launched while main active. Next monitor X2 tail/transition
+X5, preserving source/config/results and Git index.
+
+Monitoring milestone 2026-10-26 20:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 20:44:50-20:45:00.
+1069/1436 recorded outcomes: 1062 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X2 fully executed (7 failed jobs remain separate); X5 now active, parts 01-03.
+RAM 63%, slots 3, launcher 23068 command/creation verified. Three observed workers
+RUNNING with live leases/supervisors; stderr empty. Evidence:
+var/paper-v3-monitor/20261026-204450/, 1436 unique job rows, errors/history,
+retry ledger and checksum receipts. No retries launched while main active.
+Next monitor X5 and pending failures; preserve source/config/results and index.
+
+Monitoring milestone 2026-10-26 21:15 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 21:14:54-21:14:58.
+1090/1436 recorded outcomes: 1083 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X5 active parts 01-03, RAM 63%, slots 3. Launcher 23068 command/creation verified;
+observed 2 workers RUNNING/live leases and 1 SUCCEEDED finalizing, stderr empty.
+Evidence: var/paper-v3-monitor/20261026-211454/ with 1436 unique job rows,
+error history/statistics, retry queue and integrity receipts; no retry launched while
+main active. Next monitor X5 and pending failures, preserve source/config/results/index.
+
+Monitoring milestone 2026-10-26 21:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 21:44:53-21:44:58.
+1119/1436 recorded outcomes: 1112 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X5 active parts 01-03, RAM 59%, slots 3. Launcher 23068 command/creation verified;
+observed 2 RUNNING/live leases and 1 SUCCEEDED finalization, stderr empty.
+Evidence: var/paper-v3-monitor/20261026-214453/ with 1436 unique job rows,
+error history/statistics, pending retry ledger and integrity receipts. No retries
+launched while main active; next monitor X5 completion/remaining campaigns.
+Source/config/results and Git index preserved.
+
+Monitoring milestone 2026-10-26 22:18 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; sequential collection
+22:15:16-22:17:40. 1147/1436 recorded outcomes: 1140 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X5 parts01-03 complete, 04/05 active; RAM 62%, slots3 but 2 campaigns left.
+Launcher23068 command/creation verified; observed RUNNING/live lease and SUCCEEDED
+finalization; stderr empty. Evidence: var/paper-v3-monitor/20261026-221516/,
+1436 unique job rows, errors/history, pending retry ledger and integrity receipts.
+New checksum checks for X5 parts01-03 PASS; prior receipts historical. No retries
+launched while main active. Next monitor X5 tail/transition X6; preserve source/data/index.
+
+Monitoring milestone 2026-10-26 22:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 22:45:19-22:45:23.
+1162/1436 recorded outcomes: 1155 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X5 parts04/05 active, RAM59%, slots3 but only2 campaign processes. Launcher23068
+command/creation verified; observed RUNNING/live lease and SUCCEEDED finalization,
+stderr empty. Evidence: var/paper-v3-monitor/20261026-224519/, 1436 unique job rows,
+errors/history, retry ledger and integrity receipts. No retries launched while main active.
+Next monitor X5 tail/transition X6; source/config/results and Git index preserved.
+
+Monitoring milestone 2026-10-26 23:16 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 23:15:21-23:15:36.
+1185/1436 recorded outcomes: 1178 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X5 fully completed; X6 active demand parts01-03, RAM60%, slots3. Launcher23068
+command/creation verified; 3 observed RUNNING workers/live leases, stderr empty.
+Evidence: var/paper-v3-monitor/20261026-231521/ with1436 unique job rows, errors,
+retry ledger and integrity receipts. New X5 parts04/05 checksum PASS; prior receipts
+historical. No retries launched while main active. Next monitor X6 then X3, preserve
+source/config/results and Git index.
+
+Monitoring milestone 2026-10-26 23:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 23:45:20-23:45:23.
+1227/1436 recorded outcomes: 1220 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X6 demand parts01-03 active, RAM61%, slots3. Launcher23068 command/creation verified;
+observed 1 RUNNING/live lease and 2 SUCCEEDED finalizations (expired terminal leases
+not faults), stderr empty. Evidence: var/paper-v3-monitor/20261026-234520/,
+1436 unique job rows, error history, pending retry ledger and checksum receipts.
+No retries launched while main active. Next monitor X6 progression, preserve
+source/config/results and Git index.
+
+Monitoring milestone 2026-10-27 00:16 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 00:15:22-00:15:35.
+1271/1436 recorded outcomes: 1264 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X6 demand parts01-03 complete; 04/05/load active, RAM61%, slots3. Launcher23068
+command/creation verified; 2 jobs observed RUNNING/live leases during sample,
+stderr empty. Evidence: var/paper-v3-monitor/20261027-001522/, 1436 unique job rows,
+error history, retry ledger and checksum receipts. New checksum checks PASS for
+completed demand01-03; older receipts historical. No retries launched while main active.
+Next monitor X6 then X3, preserve source/config/results and Git index.
+
+Monitoring milestone 2026-10-27 00:46 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 00:45:20-00:45:42.
+1352/1436 recorded outcomes: 1345 SUCCEEDED,
+7 job errors, 0 new versus prior check; 0 operational errors.
+X6 completed; X3 tiny parts01-03 active, RAM62%, slots3. Launcher23068 command/
+creation verified; 3 observed RUNNING workers/live leases, stderr empty. Evidence:
+var/paper-v3-monitor/20261027-004520/ with1436 unique job rows, error history,
+retry ledger and checksum receipts. Newly completed X6 checks PASS, prior receipts
+historical. No retries launched while main active. Next monitor X3 then retry queue;
+source/config/results and Git index preserved.
+
+Monitoring milestone 2026-10-27 01:16 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 01:15:21-01:15:45.
+1400/1436 recorded outcomes: 1392 SUCCEEDED,
+8 job errors, 1 new versus prior check; 0 operational errors.
+X3 tiny campaigns complete, small parts01/02 active; RAM60%, slots3 but2 campaigns.
+Launcher23068 command/creation verified; both observed workers RUNNING/live leases,
+stderr empty. Evidence: var/paper-v3-monitor/20261027-011521/, 1436 unique job rows,
+error history, pending retry ledger and checksum receipts. Newly completed X3 tiny
+checks PASS, prior receipts historical. No retries launched while main active.
+Next monitor X3 tail then retry only failed jobs separately; preserve source/data/index.
+
+Monitoring milestone 2026-10-27 01:45 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 01:45:22-01:45:23.
+1421/1436 recorded outcomes: 1413 SUCCEEDED,
+8 job errors, 0 new versus prior check; 0 operational errors.
+X3 small parts01/02 active, RAM60%, slots3 but2 campaigns. Launcher23068 command/
+creation verified; observed 1 RUNNING/live lease and 1 SUCCEEDED finalization,
+stderr empty. Evidence: var/paper-v3-monitor/20261027-014522/, 1436 unique job rows,
+error history, pending retry ledger and integrity receipts. No retries launched while
+main active. Next monitor X3 tail and retry failed jobs separately after main ends;
+source/config/results and Git index preserved.
+
+Monitoring milestone 2026-10-27 02:16 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 02:15:23-02:15:29.
+1435/1436 recorded outcomes: 1426 SUCCEEDED,
+9 job errors, 1 new versus prior check; 0 operational errors.
+X3 small01 complete, small02 only campaign left, RAM58%, slots3. Launcher23068
+command/creation verified; observed job SUCCEEDED awaiting campaign finalization,
+expired terminal lease not a fault; stderr empty. Evidence:
+var/paper-v3-monitor/20261027-021523/, 1436 unique job rows, errors/history,
+retry ledger and checksum receipts. No retries launched while main still active.
+Next verify main completion/process exit, then retry failed jobs separately, max2
+additional attempts per job. Source/config/results and Git index preserved.
+
+Main-job milestone 2026-10-27 02:16 UTC+7: final X3 checkpoint completed
+2026-10-26T19:15:49Z; all 1436 jobs now recorded: 1427 SUCCEEDED, 9 FAILED.
+Latest monitor snapshot var/paper-v3-monitor/20261027-021619/ (02:16:19-02:16:25),
+last campaign checksum PASS. Ninth error is baseline small_f4_s9109 seed1,
+SLOTTING_FAILED at T3, P0, paper-x3-small-part02; added to pending retry queue.
+Launcher23068 still generating pooled reports; wait for process exit/worker quiescence
+before running failed-job retries, max2 additional attempts each. Do not declare
+full task completion from all campaigns COMPLETED; failures/retries/reports remain.
+
+Monitoring milestone 2026-10-27 02:46 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 02:45:29-02:45:42.
+All1436 outcomes present:1427 SUCCEEDED,9 FAILED(SLOTTING_FAILED); 0 new errors.
+Main runner still alive (launcher23068, interpreter12552), no numerical workers
+observed. Journal VERIFIED_REPORTED X1 at02:27:52 and X4 at02:28:58; currently
+verifying/exporting remaining blocks. Do not restart or retry concurrently.
+Evidence: var/paper-v3-monitor/20261027-024529/, 1436 unique job rows, process
+command/creation/I-O evidence, errors/history, pending retry ledger and checksum
+receipts. Stderr empty, no operational errors. No retries launched while main active.
+Next await runner exit/report completion, then execute nine failed-job retries in
+separate output (max2 additional attempts/job), preserving original data/source/index.
+
+Monitoring milestone 2026-10-27 03:16 UTC+7:
+Ran `.venv/Scripts/python.exe var/paper_v3_monitor.py`; collection 03:15:22-03:15:28.
+All1436 outcomes:1427 SUCCEEDED,9 FAILED; no new job/operational errors.
+Runner23068/interpreter12552 still alive, verified command/creation; no numerical
+workers. Reports VERIFIED_REPORTED remain X1/X4; current read-transfer counter
+283690875246 bytes vs119959728896 at02:45 (process I/O, not unique file volume),
+so evidence shows continued read work. Stderr empty; finished.json absent.
+Evidence: var/paper-v3-monitor/20261027-031522/, 1436 unique job rows, process I/O,
+errors/history, checksum receipts and pending retry ledger. Nine retries remain
+WAITING_MAIN_RUNNER_REPORTS; none launched concurrently. Next await reporting exit,
+then retry only failed jobs separately (max2 additional/job), preserve source/data/index.
+
+---
+
+# Current handoff - adaptive three/two campaigns, unlimited RSS, 2026-10-26
+
+User requested: remove per-job RAM limit; run 3 campaigns, reduce to 2 above 90%
+system RAM, return to 3 below 80%. Implemented strict thresholds with hysteresis;
+80-90% retains current level, samples every 5 s. No CPU admission threshold.
+Two continuous campaign supervisors plus a third using max_new_jobs=1: reduction
+lets the optional slot finish its current job, then withholds replacement. Jobs
+remain in killable processes through the durable queue, with time budgets retained.
+
+Stopped the owned sequential runner tree (PID 16872) before source changes. Its
+paper-x1-trap completed 150/150; 2 tiny phase-1 records also completed. Preserved
+all 152 recorded outcomes; a subsequent active child was terminated during the
+transition. No old record was rewritten. Verified external source/docs snapshot
+and prior record hashes: C:/Users/admin/SmartRetailBackups/adaptive-unlimited-20261026-101700.
+Old results remain experiments/results/paper-v3 and must not be pooled with the new run.
+
+Contracts now accept memory_limit_mb=null; worker skips only the RSS cutoff when
+null. Existing numeric limits/defaults retain enforcement. Regenerated optimization
+and campaign schemas; frontend type/rendering handles null. No input data replaced.
+Copied the 55 campaign configs into experiments/configs/paper-v3-unlimited-20261026
+with null memory limits; original configs preserved. X1b generated configs are also
+converted to null before running. This changes backend runtime identity, so all jobs
+restart separately at experiments/results/paper-v3-unlimited-20261026; reports go to
+experiments/reports/paper-v3-unlimited-20261026. Scientific parameters otherwise retained.
+
+New runner scripts/run_paper_adaptive.py started 2026-10-26 10:21:39 UTC+7, launcher
+PID 26800. PID receipt/log/status/journal in var/paper-v3-adaptive/. Three campaigns
+observed active: paper-x1-trap, paper-x1-tiny-part01, paper-x1-tiny-part02; RAM 69%.
+First 12 finished job receipts all have memory_limit_mb=null. Optional third slot
+has completed and resumed one-job slices successfully. Threshold transitions tested
+with synthetic measurements; the physical machine has not been driven above 90%.
+
+Fresh validation: backend + adaptive policy pytest 211 passed, 1 existing Starlette/
+httpx warning, 141.00 s (var/pytest-adaptive-unlimited-20261026); real worker tests
+use synthetic 16 GiB RSS readings to verify null succeeds and 2048 stops with
+RESOURCE_LIMIT. Ruff PASS; mypy PASS 105 files; architecture PASS 105 Python/40 frontend;
+frontend lint/build PASS; Vitest 4 passed. Additional scripts/tests: 9 passed, 3 failed
+because legacy paper-v2 recovery tests require absent historical result configuration;
+new runner does not import/use paper_recovery. No fixes to that unrelated historical suite.
+Commands: python -m pytest backend/tests scripts/tests/test_paper_adaptive.py -q
+-p no:cacheprovider --basetemp var/pytest-adaptive-unlimited-20261026;
+python -m ruff check --config backend/pyproject.toml backend/src
+backend/tests/integration/test_unlimited_memory.py scripts/run_paper_adaptive.py
+scripts/tests/test_paper_adaptive.py; python -m mypy --config-file
+backend/pyproject.toml backend/src/smart_retail; python scripts/verify_architecture.py
+--output var/paper-v3-adaptive-architecture.json; npm.cmd --prefix frontend run
+lint/build/test. git diff --check PASS. No staging, commit or push.
+
+Next: monitor var/paper-v3-adaptive/status.json and error.json; do not edit backend/src
+or pull source while running. stop.request in that state directory drains work without
+cancelling current jobs. Verify campaign integrity and pooled reports after completion.
+Runbook now documents the active command and paths; historical notes below are superseded.
+
+---
+
+# Current handoff - paper-v3 run started on D:, 2026-10-26
+
+User explicitly authorized running experiments after updating to c199fd03.
+Started the documented sequential paper-v3 runner from D:/Smart_Retail_Floor_Allocation
+at 2026-10-26 10:08 UTC+7. PID 16872; var/paper-v3-run.pid.json records ownership.
+Do not launch another runner or edit backend/src while this process is active.
+MongoDB was stopped initially; scripts/start_mongodb.ps1 started it successfully.
+No prior paper-v3 result/report directory or experiment runner was found.
+
+Fresh preflight: pip check PASS; Ruff backend/src, backend/tests and the three paper
+scripts PASS; architecture PASS (105 Python / 40 frontend modules); pytest backend/tests
+208 passed, 1 Starlette/httpx deprecation warning, 116.11 s. Command: .venv/Scripts/python.exe
+-m pytest backend/tests -q -p no:cacheprovider --basetemp
+var/pytest-paper-v3-preflight-20261026-1010. Validated 55 campaign configs via CampaignSpec
+and planned_jobs: 1,416 jobs, plus expected 20 X1b jobs built after X1 phase 1.
+Using the checked-in first_improvement policy; no experiment design changes.
+
+Launch command: Start-Process .venv/Scripts/python.exe -ArgumentList '-u',
+'scripts/run_paper_campaigns.py' -WindowStyle Hidden, with working directory at this root
+and stdout/stderr redirected to var/paper-v3-run.log / var/paper-v3-run.err.log.
+Runner uses the durable queue, killable worker processes, immutable inputs and runtime
+identities. Source/package/config hashes and original config index receipt are in
+var/paper-v3-launch-20261026/. MongoDB stays running for this campaign.
+Initial observed progress: paper-x1-trap RUNNING, 14/150 completed, all 14 SUCCEEDED;
+stderr empty at that observation. This is launch verification, not completed experiments.
+Next: monitor checkpoints/journal and worker health; after completion verify every campaign
+with experiments CLI verify and inspect pooled reports. Historical ~29-hour estimate is
+unconfirmed on this machine. No source/config edits, commit or push in this launch.
+
+---
+
 # Current handoff - paper-v3: all fixes from the paper-v2 review, 2026-10-26
 
 Git (2026-10-26): user authorized push to main. Merged origin/main (9 commits incl. the

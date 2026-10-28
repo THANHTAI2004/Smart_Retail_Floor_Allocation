@@ -1,0 +1,392 @@
+[
+  {
+    "block": "X1",
+    "config": "paper-x1-trap.json",
+    "job_time_limit_s": 120.0,
+    "jobs": 150
+  },
+  {
+    "block": "X1",
+    "config": "paper-x1-tiny-part01.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 40
+  },
+  {
+    "block": "X1",
+    "config": "paper-x1-tiny-part02.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 40
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part01.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part02.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part03.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part04.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part05.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part06.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part07.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part08.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part09.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part10.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part11.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part12.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part13.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part14.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part15.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part16.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part17.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part18.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part19.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-tiny-part20.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part01.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part02.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part03.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part04.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part05.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part06.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part07.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part08.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part09.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-small-part10.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-medium-part01.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 10
+  },
+  {
+    "block": "X2",
+    "config": "paper-x2-medium-part02.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 10
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-tiny-part01.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 40
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-tiny-part02.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 40
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-tiny-part03.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 20
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-small-part01.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X3",
+    "config": "paper-x3-small-part02.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-tiny.json",
+    "job_time_limit_s": 600.0,
+    "jobs": 9
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-small.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 9
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-medium.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 9
+  },
+  {
+    "block": "X4",
+    "config": "paper-x4-large.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 4
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part01.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part02.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part03.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part04.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X5",
+    "config": "paper-x5-ablation-part05.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 25
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part01.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 18
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part02.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 18
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part03.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 18
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part04.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 18
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-demand-part05.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 18
+  },
+  {
+    "block": "X6",
+    "config": "paper-x6-load.json",
+    "job_time_limit_s": 1200.0,
+    "jobs": 20
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5001.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5002.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5003.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5004.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5005.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5006.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5007.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5008.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5009.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  },
+  {
+    "block": "X1b",
+    "config": "paper-x1-tiny-exact-tiny_f6_s5010.json",
+    "job_time_limit_s": 1800.0,
+    "jobs": 2
+  }
+]

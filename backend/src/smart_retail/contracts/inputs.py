@@ -299,7 +299,7 @@ class OptimizationInput(SectionContract):
     stock_weight: NonNegative = 0
     layout_algorithm: Literal["grid", "local_search"] = "grid"
     stop_after_stage: Literal["T1", "T2", "T3", "T4"] = "T4"
-    memory_limit_mb: Annotated[int, Field(ge=128, le=8192)] = 2048
+    memory_limit_mb: Annotated[int, Field(ge=128, le=8192)] | None = 2048
 
     @model_validator(mode="after")
     def objective_weights(self) -> Self:

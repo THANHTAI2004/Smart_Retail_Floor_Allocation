@@ -117,8 +117,8 @@ class CampaignSpec(Contract):
     repetitions: int = Field(default=1, ge=1, le=10)
     # Float defaults: unvalidated int defaults would hash differently after a JSON round trip.
     job_time_limit_s: float = Field(default=15.0, gt=0, le=3600)
-    memory_limit_mb: int = Field(default=1024, ge=128, le=8192)
-    max_wall_s: float = Field(default=600.0, gt=0, le=14400)
+    memory_limit_mb: int | None = Field(default=1024, ge=128, le=8192)
+    max_wall_s: float = Field(default=600.0, gt=0, le=28800)
     max_jobs: int = Field(default=128, ge=1, le=1000)
     max_retries: int = Field(default=1, ge=0, le=2)
     workers: Literal[1] = 1

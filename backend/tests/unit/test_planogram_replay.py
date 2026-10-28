@@ -41,8 +41,9 @@ def test_mip_recovers_from_first_fit_level_choice():
         Product("A", "A", "C", 0.6, 0.2, 0.2, demand=2, clearance_m=0),
         Product("B", "B", "C", 0.6, 0.2, 0.6, clearance_m=0),
     )
-    with pytest.raises(EngineError):
-        solve((shelf,), products, {"C": "S"})
+    repaired = solve((shelf,), products, {"C": "S"})
+    assert repaired.status == "FEASIBLE_FIRST_FIT_REPAIRED"
+    assert not violations((shelf,), products, {"C": "S"}, repaired.placements)
     plan = solve((shelf,), products, {"C": "S"}, algorithm="milp")
     assert {p["sku"]: p["level_id"] for p in plan.placements} == {"A": "short", "B": "tall"}
 

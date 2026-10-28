@@ -1,0 +1,3125 @@
+[
+  {
+    "id": "small_f4_s102-fold1",
+    "original_job_key": "00834620d69728523863bcddfbfb162371b1a28462f9d57fb204217d926e7927",
+    "input_sha256": "9e1a71cc8e46432c768b81fa80b3758ad29a1cc9fe04b3a95e2a3ace44f44679",
+    "shelf": {
+      "id": "S0",
+      "width_m": 2.0,
+      "depth_m": 0.6,
+      "height_m": 1.2,
+      "levels": [
+        {
+          "id": "L0",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        },
+        {
+          "id": "L1",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        }
+      ],
+      "x": 2.0,
+      "y": 2.0,
+      "rotation": 0,
+      "faces": 1,
+      "kind": "gondola",
+      "locked": false
+    },
+    "products": [
+      {
+        "sku": "P0",
+        "name": "Synthetic product 0",
+        "category_id": "C0",
+        "width_m": 0.0459,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 50.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P5",
+        "name": "Synthetic product 5",
+        "category_id": "C5",
+        "width_m": 0.0604,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 26.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P6",
+        "name": "Synthetic product 6",
+        "category_id": "C0",
+        "width_m": 0.0421,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 47.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P11",
+        "name": "Synthetic product 11",
+        "category_id": "C5",
+        "width_m": 0.0533,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 47.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P12",
+        "name": "Synthetic product 12",
+        "category_id": "C0",
+        "width_m": 0.0571,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 28.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P17",
+        "name": "Synthetic product 17",
+        "category_id": "C5",
+        "width_m": 0.0526,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 42.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P18",
+        "name": "Synthetic product 18",
+        "category_id": "C0",
+        "width_m": 0.0779,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 40.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P23",
+        "name": "Synthetic product 23",
+        "category_id": "C5",
+        "width_m": 0.0419,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 40.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P24",
+        "name": "Synthetic product 24",
+        "category_id": "C0",
+        "width_m": 0.0778,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P29",
+        "name": "Synthetic product 29",
+        "category_id": "C5",
+        "width_m": 0.0457,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 37.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P30",
+        "name": "Synthetic product 30",
+        "category_id": "C0",
+        "width_m": 0.0492,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 27.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P35",
+        "name": "Synthetic product 35",
+        "category_id": "C5",
+        "width_m": 0.0497,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 27.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P36",
+        "name": "Synthetic product 36",
+        "category_id": "C0",
+        "width_m": 0.0519,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 28.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P41",
+        "name": "Synthetic product 41",
+        "category_id": "C5",
+        "width_m": 0.0735,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 31.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P42",
+        "name": "Synthetic product 42",
+        "category_id": "C0",
+        "width_m": 0.0403,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 50.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P47",
+        "name": "Synthetic product 47",
+        "category_id": "C5",
+        "width_m": 0.0463,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 48.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      }
+    ],
+    "assignment": {
+      "C0": "S0",
+      "C1": "S8",
+      "C2": "S4",
+      "C3": "S5",
+      "C4": "S9",
+      "C5": "S0"
+    }
+  },
+  {
+    "id": "small_f4_s102-fold4",
+    "original_job_key": "7dc86aaf10f7baffb30a25e229a4c0400d33a73542e6c5993117167660c93a75",
+    "input_sha256": "ec061f68ad7f0733e1becf3731dee0e0e1bf72b51fad5e19122f3feb65db1c48",
+    "shelf": {
+      "id": "S4",
+      "width_m": 2.0,
+      "depth_m": 0.6,
+      "height_m": 1.2,
+      "levels": [
+        {
+          "id": "L0",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        },
+        {
+          "id": "L1",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        }
+      ],
+      "x": 2.0,
+      "y": 4.5,
+      "rotation": 0,
+      "faces": 1,
+      "kind": "gondola",
+      "locked": false
+    },
+    "products": [
+      {
+        "sku": "P0",
+        "name": "Synthetic product 0",
+        "category_id": "C0",
+        "width_m": 0.0459,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 48.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P5",
+        "name": "Synthetic product 5",
+        "category_id": "C5",
+        "width_m": 0.0604,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P6",
+        "name": "Synthetic product 6",
+        "category_id": "C0",
+        "width_m": 0.0421,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 47.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P11",
+        "name": "Synthetic product 11",
+        "category_id": "C5",
+        "width_m": 0.0533,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 45.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P12",
+        "name": "Synthetic product 12",
+        "category_id": "C0",
+        "width_m": 0.0571,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 38.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P17",
+        "name": "Synthetic product 17",
+        "category_id": "C5",
+        "width_m": 0.0526,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 37.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P18",
+        "name": "Synthetic product 18",
+        "category_id": "C0",
+        "width_m": 0.0779,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 51.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P23",
+        "name": "Synthetic product 23",
+        "category_id": "C5",
+        "width_m": 0.0419,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P24",
+        "name": "Synthetic product 24",
+        "category_id": "C0",
+        "width_m": 0.0778,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 27.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P29",
+        "name": "Synthetic product 29",
+        "category_id": "C5",
+        "width_m": 0.0457,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 33.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P30",
+        "name": "Synthetic product 30",
+        "category_id": "C0",
+        "width_m": 0.0492,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 32.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P35",
+        "name": "Synthetic product 35",
+        "category_id": "C5",
+        "width_m": 0.0497,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 30.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P36",
+        "name": "Synthetic product 36",
+        "category_id": "C0",
+        "width_m": 0.0519,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 32.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P41",
+        "name": "Synthetic product 41",
+        "category_id": "C5",
+        "width_m": 0.0735,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 32.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P42",
+        "name": "Synthetic product 42",
+        "category_id": "C0",
+        "width_m": 0.0403,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 43.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P47",
+        "name": "Synthetic product 47",
+        "category_id": "C5",
+        "width_m": 0.0463,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 48.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      }
+    ],
+    "assignment": {
+      "C0": "S4",
+      "C1": "S0",
+      "C2": "S8",
+      "C3": "S5",
+      "C4": "S9",
+      "C5": "S4"
+    }
+  },
+  {
+    "id": "small_f4_s102-fold3",
+    "original_job_key": "a276878f1a78b886ba6f4d7618cf5ff80d43addf3713d10ddf328205b795e474",
+    "input_sha256": "eadcd1d2c8feb7b920b3ccf114426181833bdfc3b644cb36def254728811cef8",
+    "shelf": {
+      "id": "S4",
+      "width_m": 2.0,
+      "depth_m": 0.6,
+      "height_m": 1.2,
+      "levels": [
+        {
+          "id": "L0",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        },
+        {
+          "id": "L1",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        }
+      ],
+      "x": 2.0,
+      "y": 4.5,
+      "rotation": 0,
+      "faces": 1,
+      "kind": "gondola",
+      "locked": false
+    },
+    "products": [
+      {
+        "sku": "P0",
+        "name": "Synthetic product 0",
+        "category_id": "C0",
+        "width_m": 0.0459,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 41.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P5",
+        "name": "Synthetic product 5",
+        "category_id": "C5",
+        "width_m": 0.0604,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 32.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P6",
+        "name": "Synthetic product 6",
+        "category_id": "C0",
+        "width_m": 0.0421,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 50.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P11",
+        "name": "Synthetic product 11",
+        "category_id": "C5",
+        "width_m": 0.0533,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 48.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P12",
+        "name": "Synthetic product 12",
+        "category_id": "C0",
+        "width_m": 0.0571,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P17",
+        "name": "Synthetic product 17",
+        "category_id": "C5",
+        "width_m": 0.0526,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 45.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P18",
+        "name": "Synthetic product 18",
+        "category_id": "C0",
+        "width_m": 0.0779,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 40.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P23",
+        "name": "Synthetic product 23",
+        "category_id": "C5",
+        "width_m": 0.0419,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 42.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P24",
+        "name": "Synthetic product 24",
+        "category_id": "C0",
+        "width_m": 0.0778,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 30.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P29",
+        "name": "Synthetic product 29",
+        "category_id": "C5",
+        "width_m": 0.0457,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 33.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P30",
+        "name": "Synthetic product 30",
+        "category_id": "C0",
+        "width_m": 0.0492,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 38.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P35",
+        "name": "Synthetic product 35",
+        "category_id": "C5",
+        "width_m": 0.0497,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 32.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P36",
+        "name": "Synthetic product 36",
+        "category_id": "C0",
+        "width_m": 0.0519,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 36.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P41",
+        "name": "Synthetic product 41",
+        "category_id": "C5",
+        "width_m": 0.0735,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 40.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P42",
+        "name": "Synthetic product 42",
+        "category_id": "C0",
+        "width_m": 0.0403,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 46.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P47",
+        "name": "Synthetic product 47",
+        "category_id": "C5",
+        "width_m": 0.0463,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 56.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      }
+    ],
+    "assignment": {
+      "C0": "S4",
+      "C1": "S8",
+      "C2": "S5",
+      "C3": "S0",
+      "C4": "S9",
+      "C5": "S4"
+    }
+  },
+  {
+    "id": "small_f4_s102-fold2",
+    "original_job_key": "e740de9901443c8b0951a53aa5b7cea6c9134d03b09d8376b68ef18bd1a90ef2",
+    "input_sha256": "8418ff1c9c8d71e1474ed666b2ab0a1d097ff8efdaf9decd564c414357922b6b",
+    "shelf": {
+      "id": "S4",
+      "width_m": 2.0,
+      "depth_m": 0.6,
+      "height_m": 1.2,
+      "levels": [
+        {
+          "id": "L0",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        },
+        {
+          "id": "L1",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        }
+      ],
+      "x": 2.0,
+      "y": 4.5,
+      "rotation": 0,
+      "faces": 1,
+      "kind": "gondola",
+      "locked": false
+    },
+    "products": [
+      {
+        "sku": "P0",
+        "name": "Synthetic product 0",
+        "category_id": "C0",
+        "width_m": 0.0459,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 48.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P5",
+        "name": "Synthetic product 5",
+        "category_id": "C5",
+        "width_m": 0.0604,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P6",
+        "name": "Synthetic product 6",
+        "category_id": "C0",
+        "width_m": 0.0421,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 50.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P11",
+        "name": "Synthetic product 11",
+        "category_id": "C5",
+        "width_m": 0.0533,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 45.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P12",
+        "name": "Synthetic product 12",
+        "category_id": "C0",
+        "width_m": 0.0571,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 30.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P17",
+        "name": "Synthetic product 17",
+        "category_id": "C5",
+        "width_m": 0.0526,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 41.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P18",
+        "name": "Synthetic product 18",
+        "category_id": "C0",
+        "width_m": 0.0779,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 36.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P23",
+        "name": "Synthetic product 23",
+        "category_id": "C5",
+        "width_m": 0.0419,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 42.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P24",
+        "name": "Synthetic product 24",
+        "category_id": "C0",
+        "width_m": 0.0778,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 38.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P29",
+        "name": "Synthetic product 29",
+        "category_id": "C5",
+        "width_m": 0.0457,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P30",
+        "name": "Synthetic product 30",
+        "category_id": "C0",
+        "width_m": 0.0492,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 30.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P35",
+        "name": "Synthetic product 35",
+        "category_id": "C5",
+        "width_m": 0.0497,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 30.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P36",
+        "name": "Synthetic product 36",
+        "category_id": "C0",
+        "width_m": 0.0519,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 31.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P41",
+        "name": "Synthetic product 41",
+        "category_id": "C5",
+        "width_m": 0.0735,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 31.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P42",
+        "name": "Synthetic product 42",
+        "category_id": "C0",
+        "width_m": 0.0403,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 53.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P47",
+        "name": "Synthetic product 47",
+        "category_id": "C5",
+        "width_m": 0.0463,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 60.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      }
+    ],
+    "assignment": {
+      "C0": "S4",
+      "C1": "S8",
+      "C2": "S0",
+      "C3": "S9",
+      "C4": "S5",
+      "C5": "S4"
+    }
+  },
+  {
+    "id": "small_f4_s110-fold1",
+    "original_job_key": "21d02a1d28d7240e3094ae8b43d0f603d2ddc97e3d136430dafa483007058858",
+    "input_sha256": "177ac09f1b95fc9d574d3cb93af92739ce4b0d8aa675a82a68036847a07503b8",
+    "shelf": {
+      "id": "S5",
+      "width_m": 2.0,
+      "depth_m": 0.6,
+      "height_m": 1.2,
+      "levels": [
+        {
+          "id": "L0",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        },
+        {
+          "id": "L1",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        }
+      ],
+      "x": 5.0,
+      "y": 4.5,
+      "rotation": 0,
+      "faces": 1,
+      "kind": "gondola",
+      "locked": false
+    },
+    "products": [
+      {
+        "sku": "P3",
+        "name": "Synthetic product 3",
+        "category_id": "C3",
+        "width_m": 0.0617,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 33.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P5",
+        "name": "Synthetic product 5",
+        "category_id": "C5",
+        "width_m": 0.0416,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 41.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P9",
+        "name": "Synthetic product 9",
+        "category_id": "C3",
+        "width_m": 0.0443,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 22.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P11",
+        "name": "Synthetic product 11",
+        "category_id": "C5",
+        "width_m": 0.0763,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 26.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P15",
+        "name": "Synthetic product 15",
+        "category_id": "C3",
+        "width_m": 0.05,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 37.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P17",
+        "name": "Synthetic product 17",
+        "category_id": "C5",
+        "width_m": 0.0472,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 46.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P21",
+        "name": "Synthetic product 21",
+        "category_id": "C3",
+        "width_m": 0.0524,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 28.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P23",
+        "name": "Synthetic product 23",
+        "category_id": "C5",
+        "width_m": 0.0571,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 25.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P27",
+        "name": "Synthetic product 27",
+        "category_id": "C3",
+        "width_m": 0.0452,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P29",
+        "name": "Synthetic product 29",
+        "category_id": "C5",
+        "width_m": 0.0424,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 25.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P33",
+        "name": "Synthetic product 33",
+        "category_id": "C3",
+        "width_m": 0.0455,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 31.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P35",
+        "name": "Synthetic product 35",
+        "category_id": "C5",
+        "width_m": 0.0441,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 28.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P39",
+        "name": "Synthetic product 39",
+        "category_id": "C3",
+        "width_m": 0.058,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 52.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P41",
+        "name": "Synthetic product 41",
+        "category_id": "C5",
+        "width_m": 0.0651,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 22.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P45",
+        "name": "Synthetic product 45",
+        "category_id": "C3",
+        "width_m": 0.0714,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 32.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P47",
+        "name": "Synthetic product 47",
+        "category_id": "C5",
+        "width_m": 0.0619,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 45.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      }
+    ],
+    "assignment": {
+      "C0": "S0",
+      "C1": "S8",
+      "C2": "S4",
+      "C3": "S5",
+      "C4": "S9",
+      "C5": "S5"
+    }
+  },
+  {
+    "id": "small_f4_s110-fold0",
+    "original_job_key": "287ef51a4da7cc1304caee09d5f6440bde6652e636be9941859470bfde8b9ea4",
+    "input_sha256": "5a3cb793df30ad2d498a2800d469ab76e580de03fca725ee1a344332345edd48",
+    "shelf": {
+      "id": "S5",
+      "width_m": 2.0,
+      "depth_m": 0.6,
+      "height_m": 1.2,
+      "levels": [
+        {
+          "id": "L0",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        },
+        {
+          "id": "L1",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        }
+      ],
+      "x": 5.0,
+      "y": 4.5,
+      "rotation": 0,
+      "faces": 1,
+      "kind": "gondola",
+      "locked": false
+    },
+    "products": [
+      {
+        "sku": "P3",
+        "name": "Synthetic product 3",
+        "category_id": "C3",
+        "width_m": 0.0617,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 40.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P5",
+        "name": "Synthetic product 5",
+        "category_id": "C5",
+        "width_m": 0.0416,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 40.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P9",
+        "name": "Synthetic product 9",
+        "category_id": "C3",
+        "width_m": 0.0443,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 20.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P11",
+        "name": "Synthetic product 11",
+        "category_id": "C5",
+        "width_m": 0.0763,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 33.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P15",
+        "name": "Synthetic product 15",
+        "category_id": "C3",
+        "width_m": 0.05,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 30.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P17",
+        "name": "Synthetic product 17",
+        "category_id": "C5",
+        "width_m": 0.0472,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 45.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P21",
+        "name": "Synthetic product 21",
+        "category_id": "C3",
+        "width_m": 0.0524,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 36.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P23",
+        "name": "Synthetic product 23",
+        "category_id": "C5",
+        "width_m": 0.0571,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 25.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P27",
+        "name": "Synthetic product 27",
+        "category_id": "C3",
+        "width_m": 0.0452,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 40.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P29",
+        "name": "Synthetic product 29",
+        "category_id": "C5",
+        "width_m": 0.0424,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 22.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P33",
+        "name": "Synthetic product 33",
+        "category_id": "C3",
+        "width_m": 0.0455,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 33.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P35",
+        "name": "Synthetic product 35",
+        "category_id": "C5",
+        "width_m": 0.0441,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P39",
+        "name": "Synthetic product 39",
+        "category_id": "C3",
+        "width_m": 0.058,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 55.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P41",
+        "name": "Synthetic product 41",
+        "category_id": "C5",
+        "width_m": 0.0651,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 28.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P45",
+        "name": "Synthetic product 45",
+        "category_id": "C3",
+        "width_m": 0.0714,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 27.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P47",
+        "name": "Synthetic product 47",
+        "category_id": "C5",
+        "width_m": 0.0619,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 50.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      }
+    ],
+    "assignment": {
+      "C0": "S0",
+      "C1": "S8",
+      "C2": "S4",
+      "C3": "S5",
+      "C4": "S9",
+      "C5": "S5"
+    }
+  },
+  {
+    "id": "small_f4_s110-fold3",
+    "original_job_key": "539c66cad5d4ca89071c8bcc121519e31f234549d340a6e86a9ab920e64d519c",
+    "input_sha256": "d698b9383c656a458d2bad9ab13ad548c4dce6f88f075818379d0cf20753f3f1",
+    "shelf": {
+      "id": "S9",
+      "width_m": 2.0,
+      "depth_m": 0.6,
+      "height_m": 1.2,
+      "levels": [
+        {
+          "id": "L0",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        },
+        {
+          "id": "L1",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        }
+      ],
+      "x": 5.0,
+      "y": 7.0,
+      "rotation": 0,
+      "faces": 1,
+      "kind": "gondola",
+      "locked": false
+    },
+    "products": [
+      {
+        "sku": "P3",
+        "name": "Synthetic product 3",
+        "category_id": "C3",
+        "width_m": 0.0617,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 38.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P5",
+        "name": "Synthetic product 5",
+        "category_id": "C5",
+        "width_m": 0.0416,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 38.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P9",
+        "name": "Synthetic product 9",
+        "category_id": "C3",
+        "width_m": 0.0443,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 17.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P11",
+        "name": "Synthetic product 11",
+        "category_id": "C5",
+        "width_m": 0.0763,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 28.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P15",
+        "name": "Synthetic product 15",
+        "category_id": "C3",
+        "width_m": 0.05,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P17",
+        "name": "Synthetic product 17",
+        "category_id": "C5",
+        "width_m": 0.0472,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 57.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P21",
+        "name": "Synthetic product 21",
+        "category_id": "C3",
+        "width_m": 0.0524,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 33.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P23",
+        "name": "Synthetic product 23",
+        "category_id": "C5",
+        "width_m": 0.0571,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 26.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P27",
+        "name": "Synthetic product 27",
+        "category_id": "C3",
+        "width_m": 0.0452,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 47.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P29",
+        "name": "Synthetic product 29",
+        "category_id": "C5",
+        "width_m": 0.0424,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 22.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P33",
+        "name": "Synthetic product 33",
+        "category_id": "C3",
+        "width_m": 0.0455,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 23.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P35",
+        "name": "Synthetic product 35",
+        "category_id": "C5",
+        "width_m": 0.0441,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 21.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P39",
+        "name": "Synthetic product 39",
+        "category_id": "C3",
+        "width_m": 0.058,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 38.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P41",
+        "name": "Synthetic product 41",
+        "category_id": "C5",
+        "width_m": 0.0651,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 26.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P45",
+        "name": "Synthetic product 45",
+        "category_id": "C3",
+        "width_m": 0.0714,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P47",
+        "name": "Synthetic product 47",
+        "category_id": "C5",
+        "width_m": 0.0619,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 45.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      }
+    ],
+    "assignment": {
+      "C0": "S0",
+      "C1": "S4",
+      "C2": "S8",
+      "C3": "S9",
+      "C4": "S5",
+      "C5": "S9"
+    }
+  },
+  {
+    "id": "small_f4_s9101-fold0",
+    "original_job_key": "fa60e22349dbfb37326bf2efb3905c95b660f3f130611f62fca301c9df86f27c",
+    "input_sha256": "70c56d68e16730fd2d10b4a0ba97e17e0bc10a5c84f8cddd6a5da2f2046108a2",
+    "shelf": {
+      "id": "S8",
+      "width_m": 2.0,
+      "depth_m": 0.6,
+      "height_m": 1.2,
+      "levels": [
+        {
+          "id": "L0",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        },
+        {
+          "id": "L1",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        }
+      ],
+      "x": 2.0,
+      "y": 7.0,
+      "rotation": 0,
+      "faces": 1,
+      "kind": "gondola",
+      "locked": false
+    },
+    "products": [
+      {
+        "sku": "P3",
+        "name": "Synthetic product 3",
+        "category_id": "C3",
+        "width_m": 0.041,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 40.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P5",
+        "name": "Synthetic product 5",
+        "category_id": "C5",
+        "width_m": 0.0493,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 48.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P9",
+        "name": "Synthetic product 9",
+        "category_id": "C3",
+        "width_m": 0.0718,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 60.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P11",
+        "name": "Synthetic product 11",
+        "category_id": "C5",
+        "width_m": 0.0439,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P15",
+        "name": "Synthetic product 15",
+        "category_id": "C3",
+        "width_m": 0.0659,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 27.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P17",
+        "name": "Synthetic product 17",
+        "category_id": "C5",
+        "width_m": 0.0619,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 45.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P21",
+        "name": "Synthetic product 21",
+        "category_id": "C3",
+        "width_m": 0.0474,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 36.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P23",
+        "name": "Synthetic product 23",
+        "category_id": "C5",
+        "width_m": 0.0451,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 27.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P27",
+        "name": "Synthetic product 27",
+        "category_id": "C3",
+        "width_m": 0.0606,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 31.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P29",
+        "name": "Synthetic product 29",
+        "category_id": "C5",
+        "width_m": 0.0417,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 33.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P33",
+        "name": "Synthetic product 33",
+        "category_id": "C3",
+        "width_m": 0.0488,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 38.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P35",
+        "name": "Synthetic product 35",
+        "category_id": "C5",
+        "width_m": 0.0529,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P39",
+        "name": "Synthetic product 39",
+        "category_id": "C3",
+        "width_m": 0.0423,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 50.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P41",
+        "name": "Synthetic product 41",
+        "category_id": "C5",
+        "width_m": 0.0603,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 26.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P45",
+        "name": "Synthetic product 45",
+        "category_id": "C3",
+        "width_m": 0.0529,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 35.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P47",
+        "name": "Synthetic product 47",
+        "category_id": "C5",
+        "width_m": 0.0583,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 32.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      }
+    ],
+    "assignment": {
+      "C0": "S5",
+      "C1": "S4",
+      "C2": "S0",
+      "C3": "S8",
+      "C4": "S9",
+      "C5": "S8"
+    }
+  },
+  {
+    "id": "small_f4_s9109-fold0",
+    "original_job_key": "074dbfe6b3f663be0cd64b38aef84da395be811a3dcef753651dadfe01c40a00",
+    "input_sha256": "02fa7c34ae336faeefc1c7e7217d6c3d73724b3c7fa1d042659f8a24d066ce77",
+    "shelf": {
+      "id": "S5",
+      "width_m": 2.0,
+      "depth_m": 0.6,
+      "height_m": 1.2,
+      "levels": [
+        {
+          "id": "L0",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        },
+        {
+          "id": "L1",
+          "width_m": 1.9,
+          "depth_m": 0.5,
+          "height_m": 0.5,
+          "max_load_kg": 80.0
+        }
+      ],
+      "x": 5.0,
+      "y": 4.5,
+      "rotation": 0,
+      "faces": 1,
+      "kind": "gondola",
+      "locked": false
+    },
+    "products": [
+      {
+        "sku": "P0",
+        "name": "Synthetic product 0",
+        "category_id": "C0",
+        "width_m": 0.0489,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 16.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P1",
+        "name": "Synthetic product 1",
+        "category_id": "C1",
+        "width_m": 0.0559,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 27.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P6",
+        "name": "Synthetic product 6",
+        "category_id": "C0",
+        "width_m": 0.0741,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 30.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P7",
+        "name": "Synthetic product 7",
+        "category_id": "C1",
+        "width_m": 0.0558,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 43.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P12",
+        "name": "Synthetic product 12",
+        "category_id": "C0",
+        "width_m": 0.0611,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 30.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P13",
+        "name": "Synthetic product 13",
+        "category_id": "C1",
+        "width_m": 0.0433,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 26.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P18",
+        "name": "Synthetic product 18",
+        "category_id": "C0",
+        "width_m": 0.067,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 57.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P19",
+        "name": "Synthetic product 19",
+        "category_id": "C1",
+        "width_m": 0.0457,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 28.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P24",
+        "name": "Synthetic product 24",
+        "category_id": "C0",
+        "width_m": 0.0606,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 25.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P25",
+        "name": "Synthetic product 25",
+        "category_id": "C1",
+        "width_m": 0.0574,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 62.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P30",
+        "name": "Synthetic product 30",
+        "category_id": "C0",
+        "width_m": 0.0486,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 48.75,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P31",
+        "name": "Synthetic product 31",
+        "category_id": "C1",
+        "width_m": 0.0559,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 36.25,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P36",
+        "name": "Synthetic product 36",
+        "category_id": "C0",
+        "width_m": 0.0416,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 32.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P37",
+        "name": "Synthetic product 37",
+        "category_id": "C1",
+        "width_m": 0.0541,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 45.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P42",
+        "name": "Synthetic product 42",
+        "category_id": "C0",
+        "width_m": 0.0404,
+        "depth_m": 0.12,
+        "height_m": 0.2,
+        "weight_kg": 0.2,
+        "demand": 40.0,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      },
+      {
+        "sku": "P43",
+        "name": "Synthetic product 43",
+        "category_id": "C1",
+        "width_m": 0.0577,
+        "depth_m": 0.12,
+        "height_m": 0.15,
+        "weight_kg": 0.2,
+        "demand": 22.5,
+        "facings": 4,
+        "orientations": [
+          0
+        ],
+        "stack_layers": 1,
+        "clearance_m": 0.005,
+        "min_facings": null,
+        "max_facings": null,
+        "allowed_shelf_kinds": []
+      }
+    ],
+    "assignment": {
+      "C0": "S5",
+      "C1": "S5",
+      "C2": "S9",
+      "C3": "S8",
+      "C4": "S0",
+      "C5": "S4"
+    }
+  }
+]

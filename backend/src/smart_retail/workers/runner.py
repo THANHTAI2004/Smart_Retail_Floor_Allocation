@@ -23,6 +23,11 @@ from smart_retail.workers.resources import sample as sample_resources
 logger = logging.getLogger("smart_retail.worker")
 
 
+def memory_exceeded(rss_bytes: int | None, limit_mb: int | None) -> bool:
+    """A null limit explicitly disables only the per-job RSS cutoff."""
+    return limit_mb is not None and rss_bytes is not None and rss_bytes > limit_mb * 1024**2
+
+
 def read_progress(path: Path) -> str | None:
     """A missed progress sample must not interrupt process supervision on Windows."""
     try:
@@ -206,11 +211,8 @@ def work_once(
                 resource_samples += 1
             if usage["cpu_s"] is not None:
                 cpu_s = max(cpu_s, usage["cpu_s"])
-            if (
-                usage["rss_bytes"] is not None
-                and usage["rss_bytes"]
-                > snapshot["optimization"].get("memory_limit_mb", 2048) * 1024**2
-            ):
+            memory_limit_mb = snapshot["optimization"].get("memory_limit_mb", 2048)
+            if memory_exceeded(usage["rss_bytes"], memory_limit_mb):
                 terminal = "RESOURCE_LIMIT"
             with factory() as db:
                 db.heartbeat(heartbeat_id)

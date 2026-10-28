@@ -1,0 +1,301 @@
+{
+  "schema_version": "1.1",
+  "name": "paper-x3-small-part02",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "id": "small_f4_s9106",
+      "scale": "small",
+      "seed": 9106,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 4,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 300,
+      "order_interval_s": 16.85,
+      "picker_count": 2
+    },
+    {
+      "id": "small_f4_s9107",
+      "scale": "small",
+      "seed": 9107,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 4,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 300,
+      "order_interval_s": 16.85,
+      "picker_count": 2
+    },
+    {
+      "id": "small_f4_s9108",
+      "scale": "small",
+      "seed": 9108,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 4,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 300,
+      "order_interval_s": 16.85,
+      "picker_count": 2
+    },
+    {
+      "id": "small_f4_s9109",
+      "scale": "small",
+      "seed": 9109,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 4,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 300,
+      "order_interval_s": 16.85,
+      "picker_count": 2
+    },
+    {
+      "id": "small_f4_s9110",
+      "scale": "small",
+      "seed": 9110,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 4,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 300,
+      "order_interval_s": 16.85,
+      "picker_count": 2
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E20",
+      "question": "Do conclusions hold on locked instances evaluated on the latest 20% of orders?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "small_f4_s9106",
+        "small_f4_s9107",
+        "small_f4_s9108",
+        "small_f4_s9109",
+        "small_f4_s9110"
+      ],
+      "treatments": [
+        {
+          "id": "baseline",
+          "overrides": {
+            "optimization": {
+              "algorithm": "greedy",
+              "slotting_algorithm": "first_fit",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            }
+          }
+        },
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "sequential"
+              }
+            }
+          }
+        },
+        {
+          "id": "random_search",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "random_search"
+              }
+            }
+          }
+        },
+        {
+          "id": "annealing",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "annealing"
+              }
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 30,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    }
+  ],
+  "seeds": [
+    1
+  ],
+  "repetitions": 1,
+  "job_time_limit_s": 600.0,
+  "memory_limit_mb": null,
+  "max_wall_s": 14400.0,
+  "max_jobs": 25,
+  "max_retries": 1,
+  "workers": 1,
+  "cache_policy": "isolated",
+  "evaluation": {
+    "split": "temporal_holdout",
+    "n_folds": 10,
+    "test_size": 0.2,
+    "budget_fraction": 0.25,
+    "stratify": "dominant_category"
+  }
+}
