@@ -6,6 +6,7 @@ new directories. The journal records every attempt with UTC times and final stat
 Do not edit Python source under backend/src while this runs: the drift guard stops it.
 """
 
+import argparse
 import json
 import traceback
 from collections import defaultdict
@@ -19,11 +20,27 @@ from smart_retail.application.experiments.reports import report
 from smart_retail.contracts.experiments import CampaignSpec
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
+# Block order per config set. paper-v4 runs the diagnostic designs (step/guidance,
+# ablation, budget) before the confirmatory main comparison V1.
+SETS = {
+    "paper-v3": ["X1", "X1b", "X4", "X2", "X5", "X6", "X3"],
+    "paper-v4": ["V2", "V4", "V3", "V1", "VL", "V5"],
+}
 CONFIGS = ROOT / "experiments" / "configs" / "paper-v3"
 RESULTS = ROOT / "experiments" / "results" / "paper-v3"
 REPORTS = ROOT / "experiments" / "reports" / "paper-v3"
 JOURNAL = RESULTS / "journal.json"
-ORDER = ["X1", "X1b", "X4", "X2", "X5", "X6", "X3"]
+ORDER = SETS["paper-v3"]
+
+
+def select(name):
+    """Point configs, results, reports, journal and block order at one config set."""
+    global CONFIGS, RESULTS, REPORTS, JOURNAL, ORDER
+    CONFIGS = ROOT / "experiments" / "configs" / name
+    RESULTS = ROOT / "experiments" / "results" / name
+    REPORTS = ROOT / "experiments" / "reports" / name
+    JOURNAL = RESULTS / "journal.json"
+    ORDER = SETS[name]
 
 
 def now():
@@ -58,6 +75,9 @@ def prepare_union(journal):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--set", choices=sorted(SETS), default="paper-v3", help="config set to run")
+    select(parser.parse_args().set)
     RESULTS.mkdir(parents=True, exist_ok=True)
     journal = json.loads(JOURNAL.read_text(encoding="utf-8")) if JOURNAL.exists() else []
     for block in ORDER:

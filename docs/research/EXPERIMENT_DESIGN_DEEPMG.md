@@ -252,3 +252,68 @@ Giới hạn còn lại (phải ghi trong bài):
 
 Ước tính chạy (đo 26/10, một worker): Tiny ~1 s/lượt, Small ~6 s/lượt, Medium ~39 s/lượt;
 tổng 1.416 job (+20 job X1b) khoảng 28 giờ.
+
+## 11. paper-v4 (2026-10-28): cải tiến sau kết quả paper-v3
+
+Nguồn: `Ket_qua_thuc_nghiem_lan_2.docx` (kết quả paper-v3) và đối chiếu với mã nguồn.
+Chưa chạy thực nghiệm nào với paper-v4.
+
+### 11.1. Chẩn đoán từ mã nguồn
+
+- Random search dùng `restarts.restart()`: đi ngẫu nhiên tối đa N thay đổi T1 (N = số kệ
+  di chuyển được), mỗi lần dịch tới ±3 ô lưới hoặc hoán đổi, **lọc trước bằng `violations()`**,
+  T2/T3 giải lại bằng MILP. Feedback paper-v3 chỉ dịch một kệ ±1 ô, không lọc trước. So sánh
+  feedback–random search vì vậy trộn cỡ bước, lọc trước và dẫn hướng. Annealing dùng đúng lân cận
+  của feedback nhưng chọn đều: feedback −8,3% so với annealing −4,65% (E18) là bằng chứng sạch về
+  giá trị tín hiệu T4.
+- T4 chỉ dùng `shelf_id:face` của SKU; tầng kệ, vị trí x, hướng và số mặt chỉ tác động qua
+  thành phần thiếu hụt sức chứa. Kết quả 0/1.701 nước T3 cải thiện là hệ quả cấu trúc mô hình.
+- Nước trùng lặp bị loại trước `assess()` nên không tốn ngân sách; chỉ khoảng 30% nước FAILED
+  tốn ngân sách.
+- `local_trap` có kệ duy nhất `locked: true`, nên multistart (chỉ đổi pose T1) luôn
+  `RESTART_UNAVAILABLE` theo thiết kế.
+- Mặc định `patience=1`, `max_actions=24` chia vòng tròn T1/T2/T3: mỗi vòng quét chỉ khoảng 8 nước T1.
+
+### 11.2. Tùy chọn mới của `JointConfig` (vắng mặt = hành vi paper-v3, không ghi vào dạng chuẩn)
+
+| Trường | Ý nghĩa | Mặc định khi vắng |
+|---|---|---|
+| `t1_steps` | độ dài bước T1 theo số ô lưới | `[1]` |
+| `geometry_prefilter` | bỏ nước T1 vi phạm biên/lối vào/lối đi trước khi đánh giá | tắt |
+| `t3_scope: "objective"` | chỉ giữ T3_FACE, hoán đổi khác mặt, tăng facings khi thiếu sức chứa | `"all"` |
+| `layer_allocation: "adaptive"` | chia danh sách nước theo tỷ lệ thành công làm trơn (a+1)/(n+2) | vòng tròn |
+| `kicks`, `kick_edits` | ILS: khi hội tụ cục bộ, đá bằng `kick_edits` thay đổi T1 hợp lệ từ lời giải tốt nhất | 0 / 3 |
+| `restart_max_step` | bước tối đa của random walk (random_search, multistart, kick) | 3 |
+| `search_time_s` | so sánh cùng thời gian: hết số giây này thì không bắt đầu lượt đánh giá mới (`SEARCH_TIME_LIMIT`) | không giới hạn riêng |
+| `screen_seeds`, `screen_margin` | sàng lọc hai mức: chạy trước `screen_seeds` kịch bản, chỉ đánh giá đủ khi điểm ≤ (1 + margin) × điểm của plan tham chiếu; ngân sách tính theo lượt đánh giá đầy đủ quy đổi | tắt |
+
+Trần mỗi job nâng từ 900 s lên 3.600 s (contract, CLI, frontend). Lease worker 30 s được gia hạn
+liên tục khi job chạy, nên job dài không mất lease; trần campaign vẫn 14.400 s, nên part có
+trần 3.600 s chứa 5 job.
+
+Không cải tiến multistart trên `local_trap`: kick và restart chỉ thay đổi T1, nên vẫn
+`RESTART_UNAVAILABLE` trên instance có kệ khóa. Đây là giới hạn đã khai báo.
+
+### 11.3. Thiết kế paper-v4 (`scripts/build_paper_v4_configs.py`)
+
+Instance mới (seed 7001–7510), chưa dùng để chỉnh thuật toán; tải dùng lại
+`paper-v3/calibration.json`. `feedback_v4` = feedback paper-v3 + `t1_steps [1,2,3]`,
+`geometry_prefilter`, `t3_scope objective`, `layer_allocation adaptive`, `kicks 10`,
+`kick_edits 3`, `patience 2`.
+
+| Khối | Mã | Instance | Giao thức | Phương án | Job |
+|---|---|---|---|---|---:|
+| V2 | E52 | small ×10 (7301–7310) | 5 fold | seq_milp, random_step1, random_step3, guided_step1, guided_step3 | 250 |
+| V4 | E54 | small ×10 (7501–7510) | holdout | seq_milp, feedback_v4, bỏ lần lượt steps/prefilter/t3_scope/adaptive/kicks | 70 |
+| V3 | E53 | small ×10 (7401–7410) | holdout | seq_milp, random_search và feedback_v4 với ngân sách 16/30/40/80 | 90 |
+| V1 | E51 | tiny ×10 (2 lượt), small ×10, medium ×10 | 5 fold (medium holdout) | seq_milp, random_search, annealing, feedback, feedback_v4 | 800 |
+
+| VL | E55 | large ×3 (7601–7603, tải mặc định chưa hiệu chỉnh) | holdout | seq_milp, random_search, feedback_v4; cùng thời gian tìm kiếm 3.000 s, trần 3.600 s | 9 |
+| V5 | E56 | medium ×10 (7701–7710) | holdout | seq_milp, random_search(±screen), feedback_v4(±screen); `screen_seeds 1`, `screen_margin 0,02` | 50 |
+
+Medium dùng ngân sách 40 như tiny (trần 3.600 s/job), nên V1 có cùng ngân sách ở mọi quy mô.
+Tổng 1.269 job, thứ tự V2 → V4 → V3 → V1 → VL → V5. Ước tính thô (chi phí đo 26/10): khoảng
+80 giờ một worker (V1 medium ~17 h, V5 ~17 h, VL ~6 h). Giới hạn còn lại: số lượt đánh giá của
+large chưa đo (VL so sánh theo thời gian nên không cần số này); large chỉ có 3 instance và tải
+chưa hiệu chỉnh; margin sàng lọc 2% là giả định khai báo, chưa hiệu chỉnh.
+Họ kiểm định chính cho Holm: chỉ `test_objective`; chỉ số phụ báo cáo riêng.

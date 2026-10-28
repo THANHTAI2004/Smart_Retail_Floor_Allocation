@@ -1,0 +1,248 @@
+{
+  "schema_version": "1.1",
+  "name": "paper-v4-v1-tiny-part05",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "id": "tiny_f6_s7003",
+      "scale": "tiny",
+      "seed": 7003,
+      "scenario": "feasible",
+      "category_assignment": "free",
+      "variable_facings": false,
+      "facings": 6,
+      "levels": 2,
+      "height_scale": 1.0,
+      "input_path": null,
+      "input_file_sha256": null,
+      "orders": 150,
+      "order_interval_s": 12.58,
+      "picker_count": 2
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E51",
+      "question": "Does feedback_v4 beat sequential pipelines and equal-budget random search / annealing on held-out orders of fresh instances?",
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "datasets": [
+        "tiny_f6_s7003"
+      ],
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 40,
+                "mode": "sequential"
+              }
+            }
+          }
+        },
+        {
+          "id": "random_search",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 40,
+                "mode": "random_search"
+              }
+            }
+          }
+        },
+        {
+          "id": "annealing",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 40,
+                "mode": "annealing"
+              }
+            }
+          }
+        },
+        {
+          "id": "feedback",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 40,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement"
+              }
+            }
+          }
+        },
+        {
+          "id": "feedback_v4",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "slotting_algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "objective": {
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ],
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ]
+                },
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "scenario_seed_policy": "job_seed_offsets",
+                "max_evaluations": 40,
+                "mode": "feedback",
+                "max_iterations": 100,
+                "max_actions": 24,
+                "policy": "first_improvement",
+                "t1_steps": [
+                  1,
+                  2,
+                  3
+                ],
+                "geometry_prefilter": true,
+                "t3_scope": "objective",
+                "layer_allocation": "adaptive",
+                "kicks": 10,
+                "kick_edits": 3,
+                "patience": 2
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "statistical_method": "descriptive_paired_exploratory"
+    }
+  ],
+  "seeds": [
+    1
+  ],
+  "repetitions": 1,
+  "job_time_limit_s": 300.0,
+  "memory_limit_mb": 2048,
+  "max_wall_s": 7625.0,
+  "max_jobs": 25,
+  "max_retries": 1,
+  "workers": 1,
+  "cache_policy": "isolated",
+  "evaluation": {
+    "split": "kfold",
+    "n_folds": 5,
+    "test_size": 0.2,
+    "budget_fraction": 0.25,
+    "stratify": "dominant_category",
+    "order_rate": "population"
+  }
+}

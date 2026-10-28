@@ -82,6 +82,27 @@ Tiny 40, Small 30, Medium 16. Trần thời gian/job chỉ là giới hạn an t
 | X6 | E23–E33 | small ×5 | holdout thời gian | seq_milp và feedback; picker 1/2/4, khách 15/30/60, trọng số chờ 0/0,2/1, tải ρ≈0,5/0,9 | 110 | 600 s |
 | X3 | E20 | instance khóa (seed 9001+, 9101+) ×10 mỗi quy mô | holdout thời gian 80/20; tiny 2 lượt, small 1 | 5 phương án | 150 | 300/600 s |
 
+### paper-v4 (sau kết quả paper-v3, chưa chạy)
+
+Cấu hình đã sinh ở `experiments/configs/paper-v4/` (1.269 job, khối V2 → V4 → V3 → V1 → VL → V5; thiết kế
+ở mục 11 của `EXPERIMENT_DESIGN_DEEPMG.md`). Script dùng lại `paper-v3/calibration.json`, không
+chạy mô phỏng khi sinh:
+
+```powershell
+$env:PYTHONPATH = "scripts"; .\.venv\Scripts\python.exe scripts\build_paper_v4_configs.py
+```
+
+Chạy (khi chủ đề án cho phép) bằng cùng runner với `--set paper-v4`; kết quả, báo cáo và
+journal nằm ở `experiments/results/paper-v4`, `experiments/reports/paper-v4`:
+
+```powershell
+$p = Start-Process -FilePath ".\.venv\Scripts\python.exe" -ArgumentList "-u","scripts\run_paper_campaigns.py","--set","paper-v4" -WorkingDirectory (Get-Location) -RedirectStandardOutput "var\paper-v4-run.log" -RedirectStandardError "var\paper-v4-run.err.log" -WindowStyle Hidden -PassThru
+```
+
+Ước tính thô khoảng 80 giờ một worker (medium ngân sách 40 và trần 3.600 s/job; VL large so sánh
+cùng thời gian tìm kiếm 3.000 s; V5 sàng lọc hai mức). Có thể bỏ VL/V5 khỏi `SETS` nếu thiếu thời gian. Họ Holm chính của `instance_comparisons` là cột
+`holm_primary_wilcoxon_exact_p` (chỉ objective); `holm_wilcoxon_exact_p` vẫn gộp mọi chỉ số.
+
 ## 3. Chạy
 
 ```powershell

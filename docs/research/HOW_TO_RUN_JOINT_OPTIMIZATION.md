@@ -51,6 +51,41 @@ Use `layers` to ablate T1/T2/T3; optional T4 changes routing policy. Configure
 `max_iterations`, `max_evaluations`, `max_actions`, `patience`, `target`,
 `tolerance`, `scenario_seeds`, `holdout_seeds` and the common objective.
 
+Optional paper-v4 search controls (absent = paper-v3 behavior, omitted from the
+canonical config):
+- `t1_steps`: T1 move lengths in grid steps, e.g. `[1, 2, 3]` (default `[1]`).
+- `geometry_prefilter`: drop T1 edits that violate boundary, entrance/exit or aisle
+  clearance before they spend an evaluation. Topology is still checked on evaluation.
+- `t3_scope: "objective"`: keep only T3 edits that can change the joint score. T4
+  routes to the shelf face, so level, orientation and x position never change travel
+  or wait; facings matter only while a SKU's capacity is below its demand.
+- `layer_allocation: "adaptive"`: layers share the truncated action list by the
+  smoothed success rate (accepted + 1) / (evaluated + 2) instead of round-robin. The
+  weights are written to each `IMPROVING` trace event as `layer_weights`.
+- `kicks`, `kick_edits`: iterated local search. On `patience` sweeps without strict
+  improvement, feedback restarts descent from a random walk of `kick_edits` (default 3)
+  geometry-valid T1 edits of the best plan (`ILS_KICK` trace events). The best plan
+  is kept separately; kicks spend the same evaluation budget.
+- `restart_max_step`: largest per-axis grid displacement of a random-walk edit for
+  random_search, multistart and kicks (default 3). `1` gives the small-step control.
+- `search_time_s`: equal-wall-time comparison. No new evaluation starts after this many
+  seconds of search (an evaluation already running finishes); the rest of
+  `time_limit_s` is left for verification and held-out scoring. Termination is
+  `SEARCH_TIME_LIMIT`, and the result reports `search_time_s`.
+- `screen_seeds`, `screen_margin`: two-fidelity screening. A candidate is first
+  simulated on the first `screen_seeds` scenario seeds; it is fully evaluated only when
+  that score is at most (1 + `screen_margin`) x the reference plan's score on the same
+  seeds (feedback: descent state; annealing: current state; random_search: best plan;
+  kicks and initialization are never screened). Rejections raise `SCREENED_OUT` and
+  are not feasibility verdicts. `max_evaluations` then counts full-evaluation
+  equivalents (seed simulations / number of scenario seeds); the last promoted candidate
+  can exceed it by at most one unscreened remainder. Results report `budget_spent` and
+  `screened_out`; screening is rejected for exact/hybrid. Promotion reuses the
+  screened seed's stages from the cache (same declared scenario set).
+
+`optimization.time_limit_s` and campaign `job_time_limit_s` accept up to 3,600 s
+(supervisor grace max(15 s, 10%)); the worker renews its 30 s lease while a job runs.
+
 `objective.weights` and `objective.scales` each have four entries: travel, wait,
 stock shortfall and operational lateness penalty. Scales stay fixed across all
 candidates and seeds. The legacy travel_weight/wait_weight/stock_weight controls

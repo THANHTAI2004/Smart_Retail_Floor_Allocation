@@ -22,8 +22,8 @@ def main():
     args.input = normalize_fs_path(args.input)
     args.certificate = normalize_fs_path(args.certificate)
     args.output = normalize_fs_path(args.output)
-    if not 0 < args.time_limit <= 900:
-        parser.error("time-limit must be in (0,900] seconds")
+    if not 0 < args.time_limit <= 3600:
+        parser.error("time-limit must be in (0,3600] seconds")
     if args.output.exists():
         raise FileExistsError(args.output)
     sections = json.loads(args.input.read_text(encoding="utf-8"))

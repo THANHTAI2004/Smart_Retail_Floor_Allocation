@@ -195,9 +195,11 @@ def test_worker_wall_budget_leaves_finalization_grace():
     assert wall_budget(20) == 35
     assert wall_budget(300) == 330
     assert wall_budget(900) == 990
-    assert OptimizationInput(time_limit_s=900).time_limit_s == 900
+    assert wall_budget(3600) == 3960
+    # paper-v4: medium budget 40 and large equal-wall-time blocks need jobs above 900 s.
+    assert OptimizationInput(time_limit_s=3600).time_limit_s == 3600
     with pytest.raises(ValidationError):
-        OptimizationInput(time_limit_s=901)
+        OptimizationInput(time_limit_s=3601)
 
 
 def test_inputs_without_evaluation_keep_their_canonical_form():
@@ -413,6 +415,24 @@ def test_instance_level_comparison_uses_seq_milp_reference_and_scales():
     assert feedback["all"]["smallest_attainable_p"] == pytest.approx(0.0625)
     assert feedback["tiny"]["relative_change_of_means"] == pytest.approx(-0.2 - 0.01 / 1.0005, rel=0.05)
     assert all(r["holm_wilcoxon_exact_p"] >= r["wilcoxon_exact_p"] for r in records)
+    # Secondary metrics do not enter the primary family; its correction is never larger.
+    timed = [{**r, "wall_s": 10 * r["test_objective"]} for r in rows]
+    wider = instance_comparisons(timed, lambda _: ["test_objective", "wall_s"], scales)
+    assert {r["metric"] for r in wider} == {"test_objective", "wall_s"}
+    for r in wider:
+        if r["metric"] == "test_objective":
+            assert (
+                r["wilcoxon_exact_p"]
+                <= r["holm_primary_wilcoxon_exact_p"]
+                <= r["holm_wilcoxon_exact_p"]
+            )
+        else:
+            assert r["holm_primary_wilcoxon_exact_p"] is None
+    assert any(
+        r["holm_primary_wilcoxon_exact_p"] < r["holm_wilcoxon_exact_p"]
+        for r in wider
+        if r["metric"] == "test_objective"
+    )
 
 
 def test_instance_comparison_adds_exact_reference_for_union_gap():

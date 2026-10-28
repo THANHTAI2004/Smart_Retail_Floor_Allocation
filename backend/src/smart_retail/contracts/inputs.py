@@ -286,7 +286,7 @@ class OptimizationInput(SectionContract):
     joint: JointConfig | None = None
     evaluation: HeldOutEvaluationInput | None = None
     seed: Annotated[int, Field(ge=0, le=2147483647)] = 42
-    time_limit_s: Annotated[float, Field(gt=0, le=900)] = 30
+    time_limit_s: Annotated[float, Field(gt=0, le=3600)] = 30
     max_iterations: Annotated[int, Field(ge=1, le=1000000)] = 10000
     algorithm: Literal["milp", "greedy"] = "milp"
     distance_weight: Positive = 1

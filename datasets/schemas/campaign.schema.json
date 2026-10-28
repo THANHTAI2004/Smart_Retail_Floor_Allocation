@@ -391,7 +391,7 @@
     "job_time_limit_s": {
       "default": 15.0,
       "exclusiveMinimum": 0,
-      "maximum": 900,
+      "maximum": 3600,
       "title": "Job Time Limit S",
       "type": "number"
     },

@@ -1,0 +1,464 @@
+[
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part01.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part02.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part03.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part04.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part05.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part06.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part07.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part08.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part09.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part10.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part11.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part12.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part13.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part14.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part15.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part16.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part17.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part18.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part19.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-tiny-part20.json",
+    "jobs": 25,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part01.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part02.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part03.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part04.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part05.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part06.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part07.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part08.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part09.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-small-part10.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part01.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part02.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part03.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part04.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part05.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part06.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part07.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part08.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part09.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V1",
+    "config": "paper-v4-v1-medium-part10.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part01.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part02.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part03.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part04.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part05.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part06.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part07.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part08.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part09.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V2",
+    "config": "paper-v4-v2-step-guidance-part10.json",
+    "jobs": 25,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part01.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part02.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part03.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part04.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part05.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part06.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part07.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part08.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part09.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V3",
+    "config": "paper-v4-v3-budget-part10.json",
+    "jobs": 9,
+    "job_time_limit_s": 900.0
+  },
+  {
+    "block": "V4",
+    "config": "paper-v4-v4-ablation-part01.json",
+    "jobs": 21,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V4",
+    "config": "paper-v4-v4-ablation-part02.json",
+    "jobs": 21,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V4",
+    "config": "paper-v4-v4-ablation-part03.json",
+    "jobs": 21,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "V4",
+    "config": "paper-v4-v4-ablation-part04.json",
+    "jobs": 7,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "VL",
+    "config": "paper-v4-vl-large-part01.json",
+    "jobs": 3,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "VL",
+    "config": "paper-v4-vl-large-part02.json",
+    "jobs": 3,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "VL",
+    "config": "paper-v4-vl-large-part03.json",
+    "jobs": 3,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part01.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part02.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part03.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part04.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part05.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part06.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part07.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part08.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part09.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "V5",
+    "config": "paper-v4-v5-screening-part10.json",
+    "jobs": 5,
+    "job_time_limit_s": 3600.0
+  }
+]

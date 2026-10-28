@@ -49,7 +49,10 @@ def evaluate(
     observer,
     seeds=None,
     variant=0,
+    context_seeds=None,
 ):
+    """Score `decisions` on `seeds`; `context_seeds` is the declared scenario set of the
+    stage cache identity (screening evaluates a prefix of the set and reuses its stages)."""
     seeds = seeds or config.scenario_seeds
     scenarios, scores, vectors = [], [], []
     for seed in seeds:
@@ -57,7 +60,7 @@ def evaluate(
         data["optimization"].update(joint=None, seed=seed, stop_after_stage="T4")
         data["_joint_context"] = {
             "objective": config.objective.model_dump(mode="json"),
-            "scenario_set": list(seeds),
+            "scenario_set": list(context_seeds or seeds),
             "model": "joint-finite-1",
         }
         result = _candidate(
@@ -93,3 +96,9 @@ def evaluate(
 
 def exact_score(state):
     return Fraction(*state["score_fraction"])
+
+
+def prefix_score(state, sections, objective, count):
+    """Exact mean score of an evaluated state over its first `count` scenario seeds."""
+    values = [score(s["stages"], sections, objective)[0] for s in state["scenarios"][:count]]
+    return sum(values) / len(values)

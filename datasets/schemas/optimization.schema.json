@@ -199,6 +199,151 @@
           "default": true,
           "title": "Verify Certificate",
           "type": "boolean"
+        },
+        "t1_steps": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "maxItems": 10,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "T1 Steps"
+        },
+        "geometry_prefilter": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Geometry Prefilter"
+        },
+        "t3_scope": {
+          "anyOf": [
+            {
+              "enum": [
+                "all",
+                "objective"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "T3 Scope"
+        },
+        "layer_allocation": {
+          "anyOf": [
+            {
+              "enum": [
+                "round_robin",
+                "adaptive"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Layer Allocation"
+        },
+        "kicks": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kicks"
+        },
+        "kick_edits": {
+          "anyOf": [
+            {
+              "maximum": 50,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kick Edits"
+        },
+        "restart_max_step": {
+          "anyOf": [
+            {
+              "maximum": 10,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Restart Max Step"
+        },
+        "search_time_s": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 3600,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Search Time S"
+        },
+        "screen_seeds": {
+          "anyOf": [
+            {
+              "maximum": 9,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Screen Seeds"
+        },
+        "screen_margin": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Screen Margin"
         }
       },
       "title": "JointConfig",
@@ -429,7 +574,7 @@
     "time_limit_s": {
       "default": 30,
       "exclusiveMinimum": 0,
-      "maximum": 900,
+      "maximum": 3600,
       "title": "Time Limit S",
       "type": "number"
     },

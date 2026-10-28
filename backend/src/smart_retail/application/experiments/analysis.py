@@ -38,6 +38,8 @@ BOOTSTRAP_SEED = 20261023
 TOLERANCE = 1e-10
 # Instance-level reference: the strongest sequential pipeline when present.
 REFERENCE_ARMS = ("seq_milp", "baseline")
+# Primary Holm family of instance_comparisons (held-out objective, else training objective).
+PRIMARY_METRICS = ("test_objective", "joint_objective")
 
 
 def describe(values):
@@ -236,9 +238,14 @@ def instance_comparisons(rows, metrics_of, scales: dict[str, str] | None = None)
                             "wilcoxon_exact_p": exact_wilcoxon_p(differences),
                             "smallest_attainable_p": 2 / 2 ** len(members),
                             "holm_wilcoxon_exact_p": None,
+                            "holm_primary_wilcoxon_exact_p": None,
                         }
                     )
     holm(records, "wilcoxon_exact_p", "holm_wilcoxon_exact_p")
+    # Pre-declared primary family: objective metrics only (wall time, memory and component
+    # metrics stay in the full-table family and are reported as secondary).
+    primary = [r for r in records if r["metric"] in PRIMARY_METRICS]
+    holm(primary, "wilcoxon_exact_p", "holm_primary_wilcoxon_exact_p")
     return records
 
 

@@ -2,7 +2,7 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_serializer, model_validator
 
 
 class Objective(BaseModel):
@@ -39,6 +39,41 @@ class JointConfig(BaseModel):
     annealing_final_ratio: float = Field(default=0.01, gt=0, le=1)
     finite_space: dict | None = None
     verify_certificate: bool = True
+    # paper-v4 search controls. None keeps the paper-v3 behavior and canonical form.
+    # T1 move lengths in grid steps (None: [1]); geometry_prefilter drops T1 edits that
+    # violate boundary/clearance before they spend an evaluation (None: False).
+    t1_steps: list[int] | None = Field(default=None, min_length=1, max_length=10)
+    geometry_prefilter: bool | None = None
+    # "objective": only T3 edits that can change the joint score (face, cross-face swap,
+    # facings while capacity is short); T4 routes to shelf faces only (None: "all").
+    t3_scope: Literal["all", "objective"] | None = None
+    # "adaptive": layers share the action list by smoothed observed success rate
+    # instead of a fair round-robin (None: "round_robin").
+    layer_allocation: Literal["round_robin", "adaptive"] | None = None
+    # Iterated local search: on local convergence, restart feedback from a random-walk
+    # perturbation of the best plan with kick_edits geometry-valid T1 edits (None: 0 / 3).
+    kicks: int | None = Field(default=None, ge=0, le=100)
+    kick_edits: int | None = Field(default=None, ge=1, le=50)
+    # Largest grid displacement of a random-walk T1 edit (random_search, multistart,
+    # kicks). None: 3.
+    restart_max_step: int | None = Field(default=None, ge=1, le=10)
+    # Equal-wall-time comparison: no new evaluation starts after search_time_s seconds of
+    # search; the rest of time_limit_s is left for verification and held-out scoring.
+    search_time_s: float | None = Field(default=None, gt=0, le=3600)
+    # Two-fidelity screening: a candidate is first simulated on the first screen_seeds
+    # scenario seeds and fully evaluated only when its screened score is at most
+    # (1 + screen_margin) x the reference plan's score on the same seeds. max_evaluations
+    # then counts full-evaluation equivalents (seed simulations / len(scenario_seeds)).
+    screen_seeds: int | None = Field(default=None, ge=1, le=9)
+    screen_margin: float | None = Field(default=None, ge=0, le=1)
+
+    @model_serializer(mode="wrap")
+    def omit_absent_search_controls(self, handler):
+        data = handler(self)
+        for key in V4_CONTROLS:
+            if data.get(key) is None:
+                data.pop(key, None)
+        return data
 
     @model_validator(mode="after")
     def scenarios(self):
@@ -47,4 +82,30 @@ class JointConfig(BaseModel):
             raise ValueError("Training/holdout seeds must be distinct, disjoint 32-bit seeds")
         if self.mode in ("exact", "hybrid") and self.finite_space is None:
             raise ValueError("Exact/hybrid requires an explicit finite decision space")
+        if self.t1_steps is not None and (
+            len(set(self.t1_steps)) != len(self.t1_steps) or not all(1 <= s <= 10 for s in self.t1_steps)
+        ):
+            raise ValueError("t1_steps must be distinct grid multiples in 1..10")
+        if self.screen_seeds is not None and (
+            self.screen_seeds >= len(self.scenario_seeds) or self.mode in ("exact", "hybrid")
+        ):
+            raise ValueError(
+                "screen_seeds must be fewer than scenario_seeds and is not used by exact/hybrid"
+            )
+        if self.screen_margin is not None and self.screen_seeds is None:
+            raise ValueError("screen_margin requires screen_seeds")
         return self
+
+
+V4_CONTROLS = (
+    "t1_steps",
+    "geometry_prefilter",
+    "t3_scope",
+    "layer_allocation",
+    "kicks",
+    "kick_edits",
+    "restart_max_step",
+    "search_time_s",
+    "screen_seeds",
+    "screen_margin",
+)

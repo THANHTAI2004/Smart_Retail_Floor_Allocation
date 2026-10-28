@@ -2,7 +2,11 @@
 
 import copy
 import math
+from dataclasses import replace
 from itertools import zip_longest
+
+from smart_retail.contracts.inputs import to_domain
+from smart_retail.engines.t1_layout.geometry import violations
 
 
 def resize(row, product, shelf, *, face=None, level=None, orientation=None, facings=None, x=None):
@@ -26,13 +30,48 @@ def resize(row, product, shelf, *, face=None, level=None, orientation=None, faci
     return row
 
 
-def actions(state, feedback, sections, config):
+def interleave(queues, weights=None):
+    """Fair round-robin over layer queues, or smooth weighted round-robin by `weights`."""
+    if weights is None:
+        return [action for group in zip_longest(*queues.values()) for action in group if action]
+    declared = list(queues)
+    pending = {layer: list(q) for layer, q in queues.items() if q}
+    credit = dict.fromkeys(pending, 0.0)
+    order = []
+    while pending:
+        total = sum(weights[layer] for layer in pending)
+        for layer in pending:
+            credit[layer] += weights[layer]
+        # Deterministic tie-break by declared layer order.
+        layer = max(pending, key=lambda k: (credit[k], -declared.index(k)))
+        credit[layer] -= total
+        order.append(pending[layer].pop(0))
+        if not pending[layer]:
+            del pending[layer], credit[layer]
+    return order
+
+
+def actions(state, feedback, sections, config, weights=None):
     original = state["decisions"]
     shelves = sections["shelves"]["items"]
     products = {p["sku"]: p for p in sections["products"]["items"]}
     queues: dict[str, list[dict]] = {layer: [] for layer in config.layers}
+    steps = config.t1_steps or [1]
+    objective_t3 = config.t3_scope == "objective"
+    domain = to_domain(sections) if config.geometry_prefilter and "T1" in queues else None
+
+    def geometry_valid(poses):
+        if domain is None:
+            return True
+        layout = tuple(
+            replace(s, x=poses[s.id][0], y=poses[s.id][1], rotation=poses[s.id][2])
+            for s in sorted(domain.shelves, key=lambda v: v.id)
+        )
+        return not violations(domain.floorplan, layout)
 
     def add(layer, kind, decision, changed):
+        if layer == "T1" and not geometry_valid(decision["poses"]):
+            return
         if layer in queues:
             queues[layer].append(
                 {
@@ -51,13 +90,17 @@ def actions(state, feedback, sections, config):
             continue
         sid = s["id"]
         x, y, angle = original["poses"][sid]
-        for pose in (
-            [x - step, y, angle],
-            [x, y - step, angle],
-            [x + step, y, angle],
-            [x, y + step, angle],
-            [x, y, 90 - angle],
-        ):
+        moves = [
+            pose
+            for k in steps
+            for pose in (
+                [x - k * step, y, angle],
+                [x, y - k * step, angle],
+                [x + k * step, y, angle],
+                [x, y + k * step, angle],
+            )
+        ]
+        for pose in [*moves, [x, y, 90 - angle]]:
             d = copy.deepcopy(original)
             d["poses"][sid] = pose
             # T1 changes invalidate optimized allocation/packing; preserve only explicit pose.
@@ -108,6 +151,17 @@ def actions(state, feedback, sections, config):
         p = products[row["sku"]]
         s = by_shelf[row["shelf_id"]]
         changes = [("T3_FACE", {"face": f}) for f in range(s.get("faces", 1)) if f != row["face"]]
+        if objective_t3:
+            # T4 routes to the shelf face only; level/orientation/position never change
+            # the score, and facings matter only through the capacity shortfall term.
+            short = row["capacity_units"] < p.get("demand", 1)
+            if short and row["facings"] + 1 <= (p.get("max_facings") or p.get("facings", 1)):
+                changes.append(("T3_FACINGS", {"facings": row["facings"] + 1}))
+            for kind, kwargs in changes:
+                d = copy.deepcopy(original)
+                d["placements"][i] = resize(row, p, s, **kwargs)
+                add("T3", kind, d, [row["sku"]])
+            continue
         changes += [
             ("T3_LEVEL", {"level": lv}) for lv in s["levels"] if lv["id"] != row["level_id"]
         ]
@@ -138,6 +192,8 @@ def actions(state, feedback, sections, config):
             other = original["placements"][b]
             if other["shelf_id"] != row["shelf_id"]:
                 continue
+            if objective_t3 and other["face"] == row["face"]:
+                continue
             d = copy.deepcopy(original)
             for dest, src in ((a, other), (b, row)):
                 d["placements"][dest] = resize(
@@ -156,7 +212,6 @@ def actions(state, feedback, sections, config):
             d = copy.deepcopy(original)
             d["routing_policy"] = policy
             add("T4", "T4_POLICY", d, [policy])
-    # Fair round-robin across layers; max_actions is a declared truncated neighborhood.
-    return [action for group in zip_longest(*queues.values()) for action in group if action][
-        : config.max_actions
-    ]
+    # Fair (or success-weighted) round-robin across layers; max_actions is a declared
+    # truncated neighborhood.
+    return interleave(queues, weights)[: config.max_actions]

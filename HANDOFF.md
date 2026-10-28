@@ -1,3 +1,74 @@
+# Current handoff - paper-v4: search improvements after the paper-v3 results, 2026-10-28
+
+Request: review Ket_qua_thuc_nghiem_lan_2.docx (paper-v3 results), then "thực hiện các cải thiện
+bạn đề xuất ... không chạy thực nghiệm lại". No experiment was run. Uncommitted; no commit/push
+authorized. Design and diagnosis: docs/research/EXPERIMENT_DESIGN_DEEPMG.md section 11.
+
+Milestone 2 (2026-10-28, user: "Làm cách A ... thêm khối large theo cách C ... Cách B ... làm cái
+này đi"; still no experiment run, still uncommitted):
+- Job cap 900 s -> 3,600 s: OptimizationInput.time_limit_s, CampaignSpec.job_time_limit_s,
+  feedback/cli.py, frontend ResearchPage.tsx. Worker lease (30 s) is renewed every loop while the
+  child runs (workers/runner.py), so long jobs keep their lease; campaign ceiling stays 14,400 s.
+- Option C: JointConfig.search_time_s (no new evaluation after it; termination SEARCH_TIME_LIMIT).
+- Option B: JointConfig.screen_seeds/screen_margin; coordinator.assess screens on the seed prefix
+  against a reference plan (feedback descent state, annealing current, random_search best; kicks
+  and init never screened), SCREENED_OUT rejections, budget `spent` in full-evaluation equivalents
+  (equals evaluation count without screening), result `budget_spent`/`screened_out`;
+  evaluator.evaluate(context_seeds=...) keeps the cache identity so promotion reuses the screened
+  seed (tested: T4 hit), evaluator.prefix_score.
+- paper-v4 regenerated (old dir moved to var/paper-v4-configs-superseded-20261028): medium budget 40
+  at 3,600 s (5 jobs/part), new VL large x3 equal wall time 3,000 s, new V5 screening on medium x10;
+  1,269 jobs, order V2 V4 V3 V1 VL V5; 427 treatments validated; large holdout split checked
+  (1,600/400 orders). Estimate ~80 h one worker.
+- Schemas regenerated (optimization +147/-1, campaign max 900 -> 3600).
+- Verification: pytest backend/tests --basetemp var/pytest-v4-full-03: 186 passed, 29 skipped,
+  5 failed - all BLOCKED_MONGODB_RUNTIME (rechecked var/pytest-v4-fail-03); ruff PASS; mypy 105
+  PASS; architecture PASS (var/architecture-v4-03.json); paper-v3 configs re-dump identical
+  (0 mismatch, 328 joint treatments without new keys). NOT run: frontend lint/build/tests
+  (no node_modules), any experiment, a large-scale evaluation-cost probe.
+- MongoDB rerun (2026-10-28, user started scripts/start_mongodb.ps1; health verified):
+  pytest backend/tests -q -p no:cacheprovider --basetemp var/pytest-v4-mongo-01: 220 passed,
+  0 failed, 0 skipped, 1 existing Starlette/httpx warning (154 s). Persistence/worker integration
+  verified with the v4 changes.
+
+Diagnosis from source (not from the report numbers; reports/paper-v3-unlimited-time2-20261026 is not
+on this machine): random_search = pre-filtered multi-edit random walk with steps up to 3 grid cells,
+feedback = single +-1 cell moves without prefilter; T4 uses only shelf:face, so most T3 edits are
+objective-neutral; duplicates never spend budget; local_trap has one locked shelf (multistart
+RESTART_UNAVAILABLE by design); default patience=1.
+
+Implemented (all new JointConfig fields default None and are omitted from dumps; paper-v3 configs
+re-validate with no new keys, 353 joint treatments checked):
+- contracts/feedback.py: t1_steps, geometry_prefilter, t3_scope, layer_allocation, kicks,
+  kick_edits, restart_max_step (+ V4_CONTROLS, serializer, t1_steps validation).
+- feedback/neighborhood.py: multi-step T1 moves, geometry prefilter (engines/t1_layout violations),
+  objective-scoped T3, interleave() with smooth weighted round-robin.
+- feedback/restarts.py: max_step and edits parameters (defaults unchanged).
+- feedback/coordinator.py: adaptive per-layer success weights (trace `layer_weights`), iterated
+  local search kicks (`ILS_KICK` events, separate descent state and best), restart_max_step.
+- experiments/analysis.py: PRIMARY_METRICS and `holm_primary_wilcoxon_exact_p` (objective-only Holm
+  family) beside the existing full-table column.
+- datasets/schemas/optimization.schema.json regenerated (additive, +103 lines).
+- scripts/build_paper_v4_configs.py -> experiments/configs/paper-v4/ (1,210 jobs: V2 step x guidance
+  250, V4 leave-one-out ablation 70, V3 budget grid 90, V1 main 800; fresh seeds 7001-7510; reuses
+  paper-v3 calibration, no simulation). All 343 treatments validated through JointConfig/to_domain.
+- scripts/run_paper_campaigns.py: `--set paper-v3|paper-v4` (default paper-v3 unchanged).
+- Docs: HOW_TO_RUN_JOINT_OPTIMIZATION.md (new controls), PAPER_EXPERIMENT_RUNBOOK.md (paper-v4).
+- Tests: backend/tests/unit/test_joint_search_v4.py (8), primary-Holm assertions in
+  test_held_out_evaluation.py.
+
+Verification 2026-10-28 (repo root, MongoDB NOT available on this machine):
+- pytest backend/tests --basetemp var/pytest-v4-full-02: 182 passed, 29 skipped, 5 failed; all 5
+  failures and the skips are BLOCKED_MONGODB_RUNTIME (test_experiment_platform x4,
+  test_joint_no_incumbent x1) - persistence not verified here, rerun with MongoDB.
+- ruff (backend + v4 scripts) PASS; mypy 105 files PASS; architecture PASS (var/architecture-v4-02.json).
+- NOT run: any experiment, frontend checks.
+
+Limitations: kicks/restarts edit T1 only (no help on locked-layout local_trap); large has only 3
+uncalibrated instances; screen_margin 0.02 is a declared assumption; runtime estimate ~80 h is extrapolated from 2026-10-26 per-evaluation costs.
+Next: owner reviews feedback_v4 settings and authorizes the paper-v4 run (runbook section 2), with
+MongoDB running; then rerun the MongoDB integration tests.
+
 # Current handoff - paper-v3: all fixes from the paper-v2 review, 2026-10-26
 
 Git (2026-10-26): user authorized push to main. Merged origin/main (9 commits incl. the

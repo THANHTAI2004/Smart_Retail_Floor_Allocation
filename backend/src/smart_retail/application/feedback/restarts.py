@@ -7,12 +7,14 @@ from smart_retail.contracts.inputs import to_domain
 from smart_retail.engines.t1_layout.geometry import violations
 
 
-def restart(state, sections, seed, variant, *, max_attempts=200):
-    """Random walk of geometry-valid T1 edits from the sequential plan.
+def restart(state, sections, seed, variant, *, max_attempts=200, max_step=3, edits=None):
+    """Random walk of geometry-valid T1 edits from the given plan.
 
-    Only poses and the routing policy are fixed; T2/T3 are re-optimized for the new
-    layout. Topology is still validated when the decision is evaluated. Returns
-    (None, []) when no unlocked shelf can move within the attempt budget.
+    Moves shift one shelf by up to max_step grid steps per axis; the walk stops after
+    `edits` accepted edits (None: one per movable shelf). Only poses and the routing
+    policy are fixed; T2/T3 are re-optimized for the new layout. Topology is still
+    validated when the decision is evaluated. Returns (None, []) when no unlocked shelf
+    can move within the attempt budget.
     """
     data = to_domain(sections)
     shelves = {s.id: s for s in data.shelves}
@@ -20,7 +22,7 @@ def restart(state, sections, seed, variant, *, max_attempts=200):
     poses = {k: list(v) for k, v in state["decisions"]["poses"].items()}
     rng = random.Random(seed * 1000003 + variant)
     step = data.floorplan.grid_m
-    target = len(movable)
+    target = len(movable) if edits is None else edits
     accepted = 0
     changed: set[str] = set()
     for _ in range(max_attempts if movable else 0):
@@ -40,7 +42,7 @@ def restart(state, sections, seed, variant, *, max_attempts=200):
             else:
                 dx, dy = (0, 0)
                 while (dx, dy) == (0, 0):
-                    dx, dy = rng.randint(-3, 3), rng.randint(-3, 3)
+                    dx, dy = rng.randint(-max_step, max_step), rng.randint(-max_step, max_step)
                 trial[sid] = [round(x + dx * step, 8), round(y + dy * step, 8), angle]
             edited = [sid]
         layout = tuple(

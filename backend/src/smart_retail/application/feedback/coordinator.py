@@ -8,7 +8,7 @@ from fractions import Fraction
 
 from smart_retail.application.feedback.bootstrap import initialize
 from smart_retail.application.feedback.diagnostics import analyze
-from smart_retail.application.feedback.evaluator import evaluate, exact_score
+from smart_retail.application.feedback.evaluator import evaluate, exact_score, prefix_score
 from smart_retail.application.feedback.neighborhood import actions
 from smart_retail.application.feedback.restarts import restart
 from smart_retail.application.feedback.state import FeedbackSnapshot
@@ -23,6 +23,9 @@ from smart_retail.engines.joint_exact.verifier import verify as verify_certifica
 
 # Consecutive already-evaluated proposals before a stochastic search stops.
 DUPLICATE_LIMIT = 50
+# Defaults of the optional paper-v4 controls (contracts/feedback.py).
+DEFAULT_RESTART_STEP = 3
+DEFAULT_KICK_EDITS = 3
 
 
 def identity(sections, config):
@@ -106,9 +109,14 @@ def optimize(
     curve: list[dict] = []
     seen = set()
     evaluations = 0
+    # Budget in full-evaluation equivalents and screening rejections (paper-v4 option B).
+    spent = Fraction(0)
+    screened_out = 0
+    search_deadline = began + config.search_time_s if config.search_time_s else math.inf
     best = None
     termination = "INITIALIZED"
     space = validate_space(config, sections) if config.finite_space is not None else None
+    max_step = config.restart_max_step or DEFAULT_RESTART_STEP
 
     def event(value):
         entry = {
@@ -126,13 +134,48 @@ def optimize(
             time.monotonic() - began,
         )
 
-    def assess(decision, variant=0):
-        nonlocal evaluations
+    def exhausted():
+        return spent >= config.max_evaluations
+
+    def assess(decision, variant=0, reference=None):
+        """Evaluate a decision; with screening and a reference plan, first on a seed prefix.
+
+        A screened-out candidate raises SCREENED_OUT (it is not a feasibility verdict).
+        Budget `spent` counts seed simulations / len(scenario_seeds); without screening it
+        equals the evaluation count.
+        """
+        nonlocal evaluations, spent, screened_out
         if cancelled():
             raise EngineError("CANCELLED", "Joint search cancelled")
-        if time.monotonic() >= deadline:
+        if time.monotonic() >= min(deadline, search_deadline):
             raise EngineError("TIMEOUT", "Joint time budget")
         evaluations += 1
+        if config.screen_seeds is not None and reference is not None:
+            prefix = config.scenario_seeds[: config.screen_seeds]
+            spent += Fraction(len(prefix), len(config.scenario_seeds))
+            screened = evaluate(
+                sections,
+                config,
+                decision,
+                deadline,
+                cancelled,
+                progress,
+                cache,
+                observer,
+                seeds=prefix,
+                variant=variant,
+                context_seeds=config.scenario_seeds,
+            )
+            bound = prefix_score(reference, sections, config.objective, len(prefix)) * (
+                1 + Fraction(str(config.screen_margin or 0))
+            )
+            if exact_score(screened) > bound:
+                screened_out += 1
+                raise EngineError("SCREENED_OUT", "Screened score above the reference bound")
+            # The prefix stages are cache hits; only the remaining seeds are simulated.
+            spent += 1 - Fraction(len(prefix), len(config.scenario_seeds))
+        else:
+            spent += 1
         state = evaluate(
             sections,
             config,
@@ -153,6 +196,7 @@ def optimize(
                     "elapsed_s": time.monotonic() - began,
                     "score": state["score"],
                     "score_fraction": state["score_fraction"],
+                    **({"budget_spent": float(spent)} if config.screen_seeds else {}),
                 }
             )
         observer(
@@ -175,13 +219,13 @@ def optimize(
         rng = random.Random(data.config.seed * 1000003)
         wide = config.model_copy(update={"max_actions": 10**9})
         current = incumbent
-        steps = max(1, config.max_evaluations - evaluations)
+        steps = max(1, math.ceil(config.max_evaluations - spent))
         temperature = config.annealing_initial_temperature * max(incumbent["score"], 1e-12)
         cooling = config.annealing_final_ratio ** (1 / steps)
         pool: list[dict] = []
         pool_for = None
         stale = 0
-        while evaluations < config.max_evaluations:
+        while not exhausted():
             if pool_for != current["id"]:
                 pool = actions(current, analyze(current, sections), sections, wide)
                 pool_for = current["id"]
@@ -198,7 +242,7 @@ def optimize(
             stale = 0
             seen.add(key)
             try:
-                candidate = assess(action["decisions"])
+                candidate = assess(action["decisions"], reference=current)
             except EngineError as exc:
                 if exc.code in ("TIMEOUT", "CANCELLED"):
                     return incumbent, exc.code
@@ -242,6 +286,57 @@ def optimize(
             temperature *= cooling
         return incumbent, "EVALUATION_LIMIT"
 
+    def kick(incumbent, variant):
+        """One iterated-local-search perturbation of the best plan.
+
+        Returns (state, limited, reason): the evaluated kicked plan, or None when the
+        perturbation is unavailable, already evaluated or infeasible. The kicked plan is
+        accepted as the new descent start regardless of its score (random-walk acceptance);
+        the best plan is kept separately.
+        """
+        # Offset keeps kick streams distinct from random_search/multistart restarts.
+        decision, changed = restart(
+            incumbent,
+            sections,
+            data.config.seed + 7919,
+            variant,
+            max_step=max_step,
+            edits=config.kick_edits or DEFAULT_KICK_EDITS,
+        )
+        base = {"status": "FAILED", "action": "ILS_KICK", "layer": "T1", "variant": variant}
+        if decision is None:
+            event({**base, "reason": "RESTART_UNAVAILABLE"})
+            return None, False, "RESTART_UNAVAILABLE"
+        key = canonical_hash(decision)
+        if key in seen:
+            event({**base, "reason": "DUPLICATE"})
+            return None, False, "DUPLICATE"
+        seen.add(key)
+        try:
+            candidate = assess(decision)
+        except EngineError as exc:
+            if exc.code in ("CACHE_CORRUPT", "SOURCE_DRIFT"):
+                raise
+            event({**base, "reason": exc.code})
+            return None, exc.code in ("TIMEOUT", "CANCELLED"), exc.code
+        archive.append(candidate)
+        event(
+            {
+                "status": "EVALUATING",
+                "action": "ILS_KICK",
+                "layer": "T1",
+                "variant": variant,
+                "parent_id": incumbent["id"],
+                "candidate_id": candidate["id"],
+                "before": incumbent["score"],
+                "after": candidate["score"],
+                "accepted": True,
+                "reason": "PERTURBATION",
+                "changed": changed,
+            }
+        )
+        return candidate, False, "PERTURBATION"
+
     event(
         {
             "status": "INITIALIZED",
@@ -263,7 +358,7 @@ def optimize(
                 progress,
                 cache,
                 observer,
-                lambda: evaluations,
+                lambda: spent,
             )
             if config.mode in ("feedback", "hybrid")
             else assess(None)
@@ -289,10 +384,12 @@ def optimize(
                     data.config.candidate_count, config.max_evaluations
                 ):
                     break
-                if config.mode == "random_search" and evaluations >= config.max_evaluations:
+                if config.mode == "random_search" and exhausted():
                     break
                 # T1 grid variants are ignored for fixed layouts, so restarts edit poses directly.
-                decision, changed = restart(initial, sections, data.config.seed, variant)
+                decision, changed = restart(
+                    initial, sections, data.config.seed, variant, max_step=max_step
+                )
                 if decision is None:
                     event(
                         {
@@ -329,7 +426,7 @@ def optimize(
                     }
                 )
                 try:
-                    candidate = assess(decision)
+                    candidate = assess(decision, reference=best)
                 except EngineError as exc:
                     if exc.code in ("TIMEOUT", "CANCELLED"):
                         termination = exc.code
@@ -345,23 +442,36 @@ def optimize(
             termination = "COMPLETED"
         else:
             no_improvement = 0
+            # `local` is the descent state; `best` the best plan over all kicks. Without
+            # kicks they coincide, which is the paper-v3 strict-descent loop.
+            local = best
+            kicks_left = config.kicks or 0
+            kick_variant = 0
+            # Per-layer (evaluated, accepted) counts for adaptive layer allocation.
+            outcomes = {layer: [0, 0] for layer in config.layers}
             for iteration in range(1, config.max_iterations + 1):
-                feedback = analyze(best, sections)
-                proposals = actions(best, feedback, sections, config)
+                feedback = analyze(local, sections)
+                weights = (
+                    {layer: (a + 1) / (n + 2) for layer, (n, a) in outcomes.items()}
+                    if config.layer_allocation == "adaptive"
+                    else None
+                )
+                proposals = actions(local, feedback, sections, config, weights)
                 event(
                     {
                         "status": "IMPROVING",
                         "iteration": iteration,
                         "feedback": feedback,
-                        "candidate_id": best["id"],
+                        "candidate_id": local["id"],
                         "action_count": len(proposals),
+                        **({"layer_weights": weights} if weights else {}),
                     }
                 )
-                current = best
-                next_state = best
+                current = local
+                next_state = local
                 limited = False
                 for action in proposals:
-                    if evaluations >= config.max_evaluations:
+                    if exhausted():
                         termination = "EVALUATION_LIMIT"
                         limited = True
                         break
@@ -379,13 +489,16 @@ def optimize(
                         )
                         continue
                     seen.add(proposal_hash)
+                    tally = outcomes.get(action["layer"])
+                    if tally is not None:
+                        tally[0] += 1
                     try:
-                        candidate = assess(action["decisions"])
+                        candidate = assess(action["decisions"], reference=next_state)
                     except EngineError as exc:
                         event(
                             {
                                 "status": "FAILED"
-                                if exc.code not in ("TIMEOUT", "CANCELLED")
+                                if exc.code not in ("TIMEOUT", "CANCELLED", "SCREENED_OUT")
                                 else exc.code,
                                 "iteration": iteration,
                                 "action": action["type"],
@@ -428,16 +541,20 @@ def optimize(
                     )
                     if accepted:
                         next_state = candidate
+                        if tally is not None:
+                            tally[1] += 1
                     if accepted and config.policy == "first_improvement":
                         break
                 if next_state is current:
                     no_improvement += 1
                 else:
                     no_improvement = 0
-                    best = next_state
+                    local = next_state
+                    if exact_score(local) < exact_score(best):
+                        best = local
                 event(
                     {
-                        "status": "NO_IMPROVEMENT" if best is current else "IMPROVING",
+                        "status": "NO_IMPROVEMENT" if local is current else "IMPROVING",
                         "iteration": iteration,
                         "best_id": best["id"],
                         "best_score": best["score"],
@@ -449,10 +566,29 @@ def optimize(
                     termination = "TARGET_REACHED"
                     break
                 if no_improvement >= config.patience:
-                    termination = "CONVERGED_LOCAL"
-                    break
+                    kicked = None
+                    while kicked is None and kicks_left > 0 and not limited:
+                        if exhausted():
+                            termination, limited = "EVALUATION_LIMIT", True
+                            break
+                        kicks_left -= 1
+                        kick_variant += 1
+                        kicked, limited, reason = kick(best, kick_variant)
+                        if reason in ("TIMEOUT", "CANCELLED"):
+                            termination = reason
+                    if limited:
+                        break
+                    if kicked is None:
+                        termination = "CONVERGED_LOCAL"
+                        break
+                    local, no_improvement = kicked, 0
+                    if exact_score(local) < exact_score(best):
+                        best = local
             else:
                 termination = "ITERATION_LIMIT"
+    if termination == "TIMEOUT" and time.monotonic() < deadline:
+        # Declared search_time_s elapsed (equal-wall-time comparison), not the job budget.
+        termination = "SEARCH_TIME_LIMIT"
     certificate: dict | None = None
     proof: dict = {}
     if config.mode in ("exact", "hybrid"):
@@ -552,6 +688,12 @@ def optimize(
         },
         "initial_score": archive[0]["score"] if archive else None,
         "evaluations": evaluations,
+        **(
+            {"budget_spent": float(spent), "screened_out": screened_out}
+            if config.screen_seeds
+            else {}
+        ),
+        **({"search_time_s": config.search_time_s} if config.search_time_s else {}),
         # Anytime profile: evaluation count and elapsed time at each new best evaluated state.
         "incumbent_curve": curve,
         "evaluations_to_best": next(
