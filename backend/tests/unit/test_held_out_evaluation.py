@@ -1,4 +1,5 @@
 import copy
+import json
 import math
 
 import pytest
@@ -415,12 +416,12 @@ def test_instance_level_comparison_uses_seq_milp_reference_and_scales():
     assert feedback["all"]["smallest_attainable_p"] == pytest.approx(0.0625)
     assert feedback["tiny"]["relative_change_of_means"] == pytest.approx(-0.2 - 0.01 / 1.0005, rel=0.05)
     assert all(r["holm_wilcoxon_exact_p"] >= r["wilcoxon_exact_p"] for r in records)
-    # Secondary metrics do not enter the primary family; its correction is never larger.
+    # Secondary metrics and per-scale rows do not enter the pre-declared primary (pooled) family.
     timed = [{**r, "wall_s": 10 * r["test_objective"]} for r in rows]
     wider = instance_comparisons(timed, lambda _: ["test_objective", "wall_s"], scales)
     assert {r["metric"] for r in wider} == {"test_objective", "wall_s"}
     for r in wider:
-        if r["metric"] == "test_objective":
+        if r["metric"] == "test_objective" and r["scale"] == "all":
             assert (
                 r["wilcoxon_exact_p"]
                 <= r["holm_primary_wilcoxon_exact_p"]
@@ -431,7 +432,7 @@ def test_instance_level_comparison_uses_seq_milp_reference_and_scales():
     assert any(
         r["holm_primary_wilcoxon_exact_p"] < r["holm_wilcoxon_exact_p"]
         for r in wider
-        if r["metric"] == "test_objective"
+        if r["metric"] == "test_objective" and r["scale"] == "all"
     )
 
 
@@ -462,3 +463,312 @@ def test_instance_comparison_adds_exact_reference_for_union_gap():
     gap = gaps["exact", "feedback"]
     assert gap["instances"] == 6 and gap["treatment_lower"] == 0
     assert gap["relative_change_of_means"] > 0
+
+
+# Gain of each arm over seq_milp (objective 100) on six instances. The differences vary in sign
+# and size so the exact p-values and their Holm corrections differ between comparisons.
+GAINS = {
+    dataset: {"seq_milp": 0, "random_search": random, "feedback_v5": feedback}
+    for dataset, random, feedback in (
+        ("tiny_a", 10, 41),
+        ("tiny_b", 20, 33),
+        ("tiny_c", 30, 52),
+        ("small_a", 5, 29),
+        ("small_b", 15, -8),
+        ("small_c", 25, 46),
+    )
+}
+SCALES = {dataset: dataset.split("_")[0] for dataset in GAINS}
+RANDOM, FEEDBACK = ("seq_milp", "random_search"), ("seq_milp", "feedback_v5")
+DIRECT = ("random_search", "feedback_v5")
+# Exact two-sided signed-rank p by hand: n differences of one sign give 2 / 2**n; one difference
+# of the other sign with rank w gives 2 * #(rank subsets with sum <= w) / 2**n.
+EXPECTED_P = {
+    RANDOM: {"tiny": 0.25, "small": 0.25, "all": 2 / 64},
+    FEEDBACK: {"tiny": 0.25, "small": 0.5, "all": 4 / 64},
+    DIRECT: {"tiny": 0.25, "small": 0.75, "all": 14 / 64},
+}
+
+
+def gain_rows(gains, experiment="E50"):
+    """Rows from {dataset: {arm: gain}}; wall_s is a secondary metric with the same ordering."""
+    return [
+        {
+            "experiment": experiment,
+            "dataset": dataset,
+            "treatment": arm,
+            "seed": 1,
+            "status": "SUCCEEDED",
+            "joint_objective": 100.0 - gain,
+            "wall_s": 10.0 - gain / 10,
+        }
+        for dataset, by_arm in gains.items()
+        for arm, gain in by_arm.items()
+    ]
+
+
+def keyed(records):
+    return {(r["metric"], r["reference"], r["treatment"], r["scale"]): r for r in records}
+
+
+METRICS = ["joint_objective", "wall_s"]
+
+
+def test_predeclared_primary_family_is_the_pooled_group_of_primary_metrics():
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    records = instance_comparisons(gain_rows(GAINS), lambda _: METRICS, SCALES)
+    rows = keyed(records)
+    assert {r["scale"] for r in records} == {"tiny", "small", "all"}
+    for (reference, treatment), by_scale in EXPECTED_P.items():
+        for scale, p in by_scale.items():
+            row = rows["joint_objective", reference, treatment, scale]
+            assert row["wilcoxon_exact_p"] == pytest.approx(p)
+    pooled = {
+        k: r["holm_primary_wilcoxon_exact_p"]
+        for k, r in rows.items()
+        if r["holm_primary_wilcoxon_exact_p"] is not None
+    }
+    # Holm over the pooled p-values 2/64, 4/64, 14/64 (multipliers 3, 2, 1); nothing else counts.
+    assert pooled == pytest.approx(
+        {
+            ("joint_objective", *RANDOM, "all"): 6 / 64,
+            ("joint_objective", *FEEDBACK, "all"): 8 / 64,
+            ("joint_objective", *DIRECT, "all"): 14 / 64,
+        }
+    )
+    # The full-table column keeps every metric and scale: 18 tests, smallest p 2/64.
+    assert rows["joint_objective", *RANDOM, "all"]["holm_wilcoxon_exact_p"] == pytest.approx(0.5625)
+    assert all(r["holm_wilcoxon_exact_p"] is not None for r in records)
+
+
+def test_scale_holm_corrects_primary_metrics_within_each_scale():
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    rows = keyed(instance_comparisons(gain_rows(GAINS), lambda _: METRICS, SCALES))
+    # tiny: 0.25 x3 -> 0.75 each. small: 0.25, 0.5, 0.75 -> 0.75, 1.0, 1.0. all: as the family.
+    expected = {
+        "tiny": {RANDOM: 0.75, FEEDBACK: 0.75, DIRECT: 0.75},
+        "small": {RANDOM: 0.75, FEEDBACK: 1.0, DIRECT: 1.0},
+        "all": {RANDOM: 6 / 64, FEEDBACK: 8 / 64, DIRECT: 14 / 64},
+    }
+    for scale, by_pair in expected.items():
+        for (reference, treatment), value in by_pair.items():
+            row = rows["joint_objective", reference, treatment, scale]
+            assert row["holm_scale_wilcoxon_exact_p"] == pytest.approx(value)
+            assert (
+                rows["wall_s", reference, treatment, scale]["holm_scale_wilcoxon_exact_p"] is None
+            )
+
+
+@pytest.mark.parametrize("scales", [{dataset: "tiny" for dataset in GAINS}, None])
+def test_single_scale_experiment_keeps_its_primary_family(scales):
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    records = instance_comparisons(gain_rows(GAINS), lambda _: METRICS, scales)
+    assert {r["scale"] for r in records} == {"tiny" if scales else "unknown"}
+    expected = {RANDOM: 6 / 64, FEEDBACK: 8 / 64, DIRECT: 14 / 64}
+    for column in ("holm_primary_wilcoxon_exact_p", "holm_scale_wilcoxon_exact_p"):
+        found = {
+            (r["reference"], r["treatment"]): r[column]
+            for r in records
+            if r["metric"] == "joint_objective"
+        }
+        assert found == pytest.approx(expected)
+        assert all(r[column] is None for r in records if r["metric"] == "wall_s")
+
+
+def test_primary_family_pools_the_primary_rows_across_experiments():
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    solo = {f"solo_{i}": {"seq_milp": 0, "feedback_v5": 10 + i} for i in range(6)}
+    rows = gain_rows(GAINS) + gain_rows(solo, "E51")
+    scales = {**SCALES, **{dataset: "tiny" for dataset in solo}}
+    records = instance_comparisons(rows, lambda _: ["joint_objective"], scales)
+    found = {(r["experiment"], r["scale"], r["reference"], r["treatment"]): r for r in records}
+    assert {r["scale"] for r in records if r["experiment"] == "E51"} == {"tiny"}
+    # E50 contributes its three pooled rows (2/64, 4/64, 14/64), E51 its only row (2/64).
+    expected = {
+        ("E50", "all", *RANDOM): 8 / 64,
+        ("E50", "all", *FEEDBACK): 8 / 64,
+        ("E50", "all", *DIRECT): 14 / 64,
+        ("E51", "tiny", *FEEDBACK): 8 / 64,
+    }
+    column = "holm_primary_wilcoxon_exact_p"
+    assert {k: r[column] for k, r in found.items() if r[column] is not None} == pytest.approx(
+        expected
+    )
+    # Per-scale Holm never mixes experiments: the lone E51 row is its own group.
+    assert found["E51", "tiny", *FEEDBACK]["holm_scale_wilcoxon_exact_p"] == pytest.approx(2 / 64)
+    assert found["E50", "tiny", *RANDOM]["holm_scale_wilcoxon_exact_p"] == pytest.approx(0.75)
+
+
+@pytest.mark.parametrize("sequential", ["seq_milp", "baseline"])
+def test_random_search_is_a_second_instance_reference(sequential):
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    gains = {
+        dataset: {(sequential if arm == "seq_milp" else arm): gain for arm, gain in by_arm.items()}
+        for dataset, by_arm in GAINS.items()
+    }
+    pairs = {
+        (r["reference"], r["treatment"])
+        for r in instance_comparisons(gain_rows(gains), lambda _: ["joint_objective"], SCALES)
+    }
+    # No (random_search -> sequential) row: it would mirror (sequential -> random_search).
+    assert pairs == {
+        (sequential, "random_search"),
+        (sequential, "feedback_v5"),
+        ("random_search", "feedback_v5"),
+    }
+    alone = {d: {k: v for k, v in by_arm.items() if k != "seq_milp"} for d, by_arm in GAINS.items()}
+    records = instance_comparisons(gain_rows(alone), lambda _: ["joint_objective"])
+    assert [(r["reference"], r["treatment"]) for r in records] == [DIRECT]
+
+
+def test_random_search_does_not_mirror_the_exact_reference_rows():
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    gains = {d: {**by_arm, "exact": 60} for d, by_arm in GAINS.items()}
+    records = instance_comparisons(gain_rows(gains), lambda _: ["joint_objective"], SCALES)
+    assert {(r["reference"], r["treatment"]) for r in records} == {
+        ("seq_milp", "exact"),
+        ("seq_milp", "random_search"),
+        ("seq_milp", "feedback_v5"),
+        ("exact", "seq_milp"),
+        ("exact", "random_search"),
+        ("exact", "feedback_v5"),
+        ("random_search", "feedback_v5"),
+    }
+
+
+def test_feedback_v5_is_a_reference_of_its_ablation_arms():
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    # W2-like: eight small instances; v5_no_surrogate loses everywhere, v5_no_heat ties on four.
+    gains = {
+        f"small_{i}": {
+            "seq_milp": 0,
+            "feedback_v5": 20 + i,
+            "v5_no_surrogate": 10 + i,
+            "v5_no_heat": 20 + i - i % 2,
+        }
+        for i in range(8)
+    }
+    scales = {dataset: "small" for dataset in gains}
+    records = instance_comparisons(gain_rows(gains), lambda _: ["joint_objective"], scales)
+    # feedback_v5 meets the ablation arms only: no mirrored (feedback_v5 -> seq_milp) row.
+    assert [(r["reference"], r["treatment"]) for r in records] == [
+        ("seq_milp", "feedback_v5"),
+        ("seq_milp", "v5_no_heat"),
+        ("seq_milp", "v5_no_surrogate"),
+        ("feedback_v5", "v5_no_heat"),
+        ("feedback_v5", "v5_no_surrogate"),
+    ]
+    rows = keyed(records)
+    lost = rows["joint_objective", "feedback_v5", "v5_no_surrogate", "small"]
+    assert lost["instances"] == 8 and lost["treatment_lower"] == 0
+    assert lost["relative_change_of_means"] > 0 and lost["wilcoxon_exact_p"] == pytest.approx(2 / 256)
+    tied = rows["joint_objective", "feedback_v5", "v5_no_heat", "small"]
+    assert tied["ties"] == 4 and tied["wilcoxon_exact_p"] == pytest.approx(2 / 16)
+    # One scale: all five rows form the primary family; four p = 2/256 -> 5 x 2/256 after Holm.
+    assert lost["holm_primary_wilcoxon_exact_p"] == pytest.approx(10 / 256)
+    assert tied["holm_primary_wilcoxon_exact_p"] == pytest.approx(2 / 16)
+    # Without v5_no_* arms (W1) feedback_v5 is no reference.
+    plain = instance_comparisons(gain_rows(GAINS), lambda _: ["joint_objective"], SCALES)
+    assert "feedback_v5" not in {r["reference"] for r in plain}
+
+
+def test_feedback_v5_reference_keeps_the_random_search_row():
+    from smart_retail.application.experiments.analysis import instance_comparisons
+
+    gains = {d: {**by_arm, "v5_no_heat": by_arm["feedback_v5"] - 3} for d, by_arm in GAINS.items()}
+    pairs = {
+        (r["reference"], r["treatment"])
+        for r in instance_comparisons(gain_rows(gains), lambda _: ["joint_objective"], SCALES)
+    }
+    # Each pair of references appears once, in the direction of the earlier reference.
+    assert pairs == {
+        ("seq_milp", "random_search"),
+        ("seq_milp", "feedback_v5"),
+        ("seq_milp", "v5_no_heat"),
+        ("random_search", "feedback_v5"),
+        ("random_search", "v5_no_heat"),
+        ("feedback_v5", "v5_no_heat"),
+    }
+
+
+def write_manifests(root, *manifests):
+    for manifest in manifests:
+        folder = root / "datasets" / manifest["dataset_id"]
+        folder.mkdir(parents=True)
+        (folder / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+
+def test_dataset_scales_from_manifests(tmp_path):
+    from smart_retail.application.experiments.reports import dataset_scales
+
+    first, second = tmp_path / "one", tmp_path / "two"
+    write_manifests(
+        first,
+        {"dataset_id": "a", "spec": {"scale": "small"}},
+        {"dataset_id": "b", "generator": "imported-seven-section-bundle"},
+    )
+    write_manifests(second, {"dataset_id": "c", "spec": {"scale": "tiny"}})
+    assert dataset_scales([first]) == {"a": "small"}
+    assert dataset_scales([first, second]) == {"a": "small", "c": "tiny"}
+
+
+def test_dataset_scales_reject_one_dataset_with_two_scales(tmp_path):
+    from smart_retail.application.experiments.reports import dataset_scales
+
+    first, second, third = tmp_path / "one", tmp_path / "two", tmp_path / "three"
+    write_manifests(first, {"dataset_id": "a", "spec": {"scale": "small"}})
+    write_manifests(second, {"dataset_id": "a", "spec": {"scale": "tiny"}})
+    write_manifests(third, {"dataset_id": "a", "spec": {"scale": "small"}})
+    with pytest.raises(ValueError, match="different scales"):
+        dataset_scales([first, second])
+    assert dataset_scales([first, third]) == {"a": "small"}
+
+
+def campaign_root(root, job_key, scale):
+    files = {
+        "identity.json": {"runtime": {}},
+        "configuration.json": {"experiments": [{"id": "E50", "metrics": ["joint_objective"]}]},
+        f"records/{job_key}.json": {"job_key": job_key, "experiment": "E50"},
+    }
+    for name, content in files.items():
+        (root / name).parent.mkdir(parents=True, exist_ok=True)
+        (root / name).write_text(json.dumps(content), encoding="utf-8")
+    write_manifests(root, {"dataset_id": "a", "spec": {"scale": scale}})
+    return root
+
+
+def test_report_passes_dataset_scales_to_the_analysis(tmp_path, monkeypatch):
+    from smart_retail.application.experiments import reports
+
+    seen = {}
+
+    def capture(rows, selected, scales):
+        seen.update(selected=selected, scales=scales)
+        raise StopIteration
+
+    monkeypatch.setattr(reports, "verify_integrity", lambda _: {})
+    monkeypatch.setattr(reports, "analyze", capture)
+    root = campaign_root(tmp_path / "campaign", "k1", "small")
+    with pytest.raises(StopIteration):
+        reports.report(root, tmp_path / "out")
+    assert seen == {"selected": {"E50": ["joint_objective"]}, "scales": {"a": "small"}}
+
+
+def test_report_refuses_conflicting_scales_before_creating_the_output(tmp_path, monkeypatch):
+    from smart_retail.application.experiments import reports
+
+    monkeypatch.setattr(reports, "verify_integrity", lambda _: {})
+    roots = [
+        campaign_root(tmp_path / "one", "k1", "small"),
+        campaign_root(tmp_path / "two", "k2", "tiny"),
+    ]
+    with pytest.raises(ValueError, match="different scales"):
+        reports.report(roots, tmp_path / "out")
+    assert not (tmp_path / "out").exists()

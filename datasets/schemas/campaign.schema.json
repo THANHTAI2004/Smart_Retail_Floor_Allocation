@@ -142,6 +142,24 @@
           ],
           "default": null,
           "title": "Picker Count"
+        },
+        "layout_family": {
+          "anyOf": [
+            {
+              "enum": [
+                "grid",
+                "corner_entrance",
+                "wide",
+                "columns"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Layout Family"
         }
       },
       "required": [

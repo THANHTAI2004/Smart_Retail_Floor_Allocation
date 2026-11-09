@@ -1,0 +1,410 @@
+[
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part01.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part02.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part03.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part04.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part05.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part06.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part07.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part08.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part09.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part10.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part11.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part12.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part13.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part14.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part15.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part16.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part17.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part18.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part19.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part20.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part21.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part22.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part23.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-medium-part24.json",
+    "jobs": 6,
+    "job_time_limit_s": 3600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part01.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part02.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part03.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part04.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part05.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part06.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part07.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part08.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part09.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part10.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part11.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part12.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part13.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part14.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part15.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part16.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part17.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part18.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part19.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part20.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part21.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part22.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part23.json",
+    "jobs": 24,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-small-part24.json",
+    "jobs": 6,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part01.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part02.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part03.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part04.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part05.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part06.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part07.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part08.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part09.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part10.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part11.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W1",
+    "config": "paper-v5-w1-tiny-part12.json",
+    "jobs": 30,
+    "job_time_limit_s": 300.0
+  },
+  {
+    "block": "W2",
+    "config": "paper-v5-w2-ablation-part01.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W2",
+    "config": "paper-v5-w2-ablation-part02.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W2",
+    "config": "paper-v5-w2-ablation-part03.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W2",
+    "config": "paper-v5-w2-ablation-part04.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W2",
+    "config": "paper-v5-w2-ablation-part05.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W2",
+    "config": "paper-v5-w2-ablation-part06.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W2",
+    "config": "paper-v5-w2-ablation-part07.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  },
+  {
+    "block": "W2",
+    "config": "paper-v5-w2-ablation-part08.json",
+    "jobs": 18,
+    "job_time_limit_s": 600.0
+  }
+]

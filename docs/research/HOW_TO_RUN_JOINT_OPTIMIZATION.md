@@ -40,7 +40,7 @@ a completed campaign should be analyzed or replayed instead.
 
 `optimization.joint` is optional. Omitting it preserves the sequential/multistart
 workflow. Its `mode` selects sequential, multistart, random_search, annealing,
-feedback, exact or hybrid. Multistart and random_search evaluate seeded random walks
+feedback, genetic, exact or hybrid. Multistart and random_search evaluate seeded random walks
 of geometry-valid shelf-pose edits (T2/T3 re-optimized); random_search continues until
 `max_evaluations`. Annealing samples the feedback neighborhood uniformly and accepts
 worse moves by the Metropolis rule (`annealing_initial_temperature` relative to the
@@ -82,6 +82,50 @@ canonical config):
   can exceed it by at most one unscreened remainder. Results report `budget_spent` and
   `screened_out`; screening is rejected for exact/hybrid. Promotion reuses the
   screened seed's stages from the cache (same declared scenario set).
+
+Optional paper-v5 search controls (absent = paper-v4 behavior, omitted from the
+canonical config; design in `EXPERIMENT_DESIGN_DEEPMG.md` section 12):
+
+| Control | Default | Effect |
+|---|---|---|
+| `surrogate` | off | `walk_heat` or `walk`. Ranks T1 candidates before they are simulated: shortest walk from the entrance to each shelf's nearest pickup point on the navigation grid; categories are paired with shelves by the rearrangement inequality (hottest category on the nearest shelf). `walk_heat` weights a category by the units picked in the latest simulation plus 1, `walk` uses weight 1. Layouts without a valid topology are dropped unsimulated. The surrogate only ranks: acceptance is still strict decrease on simulation. |
+| `surrogate_pool` | off; 96 when `surrogate` is set | Number of T1 candidates sampled uniformly from all shelves (moves by `t1_steps`, rotations, swaps) per descent round before ranking. Without `surrogate` the pool is shuffled with a seed and cut at `max_actions` (the "no surrogate" ablation). Used by feedback and hybrid descent only. |
+| `compound_moves` | 0 | Number of seeded random walks that move 2..N shelves at once (from the current plan) added to the T1 candidate set. Active only when the descent is pooled (`surrogate` or `surrogate_pool` set, feedback and hybrid); otherwise accepted but inert. |
+| `restart_samples`, `restart_evaluations` | off | Warm start: `restart_samples` seeded random walks from the initial plan (the random_search generator) are ranked by the surrogate (without a surrogate they keep generation order); the first `restart_evaluations` are simulated (trace `SURROGATE_RESTART`) and descent starts from the best plan. The phase spends the same evaluation budget. `restart_evaluations` requires `restart_samples` and must not exceed it (rejected otherwise; effective cap 2,000). `restart_samples` alone does nothing. The result reports `restart_evaluations`, the evaluations spent in the phase. |
+| `search_seed_scope` | `job` | `instance`: the seed of every stochastic stream (random_search, multistart, annealing, genetic, warm start, kicks, candidate sampling) is a hash of the instance content and the job seed, so instances that share a job seed no longer share one random stream. `job` keeps the job seed. |
+| `population`, `mutation_edits` | 8, 2 | Genetic mode only: population size and shelves edited per mutation. |
+| `drop_identical_swaps` | off | `true`: the T1 neighbourhood (feedback, hybrid and annealing) omits the swap of two shelves that are physically identical (every shelf field except `id`, `x`, `y`, `rotation`, `locked` equal) when no category has `fixed_shelf_id` on either; in the pooled descent, compound walks whose layout only permutes identical shelves of the current plan (same multiset of pose and physical attributes, no fixed category on a moved shelf) are dropped too. Such edits only relabel shelves: the score does not change, but each would cost an evaluation. All generated paper-v5 shelves are identical, so every swap is dropped there. |
+
+Mode `genetic`: steady-state genetic algorithm with the same `max_evaluations` budget as
+the other search modes. A solution is the pose (x, y, rotation) of every shelf; T2/T3 are
+re-solved on each evaluation. The initial population is the initial plan plus
+(`population` - 1) random walks as in random_search. Parents come from a binary
+tournament; crossover takes each shelf's pose from one parent, and a child that violates
+geometry is retried up to 50 times and then only mutated. Mutation is a random walk of
+`mutation_edits` shelves. Duplicate children cost no budget; a child replaces the worst
+member when it is better. Trace actions are `GA_INIT` and `GA_OFFSPRING`; `surrogate` and
+`restart_*` are accepted but ignored.
+
+Declared assumptions and limits of the v5 controls:
+- Restart fields are inert outside feedback (the result reports `restart_evaluations` 0) and
+  active in hybrid, which shares the feedback descent.
+- The warm start draws its walks from the same `(seed, variant)` stream as random_search
+  (common random numbers): with the same search seed and `restart_max_step`, candidate
+  walks of the two modes coincide. This is a declared experimental assumption, not
+  independent sampling.
+- `value()` pairs free categories with the full shelf list, fixed shelves included, so on
+  instances with fixed category-to-shelf assignments it is a relaxation (slightly
+  optimistic). The paper-v5 configs have no fixed assignments.
+- The surrogate ignores queues, multi-shelf routes, T2 capacity and near/far constraints and
+  assumes an ideal T2 assignment. A bad ranking costs search time, never correctness, and is
+  not evidence of infeasibility.
+- Surrogate and pool time counts toward job wall time: a pooled `actions()` round about 6 s
+  on small and 22 s on medium; the warm start generates 128 walks (about 12.5 s per job on
+  medium) and ranks them (about 3/6/17 s on tiny/small/medium). Once the evaluation budget is
+  spent the pooled round is skipped, and walk generation stops at the search deadline
+  (`SEARCH_TIME_LIMIT`, or `TIMEOUT` at the job deadline).
+- `drop_identical_swaps` assumes that a relabel of identical shelves leaves the score
+  unchanged; with a fixed category on a shelf the swap is kept.
 
 `optimization.time_limit_s` and campaign `job_time_limit_s` accept up to 3,600 s
 (supervisor grace max(15 s, 10%)); the worker renews its 30 s lease while a job runs.

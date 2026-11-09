@@ -1,3 +1,238 @@
+# Current handoff - paper-v5 implementation complete, final review fixed (not run), 2026-11-03
+
+Request: "bạn hãy sữa lại thuật toán hay cải thiện đi mục tiêu là Q2 và Q3", "chỉ sửa và test
+không chạy thực nghiêm nha". The user approved design option B (T4-calibrated surrogate + a genetic
+algorithm baseline + multi-seed/multi-geometry instances, 3-5 day run budget). Spec:
+docs/research/EXPERIMENT_DESIGN_DEEPMG.md section 12; plan docs/superpowers/plans/2026-11-03-paper-v5-surrogate.md;
+executed task by task (ledger .superpowers/sdd/2026-11-03-paper-v5-surrogate/progress.md, git-ignored).
+Tasks 1-9 are implemented and each task was reviewed; Task 9 was fixed after its review (doc
+corrections, smoke-test assertions). The final whole-branch review (opus) answered "yes with fixes"
+(no Critical; three Important findings); all its findings were fixed in one wave (section "Final
+review fixes" below). **No experiment or campaign was run; nothing was committed or staged.**
+Closing check 2026-11-04: scoped re-review of the fix wave found all 9 findings addressed, no new
+breakage; with MongoDB started (scripts/start_mongodb.ps1) `pytest backend/tests scripts/tests -q
+-p no:cacheprovider --basetemp var/pytest-v5-final-04`: 370 passed, 3 failed (pre-existing
+scripts/tests/test_paper_recovery, paper-v2 results absent), 1 Starlette/httpx warning, 467.62 s;
+optimization/campaign schemas equal the model schemas; `git diff --check` PASS.
+Publication 2026-11-09: user authorized "Commit và push"; main was level with origin/main (0/0)
+after fetch; source unchanged since the closing check. Committed source, tests, schemas, docs,
+the plan and experiments/configs/paper-v5; Ket_qua_thuc_nghiem_lan_*.docx and the git-ignored
+.superpowers/ and var/ stay local. The paper-v5 run is still not authorized.
+
+Final review fixes (2026-11-03, after the whole-branch review):
+- No-op swaps: every generated shelf is physically identical, so a T1 swap only relabels two
+  shelves (same score, one evaluation; ~29% of the small pool, ~50% of annealing's uniform moves
+  on small and >= 78% on medium). New JointConfig control `drop_identical_swaps` (V5_CONTROLS,
+  omitted when None = paper-v4 behaviour): `neighborhood.t1_edits` skips a swap of two shelves
+  equal in every field except id/x/y/rotation/locked unless a category is fixed to one of them;
+  `t1_pool` also drops compound walks that only permute identical shelves (`relabel`). Set in
+  feedback_v5, every v5_no_* ablation and the annealing arm, which also gets `t3_scope:
+  objective` (declared: annealing differs from its paper-v4 definition, a stronger baseline).
+  feedback_v4, random_search and genetic are unchanged.
+- W2 gets direct rows: `instance_comparisons` adds `feedback_v5` as a reference when v5_no_* arms
+  exist (secondary references meet only arms that are not earlier references: no mirrored rows).
+  W2's primary family is now 5 (vs seq_milp) + 4 (feedback_v5 vs v5_no_*) = 9 test_objective rows;
+  smallest adjusted p 0.0078 x 9 ~ 0.070 > 0.05, so W2 cannot reach 0.05 and is descriptive only.
+- Medium timing (no pilot run): W1 index lists medium parts first, then small, then tiny (W2 still
+  runs first); the pooled descent no longer calls actions() once the budget is spent (the unpooled
+  paper-v4 path is unchanged); warm-start walk generation stops at the search deadline (TIMEOUT ->
+  SEARCH_TIME_LIMIT before the job deadline). The runbook adds a check of the first W1 medium part
+  (stop through the pid file if jobs approach 2,700 s of training time) and lets the owner authorize
+  one medium feedback_v5 pilot job first.
+- genetic.py: selection RNG is `Random(seed * 1000003 + SELECTION_SEED_OFFSET)` (7,340,033) instead
+  of `+ 3`, which equalled restart walk variant 3.
+- Wording: `holm_primary_wilcoxon_exact_p` is the "pre-declared primary family" (họ chính khai báo
+  trước), still exploratory; it was called "confirmatory" before. Column names unchanged.
+- New tests: identical-swap filter on/off, fixed-category exception, relabel detection, relabel
+  compound dropped, annealing neighbourhood and run without swaps/T3_LEVEL/T3_POSITION, warm-start
+  walks = random_search walks (common random numbers), no-surrogate warm start keeps generation
+  order, pooled ranking skipped once the budget is spent (unpooled path still calls actions once),
+  walk generation stops at the search deadline, golden paper-v4 trace hash (feedback_v4 settings,
+  tiny, 6 evaluations: d2d53935...458d22, identical for HEAD 0b58d04 extracted with `git archive
+  HEAD backend/src` and for this tree), feedback_v5 reference rows in instance_comparisons, medium
+  smoke for `wide` (seed 8205) and `columns` (8207), on-disk configs equal the builder.
+- Configs: the first generated set (never run) was moved to
+  var/paper-v5-configs-superseded-20261103 (69 files, content digest identical before/after the
+  move), then `$env:PYTHONPATH = "scripts"; .\.venv\Scripts\python.exe scripts\build_paper_v5_configs.py`
+  -> 68 configs + index.json, 1,008 jobs (W1 864 in 60 parts, medium first; W2 144 in 8 parts);
+  every config re-dumps through CampaignSpec with 0 mismatches and every treatment validates as
+  JointConfig; compared with the superseded set only the declared keys and the index order differ.
+  datasets/schemas/optimization.schema.json regenerated (adds drop_identical_swaps);
+  campaign.schema.json regenerates byte-identically.
+
+Final-fix verification (2026-11-03; MongoDB started with
+`powershell -ExecutionPolicy Bypass -File scripts/start_mongodb.ps1` -> "MongoDB connection and
+indexes verified"):
+- `.venv/Scripts/python.exe -m pytest backend/tests scripts/tests -q -p no:cacheprovider --basetemp var/pytest-v5-full-02`
+  -> 370 passed, 3 failed, 1 warning in 298.34 s (13:23-13:28 UTC). The 3 failures are the
+  pre-existing scripts/tests/test_paper_recovery.py::RecoveryTests (paper-v2 results absent:
+  FileNotFoundError on experiments/results/20261023-paper-v2/paper-x2b-small/configuration.json).
+- Smoke alone (`--basetemp var/pytest-v5-final-06 --durations=5`): 12 passed in 90.52 s; sequential
+  medium evaluation (2 scenario seeds) 29.0 s `wide`, 27.0 s `columns`.
+- ruff (backend/src, backend/tests, the v5 builder and its test): first run flagged one import
+  block (I001) in test_joint_search_v5.py, reformatted, then "All checks passed!" (the reformat came
+  after the full suite; the module was re-run afterwards, see the final-fix report).
+- mypy: "Success: no issues found in 108 source files". `scripts/verify_architecture.py --output
+  var/architecture-v5-02.json`: "Architecture PASS: 108 Python modules, 40 frontend modules".
+- paper-v3 (55) and paper-v4 (77) campaign configs re-dumped through CampaignSpec: 0 mismatches.
+- Report with per-item file:line, commands and outputs:
+  .superpowers/sdd/2026-11-03-paper-v5-surrogate/final-fix-report.md (git-ignored).
+
+Implemented:
+- contracts/feedback.py: JointConfig v5 controls `surrogate` (walk | walk_heat), `surrogate_pool`
+  (default 96 with a surrogate), `compound_moves`, `restart_samples`, `restart_evaluations`
+  (requires restart_samples and <= it; effective cap 2,000), `search_seed_scope` (job | instance),
+  `population` (default 8), `mutation_edits` (default 2); mode `genetic`; `V5_CONTROLS`. Absent
+  controls are omitted from dumps, so paper-v3/v4 configs keep their canonical form.
+- application/feedback: `surrogate.py` (heat, walking distance on the navigation grid, rearrangement
+  pairing, rank), `neighborhood.t1_pool` + `actions(pool_seed, deadline)`, `restarts.search_seed`
+  (instance-scoped seeds) and shared constants, coordinator warm start (trace `SURROGATE_RESTART`,
+  result `restart_evaluations`) and pooled descent, `genetic.py` (steady-state GA, trace
+  `GA_INIT`/`GA_OFFSPRING`).
+- Generator: `DatasetSpec.layout_family` (grid, corner_entrance, wide, columns); default
+  generator hashes unchanged.
+- Analysis: reports pass `dataset_scales` (per-scale instance comparisons); random_search is a second
+  reference (no mirrored row), feedback_v5 a reference of the v5_no_* arms (final fixes);
+  pre-declared primary Holm column `holm_primary_wilcoxon_exact_p` = primary
+  metrics on the pooled "all" group (or the single scale), new per-scale secondary column
+  `holm_scale_wilcoxon_exact_p`, whole-table `holm_wilcoxon_exact_p` kept for reference.
+- Configs: scripts/build_paper_v5_configs.py generated experiments/configs/paper-v5 (68 configs,
+  1,008 jobs: W1 864 = tiny 360 + small 360 + medium 144, W2 144); `scripts/run_paper_campaigns.py
+  --set paper-v5` (order W2, W1); schemas datasets/schemas/{optimization,campaign}.schema.json
+  regenerated; frontend ResearchPage.tsx option `genetic`.
+- Tests: backend/tests/unit/test_joint_search_v5.py, test_layout_families.py,
+  test_paper_v5_smoke.py (every layout family simulates on tiny and small; one feedback_v5 and one
+  genetic run on a tiny `columns` instance), test_held_out_evaluation.py additions,
+  scripts/tests/test_paper_v5_configs.py.
+- Docs: design section 12 (+ fixed-shelf relaxation line in 12.2), runbook paper-v5 section (and the
+  paper-v4 Holm sentence updated), HOW_TO_RUN_JOINT_OPTIMIZATION.md v5 controls table and genetic mode.
+
+Task 9 verification (2026-11-03, before the final review and its fixes; superseded by the
+final-fix verification above; MongoDB started with
+`powershell -ExecutionPolicy Bypass -File scripts/start_mongodb.ps1`, health check OK):
+- `.venv/Scripts/python.exe -m pytest backend/tests scripts/tests -q -p no:cacheprovider --basetemp var/pytest-v5-full-01`
+  -> 354 passed, 3 failed, 1 warning in 257.74 s. The 3 failures are
+  scripts/tests/test_paper_recovery.py::RecoveryTests (FileNotFoundError reading
+  experiments/results/20261023-paper-v2/paper-x2b-small/configuration.json: the paper-v2 results are
+  not on this machine; unrelated to paper-v5, recorded as pre-existing). The warning is the existing
+  Starlette/httpx deprecation.
+- Smoke test alone: `.venv/Scripts/python.exe -m pytest backend/tests/unit/test_paper_v5_smoke.py -q -p no:cacheprovider --basetemp var/pytest-v5-smoke-01 --durations=0`
+  -> 10 passed in 34.16 s (sequential plan per family: tiny 0.6-0.8 s, small 4.4-5.5 s; feedback_v5
+  4 evaluations with a 2-evaluation warm start 8.4 s; genetic 3.0 s). Re-run after the review fixes
+  (genetic test now also asserts GA_INIT and GA_OFFSPRING in the trace): 10 passed in 35.34 s
+  (`--basetemp var/pytest-v5-smoke-02`).
+- `.venv/Scripts/python.exe -m ruff check --config backend/pyproject.toml backend/src backend/tests scripts/build_paper_v5_configs.py scripts/tests/test_paper_v5_configs.py`
+  -> All checks passed.
+- `.venv/Scripts/python.exe -m mypy --config-file backend/pyproject.toml backend/src/smart_retail`
+  -> Success: no issues found in 108 source files.
+- `.venv/Scripts/python.exe scripts/verify_architecture.py --output var/architecture-v5-01.json`
+  -> Architecture PASS: 108 Python modules, 40 frontend modules.
+- paper-v3 (55 campaign configs) and paper-v4 (77) re-dumped through CampaignSpec: 0 mismatches
+  with the files (no new keys leak into old configs).
+- `git diff --check` -> exit 0 (no whitespace errors). Plan-touched files were normalized from CRLF
+  to LF to match the index blobs (the working tree is an autocrlf=true checkout; untouched tracked
+  files stay CRLF); `git diff --stat` line counts did not change.
+- Order of checks: the full suite, mypy, architecture and the config round-trip ran BEFORE the LF
+  normalization and the final doc edits (no production code changed after them). After the
+  normalization only a 95-test subset (backend/tests/contracts, test_held_out_evaluation.py,
+  test_paper_v5_smoke.py, scripts/tests/test_paper_v5_configs.py: 95 passed) and ruff re-ran; after
+  the review-fix edits the smoke test and ruff were re-run again (above). The full suite was not
+  re-run after the normalization.
+
+Limitations (declared, also in the runbook):
+- Frontend lint/build was not run (no node_modules); the only frontend change is one `<option>`.
+- The surrogate ranks only: it ignores queues, multi-shelf routes, T2 capacity and near/far
+  constraints; it pairs free categories with the full shelf list including fixed shelves (a
+  relaxation; paper-v5 has no fixed assignments). Every acceptance is by simulation.
+- Load calibration (orders, interval, pickers) is reused per scale from paper-v3 calibration.json,
+  measured on the grid family; it is not calibrated per layout family, so utilization differs by
+  family (read `picker_utilization` of each job).
+- The per-scale Holm column is secondary (medium has 8 instances, smallest exact p 0.0078); the
+  pre-declared primary family is the pooled "all" group. All tests stay exploratory (configs:
+  `descriptive_paired_exploratory`). Reports made before this change used the old definition.
+- E61/E62 select only `test_objective` among the primary metrics, so W2 (8 instances, one scale)
+  has 9 rows in its primary family (5 arms vs seq_milp + 4 v5_no_* arms vs feedback_v5). The
+  smallest adjusted p is 0.0078 x 9 ~ 0.070 > 0.05: W2 cannot reach 0.05 and is reported as
+  descriptive (effect sizes, wins/ties), matching the config's statistical_method
+  `descriptive_paired_exploratory`.
+- `drop_identical_swaps` assumes a relabel of identical shelves leaves the score unchanged (the
+  final review measured equal scores); the annealing arm is declared stronger than in paper-v4.
+- Warm start and random_search share the (seed, variant) walk stream (common random numbers).
+- Worst-case part wall clamp: parts of 24 small jobs and 6 medium jobs reach the 14,400 s campaign
+  ceiling if every job uses its full cap; check wall times after the first W2 part and after the
+  first W1 medium part.
+- Measured overheads that count toward job wall time: pooled actions() ~6 s per call on small and
+  ~22 s on medium; warm-start walk generation ~12.5 s per job on medium; warm-start ranking of 128
+  walks ~3/6/17 s on tiny/small/medium; one sequential medium evaluation 27-29 s (smoke). No
+  full-budget medium feedback_v5 job was timed (no pilot allowed); the final review projected
+  1,750-2,300 s against 2,700 s of training time. The ~70 h estimate (tiny 5, small 19, medium 38,
+  W2 8) is not a measurement of a v5 run.
+
+Next: the project owner reviews this work and authorizes the paper-v5 run (MongoDB running,
+`--set paper-v5` command in docs/research/PAPER_EXPERIMENT_RUNBOOK.md); the owner may first
+authorize a single medium feedback_v5 pilot job. The runner does not pause between parts: read
+the records of the first W2 part and then of `paper-v5-w1-medium-part01` (wall_s, joint_status;
+snippets in the runbook) while later parts run, and stop the runner through
+var\paper-v5-run.pid.json if part wall times approach the 14,400 s cap or medium jobs approach
+2,700 s of training time. Reports are written only after every campaign of every block has run.
+The final whole-branch review and its fix wave are done (controller re-review of the fixes is up
+to the controller). Do not edit backend/src while a campaign runs (source drift guard).
+
+---
+
+# Current handoff - paper-v4 results read and analysed (no rerun), 2026-11-03
+
+Request: "kết quả thực nghiệm v4 đang ở ổ F bạn hãy đọc và phân tích". Read-only analysis; no
+source, config or result changed; no experiment run. The run itself happened on another machine
+(ledger source path D:\Smart_Retail_Floor_Allocation\experiments\results\...).
+Copies on this machine: F:/results/paper-v4-unlimited-adaptive-20261028 (77 campaigns),
+F:/results/paper-v4-retry-20261028 (6 CANCELLED jobs replayed, 6/6 SUCCEEDED, validation PASS,
+same runtime identity 643aab175700 and config sha as the originals), F:/results/paper-v4 (an
+early cancelled start, 6/25, unused) and reports F:/reports/paper-v4-unlimited-adaptive-20261028/{V1..V5,VL}.
+The reports predate the retry (V3 has 7/10 random_search_b80, VL has 0/3 random_search).
+
+Commands: two throwaway read-only scripts in the session scratchpad run with
+.venv/Scripts/python.exe -I (results.csv/statistics.json/joint-trace.csv/raw result.json); per-scale
+instance-level exact Wilcoxon on test_objective via scipy 1.18.1.
+
+Status: 1,269 jobs; all SUCCEEDED except V3 random_search_b80 3 CANCELLED and VL random_search
+3 CANCELLED (both recovered by the retry). V3 random_search_b80: 5 jobs TIMEOUT at 68-76 evaluations
+under 3 concurrent campaigns, while the 3 replayed alone finished 80 in ~320 s (not a clean
+equal-budget arm). VL feedback_v4 TIMEOUT after 13 evaluations (~220 s each).
+
+Findings (test_objective, relative to seq_milp, per-instance mean, n=10 instances per scale):
+- V1: random_search tiny -25.9%, small -12.6%, medium -10.0%; feedback_v4 -21.5/-4.7/-2.2%;
+  feedback -14.9/-3.1/-1.6%; annealing -9.1/-1.3/-1.7%. feedback_v4 vs feedback: tiny -7.8%,
+  small -1.6% (10/10, p=0.002), medium -0.6% (p=0.58). random_search beats feedback_v4 on 30/30.
+- V2: step 3 helps random (-2.5% vs step 1, 9/10) but not guided (5 ties, p=0.31); random_step1
+  beats guided_step1 by 7%: the gap is multi-shelf perturbation, not step length or prefilter.
+- V4: kicks never fired at budget 30 (no_kicks identical to feedback_v4); prefilter and t3_scope
+  each worth ~2.2% (p=0.016); adaptive ~1.9% (p=0.06); multi-step slightly harmful (no_steps
+  -1.1%, p=0.16). feedback_v4 never evaluated a T3 move; T3 accepted 0 everywhere.
+- V3: feedback_v4 keeps improving with budget (16/30/40/80: -3.0/-4.7/-6.1/-12.1%); random_search
+  is flat (-13.4% at 16, -13.3% at 30/40, -14.4% at 80). feedback_v4_b80 ~ random_search_b40.
+- V5: screening changed nothing (random identical 10/10, feedback 9/10 ties) and cost feedback
+  +36% wall time.
+- VL: rho = 1.00 and test wait ~3,700 s (unstable queue, uncalibrated load); 7-14 evaluations
+  only; not usable for conclusions.
+
+Validity threats found:
+- All instances of a scale share the same floor geometry and the same seq_milp layout (one distinct
+  t1_objective per scale), and every random_search job uses search seed 1 (tiny 1 and 2). The random
+  stream is therefore identical across instances: in small the same candidate (#8) is best in 50/50
+  jobs and the final layout is identical; tiny #20 (seed 1) and #5 (seed 2); medium #28/#36. The
+  10/10 wins are one or two RNG draws replicated, not evidence of reliability across seeds. Tiny
+  seed 1 vs seed 2 differs by ~9% for random_search, as large as method gaps.
+- Production reports never pass `scales` to analysis.instance_comparisons, so every row has
+  scale "unknown" and per-scale inference is missing (only the unit test passes scales).
+- holm_wilcoxon_exact_p (full table) cannot reach 0.05 with 10 instances; use the primary column.
+
+Next: decide (owner) whether to (1) regenerate reports with the retry campaigns and per-scale
+scales, (2) rerun random_search/feedback_v4 with several search seeds and instances with varied
+geometry before any random-vs-guided claim, (3) recalibrate large load. Nothing committed.
+
+---
+
 # Current handoff - paper-v4: search improvements after the paper-v3 results, 2026-10-28
 
 Request: review Ket_qua_thuc_nghiem_lan_2.docx (paper-v3 results), then "thực hiện các cải thiện

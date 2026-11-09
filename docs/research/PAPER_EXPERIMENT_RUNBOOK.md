@@ -160,8 +160,126 @@ $p = Start-Process -FilePath ".\.venv\Scripts\python.exe" -ArgumentList "-u","sc
 ```
 
 Ước tính thô khoảng 80 giờ một worker (medium ngân sách 40 và trần 3.600 s/job; VL large so sánh
-cùng thời gian tìm kiếm 3.000 s; V5 sàng lọc hai mức). Có thể bỏ VL/V5 khỏi `SETS` nếu thiếu thời gian. Họ Holm chính của `instance_comparisons` là cột
-`holm_primary_wilcoxon_exact_p` (chỉ objective); `holm_wilcoxon_exact_p` vẫn gộp mọi chỉ số.
+cùng thời gian tìm kiếm 3.000 s; V5 sàng lọc hai mức). Có thể bỏ VL/V5 khỏi `SETS` nếu thiếu thời gian.
+Họ chính khai báo trước của `instance_comparisons` (định nghĩa từ paper-v5, áp dụng cho mọi báo
+cáo tạo bằng mã hiện tại; vẫn là kiểm định thăm dò) là cột `holm_primary_wilcoxon_exact_p`: chỉ các chỉ số chính
+(`test_objective`, `joint_objective`) trên nhóm gộp `all` của từng thí nghiệm (hoặc nhóm quy mô
+duy nhất); cột `holm_scale_wilcoxon_exact_p` là Holm phụ theo từng quy mô;
+`holm_wilcoxon_exact_p` gộp mọi dòng của bảng, chỉ để đối chiếu. Báo cáo paper-v4 đã tạo trước
+đó (ổ F) dùng định nghĩa cũ (chỉ objective, toàn bảng).
+
+### paper-v5 (sau kết quả paper-v4, đã cài đặt, chưa chạy)
+
+Cấu hình đã sinh ở `experiments/configs/paper-v5/` (68 file + `index.json`, 1.008 job; thiết kế ở
+mục 12 của `EXPERIMENT_DESIGN_DEEPMG.md`, tùy chọn mới ở `HOW_TO_RUN_JOINT_OPTIMIZATION.md`).
+Thứ tự khối của runner: W2 → W1; trong W1, chỉ mục xếp các phần medium trước, rồi small, rồi
+tiny (chưa có pilot paper-v5, nên thời gian job medium lộ ra sớm nhất có thể).
+
+| Khối | Mã | Nội dung | Job |
+|---|---|---|---:|
+| W2 | E62 | ablation `feedback_v5` trên small: seq_milp, feedback_v5, v5_no_surrogate, v5_no_compound, v5_no_restart, v5_no_heat; 2 instance × 4 dạng mặt bằng, seed tìm kiếm 1–3 | 144 |
+| W1 | E61 | medium 4 dạng × 2 instance, seed 1–3: seq_milp, random_search, annealing, genetic, feedback_v4, feedback_v5 | 144 |
+| W1 | E61 | small 4 dạng × 3 instance, seed 1–5, như trên | 360 |
+| W1 | E61 | tiny 4 dạng × 3 instance, seed 1–5, như trên | 360 |
+
+`feedback_v5`, mọi `v5_no_*` và `annealing` có `drop_identical_swaps: true` (không hoán đổi hai kệ
+giống hệt nhau: chỉ đổi nhãn, điểm không đổi mà tốn một lượt đánh giá); `annealing` có thêm
+`t3_scope: objective`, nên khác định nghĩa paper-v4 (baseline mạnh hơn, khai báo trong mục 12.6
+của thiết kế). `feedback_v4`, `random_search`, `genetic` không đổi.
+
+Instance mới (seed 8001+), holdout thời gian 80/20, ngân sách số lượt đánh giá như paper-v4
+(tiny 40, small 30, medium 40), mọi phương án ngẫu nhiên dùng `search_seed_scope: instance`.
+Bốn dạng mặt bằng (`layout_family`): `grid`, `corner_entrance`, `wide`, `columns`. Tải (số đơn,
+khoảng thời gian giữa các đơn, số picker) dùng lại `paper-v3/calibration.json` theo quy mô, đo trên dạng
+lưới; script sinh không chạy mô phỏng:
+
+```powershell
+$env:PYTHONPATH = "scripts"; .\.venv\Scripts\python.exe scripts\build_paper_v5_configs.py
+```
+
+Cấu hình **đã sinh sẵn**; script từ chối ghi đè thư mục `paper-v5` có sẵn, nên chỉ chạy lại khi
+đổi thiết kế (sang thư mục mới). Chạy (khi chủ đề án cho phép) bằng cùng runner với
+`--set paper-v5`; kết quả, báo cáo và journal ở `experiments/results/paper-v5`,
+`experiments/reports/paper-v5`:
+
+```powershell
+$p = Start-Process -FilePath ".\.venv\Scripts\python.exe" -ArgumentList "-u","scripts\run_paper_campaigns.py","--set","paper-v5" -WorkingDirectory (Get-Location) -RedirectStandardOutput "var\paper-v5-run.log" -RedirectStandardError "var\paper-v5-run.err.log" -WindowStyle Hidden -PassThru
+@{pid=$p.Id; started=(Get-Date).ToUniversalTime().ToString('o')} | ConvertTo-Json | Set-Content var\paper-v5-run.pid.json -Encoding utf8
+```
+
+Ước tính thô khoảng **70 giờ** thời gian job một worker (tiny 5, small 19, medium 38, W2 8 giờ),
+từ chi phí đo của paper-v4 cộng chi phí surrogate; **chưa chạy**, chủ đề án quyết định và cấp
+quyền chạy. Chi phí đo thêm trong lúc cài đặt và lần đánh giá cuối: `actions()` có pool khoảng
+6 s mỗi vòng ở small và 22 s ở medium; sinh 128 bước đi của pha khởi động khoảng 12,5 s mỗi job
+medium; xếp hạng chúng khoảng 3/6/17 s (tiny/small/medium); một lượt đánh giá kế hoạch tuần tự
+medium (2 seed kịch bản) khoảng 27–29 s trong smoke test. Các khoản này nằm trong wall time của
+job. Chủ đề án có thể cấp quyền chạy trước **một** job pilot `feedback_v5` medium (ví dụ một job
+của `paper-v5-w1-medium-part01`) trước khi chạy toàn bộ; nếu không có pilot thì dùng kiểm tra
+phần medium đầu tiên bên dưới.
+
+**Việc đầu tiên khi phần W2 đầu tiên có kết quả** (`paper-v5-w2-ablation-part01`, 18 job): đọc
+`wall_s` và `joint_status` của từng job. Runner **không dừng** sau mỗi phần mà chạy liền các phần
+kế tiếp, nên đọc các bản ghi này trong lúc các phần sau đang chạy. Báo cáo chưa có ở thời điểm
+đó: runner chỉ tạo báo cáo sau khi **mọi** campaign của **mọi** khối (W2 rồi W1) đã chạy xong
+(vòng lặp thứ hai của `run_paper_campaigns.py`). Vì vậy đọc thẳng các bản ghi:
+
+```powershell
+Get-ChildItem experiments\results\paper-v5\paper-v5-w2-ablation-part01\records -Filter *.json | ForEach-Object {
+  $r = Get-Content $_.FullName -Raw | ConvertFrom-Json
+  "{0} {1} {2} {3} {4} s {5} evals={6}" -f $r.treatment, $r.dataset, $r.seed, $r.status, [math]::Round($r.wall_s), $r.joint_status, $r.joint_evaluations }
+```
+
+Kỳ vọng: mọi job `SUCCEEDED`; `joint_status` của `seq_milp` là `COMPLETED`; các phương án tìm
+kiếm thường là `EVALUATION_LIMIT` (phương án feedback có thể là `CONVERGED_LOCAL`, hiếm khi
+`ITERATION_LIMIT`; `genetic` ở khối W1 có thể là `NEIGHBORHOOD_EXHAUSTED`). `TIMEOUT`, `FAILED`
+hoặc bất kỳ trạng thái nào khác: dừng lại và điều tra trước khi để chạy tiếp. Trần wall của mỗi
+phần là `min(14.400 s, max(600 s, số job × (trần/job + 5 s)))`; phần small 24 job (trần 600 s) và
+phần medium 6 job (trần 3.600 s) chạm trần 14.400 s nếu mọi job dùng hết thời gian. Nếu tổng
+`wall_s` dự kiến của một phần (trung bình `wall_s` × số job) gần trần đó, dừng runner bằng pid
+trong `var\paper-v5-run.pid.json` (và các tiến trình python con của nó, như ở mục 3), tách nhỏ
+phần đó rồi chạy lại lệnh (xem `NOT_EXECUTED_RESOURCE_LIMIT` ở mục 4). Không sửa `.py` trong `backend/src` khi đang chạy (mục 3).
+
+**Việc thứ hai: phần medium đầu tiên của W1** (`paper-v5-w1-medium-part01`, 6 job = 6 phương án
+của một instance × seed, chạy ngay sau 8 phần W2): đọc bản ghi theo cùng cách:
+
+```powershell
+Get-ChildItem experiments\results\paper-v5\paper-v5-w1-medium-part01\records -Filter *.json | ForEach-Object {
+  $r = Get-Content $_.FullName -Raw | ConvertFrom-Json
+  "{0} {1} {2} {3} {4} s {5} evals={6}" -f $r.treatment, $r.dataset, $r.seed, $r.status, [math]::Round($r.wall_s), $r.joint_status, $r.joint_evaluations }
+```
+
+Thời gian tìm kiếm của job medium là 75% trần job: 0,75 × 3.600 s = 2.700 s (holdout
+`budget_fraction` 0,25 giữ phần còn lại cho chấm điểm held-out). Kỳ vọng `feedback_v5` đạt
+`EVALUATION_LIMIT` (40 lượt) với `wall_s` rõ ràng dưới 2.700 s. Nếu `feedback_v5` (hoặc phương án
+khác) có `joint_status` `TIMEOUT`/`SEARCH_TIME_LIMIT`, hoặc `wall_s` tiến gần 2.700 s, dừng runner
+bằng pid trong `var\paper-v5-run.pid.json` (và các tiến trình python con) rồi báo chủ đề án trước
+khi chạy tiếp: phương án đó đã không dùng hết ngân sách đánh giá, nên so sánh cùng ngân sách
+không còn đúng ở medium.
+
+Phân tích. Tham chiếu của `instance_comparisons` là `seq_milp`; khi có `random_search` nó là tham
+chiếu thứ hai (so trực tiếp feedback_v5 với random_search); khi có phương án `v5_no_*` (W2),
+`feedback_v5` cũng là tham chiếu (so trực tiếp phương án đầy đủ với từng ablation). Tham chiếu
+thêm chỉ gặp các phương án không phải tham chiếu, nên không có dòng đối xứng. Ba cột Holm:
+- `holm_primary_wilcoxon_exact_p`: **họ chính khai báo trước** (vẫn là kiểm định thăm dò, không
+  phải khẳng định hiệu quả trên tổng thể). Chỉ số chính trên nhóm gộp `all` (hoặc nhóm quy mô
+  duy nhất của khối); các dòng còn lại để trống.
+- `holm_scale_wilcoxon_exact_p`: suy luận **phụ** theo từng quy mô (Holm trong từng cặp thí nghiệm
+  × quy mô). Medium chỉ có 8 instance (p nhỏ nhất 0,0078 trước hiệu chỉnh) nên rất khó đạt 0,05;
+  không dùng làm kết luận chính.
+- `holm_wilcoxon_exact_p`: Holm toàn bảng, chỉ để đối chiếu.
+
+E61 và E62 chỉ chọn `test_objective` trong các chỉ số chính (danh sách `metrics` của cấu hình không
+có `joint_objective`). W2 có 8 instance và 9 dòng trong họ chính (5 phương án so với `seq_milp` +
+4 phương án `v5_no_*` so với `feedback_v5`, đều `test_objective`): p nhỏ nhất sau hiệu chỉnh là
+0,0078 × 9 ≈ 0,070 > 0,05, nên W2 **không thể** đạt 0,05 kể cả khi thắng 8/8 instance. W2 chỉ
+được báo cáo ở dạng mô tả (độ lớn hiệu ứng, số instance thắng/hòa), khớp với `statistical_method`
+`descriptive_paired_exploratory` trong cấu hình; không dùng W2 làm kết luận ý nghĩa thống kê.
+
+Giới hạn khai báo: ρ thực tế lệch theo dạng mặt bằng (tải chưa hiệu chỉnh theo dạng; đọc
+`picker_utilization` của từng job); surrogate bỏ qua hàng đợi và đường đi nối nhiều kệ, chỉ xếp
+hạng, mọi chấp nhận dựa trên mô phỏng; mô phỏng và dữ liệu là SYNTHETIC; hai chuỗi bước đi ngẫu
+nhiên của khởi động feedback_v5 và random_search dùng chung `(seed, variant)` (khai báo ở
+`HOW_TO_RUN_JOINT_OPTIMIZATION.md`); không viết "tối ưu toàn cục" hay "kiểm chứng thực tế".
 
 ## 3. Chạy
 
@@ -224,7 +342,10 @@ không resume được với cùng cấu hình; cần tách nhỏ hơn và chạ
    - `instance_comparisons.csv`: **bảng suy luận chính**. Đơn vị là instance (trung bình các
      seed/fold dùng chung với tham chiếu), tham chiếu là `seq_milp`, Wilcoxon chính xác hai phía,
      tách theo quy mô (`scale`) và gộp (`all`), Holm trên toàn bảng. Cột `smallest_attainable_p`
-     cho biết p nhỏ nhất có thể với số instance đó.
+     cho biết p nhỏ nhất có thể với số instance đó. Với báo cáo nhiều quy mô (paper-v5): họ chính
+     khai báo trước là `holm_primary_wilcoxon_exact_p` trên nhóm `all`, `holm_scale_wilcoxon_exact_p`
+     là Holm phụ theo quy mô, `random_search` là tham chiếu thứ hai và `feedback_v5` là tham chiếu
+     của các ablation `v5_no_*` (xem mục paper-v5 ở mục 2).
    - `results/<phương-án>/*_file_sum_ok.txt`: tham số, từng fold, tổng kết (bố cục deepmg; thiếu
      `_ok` nghĩa là phương án chưa đủ job).
    - `comparisons.csv`: so theo cặp (seed, fold) với `baseline`, chỉ để thăm dò; với dữ liệu k-fold

@@ -20,7 +20,14 @@ class Objective(BaseModel):
 class JointConfig(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
     mode: Literal[
-        "sequential", "multistart", "random_search", "annealing", "feedback", "exact", "hybrid"
+        "sequential",
+        "multistart",
+        "random_search",
+        "annealing",
+        "feedback",
+        "genetic",
+        "exact",
+        "hybrid",
     ] = "feedback"
     scenario_seeds: list[int] = Field(default=[11], min_length=1, max_length=10)
     scenario_seed_policy: Literal["fixed", "job_seed_offsets"] = "fixed"
@@ -66,11 +73,32 @@ class JointConfig(BaseModel):
     # then counts full-evaluation equivalents (seed simulations / len(scenario_seeds)).
     screen_seeds: int | None = Field(default=None, ge=1, le=9)
     screen_margin: float | None = Field(default=None, ge=0, le=1)
+    # paper-v5 search controls. None keeps the paper-v4 behavior and canonical form.
+    # Surrogate ranking of T1 candidates ("walk_heat": category-heat-weighted pick-walk
+    # distance, "walk": unweighted) over a pool of surrogate_pool candidates per round.
+    surrogate: Literal["walk", "walk_heat"] | None = None
+    surrogate_pool: int | None = Field(default=None, ge=1, le=2000)
+    # Random walks moving 2..N shelves at once, compound_moves of them added to the T1 set.
+    compound_moves: int | None = Field(default=None, ge=0, le=500)
+    # Warm start: restart_samples random-walk candidates are ranked by the surrogate and the
+    # first restart_evaluations are simulated; descent starts from the best.
+    restart_samples: int | None = Field(default=None, ge=1, le=2000)
+    restart_evaluations: int | None = Field(default=None, ge=1, le=20000)
+    # "instance": the search seed is derived from the instance content and the job seed, so
+    # equal seeds on different instances do not share a random stream (None: "job").
+    search_seed_scope: Literal["job", "instance"] | None = None
+    # Genetic mode: population size and T1 edits per mutation.
+    population: int | None = Field(default=None, ge=2, le=200)
+    mutation_edits: int | None = Field(default=None, ge=1, le=50)
+    # True: no T1 swap of two physically identical shelves (and, in the pool, no compound
+    # walk that only relabels the current layout) unless a category is fixed to one of
+    # them; such edits leave the score unchanged but cost an evaluation (None: False).
+    drop_identical_swaps: bool | None = None
 
     @model_serializer(mode="wrap")
     def omit_absent_search_controls(self, handler):
         data = handler(self)
-        for key in V4_CONTROLS:
+        for key in V4_CONTROLS + V5_CONTROLS:
             if data.get(key) is None:
                 data.pop(key, None)
         return data
@@ -94,6 +122,10 @@ class JointConfig(BaseModel):
             )
         if self.screen_margin is not None and self.screen_seeds is None:
             raise ValueError("screen_margin requires screen_seeds")
+        if self.restart_evaluations is not None and (
+            self.restart_samples is None or self.restart_evaluations > self.restart_samples
+        ):
+            raise ValueError("restart_evaluations requires restart_samples and cannot exceed it")
         return self
 
 
@@ -108,4 +140,16 @@ V4_CONTROLS = (
     "search_time_s",
     "screen_seeds",
     "screen_margin",
+)
+
+V5_CONTROLS = (
+    "surrogate",
+    "surrogate_pool",
+    "compound_moves",
+    "restart_samples",
+    "restart_evaluations",
+    "search_seed_scope",
+    "population",
+    "mutation_edits",
+    "drop_identical_swaps",
 )

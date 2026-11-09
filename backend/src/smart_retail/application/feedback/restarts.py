@@ -1,10 +1,31 @@
 """Seeded feasible shelf-pose restarts for the multistart baseline."""
 
+import hashlib
 import random
 from dataclasses import replace
 
+from smart_retail.application.stage_workflow import canonical_hash
 from smart_retail.contracts.inputs import to_domain
 from smart_retail.engines.t1_layout.geometry import violations
+
+# Default shelf shift (grid steps per axis) of a restart move.
+DEFAULT_RESTART_STEP = 3
+# Consecutive already-evaluated proposals before a stochastic search stops.
+DUPLICATE_LIMIT = 50
+
+
+def search_seed(sections, seed, scope):
+    """Seed of the stochastic search; scope "instance" mixes in the instance content.
+
+    The digest covers the input groups only (not the optimization settings or runtime
+    keys), so the same instance and seed give the same stream whatever the method.
+    """
+    if scope != "instance":
+        return seed
+    content = {
+        k: sections[k] for k in sorted(sections) if k != "optimization" and not k.startswith("_")
+    }
+    return int(hashlib.sha256(f"{canonical_hash(content)}:{seed}".encode()).hexdigest()[:12], 16)
 
 
 def restart(state, sections, seed, variant, *, max_attempts=200, max_step=3, edits=None):

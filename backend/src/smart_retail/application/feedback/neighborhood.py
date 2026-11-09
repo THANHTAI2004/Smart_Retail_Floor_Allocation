@@ -2,11 +2,41 @@
 
 import copy
 import math
+import random
 from dataclasses import replace
 from itertools import zip_longest
 
+from smart_retail.application.feedback import surrogate
+from smart_retail.application.feedback.restarts import DEFAULT_RESTART_STEP, restart
+from smart_retail.application.stage_workflow import canonical_hash
 from smart_retail.contracts.inputs import to_domain
 from smart_retail.engines.t1_layout.geometry import violations
+
+DEFAULT_POOL = 96
+# Shelf fields that identify or place a shelf; every other field is physical.
+POSE_FIELDS = ("id", "x", "y", "rotation", "locked")
+
+
+def physical(shelf):
+    """Hash of a shelf's physical attributes: equal for shelves that differ only in id/pose."""
+    return canonical_hash({k: v for k, v in shelf.items() if k not in POSE_FIELDS})
+
+
+def pinned(sections):
+    """Shelves that a category is fixed to; moving their pose is never a mere relabel."""
+    return {c["fixed_shelf_id"] for c in sections["categories"]["items"] if c.get("fixed_shelf_id")}
+
+
+def relabel(sections, before, after):
+    """True when the poses `after` only permute physically identical shelves of `before`."""
+    kinds = {s["id"]: physical(s) for s in sections["shelves"]["items"]}
+    if any(after[sid] != before[sid] for sid in pinned(sections)):
+        return False
+
+    def signature(poses):
+        return sorted((tuple(round(v, 8) for v in poses[sid]), kinds[sid]) for sid in poses)
+
+    return signature(before) == signature(after)
 
 
 def resize(row, product, shelf, *, face=None, level=None, orientation=None, facings=None, x=None):
@@ -51,40 +81,31 @@ def interleave(queues, weights=None):
     return order
 
 
-def actions(state, feedback, sections, config, weights=None):
+def geometry_valid(domain, poses):
+    layout = tuple(
+        replace(s, x=poses[s.id][0], y=poses[s.id][1], rotation=poses[s.id][2])
+        for s in sorted(domain.shelves, key=lambda v: v.id)
+    )
+    return not violations(domain.floorplan, layout)
+
+
+def make_action(layer, kind, decision, changed, feedback):
+    return {
+        "layer": layer,
+        "type": kind,
+        "decisions": decision,
+        "changed": changed,
+        "evidence": feedback["diagnostic_evidence"],
+    }
+
+
+def t1_edits(state, feedback, sections, config):
+    """Single T1 edits as (type, decision, changed): shelf by shelf, hottest first, then swaps."""
     original = state["decisions"]
     shelves = sections["shelves"]["items"]
-    products = {p["sku"]: p for p in sections["products"]["items"]}
-    queues: dict[str, list[dict]] = {layer: [] for layer in config.layers}
-    steps = config.t1_steps or [1]
-    objective_t3 = config.t3_scope == "objective"
-    domain = to_domain(sections) if config.geometry_prefilter and "T1" in queues else None
-
-    def geometry_valid(poses):
-        if domain is None:
-            return True
-        layout = tuple(
-            replace(s, x=poses[s.id][0], y=poses[s.id][1], rotation=poses[s.id][2])
-            for s in sorted(domain.shelves, key=lambda v: v.id)
-        )
-        return not violations(domain.floorplan, layout)
-
-    def add(layer, kind, decision, changed):
-        if layer == "T1" and not geometry_valid(decision["poses"]):
-            return
-        if layer in queues:
-            queues[layer].append(
-                {
-                    "layer": layer,
-                    "type": kind,
-                    "decisions": decision,
-                    "changed": changed,
-                    "evidence": feedback["diagnostic_evidence"],
-                }
-            )
-
     hot = dict(feedback["hot_shelves"])
     step = sections["floorplan"].get("grid_m", 0.25)
+    steps = config.t1_steps or [1]
     for s in sorted(shelves, key=lambda v: (-hot.get(v["id"], 0), v["id"])):
         if s.get("locked"):
             continue
@@ -106,15 +127,93 @@ def actions(state, feedback, sections, config, weights=None):
             # T1 changes invalidate optimized allocation/packing; preserve only explicit pose.
             d.pop("assignment")
             d.pop("placements")
-            add("T1", "T1_ROTATE" if pose[2] != angle else "T1_MOVE", d, [sid])
+            yield "T1_ROTATE" if pose[2] != angle else "T1_MOVE", d, [sid]
     movable = [s["id"] for s in shelves if not s.get("locked")]
+    kinds = {s["id"]: physical(s) for s in shelves} if config.drop_identical_swaps else {}
+    fixed = pinned(sections) if config.drop_identical_swaps else set()
     for i, a in enumerate(movable):
         for b in movable[i + 1 :]:
+            if kinds and kinds[a] == kinds[b] and not {a, b} & fixed:
+                # Swapping identical shelves only relabels them: same score, one evaluation.
+                continue
             d = copy.deepcopy(original)
             d["poses"][a], d["poses"][b] = d["poses"][b], d["poses"][a]
             d.pop("assignment")
             d.pop("placements")
-            add("T1", "T1_SWAP", d, [a, b])
+            yield "T1_SWAP", d, [a, b]
+
+
+def t1_pool(state, feedback, sections, config, pool_seed, deadline=math.inf):
+    """Seeded sample of the geometry-valid single T1 edits plus compound random walks.
+
+    Compound walks move 2..N shelves at once. The pool is ranked by the surrogate, which
+    drops layouts without a valid topology, or shuffled when no surrogate is configured.
+    """
+    original = state["decisions"]
+    domain = to_domain(sections)
+    singles = [
+        make_action("T1", kind, d, changed, feedback)
+        for kind, d, changed in t1_edits(state, feedback, sections, config)
+        if geometry_valid(domain, d["poses"])
+    ]
+    rng = random.Random(pool_seed)
+    pool = rng.sample(singles, min(len(singles), config.surrogate_pool or DEFAULT_POOL))
+    movable = sum(1 for s in sections["shelves"]["items"] if not s.get("locked"))
+    for variant in range(1, (config.compound_moves or 0) + 1):
+        decision, changed = restart(
+            state,
+            sections,
+            pool_seed,
+            variant,
+            max_step=config.restart_max_step or DEFAULT_RESTART_STEP,
+            edits=rng.randint(2, max(2, movable)),
+        )
+        if decision is None or (
+            config.drop_identical_swaps
+            and relabel(sections, original["poses"], decision["poses"])
+        ):
+            continue
+        d = copy.deepcopy(original)
+        d["poses"] = decision["poses"]
+        d.pop("assignment")
+        d.pop("placements")
+        pool.append(make_action("T1", "T1_COMPOUND", d, changed, feedback))
+    unique: dict[str, dict] = {}
+    for action in pool:
+        if action["decisions"]["poses"] != original["poses"]:
+            unique.setdefault(canonical_hash(action["decisions"]), action)
+    pool = list(unique.values())
+    if config.surrogate:
+        heat = surrogate.heat(feedback, sections, config.surrogate == "walk_heat")
+        return surrogate.rank(pool, sections, heat, deadline)
+    rng.shuffle(pool)
+    return pool
+
+
+def actions(state, feedback, sections, config, weights=None, pool_seed=None, deadline=math.inf):
+    original = state["decisions"]
+    shelves = sections["shelves"]["items"]
+    products = {p["sku"]: p for p in sections["products"]["items"]}
+    queues: dict[str, list[dict]] = {layer: [] for layer in config.layers}
+    objective_t3 = config.t3_scope == "objective"
+    pooled = pool_seed is not None and (
+        config.surrogate_pool is not None or config.surrogate is not None
+    )
+    prefilter = config.geometry_prefilter and "T1" in queues and not pooled
+    domain = to_domain(sections) if prefilter else None
+
+    def add(layer, kind, decision, changed):
+        if layer == "T1" and domain is not None and not geometry_valid(domain, decision["poses"]):
+            return
+        if layer in queues:
+            queues[layer].append(make_action(layer, kind, decision, changed, feedback))
+
+    if pooled:
+        if "T1" in queues:
+            queues["T1"] = t1_pool(state, feedback, sections, config, pool_seed, deadline)
+    else:
+        for kind, d, changed in t1_edits(state, feedback, sections, config):
+            add("T1", kind, d, changed)
     picked = feedback["sku_pick_counts"]
     category_heat = {
         c["id"]: sum(

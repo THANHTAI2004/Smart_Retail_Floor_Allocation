@@ -61,9 +61,13 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
     rng = random.Random(spec.seed)
     shelf_count, category_count, sku_count, order_count = SIZES[spec.scale]
     order_count = spec.orders or order_count
-    cols = math.ceil(math.sqrt(shelf_count))
+    family = spec.layout_family or "grid"
+    cols = math.ceil((1.5 if family == "wide" else 1) * math.sqrt(shelf_count))
     rows = math.ceil(shelf_count / cols)
-    width, height = cols * 3 + 4, rows * 2.5 + 4
+    # Shelf pitch (x, y) in m; "columns" rotates shelves 90 degrees and swaps the pitch.
+    pitch_x, pitch_y = (2.5, 3.0) if family == "columns" else (3.0, 2.5)
+    width, height = cols * pitch_x + 4, rows * pitch_y + 4
+    entrance = [0, 1.0] if family == "corner_entrance" else [0, height / 2]
     shelves = [
         {
             "id": f"S{i}",
@@ -80,12 +84,15 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
                 }
                 for j in range(spec.levels)
             ],
-            "x": 2 + (i % cols) * 3,
-            "y": 2 + (i // cols) * 2.5,
+            "x": 2 + (i % cols) * pitch_x,
+            "y": 2 + (i // cols) * pitch_y,
             "locked": False,
         }
         for i in range(shelf_count)
     ]
+    if family == "columns":
+        for shelf in shelves:
+            shelf["rotation"] = 90
     products: list[dict] = [
         {
             "sku": f"P{i}",
@@ -149,7 +156,7 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
     data: dict = {
         "floorplan": {
             "boundary": [[0, 0], [width, 0], [width, height], [0, height]],
-            "entrance": [0, height / 2],
+            "entrance": entrance,
             "grid_m": 0.5,
             "min_aisle_m": 0.5,
             "require_connected_aisles": True,
@@ -206,6 +213,7 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
             "Not representative of a real store",
             "Feasibility subject to solver model and budget",
             f"Category assignment mode: {spec.category_assignment}",
+            *([f"Layout family: {spec.layout_family}"] if spec.layout_family else []),
         ],
     }
     return data, manifest

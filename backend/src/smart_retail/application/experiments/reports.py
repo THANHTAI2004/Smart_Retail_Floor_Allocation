@@ -71,6 +71,19 @@ def status_matrix(rows):
     ]
 
 
+def dataset_scales(roots: list[Path]) -> dict[str, str]:
+    """{dataset id: scale} from generator manifests; imported bundles carry no spec."""
+    scales: dict[str, str] = {}
+    for root in roots:
+        for path in sorted((root / "datasets").glob("*/manifest.json")):
+            manifest = read(path)
+            if "spec" in manifest:
+                dataset, scale = manifest["dataset_id"], manifest["spec"]["scale"]
+                if scales.setdefault(dataset, scale) != scale:
+                    raise ValueError(f"Dataset {dataset} has different scales across campaigns")
+    return scales
+
+
 def report(root: Path | list[Path], output: Path):
     roots = [normalize_fs_path(r) for r in (root if isinstance(root, list) else [root])]
     output = normalize_fs_path(output)
@@ -84,13 +97,14 @@ def report(root: Path | list[Path], output: Path):
         raise ValueError("Campaign has no recorded outcomes")
     if len({row["job_key"] for row in rows}) != len(rows):
         raise ValueError("The same job appears in more than one campaign")
+    scales = dataset_scales(roots)
     output.mkdir(parents=True, exist_ok=False)
     configurations = [read(r / "configuration.json") for r in roots]
     selected: dict[str, list[str]] = {}
     for configuration in configurations:
         for e in configuration["experiments"]:
             selected[e["id"]] = sorted(set(selected.get(e["id"], [])) | set(e["metrics"]))
-    statistics = analyze(rows, selected)
+    statistics = analyze(rows, selected, scales)
     write(output / "results.json", rows, immutable=True)
     write(output / "statistics.json", statistics, immutable=True)
     table(output / "results.csv", rows)

@@ -55,6 +55,7 @@
             "random_search",
             "annealing",
             "feedback",
+            "genetic",
             "exact",
             "hybrid"
           ],
@@ -344,6 +345,134 @@
           ],
           "default": null,
           "title": "Screen Margin"
+        },
+        "surrogate": {
+          "anyOf": [
+            {
+              "enum": [
+                "walk",
+                "walk_heat"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Surrogate"
+        },
+        "surrogate_pool": {
+          "anyOf": [
+            {
+              "maximum": 2000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Surrogate Pool"
+        },
+        "compound_moves": {
+          "anyOf": [
+            {
+              "maximum": 500,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Compound Moves"
+        },
+        "restart_samples": {
+          "anyOf": [
+            {
+              "maximum": 2000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Restart Samples"
+        },
+        "restart_evaluations": {
+          "anyOf": [
+            {
+              "maximum": 20000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Restart Evaluations"
+        },
+        "search_seed_scope": {
+          "anyOf": [
+            {
+              "enum": [
+                "job",
+                "instance"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Search Seed Scope"
+        },
+        "population": {
+          "anyOf": [
+            {
+              "maximum": 200,
+              "minimum": 2,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Population"
+        },
+        "mutation_edits": {
+          "anyOf": [
+            {
+              "maximum": 50,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mutation Edits"
+        },
+        "drop_identical_swaps": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Drop Identical Swaps"
         }
       },
       "title": "JointConfig",

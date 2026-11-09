@@ -23,11 +23,13 @@ class DatasetSpec(Contract):
     orders: int | None = Field(default=None, ge=2, le=20000)
     order_interval_s: float | None = Field(default=None, gt=0, le=86400)
     picker_count: int | None = Field(default=None, ge=1, le=100)
+    # Floor-plan family (paper-v5). None and "grid" keep the original grid geometry.
+    layout_family: Literal["grid", "corner_entrance", "wide", "columns"] | None = None
 
     @model_serializer(mode="wrap")
     def omit_absent_calibration(self, handler):
         data = handler(self)
-        for key in ("orders", "order_interval_s", "picker_count"):
+        for key in ("orders", "order_interval_s", "picker_count", "layout_family"):
             if data.get(key) is None:
                 data.pop(key, None)
         return data

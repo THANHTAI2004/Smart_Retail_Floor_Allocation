@@ -21,10 +21,12 @@ from smart_retail.contracts.experiments import CampaignSpec
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 # Block order per config set. paper-v4 runs the diagnostic designs (step/guidance,
-# ablation, budget) before the confirmatory main comparison V1.
+# ablation, budget) before the confirmatory main comparison V1; paper-v5 runs the
+# feedback_v5 ablation W2 before the main comparison W1.
 SETS = {
     "paper-v3": ["X1", "X1b", "X4", "X2", "X5", "X6", "X3"],
     "paper-v4": ["V2", "V4", "V3", "V1", "VL", "V5"],
+    "paper-v5": ["W2", "W1"],
 }
 CONFIGS = ROOT / "experiments" / "configs" / "paper-v3"
 RESULTS = ROOT / "experiments" / "results" / "paper-v3"

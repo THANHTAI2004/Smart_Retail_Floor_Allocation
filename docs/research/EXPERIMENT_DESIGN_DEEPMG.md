@@ -316,4 +316,127 @@ Tổng 1.269 job, thứ tự V2 → V4 → V3 → V1 → VL → V5. Ước tính
 80 giờ một worker (V1 medium ~17 h, V5 ~17 h, VL ~6 h). Giới hạn còn lại: số lượt đánh giá của
 large chưa đo (VL so sánh theo thời gian nên không cần số này); large chỉ có 3 instance và tải
 chưa hiệu chỉnh; margin sàng lọc 2% là giả định khai báo, chưa hiệu chỉnh.
-Họ kiểm định chính cho Holm: chỉ `test_objective`; chỉ số phụ báo cáo riêng.
+Họ kiểm định chính cho Holm: các chỉ số mục tiêu (`test_objective`; `joint_objective` khi không có
+tập thử tách riêng); chỉ số phụ báo cáo riêng.
+
+## 12. paper-v5 (2026-11-03): surrogate hiệu chỉnh bằng phản hồi T4, GA, nhiều seed
+
+Nguồn: phân tích kết quả paper-v4 (mục đầu HANDOFF.md, 2026-11-03). Chủ dự án chọn hướng B
+(surrogate), thêm GA làm baseline, ngân sách chạy 3–5 ngày, chỉ sửa mã và kiểm thử, **không
+chạy thực nghiệm**. Mục tiêu bài báo Q2–Q3.
+
+### 12.1. Chẩn đoán từ kết quả paper-v4 và mã nguồn
+
+- random_search thắng feedback_v4 ở 30/30 instance (tiny −25,9%, small −12,6%, medium −10,0% so
+  với seq_milp; feedback_v4 −21,5/−4,7/−2,2%), nhưng mọi instance cùng quy mô có cùng hình học
+  và mọi job dùng seed tìm kiếm 1 (tiny thêm seed 2): cùng một chuỗi ứng viên lặp lại, small chọn
+  ứng viên #8 ở 50/50 job. Đây là một lần bốc ngẫu nhiên, không phải độ tin cậy của phương pháp.
+- `seq_milp` không tối ưu T1 (`layout_mode: fixed` giữ lưới của bộ sinh); mọi cải thiện đến từ
+  sắp xếp lại kệ. T3 không có nước nào được chấp nhận.
+- Lân cận feedback xếp theo kệ nóng rồi cắt ở `max_actions` = 24: với 12 kệ có 156 nước dời
+  (4 hướng × 3 bước + xoay) đứng trước 66 nước hoán đổi, nên mỗi vòng chỉ dời 1–2 kệ nóng nhất
+  0,5 m; layout tốt nhất của random_search xoay 3 kệ và hoán đổi nhiều kệ cùng lúc.
+- Nước đi sai topology vẫn tốn một lượt đánh giá (`assess` cộng ngân sách trước khi giải).
+- T2 phân lại nhóm hàng sau mỗi thay đổi T1 theo khoảng cách chim bay có trọng số nhu cầu;
+  T4 tính quãng đường trên lưới đi bộ. Dựng lưới đo được: 23/44/120/307 ms cho tiny/small/
+  medium/large, so với khoảng 1/6/30 s một lượt mô phỏng.
+- Báo cáo không truyền `scales` vào `instance_comparisons` (mọi dòng `unknown`).
+
+### 12.2. Surrogate `walk_heat` (`application/feedback/surrogate.py`)
+
+Với một layout ứng viên: dựng lưới bằng `engines.navigation` (layout không liên thông hoặc có
+kệ không lấy hàng được bị loại, không tốn ngân sách); quãng đường ngắn nhất d_s từ lối vào tới
+điểm lấy hàng của từng kệ; độ nóng h_c của nhóm hàng c = số đơn vị lấy trong lần mô phỏng gần
+nhất của plan hiện tại + 1. Ghép nhóm nóng nhất với kệ gần nhất, mỗi nhóm một kệ
+(bất đẳng thức sắp xếp lại): surrogate = Σ h_(i) × d_(i) với h giảm dần, d tăng dần; nhóm có
+`fixed_shelf_id` dùng d của kệ cố định, khi số nhóm vượt số kệ thì danh sách kệ được lặp lại. `walk` dùng
+h_c = 1 (ablation "bỏ độ nóng"). Đơn vị mét × đơn vị hàng; chỉ dùng để xếp hạng.
+
+Giả định khai báo: bỏ qua hàng đợi, đường đi nối nhiều kệ trong một đơn, sức chứa T2 và ràng
+buộc gần/xa; giả định T2 xếp lý tưởng. Mọi chấp nhận và mọi kết luận dựa trên mô phỏng.
+Nới lỏng: nhóm không cố định được ghép với toàn bộ danh sách kệ, kể cả kệ đã dành cho nhóm cố
+định, nên với instance có gán cố định surrogate hơi lạc quan (paper-v5 không có instance như vậy).
+
+### 12.3. `feedback_v5` = feedback_v4 + các tùy chọn mới
+
+Tùy chọn mới của `JointConfig` (vắng mặt = hành vi paper-v4, không ghi vào dạng chuẩn):
+
+| Trường | Ý nghĩa | Mặc định khi vắng |
+|---|---|---|
+| `surrogate` | `walk_heat` hoặc `walk`: xếp hạng ứng viên T1 bằng surrogate | tắt |
+| `surrogate_pool` | số ứng viên T1 lấy mẫu đều mỗi vòng (mọi kệ: dời theo `t1_steps`, xoay, hoán đổi) trước khi xếp hạng | tắt; khi bật surrogate: 96 |
+| `compound_moves` | số bước đi ngẫu nhiên dời 2..N kệ cùng lúc (từ plan hiện tại) thêm vào tập | 0 |
+| `restart_samples`, `restart_evaluations` | pha khởi động: sinh `restart_samples` bước đi ngẫu nhiên từ plan ban đầu (như random_search), xếp hạng bằng surrogate (không có surrogate: giữ thứ tự sinh), mô phỏng `restart_evaluations` ứng viên đầu, hạ dốc từ ứng viên tốt nhất | tắt |
+| `search_seed_scope` | `instance`: seed tìm kiếm = hàm băm (nội dung instance, seed job); áp dụng cho random_search, annealing, genetic, khởi động, kick và lấy mẫu tập ứng viên | `job` (seed job) |
+| `drop_identical_swaps` | `true`: bỏ nước hoán đổi T1 giữa hai kệ giống hệt nhau về vật lý (mọi trường trừ `id`, `x`, `y`, `rotation`, `locked`) khi không nhóm hàng nào cố định (`fixed_shelf_id`) vào một trong hai kệ; trong tập ứng viên có pool còn bỏ bước đi phức hợp chỉ hoán vị các kệ giống nhau của plan hiện tại. Nước như vậy chỉ đổi nhãn kệ: điểm không đổi nhưng tốn một lượt đánh giá (khoảng 29% tập ứng viên small; khoảng 50% nước của annealing ở small, ≥ 78% ở medium) | tắt |
+
+Khi bật `surrogate_pool` mà tắt surrogate (ablation "bỏ surrogate"), tập ứng viên được xáo
+trộn có seed rồi cắt ở `max_actions`. T2 vẫn xen kẽ theo `layer_allocation`, quy tắc chấp nhận
+(giảm chặt trên mô phỏng), `policy`, `patience`, kick như paper-v4. Thời gian dựng lưới cho
+surrogate tính vào wall time của job (đo khi cài đặt: một vòng `actions()` có pool khoảng 6 s ở
+small, 22 s ở medium; sinh 128 bước đi khởi động khoảng 12,5 s mỗi job medium, xếp hạng chúng
+khoảng 17 s ở medium). Khi đã hết ngân sách, vòng có pool không được tính nữa; việc sinh bước đi
+khởi động dừng ở hạn thời gian tìm kiếm.
+
+### 12.4. Baseline `genetic`
+
+Mode mới `genetic`, cùng ngân sách số lượt đánh giá. Mã hóa: tọa độ và góc của mọi kệ (T2/T3 giải
+lại khi đánh giá). Quần thể ban đầu: plan ban đầu + (`population` − 1) bước đi ngẫu nhiên như
+random_search. Trạng thái ổn định: chọn cha mẹ giải đấu 2; lai đều theo kệ (mỗi kệ lấy tọa độ của
+cha hoặc mẹ); con vi phạm hình học được thử lại tối đa 50 lần rồi chỉ đột biến; đột biến bằng
+bước đi ngẫu nhiên `mutation_edits` kệ; con trùng không tốn ngân sách; con thay cá thể kém nhất nếu
+tốt hơn. Trường mới: `population` (mặc định 8), `mutation_edits` (mặc định 2).
+
+### 12.5. Bộ sinh: `DatasetSpec.layout_family`
+
+Vắng mặt = lưới hiện tại (dạng chuẩn và hash không đổi). `corner_entrance`: lối vào ở
+(0; 1,0) gần góc tây nam. `wide`: số cột = ⌈1,5·√n⌉, mặt bằng rộng và nông hơn. `columns`: kệ
+xoay 90°, bước 2,5 m theo x và 3 m theo y. Mọi dạng được kiểm tra hình học/topology bằng test.
+Tải dùng lại `paper-v3/calibration.json` theo quy mô (không mô phỏng khi sinh cấu hình); ρ thực tế
+lệch theo dạng mặt bằng là giới hạn khai báo, `picker_utilization` có trong từng job.
+
+### 12.6. Thiết kế paper-v5 (`scripts/build_paper_v5_configs.py`, chưa chạy)
+
+Holdout thời gian 80/20, `search_seed_scope: instance` cho mọi phương án ngẫu nhiên, instance mới
+(seed 8001+), 4 dạng mặt bằng (lưới, corner_entrance, wide, columns).
+
+| Khối | Mã | Instance | Seed tìm kiếm | Phương án | Job |
+|---|---|---|---|---|---:|
+| W1 | E61 | tiny 4 dạng × 3 | 1–5 | seq_milp, random_search, annealing, genetic, feedback_v4, feedback_v5 | 360 |
+| W1 | E61 | small 4 dạng × 3 | 1–5 | như trên | 360 |
+| W1 | E61 | medium 4 dạng × 2 | 1–3 | như trên | 144 |
+| W2 | E62 | small 4 dạng × 2 | 1–3 | seq_milp, feedback_v5, v5_no_surrogate, v5_no_compound, v5_no_restart, v5_no_heat | 144 |
+
+Ngân sách như paper-v4 (tiny 40, small 30, medium 40). feedback_v5 trên mỗi quy mô:
+`surrogate walk_heat`, `surrogate_pool 96`, `compound_moves 32`, `restart_samples 128`,
+`restart_evaluations` = 25% ngân sách (tiny 10, small 8, medium 10), `drop_identical_swaps
+true`; mọi phương án ablation `v5_no_*` giữ `drop_identical_swaps`. Phương án `annealing` có
+thêm `drop_identical_swaps true` và `t3_scope objective` (khai báo: annealing khác định nghĩa
+paper-v4, là baseline mạnh hơn, chỉ dùng nước có thể đổi điểm; nước đổi nhãn kệ và nước T3
+level/position không đổi điểm từng chiếm phần lớn ngân sách của nó). `feedback_v4`,
+`random_search`, `genetic` giữ định nghĩa trước. Ước tính thời gian job
+khoảng 70 giờ (tiny 5, small 19, medium 38, W2 8), từ chi phí đo trong paper-v4 cộng chi phí
+surrogate; chưa có pilot paper-v5 nên các phần medium của W1 đứng đầu chỉ mục (medium → small →
+tiny; khối W2 vẫn chạy trước W1) để thời gian job medium lộ ra sớm. Bỏ large, sàng lọc và lưới
+ngân sách (đã có ở paper-v4).
+
+### 12.7. Phân tích
+
+`reports.report` lấy quy mô từ manifest dataset và truyền vào `instance_comparisons` (bảng theo
+quy mô và gộp). Khi có `random_search`, nó là tham chiếu thứ hai (như `exact`), để kiểm định trực
+tiếp feedback_v5 so với random_search (không lặp lại cặp đối xứng random_search → seq_milp).
+Khi có phương án ablation `v5_no_*` (W2), `feedback_v5` cũng là tham chiếu, để so trực tiếp
+phương án đầy đủ với từng phương án bỏ một thành phần (cũng không có dòng đối xứng). Đơn
+vị suy luận vẫn là instance (trung bình qua seed tìm kiếm). Họ chính khai báo trước
+(`holm_primary_wilcoxon_exact_p`) chỉ gồm các chỉ số mục tiêu (`test_objective`; `joint_objective`
+khi không có tập thử tách riêng) trên nhóm gộp `all` (hoặc nhóm quy mô duy nhất khi khối chỉ có
+một quy mô); mỗi quy mô có cột Holm riêng
+(`holm_scale_wilcoxon_exact_p`, suy luận phụ); cột Holm toàn bảng giữ để đối chiếu. Mọi kiểm
+định vẫn là thăm dò (`descriptive_paired_exploratory`), không phải khẳng định hiệu quả trên tổng
+thể; "họ chính" chỉ là họ được khai báo trước khi chạy. Lý do chọn họ này: gộp mọi dòng theo quy
+mô vào một họ (~45 dòng) khiến quy mô 8 instance (p nhỏ nhất 0,0078) không bao giờ đạt 0,05. W2
+(8 instance, một quy mô) có 5 dòng `test_objective` so với seq_milp + 4 dòng feedback_v5 so với
+`v5_no_*` = 9 dòng trong họ chính: p nhỏ nhất sau hiệu chỉnh 0,0078 × 9 ≈ 0,070 > 0,05, nên W2
+không thể đạt 0,05 và chỉ được báo cáo ở dạng mô tả (độ lớn hiệu ứng, số instance thắng/hòa).
+Không viết "tối ưu toàn cục" hay "kiểm chứng thực tế"; surrogate thất bại xếp hạng không phải
+bằng chứng vô nghiệm.

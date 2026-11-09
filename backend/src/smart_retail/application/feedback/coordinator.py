@@ -6,11 +6,18 @@ import random
 import time
 from fractions import Fraction
 
+from smart_retail.application.feedback import surrogate
 from smart_retail.application.feedback.bootstrap import initialize
 from smart_retail.application.feedback.diagnostics import analyze
 from smart_retail.application.feedback.evaluator import evaluate, exact_score, prefix_score
+from smart_retail.application.feedback.genetic import evolve
 from smart_retail.application.feedback.neighborhood import actions
-from smart_retail.application.feedback.restarts import restart
+from smart_retail.application.feedback.restarts import (
+    DEFAULT_RESTART_STEP,
+    DUPLICATE_LIMIT,
+    restart,
+    search_seed,
+)
 from smart_retail.application.feedback.state import FeedbackSnapshot
 from smart_retail.application.stage_workflow import canonical_hash
 from smart_retail.contracts.feedback import JointConfig
@@ -21,10 +28,7 @@ from smart_retail.engines.joint_exact.solver import digest, solve
 from smart_retail.engines.joint_exact.verifier import inside
 from smart_retail.engines.joint_exact.verifier import verify as verify_certificate
 
-# Consecutive already-evaluated proposals before a stochastic search stops.
-DUPLICATE_LIMIT = 50
-# Defaults of the optional paper-v4 controls (contracts/feedback.py).
-DEFAULT_RESTART_STEP = 3
+# Default of the optional paper-v4 kick control (contracts/feedback.py).
 DEFAULT_KICK_EDITS = 3
 
 
@@ -117,6 +121,9 @@ def optimize(
     termination = "INITIALIZED"
     space = validate_space(config, sections) if config.finite_space is not None else None
     max_step = config.restart_max_step or DEFAULT_RESTART_STEP
+    # Seed of every stochastic search stream (the job seed unless search_seed_scope="instance").
+    seed = search_seed(sections, data.config.seed, config.search_seed_scope)
+    restart_attempts = 0
 
     def event(value):
         entry = {
@@ -216,7 +223,7 @@ def optimize(
         uniformly (layer, then edit) instead of ranked by T4 evidence, and worse moves
         are accepted by the Metropolis rule. Already evaluated decisions are skipped.
         """
-        rng = random.Random(data.config.seed * 1000003)
+        rng = random.Random(seed * 1000003)
         wide = config.model_copy(update={"max_actions": 10**9})
         current = incumbent
         steps = max(1, math.ceil(config.max_evaluations - spent))
@@ -298,7 +305,7 @@ def optimize(
         decision, changed = restart(
             incumbent,
             sections,
-            data.config.seed + 7919,
+            seed + 7919,
             variant,
             max_step=max_step,
             edits=config.kick_edits or DEFAULT_KICK_EDITS,
@@ -336,6 +343,68 @@ def optimize(
             }
         )
         return candidate, False, "PERTURBATION"
+
+    def warm_start(incumbent):
+        """paper-v5 warm start: simulate the first restart_evaluations of restart_samples walks.
+
+        The random walks start from the initial plan. With a surrogate they are ranked by it
+        (layouts without a valid topology are dropped unsimulated), otherwise they keep
+        generation order. Returns (best plan, TIMEOUT/CANCELLED or None).
+        """
+        pool, keys = [], set()
+        for variant in range(1, config.restart_samples + 1):
+            # Walk generation validates geometry per edit (~0.1 s per walk on medium).
+            if time.monotonic() >= min(deadline, search_deadline):
+                return incumbent, "TIMEOUT"
+            decision, changed = restart(incumbent, sections, seed, variant, max_step=max_step)
+            key = None if decision is None else canonical_hash(decision)
+            if key is not None and key not in seen and key not in keys:
+                keys.add(key)
+                pool.append({"decisions": decision, "changed": changed, "variant": variant})
+        if config.surrogate:
+            heat = surrogate.heat(
+                analyze(incumbent, sections), sections, config.surrogate == "walk_heat"
+            )
+            try:
+                pool = surrogate.rank(pool, sections, heat, min(deadline, search_deadline))
+            except EngineError as exc:
+                if exc.code not in ("TIMEOUT", "CANCELLED"):
+                    raise
+                return incumbent, exc.code
+        if not pool:
+            event(
+                {"status": "FAILED", "action": "SURROGATE_RESTART", "reason": "RESTART_UNAVAILABLE"}
+            )
+            return incumbent, None
+        for walk in pool[: config.restart_evaluations]:
+            if exhausted():
+                break
+            seen.add(canonical_hash(walk["decisions"]))
+            base = {"action": "SURROGATE_RESTART", "layer": "T1", "variant": walk["variant"]}
+            try:
+                candidate = assess(walk["decisions"], reference=incumbent)
+            except EngineError as exc:
+                if exc.code in ("TIMEOUT", "CANCELLED"):
+                    return incumbent, exc.code
+                if exc.code in ("CACHE_CORRUPT", "SOURCE_DRIFT"):
+                    raise
+                event({"status": "FAILED", **base, "reason": exc.code})
+                continue
+            archive.append(candidate)
+            event(
+                {
+                    "status": "EVALUATING",
+                    **base,
+                    "candidate_id": candidate["id"],
+                    "before": incumbent["score"],
+                    "after": candidate["score"],
+                    "changed": walk["changed"],
+                    **({"surrogate": walk["surrogate"]} if "surrogate" in walk else {}),
+                }
+            )
+            if exact_score(candidate) < exact_score(incumbent):
+                incumbent = candidate
+        return incumbent, None
 
     event(
         {
@@ -387,9 +456,7 @@ def optimize(
                 if config.mode == "random_search" and exhausted():
                     break
                 # T1 grid variants are ignored for fixed layouts, so restarts edit poses directly.
-                decision, changed = restart(
-                    initial, sections, data.config.seed, variant, max_step=max_step
-                )
+                decision, changed = restart(initial, sections, seed, variant, max_step=max_step)
                 if decision is None:
                     event(
                         {
@@ -438,9 +505,18 @@ def optimize(
                     best = candidate
         elif config.mode == "annealing":
             best, termination = anneal(best)
+        elif config.mode == "genetic":
+            best, termination = evolve(
+                best, sections, config, seed, assess, seen, archive, event, exhausted, max_step
+            )
         elif config.mode == "sequential":
             termination = "COMPLETED"
         else:
+            stopped = None
+            if config.restart_evaluations:
+                before = evaluations
+                best, stopped = warm_start(best)
+                restart_attempts = evaluations - before
             no_improvement = 0
             # `local` is the descent state; `best` the best plan over all kicks. Without
             # kicks they coincide, which is the paper-v3 strict-descent loop.
@@ -449,14 +525,35 @@ def optimize(
             kick_variant = 0
             # Per-layer (evaluated, accepted) counts for adaptive layer allocation.
             outcomes = {layer: [0, 0] for layer in config.layers}
-            for iteration in range(1, config.max_iterations + 1):
+            pooled = config.surrogate_pool is not None or config.surrogate is not None
+            # A warm start stopped by the time limit or cancellation skips the descent.
+            for iteration in range(1, 1 if stopped else config.max_iterations + 1):
+                if pooled and exhausted():
+                    # The pooled T1 queue costs seconds to rank: skip it once the budget is spent.
+                    termination = "EVALUATION_LIMIT"
+                    break
                 feedback = analyze(local, sections)
                 weights = (
                     {layer: (a + 1) / (n + 2) for layer, (n, a) in outcomes.items()}
                     if config.layer_allocation == "adaptive"
                     else None
                 )
-                proposals = actions(local, feedback, sections, config, weights)
+                try:
+                    proposals = actions(
+                        local,
+                        feedback,
+                        sections,
+                        config,
+                        weights,
+                        pool_seed=seed * 1000003 + 15485863 * iteration,
+                        deadline=min(deadline, search_deadline),
+                    )
+                except EngineError as exc:
+                    # Surrogate ranking of the pooled T1 queue stops at the search deadline.
+                    if exc.code not in ("TIMEOUT", "CANCELLED"):
+                        raise
+                    termination = exc.code
+                    break
                 event(
                     {
                         "status": "IMPROVING",
@@ -585,7 +682,7 @@ def optimize(
                     if exact_score(local) < exact_score(best):
                         best = local
             else:
-                termination = "ITERATION_LIMIT"
+                termination = stopped or "ITERATION_LIMIT"
     if termination == "TIMEOUT" and time.monotonic() < deadline:
         # Declared search_time_s elapsed (equal-wall-time comparison), not the job budget.
         termination = "SEARCH_TIME_LIMIT"
@@ -694,6 +791,7 @@ def optimize(
             else {}
         ),
         **({"search_time_s": config.search_time_s} if config.search_time_s else {}),
+        **({"restart_evaluations": restart_attempts} if config.restart_evaluations else {}),
         # Anytime profile: evaluation count and elapsed time at each new best evaluated state.
         "incumbent_curve": curve,
         "evaluations_to_best": next(

@@ -38,6 +38,8 @@ BOOTSTRAP_SEED = 20261023
 TOLERANCE = 1e-10
 # Instance-level reference: the strongest sequential pipeline when present.
 REFERENCE_ARMS = ("seq_milp", "baseline")
+# Further references compared only with non-reference arms (no mirrored rows).
+SECONDARY_REFERENCES = ("random_search", "feedback_v5")
 # Primary Holm family of instance_comparisons (held-out objective, else training objective).
 PRIMARY_METRICS = ("test_objective", "joint_objective")
 
@@ -178,9 +180,14 @@ def instance_comparisons(rows, metrics_of, scales: dict[str, str] | None = None)
     Per instance, arm values are averaged over the (seed, cv_fold) units shared with the
     reference arm (seq_milp, else baseline). When an ``exact`` arm exists (X1), every arm
     is also compared with it: the gap to the certified optimum of the declared space.
-    Folds and seeds of one instance are not independent, so the instance is the unit of
-    the exact Wilcoxon test. Results are reported per scale and pooled; Holm runs over
-    the whole table.
+    ``random_search``, when present, is a further reference (strongest unguided baseline),
+    and so is ``feedback_v5`` when ``v5_no_*`` ablation arms are present; these two meet
+    only non-reference arms. Folds and seeds of one instance are not independent, so the
+    instance is the unit of the exact Wilcoxon test. Results are reported per scale and
+    pooled. Three Holm columns: ``holm_primary`` is the pre-declared primary family (primary
+    metrics on each experiment's pooled "all" group, else its single scale), ``holm_scale``
+    corrects primary metrics within one (experiment, scale) group, ``holm_wilcoxon_exact_p``
+    runs over the whole table. All tests are exploratory (no population-level claim).
     """
     scales = scales or {}
     records = []
@@ -190,6 +197,13 @@ def instance_comparisons(rows, metrics_of, scales: dict[str, str] | None = None)
         # X1: the certified optimum of the declared space is a second reference (the gap).
         if "exact" in arms:
             references.append("exact")
+        # paper-v5: random_search is the strongest unguided baseline; feedback_v5 is tested
+        # against it directly.
+        if "random_search" in arms and "random_search" not in references:
+            references.append("random_search")
+        # paper-v5 ablation: each v5_no_* arm is tested against the full feedback_v5.
+        if "feedback_v5" in arms and any(a.startswith("v5_no_") for a in arms):
+            references.append("feedback_v5")
         datasets = sorted({r["dataset"] for r in rows if r["experiment"] == experiment})
         for reference, metric in (
             (reference, metric) for reference in references for metric in metrics_of(experiment)
@@ -206,6 +220,11 @@ def instance_comparisons(rows, metrics_of, scales: dict[str, str] | None = None)
                             statistics.mean(values[arm][u] for u in common),
                         )
             for arm, by_dataset in sorted(pairs.items()):
+                # random_search and feedback_v5 meet the other arms, not the earlier
+                # references: (random_search -> seq_milp) would mirror (seq_milp -> random_search).
+                earlier = references[: references.index(reference)]
+                if reference in SECONDARY_REFERENCES and arm in earlier:
+                    continue
                 if mixed_objectives(rows, experiment, (reference, arm), metric):
                     continue
                 groups: dict[str, list[str]] = defaultdict(list)
@@ -239,13 +258,24 @@ def instance_comparisons(rows, metrics_of, scales: dict[str, str] | None = None)
                             "smallest_attainable_p": 2 / 2 ** len(members),
                             "holm_wilcoxon_exact_p": None,
                             "holm_primary_wilcoxon_exact_p": None,
+                            "holm_scale_wilcoxon_exact_p": None,
                         }
                     )
     holm(records, "wilcoxon_exact_p", "holm_wilcoxon_exact_p")
     # Pre-declared primary family: objective metrics only (wall time, memory and component
     # metrics stay in the full-table family and are reported as secondary).
     primary = [r for r in records if r["metric"] in PRIMARY_METRICS]
-    holm(primary, "wilcoxon_exact_p", "holm_primary_wilcoxon_exact_p")
+    # Pre-declared primary family: the pooled "all" group of every experiment that has one;
+    # the per-scale rows of such an experiment are secondary. Single-scale experiments keep
+    # all rows.
+    pooled = {r["experiment"] for r in primary if r["scale"] == "all"}
+    family = [r for r in primary if r["experiment"] not in pooled or r["scale"] == "all"]
+    holm(family, "wilcoxon_exact_p", "holm_primary_wilcoxon_exact_p")
+    by_scale: dict[tuple[str, str], list[dict]] = defaultdict(list)
+    for record in primary:
+        by_scale[record["experiment"], record["scale"]].append(record)
+    for group in by_scale.values():
+        holm(group, "wilcoxon_exact_p", "holm_scale_wilcoxon_exact_p")
     return records
 
 
@@ -418,6 +448,7 @@ def analyze(
             "Failure rates include all attempted jobs; solution metrics only exist for valid results",
             "Completion rate is not a proof of feasibility/infeasibility for unsolved cases",
             "Holm adjustment is applied separately to each reported test family",
-            "instance_comparisons: the instance is the inferential unit (mean over shared seed/fold units), reference arm seq_milp else baseline, exact two-sided Wilcoxon, reported per scale and pooled",
+            "instance_comparisons: the instance is the inferential unit (mean over shared seed/fold units), exact two-sided Wilcoxon, reported per scale and pooled; references are seq_milp (else baseline), plus exact and random_search when present, and feedback_v5 when v5_no_* ablation arms are present",
+            "instance_comparisons Holm: the pre-declared primary family (holm_primary_wilcoxon_exact_p) is the primary objective metrics on the pooled 'all' group (or the single scale of an experiment); it is still exploratory, not a confirmatory efficacy claim; per-scale rows carry a separate per-scale Holm column (holm_scale_wilcoxon_exact_p); the full-table Holm column is kept for reference",
         ],
     }
