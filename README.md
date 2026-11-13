@@ -4,10 +4,11 @@ Nền tảng nghiên cứu tối ưu bố trí không gian bán lẻ, phân bổ
 và đánh giá vận hành bằng mô phỏng. Ứng dụng dùng **React/TypeScript, FastAPI và
 MongoDB với PyMongo đồng bộ**, triển khai theo kiến trúc **Modular Monolith**.
 
-Tài liệu đối chiếu mã nguồn tại checkout ngày **23/10/2026**. Kết quả audit ngày
-22/10/2026 là **SYSTEM_VERIFIED_WITH_LIMITATIONS**: 178 pytest ở mỗi đường dẫn
-dài/ngắn, 4 Vitest, 10 Playwright và 24 cổng nghiệm thu trong phạm vi xác định.
-Đây là **kết quả lịch sử**, không phải một lần chạy mới khi biên tập README.
+Tài liệu cập nhật đối chiếu mã nguồn ngày **09/11/2026** (bao gồm cải tiến thuật toán
+và bộ cấu hình paper-v5; 370 tests pass). Kết quả audit ngày 22/10/2026 là
+**SYSTEM_VERIFIED_WITH_LIMITATIONS**: 178 pytest ở mỗi đường dẫn dài/ngắn, 4 Vitest,
+10 Playwright và 24 cổng nghiệm thu trong phạm vi xác định ban đầu. Đây là
+**kết quả lịch sử**, không phải một lần chạy mới khi biên tập README.
 Xem [báo cáo và giới hạn](docs/system-audit/FINAL_SYSTEM_AUDIT.md),
 [ma trận nghiệm thu](docs/system-audit/END_TO_END_ACCEPTANCE.md) và
 [HANDOFF](HANDOFF.md) để phân biệt kiểm chứng mới với bằng chứng trước đó.
@@ -297,10 +298,12 @@ NaN/Infinity; tham chiếu được kiểm tra trước khi lưu và trước en
 | `products` | `sku`, `category_id`, kích thước m, `weight_kg`, `facings`, `stack_layers`, `clearance_m` | SKU duy nhất, category tồn tại; min/max facings và shelf kind tương thích |
 | `demand` | `arrivals_per_hour`, `horizon_s`, `customers`, `baskets`, `behavior`, `periods`, `picker_count`, `routing_policy` | Horizon ≤86.400 s; periods có thứ tự, không giao nhau; SKU hợp lệ |
 | `orders` | `orders`, `order_lines`, `placed_at`, `due_s`, `quantity` | Timestamp có múi giờ; quantity nguyên dương; mỗi đơn có line; khóa kép không trùng |
-| `optimization` | `seed`, `time_limit_s`, thuật toán, trọng số, `joint`, `memory_limit_mb` | Budget ≤300 s; 128–8.192 MiB; ít nhất một trọng số tích hợp dương |
+| `optimization` | `seed`, `time_limit_s`, thuật toán, trọng số, `joint`, `memory_limit_mb` | Budget ≤3.600 s (mặc định 30 s); 128–8.192 MiB; ít nhất một trọng số tích hợp dương |
 
 Các ví dụ sau là từng section hợp lệ và dùng chung ID. Bỏ các trường tùy chọn
 sẽ dùng mặc định của hợp đồng; đây là dữ liệu tổng hợp tối thiểu để đọc cấu trúc.
+Trình sinh dữ liệu (`DatasetSpec`) hỗ trợ 4 họ hình học mặt bằng (`layout_family`):
+`grid`, `corner_entrance`, `wide` và `columns`.
 
 ### Mặt bằng
 
@@ -733,6 +736,7 @@ quantity bằng implementation kiểm tra riêng ở application experiments.
 | Random search | Restart ngẫu nhiên có seed trên vị trí kệ tới hết `max_evaluations` | Baseline cùng ngân sách đánh giá; không chứng minh tối ưu |
 | Annealing | Cùng neighborhood với feedback, chọn bước ngẫu nhiên đều, nhận bước xấu theo Metropolis | Baseline cùng ngân sách; tách giá trị chẩn đoán T4 khỏi việc tìm kiếm thêm |
 | Feedback | KPI T4 sinh sửa quyết định, strict descent | Có thể hội tụ cục bộ trong neighborhood đã xét |
+| Genetic | Steady-state Genetic Algorithm (GA), lai ghép vị trí kệ và đột biến `mutation_edits` | Baseline cùng ngân sách `max_evaluations`; quần thể `population` |
 | Exact | Cartesian enumeration miền tường minh | Chứng minh finite/SAA nếu đủ lá và verifier PASS |
 | Hybrid | Feedback rồi exact, warm start nếu thuộc miền | Cùng giới hạn miền; cùng time/evaluation budget |
 
@@ -838,6 +842,27 @@ Pareto chỉ gồm các candidates được đánh giá, không phải toàn b�
 Cache content-addressed còn ràng buộc runtime, objective/scenario context và
 budget. Quyết định tường minh trùng nghiệm đã cache có thể tái dùng artifact đã
 kiểm tra; không chỉ dựa vào tên stage. Cache hỏng bị từ chối, không bỏ qua lỗi.
+
+### Cơ chế tìm kiếm nâng cao (Paper-v4 & Paper-v5)
+
+Để mở rộng khả năng tìm kiếm liên tầng trong các bài báo nghiên cứu, hệ thống hỗ trợ
+bổ sung các tham số điều khiển tùy chọn trong `JointConfig` (vắng mặt đồng nghĩa giữ
+nguyên hành vi chuẩn ban đầu):
+
+| Nhóm cơ chế | Tham số điều khiển | Ý nghĩa và tác động vận hành |
+|---|---|---|
+| **Mô hình đại diện (v5)** | `surrogate`, `surrogate_pool` | `walk` hoặc `walk_heat`: xếp hạng ứng viên T1 bằng đường đi ngắn nhất trên lưới navigation kết hợp bất đẳng thức sắp lại (rearrangement inequality) và nhiệt lượng bốc hàng từ mô phỏng trước; rút mẫu `surrogate_pool` (mặc định 96) trước khi chọn lọc mô phỏng T4. |
+| **Khởi động ấm (v5)** | `restart_samples`, `restart_evaluations` | Rút mẫu `restart_samples` bước đi ngẫu nhiên từ nghiệm ban đầu, xếp hạng bằng surrogate và chỉ mô phỏng `restart_evaluations` phương án tốt nhất để chọn điểm khởi đầu descent. |
+| **Bước phức hợp (v5)** | `compound_moves` | Sinh các bước di chuyển đồng thời 2..N kệ trong một lần lân cận, giúp thoát khỏi cực tiểu địa phương đơn kệ. |
+| **Lọc hoán đổi vô nghĩa (v5)** | `drop_identical_swaps` | Bỏ qua các bước hoán đổi hai kệ đồng nhất về thông số vật lý khi không có ràng buộc cố định ngành hàng, tiết kiệm lượt đánh giá mô phỏng vô ích (áp dụng cho feedback, hybrid và annealing). |
+| **Không gian hạt giống (v5)** | `search_seed_scope` | `"instance"` gắn hạt giống ngẫu nhiên với băm nội dung của từng cá thể dữ liệu, thay vì dùng chung luồng ngẫu nhiên theo job seed. |
+| **Thuật toán GA (v5)** | `population`, `mutation_edits` | Tham số kích thước quần thể (mặc định 8) và số kệ đột biến (mặc định 2) cho chế độ `genetic`. |
+| **Kiểm soát lân cận (v4)** | `t1_steps`, `geometry_prefilter` | Danh sách bước dịch chuyển lưới (ví dụ `[1, 2, 3]`); lọc trước các bước T1 vi phạm biên, cửa hoặc lối đi trước khi mô phỏng. |
+| **Phạm vi mục tiêu T3 (v4)** | `t3_scope: "objective"` | Chỉ sinh các bước sửa T3 có thể làm thay đổi điểm mục tiêu T4 (loại bỏ các thay đổi tầng/vị trí không ảnh hưởng tuyến lấy hàng). |
+| **Phân bổ thích ứng (v4)** | `layer_allocation: "adaptive"` | Chia sẻ danh sách hành động giữa các tầng theo tỷ lệ cải thiện thực tế thay vì round-robin cố định. |
+| **Iterated Local Search (v4)** | `kicks`, `kick_edits` | Khi hết kiên nhẫn (`patience`), thực hiện bước nhảy ngẫu nhiên `kick_edits` sửa đổi vị trí kệ từ incumbent để vượt qua plateau. |
+| **Ngân sách thời gian (v4)** | `search_time_s` | Giới hạn thời gian tìm kiếm thực tế (equal wall time), dành thời gian còn lại của `time_limit_s` cho xác minh và chấm điểm holdout. |
+| **Sàng lọc hai cấp độ (v4)** | `screen_seeds`, `screen_margin` | Đánh giá sơ bộ trên tập hạt giống kịch bản nhỏ `screen_seeds`, chỉ thăng hạng ứng viên vào đánh giá đầy đủ nếu chênh lệch không vượt quá `screen_margin`. Ngân sách tính theo full-evaluation equivalent. |
 
 ### Exact Joint và Hybrid
 
@@ -1060,7 +1085,8 @@ Quy trình sử dụng:
 5. Xem kết quả mặt bằng, planogram, mô phỏng; đọc assumptions và trạng thái solver.
 6. Xuất JSON/CSV ở báo cáo; **Replay** tạo lần chạy mới từ snapshot tương thích.
 7. Dùng **Thực nghiệm nghiên cứu** cho campaign: chọn config, thí nghiệm, seeds,
-   budget và mode. Exact/hybrid cần preset có finite space; chọn mode đơn thuần
+   budget và mode (hỗ trợ sequential, multistart, random_search, annealing, feedback,
+   genetic, exact, hybrid). Exact/hybrid cần preset có finite space; chọn mode đơn thuần
    trên config không có miền sẽ không tạo được mô hình hợp lệ.
 
 Một số cấu trúc lồng nhau vẫn cần JSON editor; không phải mọi trường có form
@@ -1150,11 +1176,31 @@ thiết kế hai seed 11/23, ghi nhận 38 pilot jobs/replay và 10 E13 jobs/rep
 Không đồng nhất file config gốc với config snapshot của campaign đã chạy.
 Audit xác minh cả 16 config theo schema, chưa chạy đầy đủ ma trận E01–E15.
 
+### Các chiến dịch thực nghiệm bài báo (Paper Campaign Suites)
+
+Ngoài các cấu hình cơ sở E01–E15, hệ thống phát triển các bộ chiến dịch hoàn chỉnh
+phục vụ nghiên cứu bài báo khoa học, được tổ chức thành các suite độc lập:
+
+| Bộ thực nghiệm | Quy mô và cấu hình | Trọng tâm nghiên cứu | Runner chuyên dụng |
+|---|---|---|---|
+| **paper-v3** | 55 configs, các blocks X1–X6 | Tối ưu hóa chuỗi feedback chuẩn và kiểm chứng tính hiệu quả đa tầng | `scripts/run_paper_campaigns.py --set paper-v3` |
+| **paper-v4** | 77 configs, 1.269 jobs (V1–V5, VL) | Kiểm soát không gian tìm kiếm, ILS kicks, adaptive layer, sàng lọc two-fidelity, trần thời gian 3.600 s | `scripts/run_paper_campaigns.py --set paper-v4` |
+| **paper-v5** | 68 configs, 1.008 jobs (W1 864, W2 144) | Mô hình đại diện surrogate-assisted search (`walk_heat`), baseline di truyền `genetic`, đa dạng `layout_family`, lọc `drop_identical_swaps` | `scripts/run_paper_campaigns.py --set paper-v5` |
+
+*Ghi chú về trạng thái*: Bộ cấu hình `paper-v5` đã được sinh đầy đủ qua `scripts/build_paper_v5_configs.py`,
+đáp ứng toàn bộ kiểm thử xác minh và schema, nhưng chưa kích hoạt chạy thực nghiệm tính toán (unrun configs).
+
+### Phân tích thống kê và kiểm định
+
 Analysis giữ failure rates trên mọi attempted jobs; solution KPI chỉ có khi có
 kết quả hợp lệ. Có mean/median/SD, khoảng tin cậy t và Wilson cho completion.
 So sánh ghép cặp gộp repetitions cùng seed trước; t-test/effect size chỉ khi có
-ít nhất ba seed và chênh lệch không suy biến, sau đó điều chỉnh Holm. Đây là
-thống kê khám phá, chưa phải suy luận hiệu quả trên quần thể cửa hàng.
+ít nhất ba seed và chênh lệch không suy biến. Trong các chiến dịch bài báo, phân tích
+sử dụng kiểm định Wilcoxon signed-rank chính xác với quy trình điều chỉnh Holm:
+cột `holm_primary_wilcoxon_exact_p` dành cho họ giả thuyết chính khai báo trước
+trên nhóm gộp (pooled), và `holm_scale_wilcoxon_exact_p` phân tích thứ cấp theo
+từng quy mô (scale). Đây là thống kê khám phá, chưa phải suy luận hiệu quả trên
+quần thể cửa hàng thực tế.
 
 <a id="phan-17"></a>
 
@@ -1454,9 +1500,9 @@ numerical offline rõ ràng, không phải endpoint chạy solver trong HTTP.
 
 | Nhóm | Nội dung | Cách diễn giải đúng |
 |---|---|---|
-| A — Đã triển khai, có kiểm chứng giới hạn | Queue/process, CAS/fencing, T1–T4 replay, finite proof, campaign/resume/report | Có bằng chứng trong phạm vi local synthetic và fixture xác định |
-| B — Đã triển khai nhưng có giới hạn | Heuristic neighborhoods, grid navigation, finite exact, synthetic holdout, resource sampling | Chưa bảo đảm nghiệm tốt nhất tổng quát hay hiệu quả thực tế |
-| C — Chưa triển khai hoặc chưa xác minh | Field data/calibration, đa người dùng/auth/RBAC, HA/failover, endurance, đầy đủ Large matrices | Là công việc tương lai, không phải tính năng hiện có |
+| A — Đã triển khai, có kiểm chứng giới hạn | Queue/process, CAS/fencing, T1–T4 replay, finite proof, campaign/resume/report, GA baseline, surrogate guidance (`walk_heat`), screening, layout families, drop identical swaps | Có bằng chứng trong phạm vi local synthetic và unit/smoke tests; bộ cấu hình paper-v5 đã sinh và kiểm thử schema, chưa kích hoạt chạy tính toán |
+| B — Đã triển khai nhưng có giới hạn | Heuristic neighborhoods, grid navigation, surrogate ranking (proxy hình học/nhiệt lượng bỏ qua hàng đợi), finite exact, synthetic holdout | Chưa bảo đảm nghiệm tốt nhất tổng quát hay hiệu quả thực tế |
+| C — Chưa triển khai hoặc chưa xác minh | Field data/calibration, đa người dùng/auth/RBAC, HA/failover, endurance, kết quả thực nghiệm hoàn chỉnh của ma trận paper-v5 | Là công việc tương lai, không phải tính năng hiện có |
 
 | Hướng phát triển | Điều kiện cần trước khi nhận kết luận |
 |---|---|
@@ -1466,7 +1512,7 @@ numerical offline rõ ràng, không phải endpoint chạy solver trong HTTP.
 | Crowd dynamics | Mô hình tương tác hành lang và calibration riêng, không suy từ shelf queues |
 | Multi-user deployment | Authentication, authorization, quota, audit/security review và tests |
 | Độ bền vận hành | Crash/network/failover injection, backup drill và long-duration monitoring |
-| Joint search mạnh hơn | Miền/mục tiêu rõ, validators và proof scope trước khi thay solver |
+| Thuật toán mở rộng | Đã triển khai GA, ILS kicks, surrogate guidance; việc thử nghiệm thêm metaheuristic khác cần miền/mục tiêu rõ và proof scope trước khi thay solver |
 
 Chưa có category splitting, continuous global optimality, toàn bộ Pareto frontier,
 empirical shopper calibration hay chứng minh expected objective trên mọi hành vi.
@@ -1484,6 +1530,9 @@ MILP T2 hoặc T3 tối ưu đồng nghĩa toàn hệ thống tối ưu.
 | Hợp đồng dữ liệu | [Input contracts](docs/data/input-contracts.md), [schema fixtures](datasets/schemas) |
 | Mô hình joint | [Formulation](docs/research/JOINT_OPTIMIZATION_FORMULATION.md) |
 | Sử dụng joint | [Hướng dẫn](docs/research/HOW_TO_RUN_JOINT_OPTIMIZATION.md) |
+| Thiết kế thực nghiệm bài báo | [Thiết kế DEEPMG](docs/research/EXPERIMENT_DESIGN_DEEPMG.md) |
+| Sổ tay vận hành thực nghiệm | [Runbook thực nghiệm bài báo](docs/research/PAPER_EXPERIMENT_RUNBOOK.md) |
+| Kế hoạch paper-v5 surrogate | [Kế hoạch paper-v5](docs/superpowers/plans/2026-11-03-paper-v5-surrogate.md) |
 | Trạng thái nghiên cứu | [Research status](docs/research/RESEARCH_STATUS.md), [experiment validation](docs/system-audit/EXPERIMENT_VALIDATION.md) |
 | MongoDB | [Operations](docs/migration/MONGODB_OPERATIONS.md), [Persistence checks](docs/migration/MONGODB_ONLY_ACCEPTANCE.md) |
 | Sao lưu | [BSON/GridFS backup/restore](docs/migration/MONGODB_BACKUP_RESTORE.md) |
