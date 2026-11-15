@@ -1,3 +1,4 @@
+# Vai trò: Phát lại kiểm tra nghiệm đã lưu và tính thống kê ghép cặp mang tính thăm dò cho campaign.
 """Independently audit stored witnesses and compute exploratory paired statistics."""
 
 import argparse
@@ -19,10 +20,12 @@ from smart_retail.engines.t2_allocation.validation import replay as allocation_r
 from smart_retail.engines.t3_slotting.validation import violations as packing_errors
 
 
+# Hàm read: đọc dữ liệu đầu vào từ nơi lưu trữ.
 def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+# Hàm audit: xử lý bước audit trong phạm vi module hiện tại.
 def audit(campaign: Path) -> dict:
     rows = read(campaign / "runs.json")
     successes = 0
@@ -119,6 +122,7 @@ def audit(campaign: Path) -> dict:
     }
 
 
+# Hàm paired: xử lý bước paired trong phạm vi module hiện tại.
 def paired(rows: list[dict]) -> list[dict]:
     comparisons = []
     for experiment in sorted({r["experiment"] for r in rows}):
@@ -173,6 +177,7 @@ def paired(rows: list[dict]) -> list[dict]:
     return comparisons
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("campaign", type=Path)

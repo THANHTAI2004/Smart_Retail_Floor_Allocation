@@ -1,3 +1,4 @@
+// Vai trò: Định nghĩa giao diện nhập nhóm sản phẩm, gồm giá trị mẫu và gợi ý trường dữ liệu cho trình biên tập dùng chung.
 import sample from "../projects/sample";
 export const productDefinition = {
   title: "Sản phẩm",

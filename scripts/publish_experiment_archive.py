@@ -1,3 +1,5 @@
+# Vai trò: Đóng gói kết quả thành các phần ZIP có checksum và hỗ trợ xuất bản release.
+# Việc gọi script có thể tạo thao tác lên GitHub.
 """Create verified ZIP volumes and publish them to this repository's release.
 
 Uses the already authenticated Git Credential Manager account, never stores its
@@ -30,6 +32,7 @@ STATE: dict = {}
 SECRET = re.compile(rb"(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|mongodb(?:\+srv)?://[^\s/:<>\"']+:[^\s@<>\"']+@)")
 
 
+# Hàm save_state: kiểm tra và lưu state theo quy tắc trong thân hàm.
 def save_state(**updates):
     with LOCK:
         STATE.update(updates, updated_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
@@ -45,6 +48,7 @@ def save_state(**updates):
                 time.sleep(0.05)
 
 
+# Hàm digest: xử lý bước digest trong phạm vi module hiện tại.
 def digest(path):
     h = hashlib.sha256()
     with path.open("rb") as f:
@@ -53,6 +57,7 @@ def digest(path):
     return h.hexdigest()
 
 
+# Hàm gh: xử lý bước gh trong phạm vi module hiện tại.
 def gh(args, env, check=True):
     p = subprocess.run([str(GH), *args], cwd=ROOT, env=env,
                        capture_output=True, text=True, encoding="utf-8")
@@ -61,8 +66,10 @@ def gh(args, env, check=True):
     return p
 
 
+# Hàm inventory: xử lý bước inventory trong phạm vi module hiện tại.
 def inventory():
     rows, excluded = [], []
+    # Hàm walk_error: xử lý bước walk error trong phạm vi module hiện tại.
     def walk_error(error):
         raise error
     for base, dirs, files in os.walk(DATA_ROOT / "experiments", followlinks=False, onerror=walk_error):
@@ -108,6 +115,7 @@ def inventory():
     return snapshot
 
 
+# Hàm make_volume: tạo volume theo quy tắc trong thân hàm.
 def make_volume(item):
     number, rows = item
     name = f"experiments-{number:04d}.zip"
@@ -174,6 +182,7 @@ def make_volume(item):
     return result
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     if os.name == "nt":
@@ -203,6 +212,7 @@ def main():
     uploaded = 0
     uploaded_lock = threading.Lock()
 
+    # Hàm upload_volume: xử lý bước upload volume trong phạm vi module hiện tại.
     def upload_volume(result):
         nonlocal uploaded
         assets = json.loads(gh(["api", release_api], env).stdout)["assets"]

@@ -1,9 +1,11 @@
+# Vai trò: Đọc mức sử dụng CPU và bộ nhớ của tiến trình con từ hệ điều hành để supervisor áp dụng giới hạn.
 """Child-process resource sampling using OS APIs, not supervisor memory proxies."""
 
 import os
 from pathlib import Path
 
 
+# Hàm is_alive: xử lý bước is alive trong phạm vi module hiện tại.
 def is_alive(pid: int) -> bool:
     if os.name == "nt":
         import ctypes
@@ -30,6 +32,7 @@ def is_alive(pid: int) -> bool:
         return False
 
 
+# Hàm sample: lấy mẫu dữ liệu hoặc tài nguyên cho phạm vi kiểm tra hiện tại.
 def sample(pid: int) -> dict:
     if os.name == "nt":
         import ctypes

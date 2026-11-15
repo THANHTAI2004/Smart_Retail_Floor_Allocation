@@ -1,3 +1,5 @@
+# Vai trò: Mô hình domain cho nhu cầu và kết quả mô phỏng.
+# Các kiểu nghiệp vụ không phụ thuộc HTTP hoặc driver lưu trữ; kích thước vật lý dùng đơn vị SI.
 """Business models for demand. No HTTP or ORM dependencies."""
 
 from dataclasses import dataclass, field

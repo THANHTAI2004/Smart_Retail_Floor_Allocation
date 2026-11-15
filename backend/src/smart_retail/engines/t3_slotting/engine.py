@@ -1,3 +1,5 @@
+# Vai trò: T3 xếp SKU bằng first-fit; khi mắc kẹt thử sắp lại kệ trong giới hạn.
+# Kết quả phải thỏa kiểm tra kích thước và sức chứa.
 """T3 first-fit with bounded shelf repacking after a constructive dead end."""
 
 import math
@@ -15,6 +17,7 @@ class SlotState(TypedDict):
     used: float
 
 
+# Hàm solve: giải phần bài toán thuộc module này trong các giới hạn được truyền vào.
 def solve(
     shelves: tuple[Shelf, ...],
     products: tuple[Product, ...],
@@ -36,6 +39,7 @@ def solve(
         for face in range(s.faces)
         for level in s.levels
     }
+    # Các mặt cùng tầng dùng chung giới hạn tải trọng; không cấp lại tải tối đa cho từng mặt.
     shared_load = {(s.id, level.id): 0.0 for s in shelves for level in s.levels}
     placements: list[dict] = []
     repaired_shelves: set[str] = set()
@@ -99,6 +103,7 @@ def solve(
                 break
             if placed:
                 break
+        # First-fit mắc kẹt có thể do lựa chọn vị trí trước đó; thử repack cả kệ trước khi báo thất bại.
         if not placed:
             failed_shelf = next((s for s in shelves if s.id == shelf_id), None)
             repaired = None if failed_shelf is None else repack(
@@ -116,6 +121,7 @@ def solve(
             placements = [row for row in placements if row["shelf_id"] != shelf_id] + repaired
             assert failed_shelf is not None
             repaired_shelves.add(failed_shelf.id)
+    # Phát lại toàn bộ placements để xác nhận cả nhánh first-fit và nhánh sửa kệ bằng cùng bộ kiểm tra.
     errors = violations(shelves, products, assignment, tuple(placements))
     if errors:
         raise EngineError("INVALID_SOLUTION", "; ".join(errors))

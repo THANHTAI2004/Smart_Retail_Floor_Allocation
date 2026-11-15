@@ -1,3 +1,5 @@
+# Vai trò: T1 dựng vị trí kệ theo lưới và kiểm tra hình học.
+# Tọa độ, kích thước và khoảng cách dùng mét.
 """T1 deterministic grid construction and independently callable geometry checks."""
 
 import math
@@ -12,6 +14,7 @@ from smart_retail.domain.models import EngineError, Floorplan, LayoutSolution, S
 from smart_retail.engines.t1_layout.geometry import footprint, violations
 
 
+# Hàm solve: giải phần bài toán thuộc module này trong các giới hạn được truyền vào.
 def solve(
     floor: Floorplan,
     shelves: tuple[Shelf, ...],

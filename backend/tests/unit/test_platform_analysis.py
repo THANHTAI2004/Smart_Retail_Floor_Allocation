@@ -1,14 +1,18 @@
+# Vai trò: Kiểm thử giữ job thất bại, đơn vị ghép cặp và mẫu suy biến trong phân tích.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import math
 
 from smart_retail.application.experiments.analysis import analyze, describe
 
 
+# Hàm test_singleton_and_empty_samples_do_not_invent_intervals: kiểm tra kịch bản singleton and empty samples do not invent intervals bằng các assertion trong thân hàm.
 def test_singleton_and_empty_samples_do_not_invent_intervals():
     assert describe([])["ci95"] is None
     assert describe([3])["sd"] is None
     assert describe([1, 3])["median"] == 2
 
 
+# Hàm test_failed_jobs_retained_and_duplicate_seeds_not_independent: kiểm tra kịch bản failed jobs retained and duplicate seeds not independent bằng các assertion trong thân hàm.
 def test_failed_jobs_retained_and_duplicate_seeds_not_independent():
     rows = []
     for seed in (1, 2, 3):
@@ -50,6 +54,7 @@ def test_failed_jobs_retained_and_duplicate_seeds_not_independent():
     assert 0 <= comparisons[0]["exploratory_p"] <= comparisons[0]["holm_p"] <= 1
 
 
+# Hàm test_degenerate_pairs_get_no_hypothesis_test: kiểm tra kịch bản degenerate pairs get no hypothesis test bằng các assertion trong thân hàm.
 def test_degenerate_pairs_get_no_hypothesis_test():
     rows = [
         {

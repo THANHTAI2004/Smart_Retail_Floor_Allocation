@@ -1,3 +1,4 @@
+# Vai trò: Đọc trạng thái dịch vụ đã lưu và dừng các tiến trình thuộc lượt khởi động đó theo kiểm tra trong script.
 param([switch]$StopMongoDB)
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot

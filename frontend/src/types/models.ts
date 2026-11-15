@@ -1,3 +1,5 @@
+// Vai trò: Các kiểu TypeScript cho dữ liệu API, đầu vào và kết quả.
+// Trường có hậu tố đơn vị giữ đúng ý nghĩa từ backend.
 export type Point = [number, number];
 interface Level {
   id: string;

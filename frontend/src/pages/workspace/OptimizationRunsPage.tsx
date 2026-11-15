@@ -1,9 +1,11 @@
+// Vai trò: Cấu hình tối ưu, tạo job, xem trạng thái và yêu cầu hủy hoặc phát lại lần chạy qua API.
 import { Play, RefreshCw } from "lucide-react";
 import { api } from "../../services/api";
 import type { WorkspaceModel } from "../../app/useWorkspace";
 import { Badge } from "../../components/Badge";
 import { activeStates } from "../../app/useRunState";
 
+// Cấu hình tối ưu, tạo job, xem trạng thái và yêu cầu hủy hoặc phát lại lần chạy qua API.
 export function OptimizationRunsPage({ model }: { model: WorkspaceModel }) {
   const { project, page, busy, act, setValidation, health, setRuns, runs, setSelectedRun, setMessage, validation, go } = model;
   return (<>{project && page === "runs" && (

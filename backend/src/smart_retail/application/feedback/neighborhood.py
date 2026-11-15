@@ -1,3 +1,5 @@
+# Vai trò: Sinh các thay đổi quyết định T1–T4 và sắp thứ tự theo chẩn đoán.
+# Đề xuất vẫn cần được đánh giá và kiểm tra tính khả thi.
 """Deterministic feasible-or-rejected decision edits, ranked by observed T4 evidence."""
 
 import copy
@@ -17,28 +19,33 @@ DEFAULT_POOL = 96
 POSE_FIELDS = ("id", "x", "y", "rotation", "locked")
 
 
+# Trích quyết định vật lý để so sánh hoặc sửa ứng viên mà không trộn telemetry.
 def physical(shelf):
     """Hash of a shelf's physical attributes: equal for shelves that differ only in id/pose."""
     return canonical_hash({k: v for k, v in shelf.items() if k not in POSE_FIELDS})
 
 
+# Xác định quyết định bị khóa để sinh lân cận đúng giới hạn đầu vào.
 def pinned(sections):
     """Shelves that a category is fixed to; moving their pose is never a mere relabel."""
     return {c["fixed_shelf_id"] for c in sections["categories"]["items"] if c.get("fixed_shelf_id")}
 
 
+# Nhận diện hoán vị kệ tương đương để kiểm soát các bước đổi nhãn trung tính.
 def relabel(sections, before, after):
     """True when the poses `after` only permute physically identical shelves of `before`."""
     kinds = {s["id"]: physical(s) for s in sections["shelves"]["items"]}
     if any(after[sid] != before[sid] for sid in pinned(sections)):
         return False
 
+    # Hàm signature: xử lý bước signature trong phạm vi module hiện tại.
     def signature(poses):
         return sorted((tuple(round(v, 8) for v in poses[sid]), kinds[sid]) for sid in poses)
 
     return signature(before) == signature(after)
 
 
+# Hàm resize: xử lý bước resize trong phạm vi module hiện tại.
 def resize(row, product, shelf, *, face=None, level=None, orientation=None, facings=None, x=None):
     row = dict(row)
     row.update(
@@ -60,6 +67,7 @@ def resize(row, product, shelf, *, face=None, level=None, orientation=None, faci
     return row
 
 
+# Hàm interleave: xử lý bước interleave trong phạm vi module hiện tại.
 def interleave(queues, weights=None):
     """Fair round-robin over layer queues, or smooth weighted round-robin by `weights`."""
     if weights is None:
@@ -81,6 +89,7 @@ def interleave(queues, weights=None):
     return order
 
 
+# Hàm geometry_valid: xử lý bước geometry valid trong phạm vi module hiện tại.
 def geometry_valid(domain, poses):
     layout = tuple(
         replace(s, x=poses[s.id][0], y=poses[s.id][1], rotation=poses[s.id][2])
@@ -89,6 +98,7 @@ def geometry_valid(domain, poses):
     return not violations(domain.floorplan, layout)
 
 
+# Hàm make_action: tạo action theo quy tắc trong thân hàm.
 def make_action(layer, kind, decision, changed, feedback):
     return {
         "layer": layer,
@@ -99,6 +109,7 @@ def make_action(layer, kind, decision, changed, feedback):
     }
 
 
+# Hàm t1_edits: xử lý bước t1 edits trong phạm vi module hiện tại.
 def t1_edits(state, feedback, sections, config):
     """Single T1 edits as (type, decision, changed): shelf by shelf, hottest first, then swaps."""
     original = state["decisions"]
@@ -143,6 +154,7 @@ def t1_edits(state, feedback, sections, config):
             yield "T1_SWAP", d, [a, b]
 
 
+# Tạo tập ứng viên vị trí kệ có seed để sàng lọc trước khi đánh giá mô phỏng đầy đủ.
 def t1_pool(state, feedback, sections, config, pool_seed, deadline=math.inf):
     """Seeded sample of the geometry-valid single T1 edits plus compound random walks.
 
@@ -190,6 +202,7 @@ def t1_pool(state, feedback, sections, config, pool_seed, deadline=math.inf):
     return pool
 
 
+# Sinh lân cận theo các layer được bật; thứ tự đề xuất không bảo đảm mọi ứng viên đều khả thi.
 def actions(state, feedback, sections, config, weights=None, pool_seed=None, deadline=math.inf):
     original = state["decisions"]
     shelves = sections["shelves"]["items"]
@@ -202,6 +215,7 @@ def actions(state, feedback, sections, config, weights=None, pool_seed=None, dea
     prefilter = config.geometry_prefilter and "T1" in queues and not pooled
     domain = to_domain(sections) if prefilter else None
 
+    # Hàm add: xử lý bước add trong phạm vi module hiện tại.
     def add(layer, kind, decision, changed):
         if layer == "T1" and domain is not None and not geometry_valid(domain, decision["poses"]):
             return

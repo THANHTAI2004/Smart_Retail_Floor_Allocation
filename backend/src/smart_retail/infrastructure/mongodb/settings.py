@@ -1,3 +1,4 @@
+# Vai trò: Đọc cấu hình kết nối MongoDB cho runtime hiện tại và tập hợp các tùy chọn persistence.
 import json
 import os
 import re
@@ -13,6 +14,7 @@ class Settings:
     database: str
 
     @classmethod
+    # Hàm load: nạp dữ liệu cần cho bước tiếp theo.
     def load(cls, uri=None, database=None):
         local = Path(os.getenv("SMART_RETAIL_HOME", str(Path.cwd()))) / "var/mongodb/private.json"
         uri = (

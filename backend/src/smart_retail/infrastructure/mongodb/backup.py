@@ -1,3 +1,5 @@
+# Vai trò: Sao lưu và phục hồi BSON gốc cùng GridFS cho database đã ngừng ghi.
+# Kiểm tra checksum và điều kiện đích trước khi phục hồi.
 """Native BSON backup/restore for a quiesced MongoDB database, including GridFS."""
 
 import argparse
@@ -11,6 +13,7 @@ from bson import BSON, decode_file_iter, json_util
 from smart_retail.infrastructure.mongodb.client import connect
 
 
+# Hàm inspect: xử lý bước inspect trong phạm vi module hiện tại.
 def inspect(archive):
     manifest = json.loads(archive.read("manifest.json"))
     if manifest.get("format") != "smart-retail-bson-v1":
@@ -28,6 +31,7 @@ def inspect(archive):
     return manifest
 
 
+# Hàm backup: xử lý bước backup trong phạm vi module hiện tại.
 def backup(store, destination: Path):
     """Caller must stop all writers; no cross-collection snapshot is claimed."""
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -65,6 +69,7 @@ def backup(store, destination: Path):
     return manifest
 
 
+# Hàm restore: xử lý bước restore trong phạm vi module hiện tại.
 def restore(store, source: Path):
     """Refuse existing target and validate all bytes before the first insertion."""
     if store.database.list_collection_names():
@@ -86,6 +91,7 @@ def restore(store, source: Path):
     return manifest
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("operation", choices=["backup", "restore"])

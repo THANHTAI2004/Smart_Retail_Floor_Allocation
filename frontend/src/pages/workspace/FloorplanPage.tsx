@@ -1,7 +1,9 @@
+// Vai trò: Trang bao trình biên tập mặt bằng, kết nối bản nháp và thao tác lưu của workspace.
 import { Suspense } from "react";
 import { FloorplanEditor } from "../../app/FloorplanCanvas";
 import type { WorkspaceModel } from "../../app/useWorkspace";
 
+// Trang bao trình biên tập mặt bằng, kết nối bản nháp và thao tác lưu của workspace.
 export function FloorplanPage({ model }: { model: WorkspaceModel }) {
   const { project, page, busy, addShelf, saveDrawing, mode, setMode, setDirty, floor, setFloor, dirty, shelves, setShelves } = model;
   return (<>{project && page === "floorplan" && (

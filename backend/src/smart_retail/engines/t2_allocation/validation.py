@@ -1,3 +1,4 @@
+# Vai trò: Phát lại phân bổ và tính mục tiêu từ quyết định ngành–kệ, độc lập với ma trận MILP.
 """Assignment replay independent of the MILP coefficient matrix."""
 
 import math
@@ -6,6 +7,7 @@ from smart_retail.domain.models import Category, Floorplan, Shelf
 from smart_retail.engines.t1_layout.engine import footprint
 
 
+# Tính lại sức chứa và quan hệ ngành từ assignment, không dựa vào vector biến hay ma trận solver.
 def replay(
     floor: Floorplan,
     shelves: tuple[Shelf, ...],

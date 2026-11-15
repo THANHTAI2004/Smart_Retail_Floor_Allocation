@@ -1,3 +1,4 @@
+# Vai trò: Gom các nhóm domain thành một RetailDataset để truyền đầu vào đã chuyển đổi cho luồng tối ưu.
 from dataclasses import dataclass
 from typing import Literal
 

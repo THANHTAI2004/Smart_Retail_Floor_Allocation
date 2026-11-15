@@ -1,3 +1,5 @@
+# Vai trò: Bảy nhóm đầu vào có phiên bản, kiểm tra tham chiếu và chuyển sang domain.
+# Các mô hình này cũng cung cấp JSON Schema.
 """The seven versioned input groups, also used for files and JSON Schema."""
 
 from datetime import datetime
@@ -48,6 +50,7 @@ class FloorplanInput(SectionContract):
     require_connected_aisles: bool = False
 
     @model_validator(mode="after")
+    # Hàm geometry: xử lý bước geometry trong phạm vi module hiện tại.
     def geometry(self) -> Self:
         polygon = Polygon(self.boundary)
         if not polygon.is_valid or polygon.area <= 0:
@@ -102,6 +105,7 @@ class ShelfInput(Contract):
     locked: bool = False
 
     @model_validator(mode="after")
+    # Trích quyết định vật lý để so sánh hoặc sửa ứng viên mà không trộn telemetry.
     def physical(self) -> Self:
         if (self.x is None) != (self.y is None):
             raise ValueError("Supply both x and y, or leave both empty")
@@ -122,6 +126,7 @@ class ShelvesInput(SectionContract):
     items: list[ShelfInput] = Field(default_factory=list, max_length=100)
 
     @model_validator(mode="after")
+    # Hàm unique: xử lý bước unique trong phạm vi module hiện tại.
     def unique(self) -> Self:
         unique_ids(self.items)
         if self.layout_mode == "fixed" and any(s.x is None for s in self.items):
@@ -146,6 +151,7 @@ class CategoriesInput(SectionContract):
     items: list[CategoryInput] = Field(default_factory=list, max_length=200)
 
     @model_validator(mode="after")
+    # Hàm unique: xử lý bước unique trong phạm vi module hiện tại.
     def unique(self) -> Self:
         unique_ids(self.items)
         ids = {c.id for c in self.items}
@@ -177,6 +183,7 @@ class ProductInput(Contract):
     allowed_shelf_kinds: list[str] = Field(default_factory=list, max_length=50)
 
     @model_validator(mode="after")
+    # Hàm facing_bounds: xử lý bước facing bounds trong phạm vi module hiện tại.
     def facing_bounds(self) -> Self:
         lo = self.min_facings if self.min_facings is not None else self.facings
         hi = self.max_facings if self.max_facings is not None else self.facings
@@ -189,6 +196,7 @@ class ProductsInput(SectionContract):
     items: list[ProductInput] = Field(default_factory=list, max_length=10000)
 
     @model_validator(mode="after")
+    # Hàm unique: xử lý bước unique trong phạm vi module hiện tại.
     def unique(self) -> Self:
         unique_ids(self.items, "sku")
         return self
@@ -217,6 +225,7 @@ class DemandInput(SectionContract):
     routing_policy: Literal["nearest", "return", "exact"] = "nearest"
 
     @model_validator(mode="after")
+    # Hàm intervals: xử lý bước intervals trong phạm vi module hiện tại.
     def intervals(self) -> Self:
         previous = 0.0
         for p in self.periods:
@@ -235,6 +244,7 @@ class OrderInput(Contract):
     due_s: Positive = 3600
 
     @model_validator(mode="after")
+    # Hàm timezone_required: xử lý bước timezone required trong phạm vi module hiện tại.
     def timezone_required(self) -> Self:
         if self.placed_at.tzinfo is None:
             raise ValueError("Order timestamp must include a timezone")
@@ -252,6 +262,7 @@ class OrdersInput(SectionContract):
     order_lines: list[OrderLineInput] = Field(default_factory=list, max_length=100000)
 
     @model_validator(mode="after")
+    # Hàm integrity: xử lý bước integrity trong phạm vi module hiện tại.
     def integrity(self) -> Self:
         unique_ids(self.orders)
         ids = {o.id for o in self.orders}
@@ -276,6 +287,7 @@ class HeldOutEvaluationInput(Contract):
     orders: OrdersInput
 
     @model_validator(mode="after")
+    # Hàm nonempty: xử lý bước nonempty trong phạm vi module hiện tại.
     def nonempty(self) -> Self:
         if not self.orders.orders:
             raise ValueError("Held-out evaluation requires at least one order")
@@ -302,12 +314,14 @@ class OptimizationInput(SectionContract):
     memory_limit_mb: Annotated[int, Field(ge=128, le=8192)] | None = 2048
 
     @model_validator(mode="after")
+    # Hàm objective_weights: xử lý bước objective weights trong phạm vi module hiện tại.
     def objective_weights(self) -> Self:
         if self.travel_weight + self.wait_weight + self.stock_weight <= 0:
             raise ValueError("At least one integrated objective weight must be positive")
         return self
 
     @model_serializer(mode="wrap")
+    # Hàm omit_absent_evaluation: xử lý bước omit absent evaluation trong phạm vi module hiện tại.
     def omit_absent_evaluation(self, handler):
         # Inputs without held-out orders keep their pre-existing canonical form.
         data = handler(self)
@@ -316,6 +330,7 @@ class OptimizationInput(SectionContract):
         return data
 
 
+# Hàm unique_ids: xử lý bước unique ids trong phạm vi module hiện tại.
 def unique_ids(items: list, key: str = "id") -> None:
     if len({getattr(x, key) for x in items}) != len(items):
         raise ValueError(f"Duplicate {key}")
@@ -332,6 +347,7 @@ SECTIONS: dict[str, type[Contract]] = {
 }
 
 
+# Kiểm tra khóa ngoại giữa các nhóm đầu vào để tránh lỗi chỉ xuất hiện sau khi worker bắt đầu.
 def validate_references(sections: dict) -> list[str]:
     errors = []
     shelves = {x["id"] for x in sections.get("shelves", {}).get("items", [])}
@@ -359,6 +375,7 @@ def validate_references(sections: dict) -> list[str]:
     return errors
 
 
+# Xác thực dữ liệu hợp đồng trước khi tạo đối tượng domain; domain là đầu vào dùng cho engine.
 def to_domain(sections: dict) -> d.RetailDataset:
     missing = set(SECTIONS) - sections.keys()
     if missing:

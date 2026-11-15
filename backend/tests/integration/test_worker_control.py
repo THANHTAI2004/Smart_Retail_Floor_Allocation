@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử hủy tiến trình con thật và từ chối snapshot bị sửa.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import json
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -5,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from smart_retail.workers.runner import read_progress, work_once
 
 
+# Hàm test_cancellation_kills_a_real_running_t4_child: kiểm tra kịch bản cancellation kills a real running t4 child bằng các assertion trong thân hàm.
 def test_cancellation_kills_a_real_running_t4_child(
     client, saved_project, sample, database, tmp_path
 ):
@@ -39,6 +42,7 @@ def test_cancellation_kills_a_real_running_t4_child(
     assert receipt["child_exit"] != 0
 
 
+# Hàm test_snapshot_corruption_fails_before_execution: kiểm tra kịch bản snapshot corruption fails before execution bằng các assertion trong thân hàm.
 def test_snapshot_corruption_fails_before_execution(client, saved_project, database, tmp_path):
     run = client.post(f"/api/projects/{saved_project['id']}/runs").json()
     with database[1]() as db:

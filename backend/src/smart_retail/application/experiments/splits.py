@@ -1,3 +1,5 @@
+# Vai trò: Chia đơn theo seed cho k-fold hoặc temporal holdout và áp dụng tập tương ứng vào đầu vào job.
+# Seed cố định giúp tái lập việc chia tập.
 """Deterministic order partitions for repeated stratified k-fold and temporal holdout."""
 
 import copy
@@ -11,6 +13,7 @@ from smart_retail.application.workflow import canonical_hash
 from smart_retail.contracts.experiments import EvaluationSpec
 
 
+# Hàm dominant_category: xử lý bước dominant category trong phạm vi module hiện tại.
 def dominant_category(lines: list[dict], category_of: dict[str, str]) -> str:
     units: dict[str, int] = defaultdict(int)
     for line in lines:
@@ -18,6 +21,7 @@ def dominant_category(lines: list[dict], category_of: dict[str, str]) -> str:
     return min(units, key=lambda key: (-units[key], key))
 
 
+# Hàm arrival_rate: xử lý bước arrival rate trong phạm vi module hiện tại.
 def arrival_rate(orders: list[dict]) -> float | None:
     """Orders per second over the placed_at span; None when the span is empty."""
     times = sorted(datetime.fromisoformat(o["placed_at"]).timestamp() for o in orders)
@@ -25,6 +29,7 @@ def arrival_rate(orders: list[dict]) -> float | None:
     return (len(times) - 1) / span if span > 0 else None
 
 
+# Hàm rescale: xử lý bước rescale trong phạm vi module hiện tại.
 def rescale(orders: list[dict], target_rate: float | None) -> None:
     """Scale placed_at offsets in place so the subset arrives at ``target_rate``.
 
@@ -41,6 +46,7 @@ def rescale(orders: list[dict], target_rate: float | None) -> None:
         order["placed_at"] = (start + offset * factor).isoformat()
 
 
+# Chốt ID đơn thuộc từng tập theo seed để có thể kiểm tra giao nhau và tái lập cách chia.
 def split_orders(sections: dict, spec: EvaluationSpec, seed: int) -> dict:
     """Partition order IDs; the same (orders, spec, seed) always yields the same folds."""
     orders = sections["orders"]["orders"]
@@ -98,6 +104,7 @@ def split_orders(sections: dict, spec: EvaluationSpec, seed: int) -> dict:
     return plan
 
 
+# Chỉ đưa đơn huấn luyện vào luồng tối ưu; đơn đánh giá được giữ theo cấu hình để chấm sau.
 def apply_split(sections: dict, plan: dict, fold: int, spec: EvaluationSpec) -> dict:
     """Training sections with demand re-estimated from training orders plus held-out orders."""
     if canonical_hash(sections["orders"]) != plan["orders_sha256"]:
@@ -106,6 +113,7 @@ def apply_split(sections: dict, plan: dict, fold: int, spec: EvaluationSpec) -> 
 
     population_rate = arrival_rate(sections["orders"]["orders"])
 
+    # Hàm subset: xử lý bước subset trong phạm vi module hiện tại.
     def subset(identifiers: list[str]) -> dict:
         chosen = set(identifiers)
         section = copy.deepcopy(sections["orders"])

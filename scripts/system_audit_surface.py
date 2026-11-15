@@ -1,3 +1,4 @@
+# Vai trò: Kiểm tra bề mặt đọc/ghi HTTP trên database audit riêng để đối chiếu tính nhất quán lưu trữ.
 """Read/write API surface probes in one isolated audit database; no numerical jobs."""
 
 import json
@@ -12,6 +13,7 @@ from smart_retail.contracts.tabular import TABLES
 from smart_retail.infrastructure.database import connect
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     root = Path(__file__).resolve().parents[1]
     audit = json.loads((root / "var/system-audit-current.json").read_text(encoding="utf-8"))

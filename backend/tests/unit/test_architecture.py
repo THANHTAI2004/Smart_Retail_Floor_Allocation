@@ -1,8 +1,11 @@
+# Vai trò: Kiểm thử chiều phụ thuộc kiến trúc và việc loại bỏ persistence SQL khỏi ứng dụng hiện tại.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import ast
 import importlib.util
 from pathlib import Path
 
 
+# Hàm test_dependency_direction: kiểm tra kịch bản dependency direction bằng các assertion trong thân hàm.
 def test_dependency_direction():
     root = Path(__file__).resolve().parents[2] / "src/smart_retail"
     for folder, forbidden in [
@@ -43,6 +46,7 @@ def test_dependency_direction():
                 assert not any(name.startswith(forbidden) for name in names), path
 
 
+# Hàm test_project_has_no_sql_persistence_imports_or_dependencies: kiểm tra kịch bản project has no sql persistence imports or dependencies bằng các assertion trong thân hàm.
 def test_project_has_no_sql_persistence_imports_or_dependencies():
     root = Path(__file__).resolve().parents[2]
     forbidden = ("sqlalchemy", "alembic", "psycopg", "psycopg2", "motor")

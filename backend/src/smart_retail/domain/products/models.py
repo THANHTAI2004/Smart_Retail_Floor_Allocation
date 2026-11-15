@@ -1,3 +1,5 @@
+# Vai trò: Mô hình domain cho sản phẩm và planogram.
+# Các kiểu nghiệp vụ không phụ thuộc HTTP hoặc driver lưu trữ; kích thước vật lý dùng đơn vị SI.
 """Business models for products. No HTTP or ORM dependencies."""
 
 from dataclasses import dataclass

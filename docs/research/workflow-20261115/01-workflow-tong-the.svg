@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="739.8pt" height="735.12pt" viewBox="0 0 739.8 735.12" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-15T10:03:07.038285</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 735.12 
+L 739.8 735.12 
+L 739.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 118.1862 106.299 
+L 621.6138 106.299 
+Q 627.417 106.299 627.417 100.53324 
+L 627.417 58.01076 
+Q 627.417 52.245 621.6138 52.245 
+L 118.1862 52.245 
+Q 112.383 52.245 112.383 58.01076 
+L 112.383 100.53324 
+Q 112.383 106.299 118.1862 106.299 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #e8f1fb; stroke: #25354a; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 118.1862 189.1818 
+L 621.6138 189.1818 
+Q 627.417 189.1818 627.417 183.41604 
+L 627.417 133.68636 
+Q 627.417 127.9206 621.6138 127.9206 
+L 118.1862 127.9206 
+Q 112.383 127.9206 112.383 133.68636 
+L 112.383 183.41604 
+Q 112.383 189.1818 118.1862 189.1818 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #e8f1fb; stroke: #25354a; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 118.1862 272.0646 
+L 621.6138 272.0646 
+Q 627.417 272.0646 627.417 266.29884 
+L 627.417 216.56916 
+Q 627.417 210.8034 621.6138 210.8034 
+L 118.1862 210.8034 
+Q 112.383 210.8034 112.383 216.56916 
+L 112.383 266.29884 
+Q 112.383 272.0646 118.1862 272.0646 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #e9f5ed; stroke: #25354a; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 190.7262 351.3438 
+L 549.0738 351.3438 
+Q 554.877 351.3438 554.877 345.57804 
+L 554.877 303.05556 
+Q 554.877 297.2898 549.0738 297.2898 
+L 190.7262 297.2898 
+Q 184.923 297.2898 184.923 303.05556 
+L 184.923 345.57804 
+Q 184.923 351.3438 190.7262 351.3438 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #fff2dc; stroke: #25354a; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 42.0192 493.686 
+L 320.5728 493.686 
+Q 326.376 493.686 326.376 487.92024 
+L 326.376 384.13656 
+Q 326.376 378.3708 320.5728 378.3708 
+L 42.0192 378.3708 
+Q 36.216 378.3708 36.216 384.13656 
+L 36.216 487.92024 
+Q 36.216 493.686 42.0192 493.686 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #f2f4f6; stroke: #25354a; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 419.2272 493.686 
+L 697.7808 493.686 
+Q 703.584 493.686 703.584 487.92024 
+L 703.584 384.13656 
+Q 703.584 378.3708 697.7808 378.3708 
+L 419.2272 378.3708 
+Q 413.424 378.3708 413.424 384.13656 
+L 413.424 487.92024 
+Q 413.424 493.686 419.2272 493.686 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #f0ebfa; stroke: #25354a; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 92.7972 605.3976 
+L 647.0028 605.3976 
+Q 652.806 605.3976 652.806 599.63184 
+L 652.806 531.88416 
+Q 652.806 526.1184 647.0028 526.1184 
+L 92.7972 526.1184 
+Q 86.994 526.1184 86.994 531.88416 
+L 86.994 599.63184 
+Q 86.994 605.3976 92.7972 605.3976 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #e9f5ed; stroke: #25354a; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 92.7972 690.0822 
+L 647.0028 690.0822 
+Q 652.806 690.0822 652.806 684.31644 
+L 652.806 634.58676 
+Q 652.806 628.821 647.0028 628.821 
+L 92.7972 628.821 
+Q 86.994 628.821 86.994 634.58676 
+L 86.994 684.31644 
+Q 86.994 690.0822 92.7972 690.0822 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #e8f1fb; stroke: #25354a; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 369.9 106.495632 
+Q 369.9 117.109573 369.9 126.27007 
+" clip-path="url(#p6a8343508d)" style="fill: none; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 372.5 121.07007 
+L 369.9 126.27007 
+L 367.3 121.07007 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #25354a; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 369.9 189.378432 
+Q 369.9 199.992373 369.9 209.15287 
+" clip-path="url(#p6a8343508d)" style="fill: none; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 372.5 203.95287 
+L 369.9 209.15287 
+L 367.3 203.95287 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #25354a; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 369.9 272.265191 
+Q 369.9 284.677972 369.9 295.637309 
+" clip-path="url(#p6a8343508d)" style="fill: none; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 372.5 290.437309 
+L 369.9 295.637309 
+L 367.3 290.437309 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #25354a; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 295.415446 350.025002 
+Q 239.325641 363.956986 184.646417 377.5386 
+" clip-path="url(#p6a8343508d)" style="fill: none; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 190.319829 378.808402 
+L 184.646417 377.5386 
+L 189.066306 373.761752 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #25354a; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 444.384554 350.025002 
+Q 500.474359 363.956986 555.153583 377.5386 
+" clip-path="url(#p6a8343508d)" style="fill: none; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 550.733694 373.761752 
+L 555.153583 377.5386 
+L 549.480171 378.808402 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #25354a; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 183.211996 494.257091 
+Q 235.701558 509.902366 286.798233 525.132472 
+" clip-path="url(#p6a8343508d)" style="fill: none; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 282.557569 521.155443 
+L 286.798233 525.132472 
+L 281.072211 526.138786 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #25354a; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 556.588004 494.257091 
+Q 504.098442 509.902366 453.001767 525.132472 
+" clip-path="url(#p6a8343508d)" style="fill: none; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 458.727789 526.138786 
+L 453.001767 525.132472 
+L 457.242431 521.155443 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #25354a; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 369.9 607.396032 
+Q 369.9 618.009973 369.9 627.17047 
+" clip-path="url(#p6a8343508d)" style="fill: none; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 372.5 621.97047 
+L 369.9 627.17047 
+L 367.3 621.97047 
+z
+" clip-path="url(#p6a8343508d)" style="fill: #25354a; stroke: #25354a; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 21px; font-family: 'Arial'; text-anchor: middle; fill: #25354a" x="369.9" y="37.032206" transform="rotate(-0 369.9 37.032206)">WORKFLOW TỔNG THỂ CỦA HỆ THỐNG</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'Arial'; text-anchor: middle; fill: #59687b" x="369.9" y="45.889269" transform="rotate(-0 369.9 45.889269)">Ứng dụng hiện tại • phân biệt luồng thông thường và các chế độ tối ưu joint</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(237.809062 75.759715)">Nhập dữ liệu qua UI/API hoặc cấu hình campaign</text>
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(256.5525 90.963035)">Xác thực hợp đồng và tham chiếu đầu vào</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(211.461562 155.038915)">Chốt snapshot + checksum + nhận diện nguồn/dependency</text>
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(219.143437 170.242235)">Đưa job vào durable queue → worker chạy tiến trình con</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(228.514687 237.921715)">Nếu có đánh giá ngoài mẫu: tách dữ liệu trước tối ưu</text>
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(219.109687 253.125035)">Giữ phần đánh giá riêng; chỉ tối ưu trên phần huấn luyện</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 12px; font-family: 'Arial'; text-anchor: middle; fill: #25354a" x="369.9" y="327.4218" transform="rotate(-0 369.9 327.4218)">Chọn workflow theo optimization.joint</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(154.11225 416.255295)">joint = null</text>
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(107.375062 432.516115)">Luồng T1 → T2 → T3 → T4</text>
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(115.242562 447.719435)">Một hoặc nhiều ứng viên</text>
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(113.320687 462.949943)">Chọn theo điểm tổng hợp</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 11px; font-family: 'Arial'; fill: #25354a" transform="translate(511.163609 418.872428)">joint được cấu hình</text>
+    <text style="font-size: 11px; font-family: 'Arial'; fill: #25354a" transform="translate(463.743297 431.970915)">sequential / multistart / random_search</text>
+    <text style="font-size: 11px; font-family: 'Arial'; fill: #25354a" transform="translate(485.427906 445.842838)">annealing / genetic / feedback</text>
+    <text style="font-size: 11px; font-family: 'Arial'; fill: #25354a" transform="translate(525.796187 459.779215)">exact / hybrid</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(247.81125 562.245715)">Nếu có tập giữ lại: cố định quyết định đã chọn</text>
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(208.644375 577.476223)">Mô phỏng + replay → điểm ngoài mẫu và trạng thái đánh giá</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(241.829062 655.939315)">Lưu kết quả / lỗi / trạng thái / receipt / checksum</text>
+    <text style="font-size: 12px; font-family: 'Arial'; fill: #25354a" transform="translate(222.864375 671.169823)">Đọc trên giao diện hoặc tổng hợp báo cáo thực nghiệm</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10px; font-family: 'Arial'; text-anchor: middle; fill: #59687b" x="369.9" y="717.1092" transform="rotate(-0 369.9 717.1092)">Dữ liệu mẫu small_store: joint=null. Sơ đồ feedback_v5 ở hình riêng là một nhánh của hệ thống.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p6a8343508d">
+   <rect x="7.2" y="7.2" width="725.4" height="720.72"/>
+  </clipPath>
+ </defs>
+</svg>

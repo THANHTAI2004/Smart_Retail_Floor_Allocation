@@ -1,3 +1,5 @@
+# Vai trò: Ước lượng nhu cầu từ tập đơn huấn luyện và chấm phương án đã chọn trên đơn giữ lại.
+# Tách hai tập giúp tránh đưa dữ liệu đánh giá vào bước tối ưu.
 """Demand estimation from orders and out-of-sample scoring of a selected plan.
 
 Training and held-out sections are derived by the same estimation rule. Held-out
@@ -22,6 +24,7 @@ ASSUMPTIONS = [
 ]
 
 
+# Nhu cầu dùng cho tối ưu chỉ được ước lượng từ tập đơn được truyền vào hàm.
 def estimate_demand(sections: dict, orders: dict, population_orders: int) -> dict:
     """Return a copy whose orders and demand parameters come from ``orders`` only."""
     data = copy.deepcopy(sections)
@@ -39,6 +42,7 @@ def estimate_demand(sections: dict, orders: dict, population_orders: int) -> dic
     return data
 
 
+# Hàm integrated_score: xử lý bước integrated score trong phạm vi module hiện tại.
 def integrated_score(sections: dict, stages: dict) -> tuple[float, list[float]]:
     """Weighted integrated objective used by bounded candidate selection."""
     dataset = to_domain(sections)
@@ -62,6 +66,7 @@ def integrated_score(sections: dict, stages: dict) -> tuple[float, list[float]]:
     return sum(a * b for a, b in zip(components, weights)) / sum(weights), components
 
 
+# Hàm _metrics: xử lý bước metrics trong phạm vi module hiện tại.
 def _metrics(results: list[dict]) -> dict:
     keys = ("mean_distance_m", "mean_wait_s", "late_orders", "completed")
     return {
@@ -69,6 +74,7 @@ def _metrics(results: list[dict]) -> dict:
     }
 
 
+# Giữ quyết định đã chọn và chấm trên đơn ngoài mẫu; không tối ưu lại để khớp tập đánh giá.
 def evaluate_held_out(
     sections: dict,
     result: dict,
@@ -159,6 +165,7 @@ def evaluate_held_out(
     }
 
 
+# Hàm with_held_out: xử lý bước with held out trong phạm vi module hiện tại.
 def with_held_out(sections: dict, execute: Callable, **kwargs) -> dict:
     """Optimize on training orders within a reduced budget, then score held-out orders."""
     began = time.monotonic()

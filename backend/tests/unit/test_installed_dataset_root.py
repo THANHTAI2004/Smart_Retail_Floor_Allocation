@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử giới hạn thư mục dataset khi package được cài ở vị trí khác.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """Dataset confinement must use application home, not package installation depth."""
 
 import hashlib
@@ -11,6 +13,7 @@ from smart_retail.contracts.experiments import DatasetSpec
 from smart_retail.infrastructure.database import ROOT
 
 
+# Hàm test_imported_dataset_works_from_installed_package_location: kiểm tra kịch bản imported dataset works from installed package location bằng các assertion trong thân hàm.
 def test_imported_dataset_works_from_installed_package_location(tmp_path):
     installed = tmp_path / "site-packages/smart_retail/application/experiments/generators.py"
     installed.parent.mkdir(parents=True)

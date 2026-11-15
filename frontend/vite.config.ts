@@ -1,3 +1,4 @@
+// Vai trò: Cấu hình dev server và build Vite cho React, gồm chuyển tiếp API đến backend.
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 

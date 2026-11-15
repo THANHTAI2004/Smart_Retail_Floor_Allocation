@@ -1,3 +1,4 @@
+// Vai trò: Ghép các màn hình bố trí, planogram, mô phỏng và báo cáo cho lần chạy đang chọn.
 import { PlanogramViewer } from "../../features/results/PlanogramViewer";
 import { SimulationAnalytics } from "../../features/results/SimulationAnalytics";
 import { ReportsPage } from "../ReportsPage";
@@ -7,6 +8,7 @@ import { FloorplanEditor } from "../../app/FloorplanCanvas";
 import type { WorkspaceModel } from "../../app/useWorkspace";
 import { Badge } from "../../components/Badge";
 
+// Ghép các màn hình bố trí, planogram, mô phỏng và báo cáo cho lần chạy đang chọn.
 export function RunResultsPage({ model }: { model: WorkspaceModel }) {
   const { project, page, selectRun, result, run, go, successful, comparison, compareId, setCompareId } = model;
   return (<>{project &&

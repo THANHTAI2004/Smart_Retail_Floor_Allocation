@@ -1,3 +1,5 @@
+# Vai trò: Mô hình domain cho dự án, cửa hàng và vùng trưng bày.
+# Các kiểu nghiệp vụ không phụ thuộc HTTP hoặc driver lưu trữ; kích thước vật lý dùng đơn vị SI.
 """Business models for projects. No HTTP or ORM dependencies."""
 
 from dataclasses import dataclass

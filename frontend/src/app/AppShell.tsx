@@ -1,3 +1,4 @@
+// Vai trò: Khung giao diện: điều hướng, trạng thái chung và trang nội dung theo workspace đang chọn.
 import { ResearchPage } from "../features/research/ResearchPage";
 import { navigation, descriptions } from "./navigation";
 import { Check, ChevronRight, FolderOpen, Layers, Menu, Settings2, X } from "lucide-react";
@@ -12,6 +13,7 @@ import { OptimizationRunsPage } from "../pages/workspace/OptimizationRunsPage";
 import { RunResultsPage } from "../pages/workspace/RunResultsPage";
 import { DiagnosticsPage } from "../pages/workspace/DiagnosticsPage";
 
+// Khung giao diện: điều hướng, trạng thái chung và trang nội dung theo workspace đang chọn.
 export function AppShell({ model }: { model: WorkspaceModel }) {
   const { mobile, setMobile, page, running, health, nav, busy, loading, project, projects, loadProject, completed, message, error, pollError, projectError, setError, act, setProjects } = model;
   return (

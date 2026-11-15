@@ -1,3 +1,4 @@
+# Vai trò: Sắp lại một kệ theo tìm kiếm hữu hạn để xử lý phân mảnh do first-fit, có kiểm tra hủy và thời hạn.
 """Bounded deterministic repacking of one shelf after a first-fit dead end.
 
 The assignment, fixed facings and maximum stacking policy remain unchanged.
@@ -14,6 +15,7 @@ MAX_REPAIR_NODES = 20000
 MAX_REPAIR_PRODUCTS = 64
 
 
+# Thử sắp lại toàn bộ SKU của một kệ để xử lý first-fit bị phân mảnh, vẫn tôn trọng deadline và hủy.
 def repack(
     shelf: Shelf,
     products: tuple[Product, ...],
@@ -37,6 +39,7 @@ def repack(
     visited: set[tuple] = set()
     nodes = 0
 
+    # Hàm search: xử lý bước search trong phạm vi module hiện tại.
     def search(index: int) -> bool:
         nonlocal nodes
         if cancelled():

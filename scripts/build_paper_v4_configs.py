@@ -1,3 +1,4 @@
+# Vai trò: Sinh các nhánh và phần campaign Paper V4, bảo đảm cấu hình được chốt theo giới hạn thiết kế.
 """Generate the paper-v4 campaign configs (V1-V4) into experiments/configs/paper-v4/.
 
 Design: docs/research/EXPERIMENT_DESIGN_DEEPMG.md, section 11. Changes after the
@@ -62,11 +63,13 @@ V4_OFF = {
 }
 
 
+# Hàm v4: xử lý bước v4 trong phạm vi module hiện tại.
 def v4(**changes):
     settings = {**FEEDBACK, **V4, **changes}
     return {k: v for k, v in settings.items() if v is not None}
 
 
+# Hàm arms: xử lý bước arms trong phạm vi module hiện tại.
 def arms(budget):
     return [
         arm("seq_milp", budget, mode="sequential"),
@@ -77,6 +80,7 @@ def arms(budget):
     ]
 
 
+# Hàm finalize: xử lý bước finalize trong phạm vi module hiện tại.
 def finalize(spec):
     """Split over-limit designs; give every part a job ceiling and a wall budget."""
     parts = partition(spec, PART_JOBS.get(int(spec["job_time_limit_s"]), 1000))
@@ -90,9 +94,11 @@ def finalize(spec):
     return result
 
 
+# Hàm build: xử lý bước build trong phạm vi module hiện tại.
 def build():
     load = json.loads(CALIBRATION.read_text(encoding="utf-8"))["scales"]
 
+    # Hàm dataset: xử lý bước dataset trong phạm vi module hiện tại.
     def dataset(scale, seed):
         facings, orders, *_ = V4_SCALES[scale]
         return {
@@ -105,9 +111,11 @@ def build():
             "picker_count": load[scale]["picker_count"],
         }
 
+    # Hàm budget: xử lý bước budget trong phạm vi module hiện tại.
     def budget(scale):
         return V4_SCALES[scale][2]
 
+    # Hàm limit: xử lý bước limit trong phạm vi module hiện tại.
     def limit(scale):
         return V4_SCALES[scale][3]
 
@@ -191,6 +199,7 @@ def build():
     return designs
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     if OUT.exists():
         sys.exit(f"{OUT} exists; choose a new directory instead of replacing configs")

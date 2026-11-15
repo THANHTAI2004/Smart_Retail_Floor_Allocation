@@ -1,3 +1,5 @@
+# Vai trò: Đọc và ghi bằng chứng campaign, tạo dấu vân tay và kiểm tra checksum.
+# Phân biệt tệp bất biến với checkpoint được thay thế nguyên tử.
 """Immutable evidence files and atomic replaceable campaign checkpoints."""
 
 import hashlib
@@ -9,6 +11,7 @@ from uuid import uuid4
 from smart_retail.infrastructure.filesystem import normalize_fs_path, publish_immutable_file
 
 
+# Hàm read: đọc dữ liệu đầu vào từ nơi lưu trữ.
 def read(path: Path):
     path = normalize_fs_path(path)
     for attempt in range(25):
@@ -20,6 +23,7 @@ def read(path: Path):
             time.sleep(0.01)
 
 
+# Tệp bằng chứng bất biến không được ghi đè; checkpoint thay được cần công bố nguyên tử để tránh đọc nửa chừng.
 def write(path: Path, value, *, immutable: bool = False):
     path = normalize_fs_path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -45,6 +49,7 @@ def write(path: Path, value, *, immutable: bool = False):
                 time.sleep(0.01)
 
 
+# Hàm fingerprint: lập danh mục checksum để kiểm tra tính toàn vẹn.
 def fingerprint(root: Path) -> dict[str, str]:
     root = normalize_fs_path(root)
     return {
@@ -55,6 +60,7 @@ def fingerprint(root: Path) -> dict[str, str]:
     }
 
 
+# Đối chiếu tệp với fingerprint đã lưu; bước này không chạy lại solver hay chứng minh kết luận khoa học.
 def verify_integrity(root: Path):
     root = normalize_fs_path(root)
     saved = read(root / "integrity.json")

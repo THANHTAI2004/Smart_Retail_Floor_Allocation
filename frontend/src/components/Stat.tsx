@@ -1,4 +1,6 @@
+// Vai trò: Ô thống kê dùng lại cho nhãn, giá trị, đơn vị và nội dung phụ trên dashboard.
 import type { ReactNode } from "react";
+// Ô thống kê dùng lại cho nhãn, giá trị, đơn vị và nội dung phụ trên dashboard.
 export function Stat({
   label,
   value,

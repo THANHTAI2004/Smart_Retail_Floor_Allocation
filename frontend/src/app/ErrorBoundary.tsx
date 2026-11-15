@@ -1,3 +1,4 @@
+// Vai trò: Chặn lỗi render ở cây React con và hiển thị trạng thái phục hồi thay vì làm mất toàn bộ giao diện.
 import { Component, type ReactNode } from "react";
 
 export class ErrorBoundary extends Component<
@@ -5,9 +6,11 @@ export class ErrorBoundary extends Component<
   { failed: boolean }
 > {
   state = { failed: false };
+  // Chuyển sang trạng thái lỗi khi một component con không render được.
   static getDerivedStateFromError() {
     return { failed: true };
   }
+  // Hiển thị thông báo phục hồi khi có lỗi; bình thường trả về cây component con.
   render() {
     if (this.state.failed) {
       return (

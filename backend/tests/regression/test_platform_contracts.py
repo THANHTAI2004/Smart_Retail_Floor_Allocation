@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử migration, CSV, hình học, MILP, định tuyến và mô phỏng theo hợp đồng công khai.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import copy
 import itertools
 import math
@@ -18,6 +20,7 @@ from smart_retail.engines.t3_slotting.validation import violations
 from smart_retail.engines.t4_simulation.routing import order
 
 
+# Hàm test_version_migration_is_non_destructive_and_explicit: kiểm tra kịch bản version migration is non destructive and explicit bằng các assertion trong thân hàm.
 def test_version_migration_is_non_destructive_and_explicit(sample):
     old = copy.deepcopy(sample)
     for section in old.values():
@@ -33,6 +36,7 @@ def test_version_migration_is_non_destructive_and_explicit(sample):
 
 
 @pytest.mark.parametrize("section", ["shelves", "categories", "products", "orders"])
+# Hàm test_lossless_csv_including_nested_values: kiểm tra kịch bản lossless csv including nested values bằng các assertion trong thân hàm.
 def test_lossless_csv_including_nested_values(section, sample):
     encoded = export_csv(section, sample[section])
     assert import_csv(section, encoded) == SECTIONS[section].model_validate(
@@ -42,6 +46,7 @@ def test_lossless_csv_including_nested_values(section, sample):
         import_csv(section, "width_m\n1\n")
 
 
+# Hàm test_csv_api_transaction_and_reference_validation: kiểm tra kịch bản csv api transaction and reference validation bằng các assertion trong thân hàm.
 def test_csv_api_transaction_and_reference_validation(client, saved_project):
     pid = saved_project["id"]
     exported = client.get(f"/api/projects/{pid}/inputs/products/export?format=csv")
@@ -61,6 +66,7 @@ def test_csv_api_transaction_and_reference_validation(client, saved_project):
     )
 
 
+# Hàm test_local_search_improves_feasible_layout: kiểm tra kịch bản local search improves feasible layout bằng các assertion trong thân hàm.
 def test_local_search_improves_feasible_layout(sample):
     d = to_domain(sample)
     baseline = layout(d.floorplan, d.shelves, d.layout_mode)
@@ -72,6 +78,7 @@ def test_local_search_improves_feasible_layout(sample):
     assert improved.objective < objective(d.floorplan, baseline.shelves)
 
 
+# Hàm test_full_walkable_topology_rejects_disconnected_components: kiểm tra kịch bản full walkable topology rejects disconnected components bằng các assertion trong thân hàm.
 def test_full_walkable_topology_rejects_disconnected_components(sample):
     d = to_domain(sample)
     floor = replace(
@@ -84,6 +91,7 @@ def test_full_walkable_topology_rejects_disconnected_components(sample):
     assert error.value.code == "DISCONNECTED_AISLES"
 
 
+# Hàm test_mip_facing_range_and_shelf_compatibility: kiểm tra kịch bản mip facing range and shelf compatibility bằng các assertion trong thân hàm.
 def test_mip_facing_range_and_shelf_compatibility():
     shelves = (Shelf("S", 1, 0.5, 1, (ShelfLevel("L", 1, 0.5, 0.4),)),)
     product = Product("P", "P", "C", 0.2, 0.2, 0.2, clearance_m=0, min_facings=1, max_facings=3)
@@ -100,11 +108,13 @@ def test_mip_facing_range_and_shelf_compatibility():
     assert error.value.code == "INFEASIBLE"
 
 
+# Hàm test_exact_routing_matches_permutation_oracle: kiểm tra kịch bản exact routing matches permutation oracle bằng các assertion trong thân hàm.
 def test_exact_routing_matches_permutation_oracle():
     start = (0, 0)
     points = {"A": (2, 1), "B": (1, 4), "C": (5, 2), "D": (4, 5)}
     distance = math.dist
 
+    # Hàm cost: xử lý bước cost trong phạm vi module hiện tại.
     def cost(keys):
         route = [start, *(points[k] for k in keys), start]
         return sum(distance(a, b) for a, b in itertools.pairwise(route))
@@ -114,6 +124,7 @@ def test_exact_routing_matches_permutation_oracle():
     assert cost(chosen) <= cost(order("nearest", points, start, distance)) + 1e-9
 
 
+# Hàm test_soft_affinity_milp_matches_independent_enumeration: kiểm tra kịch bản soft affinity milp matches independent enumeration bằng các assertion trong thân hàm.
 def test_soft_affinity_milp_matches_independent_enumeration(sample):
     from smart_retail.engines.t2_allocation.engine import solve as allocate
     from smart_retail.engines.t2_allocation.validation import replay
@@ -135,6 +146,7 @@ def test_soft_affinity_milp_matches_independent_enumeration(sample):
     assert result["mip_gap"] == 0
 
 
+# Hàm test_piecewise_arrivals_and_finite_picker_metrics: kiểm tra kịch bản piecewise arrivals and finite picker metrics bằng các assertion trong thân hàm.
 def test_piecewise_arrivals_and_finite_picker_metrics(sample):
     sample["demand"].update(
         customers=4,
@@ -158,6 +170,7 @@ def test_piecewise_arrivals_and_finite_picker_metrics(sample):
         )
 
 
+# Hàm test_reject_invalid_periods_facings_and_origin: kiểm tra kịch bản reject invalid periods facings and origin bằng các assertion trong thân hàm.
 def test_reject_invalid_periods_facings_and_origin(sample):
     for section, patch in (
         ("demand", {"periods": [{"start_s": 20, "end_s": 10, "arrivals_per_hour": 10}]}),
@@ -168,6 +181,7 @@ def test_reject_invalid_periods_facings_and_origin(sample):
             SECTIONS[section].model_validate({**sample[section], **patch})
 
 
+# Hàm test_customer_exit_and_required_aisle_replay: kiểm tra kịch bản customer exit and required aisle replay bằng các assertion trong thân hàm.
 def test_customer_exit_and_required_aisle_replay(sample):
     from smart_retail.application.experiments.validation import verify
 
@@ -184,6 +198,7 @@ def test_customer_exit_and_required_aisle_replay(sample):
     assert verify(sample, result)["status"] == "PASS"
 
 
+# Hàm test_invalid_exit_obstacle_and_required_zone_are_rejected: kiểm tra kịch bản invalid exit obstacle and required zone are rejected bằng các assertion trong thân hàm.
 def test_invalid_exit_obstacle_and_required_zone_are_rejected(sample):
     floor = sample["floorplan"]
     with pytest.raises(ValidationError):

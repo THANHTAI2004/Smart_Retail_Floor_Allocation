@@ -1,3 +1,5 @@
+# Vai trò: Lưu lần chạy và các chuyển trạng thái hàng đợi.
+# Claim, lease và quyền công bố giúp ngăn worker cũ ghi kết quả sau khi mất quyền.
 import time
 
 from pymongo import ReturnDocument
@@ -16,6 +18,7 @@ class Runs:
     database: Database
     payloads: Payloads
 
+    # Hàm decode_run: xử lý bước decode run trong phạm vi module hiện tại.
     def decode_run(self, document):
         if document is None:
             return None
@@ -24,9 +27,11 @@ class Runs:
             document[field] = self.payloads.unpack(document, field)
         return record_value(RunRecord, document)
 
+    # Hàm get_run: đọc run theo quy tắc trong thân hàm.
     def get_run(self, identifier):
         return self.decode_run(self.database.optimization_runs.find_one({"_id": identifier}))
 
+    # Hàm insert_run: xử lý bước insert run trong phạm vi module hiện tại.
     def insert_run(self, record):
         if sha(record.snapshot) != record.input_sha256:
             raise ValueError("Snapshot checksum mismatch before enqueue")
@@ -37,6 +42,7 @@ class Runs:
             self.payloads.pack(document, field, getattr(record, field))
         self.database.optimization_runs.insert_one(document)
 
+    # Hàm list_runs: liệt kê runs theo quy tắc trong thân hàm.
     def list_runs(self, project_id):
         return [
             self.decode_run(d)
@@ -45,6 +51,7 @@ class Runs:
             .limit(100)
         ]
 
+    # Hàm cancel_run: xử lý bước cancel run trong phạm vi module hiện tại.
     def cancel_run(self, identifier):
         # Single atomic pipeline: QUEUED -> CANCELLED, RUNNING -> CANCEL_REQUESTED.
         self.database.optimization_runs.find_one_and_update(
@@ -65,6 +72,7 @@ class Runs:
         )
         return self.get_run(identifier)
 
+    # Hàm owned_filter: xử lý bước owned filter trong phạm vi module hiện tại.
     def owned_filter(self, record, now=None):
         return {
             "_id": record.id,
@@ -74,6 +82,7 @@ class Runs:
             "status": {"$in": ["RUNNING", "CANCEL_REQUESTED"]},
         }
 
+    # Hàm publish: xử lý bước publish trong phạm vi module hiện tại.
     def publish(self, record, owner=None):
         if record.result is not None and sha(record.result) != record.result_sha256:
             raise ValueError("Result checksum mismatch before publication")
@@ -97,6 +106,7 @@ class Runs:
         )
         return self.decode_run(saved)
 
+    # Hàm mark_worker_lost: xử lý bước mark worker lost trong phạm vi module hiện tại.
     def mark_worker_lost(self, record):
         self.database.optimization_runs.update_one(
             {

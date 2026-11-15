@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử phát lại nghiệm, định tuyến và tính đúng của cache theo phụ thuộc.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import copy
 import math
 from dataclasses import replace
@@ -11,6 +13,7 @@ from smart_retail.engines.t1_layout.engine import footprint
 from smart_retail.engines.t2_allocation.validation import replay
 
 
+# Hàm test_integrated_candidates_replay_determinism_and_selection: kiểm tra kịch bản integrated candidates replay determinism and selection bằng các assertion trong thân hàm.
 def test_integrated_candidates_replay_determinism_and_selection(sample):
     sample["optimization"].update(candidate_count=4, slotting_algorithm="milp")
     original = copy.deepcopy(sample)
@@ -27,6 +30,7 @@ def test_integrated_candidates_replay_determinism_and_selection(sample):
     assert not integrated["global_optimality_proven"]
 
 
+# Hàm test_routes_replay_geometry_distance_elapsed_and_quantities: kiểm tra kịch bản routes replay geometry distance elapsed and quantities bằng các assertion trong thân hàm.
 def test_routes_replay_geometry_distance_elapsed_and_quantities(sample):
     sample["demand"]["customers"] = 0
     result = execute(sample)
@@ -54,6 +58,7 @@ def test_routes_replay_geometry_distance_elapsed_and_quantities(sample):
         assert all(not line.intersects(Polygon(o)) for o in d.floorplan.obstacles)
 
 
+# Hàm test_t2_independent_replay_detects_tampered_capacity_fixed_and_separation: kiểm tra kịch bản t2 independent replay detects tampered capacity fixed and separation bằng các assertion trong thân hàm.
 def test_t2_independent_replay_detects_tampered_capacity_fixed_and_separation(sample):
     from smart_retail.engines.t1_layout.engine import solve
 
@@ -69,6 +74,7 @@ def test_t2_independent_replay_detects_tampered_capacity_fixed_and_separation(sa
     assert any("proximity" in e for e in errors)
 
 
+# Hàm test_cache_reuses_only_identical_dependencies_and_invalidates_products: kiểm tra kịch bản cache reuses only identical dependencies and invalidates products bằng các assertion trong thân hàm.
 def test_cache_reuses_only_identical_dependencies_and_invalidates_products(sample):
     import time
 

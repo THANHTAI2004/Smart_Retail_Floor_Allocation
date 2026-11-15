@@ -1,3 +1,5 @@
+// Vai trò: Kiểm thử khả năng truy cập bằng axe trên các màn hình chính.
+// Fixture và assertion là phạm vi kiểm tra, không thay thế bằng chứng chạy mới.
 const output = process.env.SMART_RETAIL_E2E_OUTPUT || "../var/playwright";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";

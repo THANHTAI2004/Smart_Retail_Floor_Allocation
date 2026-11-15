@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử sửa phân mảnh first-fit, giới hạn tìm kiếm và tải trọng dùng chung.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import json
 from pathlib import Path
 
@@ -13,6 +15,7 @@ CASES = json.loads((Path(__file__).resolve().parents[3] /
 
 
 @pytest.mark.parametrize("case", CASES, ids=[c["id"] for c in CASES])
+# Hàm test_recorded_first_fit_fragmentation_recovers_without_changing_inputs: kiểm tra kịch bản recorded first fit fragmentation recovers without changing inputs bằng các assertion trong thân hàm.
 def test_recorded_first_fit_fragmentation_recovers_without_changing_inputs(case):
     shelf = Shelf(**{**case["shelf"], "levels": tuple(
         ShelfLevel(**level) for level in case["shelf"]["levels"]
@@ -26,6 +29,7 @@ def test_recorded_first_fit_fragmentation_recovers_without_changing_inputs(case)
     assert plan.status == "FEASIBLE_FIRST_FIT_REPAIRED"
 
 
+# Hàm test_repair_is_bounded_and_honors_cancellation_and_deadline: kiểm tra kịch bản repair is bounded and honors cancellation and deadline bằng các assertion trong thân hàm.
 def test_repair_is_bounded_and_honors_cancellation_and_deadline():
     import math
 
@@ -40,6 +44,7 @@ def test_repair_is_bounded_and_honors_cancellation_and_deadline():
     assert timeout.value.code == "TIMEOUT"
 
 
+# Hàm test_successful_first_fit_is_unchanged_by_repair: kiểm tra kịch bản successful first fit is unchanged by repair bằng các assertion trong thân hàm.
 def test_successful_first_fit_is_unchanged_by_repair():
     shelf = Shelf("S", 1, 0.5, 1, (ShelfLevel("L", 1, 0.5, 0.5),))
     product = Product("P", "P", "C", 0.2, 0.2, 0.2)
@@ -48,6 +53,7 @@ def test_successful_first_fit_is_unchanged_by_repair():
     assert plan.placements[0]["x_m"] == 0
 
 
+# Hàm test_shared_load_stays_enforced_across_faces_during_repair: kiểm tra kịch bản shared load stays enforced across faces during repair bằng các assertion trong thân hàm.
 def test_shared_load_stays_enforced_across_faces_during_repair():
     shelf = Shelf("S", 1, 0.2, 1, (ShelfLevel("L", 1, 0.2, 0.2, 1),), faces=2)
     products = (Product("A", "A", "C", 0.6, 0.2, 0.2, weight_kg=1, clearance_m=0),

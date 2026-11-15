@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử campaign thực, resume, cache, báo cáo và giới hạn lập kế hoạch.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import copy
 import json
 import time
@@ -18,6 +20,7 @@ from smart_retail.infrastructure.stage_cache import StageCache
 from smart_retail.workers.resources import sample as sample_resources
 
 
+# Hàm spec: xử lý bước spec trong phạm vi module hiện tại.
 def spec():
     return CampaignSpec.model_validate(
         {
@@ -45,6 +48,7 @@ def spec():
 
 @pytest.mark.parametrize("scale", ["tiny", "small", "medium", "large"])
 @pytest.mark.parametrize("scenario", ["feasible", "infeasible", "high_load", "volatile", "uneven"])
+# Hàm test_generators_are_deterministic_valid_and_labeled: kiểm tra kịch bản generators are deterministic valid and labeled bằng các assertion trong thân hàm.
 def test_generators_are_deterministic_valid_and_labeled(scale, scenario):
     request = DatasetSpec(id=scale, scale=scale, scenario=scenario)
     a, ma = generate(request)
@@ -58,6 +62,7 @@ def test_generators_are_deterministic_valid_and_labeled(scale, scenario):
     to_domain(a)
 
 
+# Hàm test_resume_reports_checksums_and_full_campaign_replay: kiểm tra kịch bản resume reports checksums and full campaign replay bằng các assertion trong thân hàm.
 def test_resume_reports_checksums_and_full_campaign_replay(tmp_path):
     configuration = spec()
     output = tmp_path / "campaign"
@@ -96,6 +101,7 @@ def test_resume_reports_checksums_and_full_campaign_replay(tmp_path):
         verify_integrity(output)
 
 
+# Hàm test_repeated_kfold_campaign_records_folds_and_pools_reports: kiểm tra kịch bản repeated kfold campaign records folds and pools reports bằng các assertion trong thân hàm.
 def test_repeated_kfold_campaign_records_folds_and_pools_reports(tmp_path):
     arms = {
         "baseline": {"algorithm": "greedy", "slotting_algorithm": "first_fit"},
@@ -170,6 +176,7 @@ def test_repeated_kfold_campaign_records_folds_and_pools_reports(tmp_path):
         report([output, replay], tmp_path / "pooled")
 
 
+# Hàm test_persistent_cache_invalidation_and_tampering: kiểm tra kịch bản persistent cache invalidation and tampering bằng các assertion trong thân hàm.
 def test_persistent_cache_invalidation_and_tampering(sample, tmp_path):
     cache = StageCache(tmp_path / "cache")
     sample["optimization"]["stop_after_stage"] = "T3"
@@ -191,6 +198,7 @@ def test_persistent_cache_invalidation_and_tampering(sample, tmp_path):
     assert error.value.code == "CACHE_CORRUPT"
 
 
+# Hàm test_pooled_joint_report_retains_every_campaign: kiểm tra kịch bản pooled joint report retains every campaign bằng các assertion trong thân hàm.
 def test_pooled_joint_report_retains_every_campaign(tmp_path):
     import csv
 
@@ -222,6 +230,7 @@ def test_pooled_joint_report_retains_every_campaign(tmp_path):
     }
 
 
+# Hàm test_campaign_contract_rejects_invalid_refs_and_parallel_workers: kiểm tra kịch bản campaign contract rejects invalid refs and parallel workers bằng các assertion trong thân hàm.
 def test_campaign_contract_rejects_invalid_refs_and_parallel_workers():
     data = spec().model_dump()
     data["workers"] = 2
@@ -233,6 +242,7 @@ def test_campaign_contract_rejects_invalid_refs_and_parallel_workers():
         CampaignSpec.model_validate(data)
 
 
+# Hàm test_resource_sampler_measures_current_process: kiểm tra kịch bản resource sampler measures current process bằng các assertion trong thân hàm.
 def test_resource_sampler_measures_current_process():
     import os
 
@@ -240,12 +250,15 @@ def test_resource_sampler_measures_current_process():
     assert result["rss_bytes"] > 0 and result["peak_rss_bytes"] >= result["rss_bytes"]
 
 
+# Hàm test_process_creation_failures_have_bounded_retry_and_terminal_receipts: kiểm tra kịch bản process creation failures have bounded retry and terminal receipts bằng các assertion trong thân hàm.
 def test_process_creation_failures_have_bounded_retry_and_terminal_receipts(tmp_path, monkeypatch):
     from types import SimpleNamespace
 
     from smart_retail.workers import runner
 
+    # Hàm process: xử lý bước process trong phạm vi module hiện tại.
     def process(*args, **kwargs):
+        # Hàm fail: xử lý bước fail trong phạm vi module hiện tại.
         def fail():
             raise OSError("Injected process creation failure")
 
@@ -262,6 +275,7 @@ def test_process_creation_failures_have_bounded_retry_and_terminal_receipts(tmp_
     assert len(list((output / "artifacts").glob("*/receipt.json"))) == 2
 
 
+# Hàm test_imported_dataset_requires_hash_and_synthetic_origin: kiểm tra kịch bản imported dataset requires hash and synthetic origin bằng các assertion trong thân hàm.
 def test_imported_dataset_requires_hash_and_synthetic_origin(sample, tmp_path, monkeypatch):
     import hashlib
 
@@ -280,6 +294,7 @@ def test_imported_dataset_requires_hash_and_synthetic_origin(sample, tmp_path, m
         generate(DatasetSpec(id="custom", input_path=str(path), input_file_sha256=digest))
 
 
+# Hàm test_oversized_cartesian_plan_rejected_before_materialization: kiểm tra kịch bản oversized cartesian plan rejected before materialization bằng các assertion trong thân hàm.
 def test_oversized_cartesian_plan_rejected_before_materialization():
     configuration = spec().model_dump()
     configuration["seeds"] = list(range(100))

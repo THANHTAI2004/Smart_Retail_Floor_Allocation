@@ -1,3 +1,4 @@
+# Vai trò: Thu thập kiểm tra mới vào thư mục bằng chứng riêng, ghi lại lệnh, mã thoát và log.
 """Collect fresh release checks into a new, reviewable evidence directory."""
 
 import argparse
@@ -14,6 +15,7 @@ from uuid import uuid4
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)

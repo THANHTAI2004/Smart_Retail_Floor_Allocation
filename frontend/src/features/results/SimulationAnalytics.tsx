@@ -1,6 +1,7 @@
 import type { RunResult } from "../../types/models";
 import { Stat } from "../../components/Stat";
 
+// Hiển thị KPI, hành trình và số liệu mô phỏng T4 theo kết quả được chọn.
 export function SimulationAnalytics({ result }: { result: RunResult }) {
   return (
     <>

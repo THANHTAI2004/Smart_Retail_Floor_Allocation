@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử giữ lỗi tìm kiếm và bằng chứng vô nghiệm khi joint chưa có nghiệm khả thi.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import copy
 import json
 from pathlib import Path
@@ -6,6 +8,7 @@ from smart_retail.application.experiments.campaign import run
 from smart_retail.contracts.experiments import CampaignSpec
 
 
+# Hàm test_real_worker_retains_failed_search_and_proven_infeasibility_without_success: kiểm tra kịch bản real worker retains failed search and proven infeasibility without success bằng các assertion trong thân hàm.
 def test_real_worker_retains_failed_search_and_proven_infeasibility_without_success(tmp_path):
     root = Path(__file__).resolve().parents[3]
     spec = json.loads((root / "experiments/configs/joint_certification.json").read_text())

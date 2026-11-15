@@ -1,3 +1,4 @@
+# Vai trò: Điều phối campaign riêng biệt trên hai hoặc ba slot theo điều kiện tài nguyên và tiến độ.
 """Adaptive two/three isolated campaigns; X3 last; unchanged scientific source."""
 
 import argparse
@@ -27,26 +28,31 @@ GROUPS = [["X1"], ["X4"], ["X2", "X2b"], ["X5"], ["X6", "RECOVERY"], ["X3"]]
 CONTROL = STATE / "concurrency.json"
 
 
+# Hàm now: lấy thời điểm hiện tại theo cách chuẩn hóa trong hàm.
 def now():
     return datetime.now(UTC).isoformat()
 
 
+# Hàm available_slots: xử lý bước available slots trong phạm vi module hiện tại.
 def available_slots(active, limit=2):
     if limit not in (2, 3):
         raise ValueError("Only two or three campaign slots are authorized")
     return max(0, limit - len(active))
 
 
+# Hàm concurrency: xử lý bước concurrency trong phạm vi module hiện tại.
 def concurrency():
     value = read(CONTROL)["slots"] if CONTROL.exists() else 2
     available_slots([], value)
     return value
 
 
+# Hàm record_files: xử lý bước record files trong phạm vi module hiện tại.
 def record_files():
     return list(RESULTS.glob("*/records/*.json"))
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check-only", action="store_true")

@@ -1,3 +1,4 @@
+# Vai trò: Vẽ biểu đồ từ bảng và số liệu thực nghiệm được cung cấp; biểu đồ phụ thuộc phạm vi dữ liệu đầu vào.
 """Export actual scalability, sensitivity and finite-candidate Pareto figures.
 
 Run from repository root; a new output directory and source-bound manifest are required.
@@ -18,6 +19,7 @@ from smart_retail.application.experiments.analysis import describe
 from smart_retail.application.experiments.storage import read, verify_integrity, write
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("campaign", type=Path)
@@ -27,6 +29,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=False)
     rows = [read(path) for path in (args.campaign / "records").glob("*.json")]
     figure_data = []
+    # Hàm save: xử lý bước save trong phạm vi module hiện tại.
     def save(fig, name):
         fig.tight_layout()
         fig.savefig(args.output / f"{name}.png", dpi=160)

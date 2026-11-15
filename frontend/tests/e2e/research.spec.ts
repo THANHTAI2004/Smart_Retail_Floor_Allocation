@@ -1,3 +1,5 @@
+// Vai trò: Kiểm thử bản vẽ undo/redo và workflow nghiên cứu dùng dữ liệu đã lưu.
+// Fixture và assertion là phạm vi kiểm tra, không thay thế bằng chứng chạy mới.
 import { expect, test } from "@playwright/test";
 
 test("drawing undo/redo and bounded MILP research workflow use persisted inputs", async ({ page, request }) => {

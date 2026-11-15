@@ -1,3 +1,5 @@
+# Vai trò: Chạy đánh giá trên các seed kịch bản dùng chung và tính mục tiêu so sánh nhất quán.
+# Các quyết định được kiểm tra trước khi được chọn.
 """Common-random-number evaluation and fixed, rational selection objective."""
 
 import copy
@@ -7,6 +9,7 @@ from smart_retail.application.experiments.validation import verify
 from smart_retail.application.stage_workflow import _candidate, canonical_hash
 
 
+# Hàm decisions_of: xử lý bước decisions of trong phạm vi module hiện tại.
 def decisions_of(result):
     stages = result["stages"]
     return {
@@ -17,10 +20,12 @@ def decisions_of(result):
     }
 
 
+# Chuyển giá trị sang phân số theo quy tắc của mục tiêu để so sánh nhất quán.
 def fraction(value):
     return Fraction(str(value))
 
 
+# Tính giá trị mục tiêu của quyết định theo định nghĩa và các thành phần đã khai báo.
 def score(stages, sections, objective):
     metrics = stages["T4"]["metrics"]
     capacities = {p["sku"]: p["capacity_units"] for p in stages["T3"]["placements"]}
@@ -38,6 +43,7 @@ def score(stages, sections, objective):
     return total / sum(map(fraction, objective.weights)), normalized
 
 
+# Đánh giá cùng quyết định trên bộ seed chung giúp giảm sai khác do ngẫu nhiên giữa các phương pháp.
 def evaluate(
     sections,
     config,
@@ -94,10 +100,12 @@ def evaluate(
     }
 
 
+# Tính điểm theo biểu diễn chính xác cho phép kiểm tra chứng nhận trong miền hữu hạn.
 def exact_score(state):
     return Fraction(*state["score_fraction"])
 
 
+# Hàm prefix_score: xử lý bước prefix score trong phạm vi module hiện tại.
 def prefix_score(state, sections, objective, count):
     """Exact mean score of an evaluated state over its first `count` scenario seeds."""
     values = [score(s["stages"], sections, objective)[0] for s in state["scenarios"][:count]]

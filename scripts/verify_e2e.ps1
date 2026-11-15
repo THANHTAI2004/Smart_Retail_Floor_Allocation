@@ -1,3 +1,4 @@
+# Vai trò: Chuẩn bị dịch vụ cùng database test riêng, chạy kiểm tra giao diện đầu cuối và thu bằng chứng.
 param([string]$OutputRoot = '', [string]$DatabasePrefix = 'sr_e2e_')
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot

@@ -1,3 +1,4 @@
+# Vai trò: Nhập và xuất CSV cho dữ liệu dạng bảng, giữ trường lồng nhau bằng ô JSON để có thể khôi phục đầy đủ.
 """Lossless CSV import/export for tabular sections, including nested JSON cells."""
 
 import csv
@@ -9,6 +10,7 @@ from smart_retail.contracts.inputs import SECTIONS
 TABLES = {"shelves": "items", "categories": "items", "products": "items", "orders": "order_lines"}
 
 
+# Hàm export_csv: xuất csv theo quy tắc trong thân hàm.
 def export_csv(section: str, payload: dict) -> str:
     if section not in TABLES:
         raise ValueError("This section is not a supported table")
@@ -31,6 +33,7 @@ def export_csv(section: str, payload: dict) -> str:
     return stream.getvalue()
 
 
+# Hàm import_csv: nhập csv theo quy tắc trong thân hàm.
 def import_csv(section: str, text: str) -> dict:
     if section not in TABLES or len(text.encode("utf-8")) > 10_000_000:
         raise ValueError("Unsupported table or file exceeds 10 MB")

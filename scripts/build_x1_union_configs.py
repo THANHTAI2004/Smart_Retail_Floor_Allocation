@@ -1,3 +1,5 @@
+# Vai trò: Tạo pha exact X1 từ hợp miền nghiệm heuristic pha trước.
+# Kết luận chỉ áp dụng cho miền hợp đã dựng.
 """X1 phase 2: exact search over the union of phase-1 heuristic solutions (paper-v3).
 
 Phase 1 (paper-x1-tiny*) runs seq_milp, random_search, annealing and feedback. This
@@ -31,16 +33,19 @@ NAME = "paper-x1-tiny-exact"
 STATE_CAP = 400
 
 
+# Hàm read: đọc dữ liệu đầu vào từ nơi lưu trữ.
 def read(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+# Hàm phase1_roots: xử lý bước phase1 roots trong phạm vi module hiện tại.
 def phase1_roots(results=RESULTS):
     return sorted(
         p for p in results.glob(f"{PHASE1}*") if p.is_dir() and not p.name.startswith(NAME)
     )
 
 
+# Hàm build_union: dựng union theo quy tắc trong thân hàm.
 def build_union(roots, out=OUT):
     index_path = out / "index.json"
     index = read(index_path)
@@ -100,6 +105,7 @@ def build_union(roots, out=OUT):
     return copy.deepcopy(rows)
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     rows = build_union(phase1_roots())
     for row in rows:

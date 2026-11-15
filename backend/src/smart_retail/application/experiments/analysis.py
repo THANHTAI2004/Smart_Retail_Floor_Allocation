@@ -1,3 +1,5 @@
+# Vai trò: Thống kê kết quả và so sánh ghép cặp theo đơn vị thực nghiệm.
+# Giữ thông tin thất bại; không coi các fold hoặc lần lặp phụ thuộc là mẫu độc lập tùy ý.
 """Failure-preserving descriptive statistics and seed/fold-paired comparisons.
 
 Pairing unit: (seed, cv_fold); repetitions of one unit are averaged first. Folds of
@@ -44,6 +46,7 @@ SECONDARY_REFERENCES = ("random_search", "feedback_v5")
 PRIMARY_METRICS = ("test_objective", "joint_objective")
 
 
+# Hàm describe: xử lý bước describe trong phạm vi module hiện tại.
 def describe(values):
     n = len(values)
     if not n:
@@ -62,6 +65,7 @@ def describe(values):
     }
 
 
+# Hàm vargha_delaney_a12: xử lý bước vargha delaney a12 trong phạm vi module hiện tại.
 def vargha_delaney_a12(treatment, baseline):
     """P(treatment > baseline) + 0.5 P(tie); 0.5 means no stochastic difference."""
     if not treatment or not baseline:
@@ -70,6 +74,7 @@ def vargha_delaney_a12(treatment, baseline):
     return greater / (len(treatment) * len(baseline))
 
 
+# Hàm bootstrap_median_ci: xử lý bước bootstrap median ci trong phạm vi module hiện tại.
 def bootstrap_median_ci(differences, resamples=BOOTSTRAP_RESAMPLES, seed=BOOTSTRAP_SEED):
     if len(differences) < 2:
         return None
@@ -80,12 +85,14 @@ def bootstrap_median_ci(differences, resamples=BOOTSTRAP_RESAMPLES, seed=BOOTSTR
     return [medians[int(0.025 * resamples)], medians[int(0.975 * resamples) - 1]]
 
 
+# Hàm wilcoxon_p: xử lý bước wilcoxon p trong phạm vi module hiện tại.
 def wilcoxon_p(differences):
     if sum(abs(d) > TOLERANCE for d in differences) < 2:
         return None
     return float(wilcoxon(differences, zero_method="wilcox").pvalue)
 
 
+# Dùng kiểm định có hiệu chỉnh phụ thuộc do lấy mẫu lại thay cho giả định mọi fold độc lập.
 def nadeau_bengio_p(differences, test_to_train):
     """Corrected resampled t-test (Nadeau & Bengio, 2003) for repeated k-fold units."""
     n = len(differences)
@@ -98,6 +105,7 @@ def nadeau_bengio_p(differences, test_to_train):
     return float(2 * t.sf(abs(statistic), n - 1))
 
 
+# Hiệu chỉnh nhóm p-value theo Holm để kiểm soát sai số khi xét nhiều giả thuyết.
 def holm(records, key, target):
     tested = sorted((r for r in records if r[key] is not None), key=lambda r: r[key])
     adjusted = 0.0
@@ -106,6 +114,7 @@ def holm(records, key, target):
         record[target] = adjusted
 
 
+# Xác định đơn vị so sánh trước khi tổng hợp để các lần lặp cùng điều kiện không bị đếm tùy ý thành mẫu độc lập.
 def unit_values(rows, experiment, dataset, metric):
     """{treatment: {(seed, cv_fold): mean over repetitions}} for successful jobs."""
     values: dict[str, dict[tuple, list[float]]] = defaultdict(lambda: defaultdict(list))
@@ -126,6 +135,7 @@ def unit_values(rows, experiment, dataset, metric):
     return means, (statistics.mean(ratios) if ratios else None)
 
 
+# Hàm mixed_objectives: xử lý bước mixed objectives trong phạm vi module hiện tại.
 def mixed_objectives(rows, experiment, arms, metric) -> bool:
     """True when arms were scored by different objective definitions."""
     if metric not in OBJECTIVE_METRICS:
@@ -138,6 +148,7 @@ def mixed_objectives(rows, experiment, arms, metric) -> bool:
     return len(definitions) > 1
 
 
+# Hàm friedman_nemenyi: xử lý bước friedman nemenyi trong phạm vi module hiện tại.
 def friedman_nemenyi(blocks: list[list[float]], arms: list[str], level: str) -> dict:
     """Average ranks (1 = smallest value), Friedman test and Nemenyi critical difference."""
     k, n = len(arms), len(blocks)
@@ -166,6 +177,7 @@ def friedman_nemenyi(blocks: list[list[float]], arms: list[str], level: str) -> 
     return record
 
 
+# Hàm exact_wilcoxon_p: xử lý bước exact wilcoxon p trong phạm vi module hiện tại.
 def exact_wilcoxon_p(differences):
     """Two-sided exact signed-rank p over nonzero differences; None if all are zero."""
     nonzero = [d for d in differences if abs(d) > TOLERANCE]
@@ -174,6 +186,7 @@ def exact_wilcoxon_p(differences):
     return float(wilcoxon(nonzero, method="exact").pvalue)
 
 
+# So sánh các nhánh theo instance và nhánh tham chiếu, giữ phạm vi scale cùng nhóm chỉ số khai báo.
 def instance_comparisons(rows, metrics_of, scales: dict[str, str] | None = None):
     """Instance-level inference: each instance contributes one paired mean per arm.
 
@@ -279,6 +292,7 @@ def instance_comparisons(rows, metrics_of, scales: dict[str, str] | None = None)
     return records
 
 
+# Hàm analyze: xử lý bước analyze trong phạm vi module hiện tại.
 def analyze(
     rows,
     selected_metrics: dict[str, list[str]] | None = None,
@@ -322,6 +336,7 @@ def analyze(
             }
         )
 
+    # Hàm chosen: xử lý bước chosen trong phạm vi module hiện tại.
     def chosen(experiment):
         return [
             m

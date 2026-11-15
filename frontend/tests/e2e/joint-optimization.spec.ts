@@ -1,3 +1,5 @@
+// Vai trò: Kiểm thử hiển thị joint, đường hội tụ và bằng chứng chứng nhận.
+// Fixture và assertion là phạm vi kiểm tra, không thay thế bằng chứng chạy mới.
 import { expect, test } from "@playwright/test";
 import fs from "node:fs/promises";
 import path from "node:path";

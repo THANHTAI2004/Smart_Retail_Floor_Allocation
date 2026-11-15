@@ -1,7 +1,9 @@
+// Vai trò: Quản lý bản nháp mặt bằng, danh sách kệ và cờ thay đổi chưa lưu trong giao diện.
 import { useCallback, useState } from "react";
 import sample from "../features/projects/sample";
 import type { Floorplan, Project, Shelf } from "../types/models";
 
+// Quản lý bản nháp mặt bằng, danh sách kệ và cờ thay đổi chưa lưu trong giao diện.
 export function useFloorplanState() {
   const [floor, setFloor] = useState<Floorplan>(sample.floorplan as unknown as Floorplan);
   const [shelves, setShelves] = useState<Shelf[]>([]);

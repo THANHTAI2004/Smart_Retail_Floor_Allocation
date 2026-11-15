@@ -1,3 +1,4 @@
+// Vai trò: Cấu hình ESLint cho JavaScript và TypeScript của giao diện.
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 

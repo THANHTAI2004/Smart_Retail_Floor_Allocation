@@ -1,3 +1,5 @@
+# Vai trò: Xuất kết quả theo từng nhánh thuật toán và fold theo định dạng deepmg.
+# Các bảng được dựng từ bản ghi thực nghiệm đã lưu.
 """deepmg-style results layout: one folder per arm with sum/eachfold/mean files.
 
 Mirrors deepmg (pypi.org/project/deepmg) ``results/<prefix>/``: ``*_file_sum.txt``
@@ -47,6 +49,7 @@ MEAN_FILES = {
 }
 
 
+# Hàm cell: xử lý bước cell trong phạm vi module hiện tại.
 def cell(value) -> str:
     if value is None:
         return "NA"
@@ -55,10 +58,12 @@ def cell(value) -> str:
     return str(value)
 
 
+# Hàm line: xử lý bước line trong phạm vi module hiện tại.
 def line(values) -> str:
     return "\t".join(cell(v) for v in values) + "\n"
 
 
+# Hàm stats: xử lý bước stats trong phạm vi module hiện tại.
 def stats(values: list[float]) -> tuple:
     if not values:
         return (0, None, None)
@@ -66,6 +71,7 @@ def stats(values: list[float]) -> tuple:
     return (len(values), statistics.mean(values), sd)
 
 
+# Hàm successful: xử lý bước successful trong phạm vi module hiện tại.
 def successful(records: list[dict], metric: str) -> list[float]:
     return [
         r[metric]
@@ -74,6 +80,7 @@ def successful(records: list[dict], metric: str) -> list[float]:
     ]
 
 
+# Hàm prefix: xử lý bước prefix trong phạm vi module hiện tại.
 def prefix(configuration: dict, experiment: str, dataset: str, treatment: str) -> str:
     spec = configuration.get("evaluation")
     if spec is None:
@@ -87,6 +94,7 @@ def prefix(configuration: dict, experiment: str, dataset: str, treatment: str) -
     return f"{experiment}_{dataset}_{treatment}_{protocol}_r{runs}_t{budget}s"
 
 
+# Hàm arm_config: xử lý bước arm config trong phạm vi module hiện tại.
 def arm_config(configuration: dict, experiment: str, dataset: str, treatment: str, jobs: int):
     """A one-arm campaign whose jobs reproduce the same job keys and inputs."""
     source = next(e for e in configuration["experiments"] if e["id"] == experiment)
@@ -105,6 +113,7 @@ def arm_config(configuration: dict, experiment: str, dataset: str, treatment: st
     }
 
 
+# Hàm export: xuất dữ liệu kết quả sang artifact.
 def export(roots: list[Path], output: Path, rows: list[dict], configurations: list[dict]):
     planned: dict[tuple, int] = defaultdict(int)
     origin: dict[tuple, dict] = {}

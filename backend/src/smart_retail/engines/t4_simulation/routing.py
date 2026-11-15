@@ -1,3 +1,4 @@
+# Vai trò: Chọn thứ tự ghé điểm lấy hàng theo chính sách định tuyến trên khoảng cách đường đi hợp lệ.
 """Deterministic routing policies over valid shortest-path distances."""
 
 from collections.abc import Callable
@@ -5,6 +6,7 @@ from collections.abc import Callable
 from smart_retail.domain.models import EngineError
 
 
+# Chọn thứ tự ghé; khoảng cách phải được cung cấp từ đồ thị đi được để tránh đường xuyên vật cản.
 def order(policy: str, targets: dict[str, tuple], start: tuple, distance: Callable) -> list[str]:
     if policy == "return":
         return sorted(targets)

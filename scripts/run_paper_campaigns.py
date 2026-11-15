@@ -1,3 +1,4 @@
+# Vai trò: Chạy các campaign tuần tự theo thứ tự khối của bộ cấu hình, hỗ trợ tiếp tục và tổng hợp báo cáo.
 """Run the direction-A paper campaigns sequentially, resumably, then pool reports per block.
 
 Order follows docs/research/EXPERIMENT_DESIGN_DEEPMG.md section 8 (X3 last). Each campaign
@@ -35,6 +36,7 @@ JOURNAL = RESULTS / "journal.json"
 ORDER = SETS["paper-v3"]
 
 
+# Hàm select: xử lý bước select trong phạm vi module hiện tại.
 def select(name):
     """Point configs, results, reports, journal and block order at one config set."""
     global CONFIGS, RESULTS, REPORTS, JOURNAL, ORDER
@@ -45,15 +47,18 @@ def select(name):
     ORDER = SETS[name]
 
 
+# Hàm now: lấy thời điểm hiện tại theo cách chuẩn hóa trong hàm.
 def now():
     return datetime.now(UTC).isoformat()
 
 
+# Hàm record: xử lý bước record trong phạm vi module hiện tại.
 def record(journal, entry):
     journal.append(entry)
     JOURNAL.write_text(json.dumps(journal, indent=2) + "\n", encoding="utf-8")
 
 
+# Hàm load_blocks: nạp blocks theo quy tắc trong thân hàm.
 def load_blocks():
     blocks = defaultdict(list)
     for row in json.loads((CONFIGS / "index.json").read_text(encoding="utf-8")):
@@ -61,6 +66,7 @@ def load_blocks():
     return blocks
 
 
+# Hàm prepare_union: xử lý bước prepare union trong phạm vi module hiện tại.
 def prepare_union(journal):
     """Build X1b once every phase-1 X1 campaign is COMPLETED (journaled either way)."""
     entry = {"block": "X1b", "action": "build_union", "started_utc": now()}
@@ -76,6 +82,7 @@ def prepare_union(journal):
     print(f"[{now()}] X1b union configs: {entry['status']}", flush=True)
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--set", choices=sorted(SETS), default="paper-v3", help="config set to run")

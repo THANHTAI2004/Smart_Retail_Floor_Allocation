@@ -1,3 +1,5 @@
+# Vai trò: Khai báo ứng dụng HTTP, kiểm tra yêu cầu và chuyển thao tác sang tầng application.
+# Công việc tính toán được đưa vào hàng đợi để worker xử lý.
 """HTTP adapters only; numerical work belongs to the external worker."""
 
 import logging
@@ -37,10 +39,12 @@ class TableImport(BaseModel):
     expected_revision: int = Field(ge=0)
 
 
+# Hàm create_app: tạo mới app theo quy tắc trong thân hàm.
 def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
     engine, factory = connect(url, database=database)
 
     @asynccontextmanager
+    # Hàm lifespan: xử lý bước lifespan trong phạm vi module hiện tại.
     async def lifespan(_: FastAPI):
         engine.ready()
         yield
@@ -49,6 +53,7 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
     app = FastAPI(title="Smart Retail Floor Allocation", version="0.1.0", lifespan=lifespan)
     app.state.session_factory = factory
     @app.exception_handler(ConnectionFailure)
+    # Hàm database_unavailable: xử lý bước database unavailable trong phạm vi module hiện tại.
     async def database_unavailable(_: Request, exc: ConnectionFailure):
         logger.warning("MongoDB connectivity failure: %s", type(exc).__name__)
         return JSONResponse(
@@ -65,6 +70,7 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
         allow_headers=["Content-Type"],
     )
 
+    # Hàm session: xử lý bước session trong phạm vi module hiện tại.
     def session():
         with factory() as value:
             yield value
@@ -72,16 +78,19 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
     DB = Annotated[MongoStore, Depends(session)]
 
     @app.exception_handler(projects.ServiceError)
+    # Hàm service_error: xử lý bước service error trong phạm vi module hiện tại.
     async def service_error(_: Request, exc: projects.ServiceError):
         return JSONResponse(status_code=exc.status, content={"detail": str(exc)})
 
     @app.exception_handler(ValidationError)
     @app.exception_handler(RequestValidationError)
+    # Hàm validation_error: xử lý bước validation error trong phạm vi module hiện tại.
     async def validation_error(_: Request, exc):
         errors = [{"path": ".".join(map(str, e["loc"])), "message": e["msg"]} for e in exc.errors()]
         return JSONResponse(status_code=422, content={"detail": errors})
 
     @app.middleware("http")
+    # Hàm timing: xử lý bước timing trong phạm vi module hiện tại.
     async def timing(request: Request, call_next):
         start = time.monotonic()
         response = await call_next(request)
@@ -96,6 +105,7 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
         return response
 
     @app.get("/api/health")
+    # Hàm health: xử lý bước health trong phạm vi module hiện tại.
     def health(db: DB):
         db.database.command("ping")
         return {
@@ -106,10 +116,12 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
         }
 
     @app.get("/api/schemas")
+    # Hàm schemas: xử lý bước schemas trong phạm vi module hiện tại.
     def schemas():
         return {key: value.model_json_schema() for key, value in SECTIONS.items()}
 
     @app.get("/api/projects/{identifier}/inputs/{section}/export")
+    # Hàm export_input: xuất input theo quy tắc trong thân hàm.
     def export_input(identifier: str, section: str, db: DB, format: str = "json"):
         project = projects.get_project(db, identifier)
         if section not in SECTIONS or section not in project.sections:
@@ -127,6 +139,7 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
             raise projects.ServiceError(422, str(exc)) from exc
 
     @app.post("/api/projects/{identifier}/inputs/{section}/import-csv")
+    # Hàm import_table: nhập table theo quy tắc trong thân hàm.
     def import_table(identifier: str, section: str, payload: TableImport, db: DB):
         try:
             data = import_csv(section, payload.text)
@@ -135,6 +148,7 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
         return projects.save_section(db, identifier, section, data, payload.expected_revision)
 
     @app.get("/api/projects", response_model=list[ProjectOutput])
+    # Hàm list_projects: liệt kê projects theo quy tắc trong thân hàm.
     def list_projects(db: DB):
         return [
             projects.project_dict(p)
@@ -142,40 +156,49 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
         ]
 
     @app.post("/api/projects", status_code=201, response_model=ProjectOutput)
+    # Hàm create: xử lý bước create trong phạm vi module hiện tại.
     def create(payload: NewProject, db: DB):
         return projects.create_project(db, payload.name)
 
     @app.get("/api/projects/{identifier}", response_model=ProjectOutput)
+    # Hàm get: xử lý bước get trong phạm vi module hiện tại.
     def get(identifier: str, db: DB):
         return projects.project_dict(projects.get_project(db, identifier))
 
     @app.put("/api/projects/{identifier}/inputs/{section}", response_model=ProjectOutput)
+    # Hàm save: xử lý bước save trong phạm vi module hiện tại.
     def save(
         identifier: str, section: str, payload: dict, db: DB, expected_revision: int = Query(ge=0)
     ):
         return projects.save_section(db, identifier, section, payload, expected_revision)
 
     @app.post("/api/projects/{identifier}/validate", response_model=ValidationOutput)
+    # Hàm validate: xử lý bước validate trong phạm vi module hiện tại.
     def validate(identifier: str, db: DB):
         return projects.validation_report(projects.get_project(db, identifier).sections)
 
     @app.post("/api/projects/{identifier}/runs", status_code=202, response_model=RunOutput)
+    # Hàm enqueue: xử lý bước enqueue trong phạm vi module hiện tại.
     def enqueue(identifier: str, db: DB):
         return projects.enqueue(db, identifier)
 
     @app.get("/api/projects/{identifier}/runs", response_model=list[RunOutput])
+    # Hàm runs: xử lý bước runs trong phạm vi module hiện tại.
     def runs(identifier: str, db: DB):
         return projects.list_runs(db, identifier)
 
     @app.get("/api/runs/{identifier}", response_model=RunOutput)
+    # Hàm run: thực hiện luồng chạy với trạng thái và ngân sách được quản lý trong thân hàm.
     def run(identifier: str, db: DB):
         return projects.run_dict(projects.get_run(db, identifier), include_snapshot=True)
 
     @app.post("/api/runs/{identifier}/cancel", response_model=RunOutput)
+    # Hàm cancel: gửi hoặc ghi nhận yêu cầu hủy theo trạng thái hiện tại.
     def cancel(identifier: str, db: DB):
         return projects.cancel(db, identifier)
 
     @app.post("/api/runs/{identifier}/replay", status_code=202, response_model=RunOutput)
+    # Hàm replay: kiểm tra lại quyết định từ đầu vào gốc.
     def replay(identifier: str, db: DB):
         old = projects.get_run(db, identifier)
         if old.snapshot.get("_runtime") != runtime_identity():
@@ -196,6 +219,7 @@ def create_app(url: str | None = None, database: str | None = None) -> FastAPI:
         return projects.run_dict(new)
 
     @app.get("/api/runs/{identifier}/report")
+    # Hàm report: tổng hợp báo cáo từ các bản ghi.
     def report(identifier: str, db: DB, format: str = "json"):
         run = projects.run_dict(projects.get_run(db, identifier), include_snapshot=True)
         if canonical_hash(run["snapshot"]) != run["input_sha256"]:

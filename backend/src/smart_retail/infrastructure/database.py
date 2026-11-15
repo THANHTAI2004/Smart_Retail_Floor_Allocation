@@ -1,3 +1,4 @@
+# Vai trò: Cổng kết nối persistence MongoDB cho application và worker; chi tiết driver nằm trong module mongodb.
 """Primary MongoDB connection facade; historical SQL migrations are offline only."""
 
 import os

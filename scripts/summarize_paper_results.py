@@ -1,3 +1,4 @@
+# Vai trò: Tổng hợp kết quả mô tả theo job duy nhất, phân biệt lần chạy gốc và các đợt bổ sung.
 """Export unique-job descriptive results with explicit historical/follow-up accounting."""
 
 import csv
@@ -23,6 +24,7 @@ METRICS = [
 ]
 
 
+# Hàm csv_file: xử lý bước csv file trong phạm vi module hiện tại.
 def csv_file(path, rows):
     columns = list(dict.fromkeys(k for row in rows for k in row))
     with path.open("w", newline="", encoding="utf-8-sig") as stream:
@@ -31,6 +33,7 @@ def csv_file(path, rows):
         writer.writerows(rows)
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     out = ROOT / "experiments/reports/20261023-paper-v2" / f"user-statistics-{stamp}"

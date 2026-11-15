@@ -1,3 +1,5 @@
+# Vai trò: Điều phối một ứng viên qua các tầng T1–T4 và tái sử dụng cache theo đầu vào phụ thuộc.
+# Engine từng tầng chỉ giải phần việc được giao.
 """Application orchestration. Engines never choose the whole-system workflow."""
 
 import hashlib
@@ -25,6 +27,7 @@ from smart_retail.engines.t2_allocation.engine import solve as allocate
 from smart_retail.engines.t3_slotting.engine import solve as slot
 
 
+# Sắp khóa JSON và loại NaN để cùng nội dung tạo cùng digest dùng cho snapshot, cache và kiểm tra đầu vào.
 def canonical_hash(value: dict) -> str:
     return hashlib.sha256(
         json.dumps(
@@ -33,6 +36,7 @@ def canonical_hash(value: dict) -> str:
     ).hexdigest()
 
 
+# Mỗi tầng nhận kết quả tầng trước và phần thời gian còn lại trong cùng deadline.
 def _candidate(
     sections: dict,
     cancelled: Callable[[], bool] = lambda: False,
@@ -54,7 +58,9 @@ def _candidate(
         "stage_cache": {},
     }
 
+    # Hàm cached: xử lý bước cached trong phạm vi module hiện tại.
     def cached(stage: str, inputs: dict, compute: Callable):
+        # Hàm cache_key: xử lý bước cache key trong phạm vi module hiện tại.
         def cache_key(values):
             return canonical_hash(
                 {
@@ -67,6 +73,7 @@ def _candidate(
                 }
             )
 
+        # Khóa chứa phụ thuộc tầng, runtime và ngữ cảnh joint; chỉ tái dùng khi đúng nội dung đầu vào.
         key = cache_key(inputs)
         # A supplied physical decision identical to a cached official solve reuses
         # that verified artifact. An upstream decision edit never forces unrelated
@@ -96,12 +103,14 @@ def _candidate(
             exc.stage = stage
             raise
         status = value.get("status") if isinstance(value, dict) else getattr(value, "status", None)
+        # Nghiệm bị giới hạn thời gian không được cache như một kết quả ổn định cho các lần đánh giá sau.
         if cache is not None and status != "FEASIBLE_TIME_LIMIT":
             cache[key] = value
         observer(stage, key, inputs, value, hit, time.monotonic() - began)
         result["stage_cache"][stage] = {"key": key, "hit": hit}
         return value
 
+    # Hàm check: xử lý bước check trong phạm vi module hiện tại.
     def check(stage: str) -> None:
         progress(stage)
         if cancelled():

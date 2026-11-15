@@ -1,3 +1,4 @@
+# Vai trò: Tạo fixture tổng hợp nhỏ với miền quyết định tường minh cho kiểm tra joint và chứng nhận.
 """Author tiny declared-domain synthetic fixtures; never derive an oracle from a solver."""
 
 import copy
@@ -8,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# Hàm fixture: xử lý bước fixture trong phạm vi module hiện tại.
 def fixture(two=False):
     envelope = {"schema_version": "1.1", "data_origin": "SYNTHETIC"}
     sections = {
@@ -127,6 +129,7 @@ def fixture(two=False):
     return sections, space
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     out = ROOT / "datasets/joint"
     out.mkdir(exist_ok=False)

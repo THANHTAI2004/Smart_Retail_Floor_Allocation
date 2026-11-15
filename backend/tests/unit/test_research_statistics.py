@@ -1,14 +1,18 @@
+# Vai trò: Kiểm thử khoảng tin cậy, dữ liệu hằng và hiệu chỉnh nhiều phép kiểm định.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import math
 
 from experiments.analyze_campaign import paired
 from experiments.run_campaign import summarize
 
 
+# Hàm test_single_observation_does_not_invent_uncertainty: kiểm tra kịch bản single observation does not invent uncertainty bằng các assertion trong thân hàm.
 def test_single_observation_does_not_invent_uncertainty():
     summary = summarize([{"experiment": "E", "treatment": "A", "status": "SUCCEEDED", "wall_s": 2}])
     assert summary[0]["metrics"]["wall_s"] == {"n": 1, "mean": 2, "sample_sd": None, "ci95": None}
 
 
+# Hàm test_statistics_preserve_failures_and_constant_paired_differences: kiểm tra kịch bản statistics preserve failures and constant paired differences bằng các assertion trong thân hàm.
 def test_statistics_preserve_failures_and_constant_paired_differences():
     rows = []
     for seed in range(5):
@@ -29,6 +33,7 @@ def test_statistics_preserve_failures_and_constant_paired_differences():
     assert summarize(rows)[1]["succeeded"] == 0
 
 
+# Hàm test_nonconstant_paired_ci_and_holm_are_finite: kiểm tra kịch bản nonconstant paired ci and holm are finite bằng các assertion trong thân hàm.
 def test_nonconstant_paired_ci_and_holm_are_finite():
     rows = []
     for seed in range(5):

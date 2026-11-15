@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử giới hạn thời gian mở rộng và vòng chuyển đổi schema của campaign.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import json
 from pathlib import Path
 
@@ -9,6 +11,7 @@ from smart_retail.contracts.inputs import OptimizationInput, to_domain
 from smart_retail.workers.runner import wall_budget
 
 
+# Hàm test_extended_campaign_budget_and_schema_roundtrip: kiểm tra kịch bản extended campaign budget and schema roundtrip bằng các assertion trong thân hàm.
 def test_extended_campaign_budget_and_schema_roundtrip(sample):
     root = Path(__file__).resolve().parents[3]
     data = json.loads((root / "experiments/configs/paper-v3/paper-x2-medium-part01.json").read_text())
@@ -21,6 +24,7 @@ def test_extended_campaign_budget_and_schema_roundtrip(sample):
 
 
 @pytest.mark.parametrize("key,value", [("job_time_limit_s", 3601), ("max_wall_s", 28801)])
+# Hàm test_extended_campaign_still_has_bounded_limits: kiểm tra kịch bản extended campaign still has bounded limits bằng các assertion trong thân hàm.
 def test_extended_campaign_still_has_bounded_limits(key, value):
     root = Path(__file__).resolve().parents[3]
     data = json.loads((root / "experiments/configs/paper-v3/paper-x1-trap.json").read_text())
@@ -29,6 +33,7 @@ def test_extended_campaign_still_has_bounded_limits(key, value):
         CampaignSpec.model_validate(data)
 
 
+# Hàm test_optimization_rejects_above_extended_limit: kiểm tra kịch bản optimization rejects above extended limit bằng các assertion trong thân hàm.
 def test_optimization_rejects_above_extended_limit():
     with pytest.raises(ValidationError):
         OptimizationInput(time_limit_s=3601)

@@ -1,3 +1,5 @@
+# Vai trò: Dựng miền quyết định hữu hạn từ nghiệm heuristic đã ghi nhận để chạy tham chiếu exact.
+# Chứng nhận chỉ có ý nghĩa trong miền được khai báo.
 """Declared finite decision spaces built from heuristic solutions, for exact reference runs (X1).
 
 The union space bundles whole layers: every distinct layout (all shelf poses) found by
@@ -14,6 +16,7 @@ from smart_retail.contracts.optimality import Placement
 ROW_KEYS = tuple(Placement.model_fields)
 
 
+# Hàm union_space: xử lý bước union space trong phạm vi module hiện tại.
 def union_space(decisions: list[dict]) -> tuple[dict, dict]:
     layouts: list[dict] = []
     allocations: list[dict] = []

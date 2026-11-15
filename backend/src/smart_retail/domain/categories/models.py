@@ -1,3 +1,5 @@
+# Vai trò: Mô hình domain cho ngành hàng.
+# Các kiểu nghiệp vụ không phụ thuộc HTTP hoặc driver lưu trữ; kích thước vật lý dùng đơn vị SI.
 """Business models for categories. No HTTP or ORM dependencies."""
 
 from dataclasses import dataclass

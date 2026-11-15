@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử I/O Unicode, đường dẫn dài, spawn và công bố cache đồng thời.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """Actual deep Unicode I/O and spawn, without changing Windows system policy."""
 
 import multiprocessing as mp
@@ -17,6 +19,7 @@ from smart_retail.infrastructure.filesystem import (
 from smart_retail.infrastructure.stage_cache import StageCache
 
 
+# Hàm deep_root: xử lý bước deep root trong phạm vi module hiện tại.
 def deep_root(tmp_path):
     root = normalize_fs_path(tmp_path)
     while len(str(root)) < 330:
@@ -24,6 +27,7 @@ def deep_root(tmp_path):
     return logical_fs_path(root)
 
 
+# Hàm spawn_writer: xử lý bước spawn writer trong phạm vi module hiện tại.
 def spawn_writer(root):
     cache = StageCache(Path(root))
     cache["a" * 64] = {"message": "D\u1eef li\u1ec7u b\u1ea5t bi\u1ebfn", "count": 7}
@@ -31,6 +35,7 @@ def spawn_writer(root):
 
 
 @pytest.mark.parametrize("long", [False, True])
+# Hàm test_cache_short_long_unicode_repeated_and_no_temp: kiểm tra kịch bản cache short long unicode repeated and no temp bằng các assertion trong thân hàm.
 def test_cache_short_long_unicode_repeated_and_no_temp(tmp_path, long):
     root = deep_root(tmp_path) if long else tmp_path / "ng\u1eafn"
     cache = StageCache(root)
@@ -53,6 +58,7 @@ def test_cache_short_long_unicode_repeated_and_no_temp(tmp_path, long):
     assert not list(cache.root.glob("*.tmp"))
 
 
+# Hàm test_cache_corruption_and_concurrent_publication: kiểm tra kịch bản cache corruption and concurrent publication bằng các assertion trong thân hàm.
 def test_cache_corruption_and_concurrent_publication(tmp_path):
     cache = StageCache(deep_root(tmp_path))
     key = "b" * 64
@@ -68,6 +74,7 @@ def test_cache_corruption_and_concurrent_publication(tmp_path):
         cache[key]
 
 
+# Hàm test_spawned_subprocess_writes_deep_cache: kiểm tra kịch bản spawned subprocess writes deep cache bằng các assertion trong thân hàm.
 def test_spawned_subprocess_writes_deep_cache(tmp_path):
     root = deep_root(tmp_path)
     process = mp.get_context("spawn").Process(target=spawn_writer, args=(str(root),))
@@ -82,9 +89,11 @@ def test_spawned_subprocess_writes_deep_cache(tmp_path):
     assert read(root / "subprocess.json") == {"done": True}
 
 
+# Hàm test_failed_link_never_overwrites_or_leaks_temporary: kiểm tra kịch bản failed link never overwrites or leaks temporary bằng các assertion trong thân hàm.
 def test_failed_link_never_overwrites_or_leaks_temporary(tmp_path, monkeypatch):
     cache = StageCache(deep_root(tmp_path))
 
+    # Hàm unsupported: xử lý bước unsupported trong phạm vi module hiện tại.
     def unsupported(*args):
         raise OSError("hard links unavailable")
 
@@ -95,6 +104,7 @@ def test_failed_link_never_overwrites_or_leaks_temporary(tmp_path, monkeypatch):
     assert not list(cache.root.glob("*.tmp"))
 
 
+# Hàm test_windows_drive_unc_conversion_and_posix_identity: kiểm tra kịch bản windows drive unc conversion and posix identity bằng các assertion trong thân hàm.
 def test_windows_drive_unc_conversion_and_posix_identity(tmp_path):
     assert windows_extended_path(r"C:\folder\..\data") == "\\\\?\\C:\\data"
     assert windows_extended_path(r"\\server\share\folder") == "\\\\?\\UNC\\server\\share\\folder"

@@ -1,3 +1,5 @@
+# Vai trò: Lập kế hoạch campaign có thể tiếp tục, lưu đầu vào bất biến và đưa từng job qua hàng đợi production.
+# Chỉ tiếp tục khi nguồn, cấu hình và dependency khớp nhận diện đã lưu.
 """Resumable one-worker campaigns using the production durable run queue."""
 
 import copy
@@ -23,10 +25,12 @@ from smart_retail.workers.resources import is_alive
 from smart_retail.workers.runner import work_once
 
 
+# Hàm utc: lấy thời điểm hiện tại ở UTC.
 def utc():
     return datetime.now(UTC).isoformat()
 
 
+# Dùng cùng một quy tắc dựng đầu vào cho bước lập kế hoạch và chạy thật để input_sha256 có thể đối chiếu.
 def job_sections(spec: CampaignSpec, dataset: dict, job: dict, plans: dict) -> dict:
     """Single reconstruction rule for planning and execution of one job input."""
     data = merge(copy.deepcopy(dataset), job["overrides"])
@@ -40,6 +44,7 @@ def job_sections(spec: CampaignSpec, dataset: dict, job: dict, plans: dict) -> d
     return data
 
 
+# Hàm split_plans: xử lý bước split plans trong phạm vi module hiện tại.
 def split_plans(root: Path, dataset_id: str) -> dict:
     return {
         int(path.stem): read(path)
@@ -47,6 +52,7 @@ def split_plans(root: Path, dataset_id: str) -> dict:
     }
 
 
+# Tạo đích mới, chốt dataset, cách chia tập và toàn bộ kế hoạch trước khi worker nhận job đầu tiên.
 def initialize(spec: CampaignSpec, root: Path):
     root = normalize_fs_path(root)
     began = time.monotonic()
@@ -119,6 +125,7 @@ def initialize(spec: CampaignSpec, root: Path):
     write(root / "integrity.json", fingerprint(root))
 
 
+# Tiếp tục bằng tập job_key đã hoàn thành; mọi thay đổi nguồn hoặc cấu hình đều yêu cầu campaign mới.
 def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: int | None = None):
     root = normalize_fs_path(root)
     if not resume:
@@ -137,6 +144,7 @@ def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: i
         else:
             raise ValueError("Campaign already has a live supervisor")
     write(lock, {"pid": os.getpid(), "started_utc": utc()}, immutable=True)
+    # Tên database tách theo đường dẫn campaign để các campaign song song không dùng chung hàng đợi.
     campaign_database = (
         os.getenv("SMART_RETAIL_CAMPAIGN_DB_PREFIX", "sr_campaign_")
         + hashlib.sha256(str(logical_fs_path(root.resolve())).encode()).hexdigest()[:24]
@@ -145,6 +153,7 @@ def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: i
     engine.ready()
     checkpoint = read(root / "checkpoint.json")
     records = [read(path) for path in sorted((root / "records").glob("*.json"))]
+    # Resume bỏ qua job đã có record; nhận diện bằng khóa kế hoạch thay vì vị trí trong danh sách.
     done = {record["job_key"] for record in records}
     jobs = read(root / "plan.json")["jobs"]
     started = time.monotonic()
@@ -152,6 +161,7 @@ def run(spec: CampaignSpec, root: Path, *, resume: bool = False, max_new_jobs: i
     new_jobs = 0
     status = "COMPLETED"
 
+    # Hàm cancellation: xử lý bước cancellation trong phạm vi module hiện tại.
     def cancellation():
         return (root / "cancel.request").exists() or (
             root.parent / ".requests" / f"{root.name}.cancel"

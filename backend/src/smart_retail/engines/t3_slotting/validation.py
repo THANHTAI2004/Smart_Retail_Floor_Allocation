@@ -1,3 +1,4 @@
+# Vai trò: Phát lại planogram từ kích thước sản phẩm và kệ: kiểm tra trùng vị trí, tải trọng, facings và sức chứa.
 """Independent planogram replay from physical inputs, without solver matrices."""
 
 import math
@@ -6,6 +7,7 @@ from collections import defaultdict
 from smart_retail.domain.models import Product, Shelf
 
 
+# Kiểm tra hình học từng placement và tải trọng dùng chung của các mặt trên cùng tầng kệ.
 def violations(
     shelves: tuple[Shelf, ...],
     products: tuple[Product, ...],

@@ -1,3 +1,4 @@
+# Vai trò: Cache JSON theo nội dung đầu vào từng tầng, kiểm tra checksum khi đọc để phát hiện hỏng hoặc sửa tệp.
 """Content-addressed JSON stage cache with checksum validation and no pickle."""
 
 import json
@@ -18,14 +19,17 @@ from smart_retail.infrastructure.filesystem import normalize_fs_path, publish_im
 
 
 class StageCache(dict):
+    # Hàm __init__: khởi tạo đối tượng và các phụ thuộc ban đầu.
     def __init__(self, root: Path):
         super().__init__()
         self.root = normalize_fs_path(root)
         self.root.mkdir(parents=True, exist_ok=True)
 
+    # Hàm __contains__: xử lý bước contains trong phạm vi module hiện tại.
     def __contains__(self, key):
         return (self.root / f"{key}.json").exists()
 
+    # Hàm __getitem__: xử lý bước getitem trong phạm vi module hiện tại.
     def __getitem__(self, key):
         envelope = json.loads((self.root / f"{key}.json").read_text(encoding="utf-8"))
         if envelope["key"] != key or canonical_hash(envelope["payload"]) != envelope["sha256"]:
@@ -45,6 +49,7 @@ class StageCache(dict):
             raise EngineError("CACHE_CORRUPT", "Unknown cached type")
         return payload
 
+    # Hàm __setitem__: xử lý bước setitem trong phạm vi module hiện tại.
     def __setitem__(self, key, value):
         payload = asdict(value) if is_dataclass(value) and not isinstance(value, type) else value
         envelope = {

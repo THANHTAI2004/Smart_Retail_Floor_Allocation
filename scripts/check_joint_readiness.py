@@ -1,3 +1,4 @@
+# Vai trò: Kiểm tra gate joint từ receipt chạy và chứng nhận; sự tồn tại của tệp chưa đủ chứng minh đã đạt.
 """Assess JO gates from executed release/campaign/proof receipts, never file presence alone."""
 
 import argparse
@@ -12,10 +13,12 @@ from smart_retail.infrastructure.provenance import runtime_identity
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# Hàm read: đọc dữ liệu đầu vào từ nơi lưu trữ.
 def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--release", type=Path, required=True)
@@ -141,6 +144,7 @@ def main():
     )
     gates = []
 
+    # Hàm gate: xử lý bước gate trong phạm vi module hiện tại.
     def gate(number, passed, evidence, limitation=""):
         gates.append(
             {
@@ -151,6 +155,7 @@ def main():
             }
         )
 
+    # Hàm tested: xử lý bước tested trong phạm vi module hiện tại.
     def tested(name):
         return all_tests and check.get("pytest", False) and name in names
 

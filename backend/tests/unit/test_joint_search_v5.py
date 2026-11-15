@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử seed theo instance, surrogate, restart và baseline di truyền V5.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """paper-v5 search controls: contract, instance-scoped search seed, surrogate and genetic mode."""
 
 import copy
@@ -37,11 +39,13 @@ JOINT = {
 
 
 @pytest.fixture(scope="module")
+# Hàm tiny: xử lý bước tiny trong phạm vi module hiện tại.
 def tiny():
     return generate(DatasetSpec(id="tiny", scale="tiny", facings=6))[0]
 
 
 @pytest.fixture(scope="module")
+# Hàm initial: xử lý bước initial trong phạm vi module hiện tại.
 def initial(tiny):
     """Sequential plan of the generated tiny instance and its T4 feedback."""
     config = JointConfig(**JOINT, mode="feedback")
@@ -62,6 +66,7 @@ def initial(tiny):
 
 
 @pytest.fixture(scope="module")
+# Hàm small_initial: xử lý bước small initial trong phạm vi module hiện tại.
 def small_initial():
     """Sequential plan of the generated small instance (12 shelves) and its T4 feedback."""
     base = generate(DatasetSpec(id="small", scale="small", facings=4))[0]
@@ -82,6 +87,7 @@ def small_initial():
     return sections, state, analyze(state, sections)
 
 
+# Hàm test_absent_v5_controls_keep_the_paper_v4_canonical_form: kiểm tra kịch bản absent v5 controls keep the paper v4 canonical form bằng các assertion trong thân hàm.
 def test_absent_v5_controls_keep_the_paper_v4_canonical_form():
     dumped = JointConfig(**JOINT, mode="feedback").model_dump(mode="json")
     assert not set(V5_CONTROLS) & set(dumped)
@@ -91,6 +97,7 @@ def test_absent_v5_controls_keep_the_paper_v4_canonical_form():
     assert dumped["mode"] == "genetic" and "compound_moves" not in dumped
 
 
+# Hàm test_restart_controls_are_validated: kiểm tra kịch bản restart controls are validated bằng các assertion trong thân hàm.
 def test_restart_controls_are_validated():
     with pytest.raises(ValueError):
         JointConfig(**JOINT, restart_evaluations=3)
@@ -100,6 +107,7 @@ def test_restart_controls_are_validated():
     assert ok.restart_samples == 8 and ok.restart_evaluations == 3
 
 
+# Hàm test_search_seed_scope: kiểm tra kịch bản search seed scope bằng các assertion trong thân hàm.
 def test_search_seed_scope(tiny):
     sections = copy.deepcopy(tiny)
     assert search_seed(sections, 1, None) == 1 == search_seed(sections, 1, "job")
@@ -115,10 +123,12 @@ def test_search_seed_scope(tiny):
 HEAT = {"C0": 9, "C1": 1, "C2": 4}
 
 
+# Hàm reject_layout: xử lý bước reject layout trong phạm vi module hiện tại.
 def reject_layout(monkeypatch, code, poses=None):
     """Make `surrogate.navigation` raise `code` for the layout with these poses (None: any)."""
     real = surrogate.navigation
 
+    # Hàm fake: xử lý bước fake trong phạm vi module hiện tại.
     def fake(floor, shelves, *args, **kwargs):
         if poses is None or all([s.x, s.y, s.rotation] == poses[s.id] for s in shelves):
             raise EngineError(code, "injected")
@@ -127,6 +137,7 @@ def reject_layout(monkeypatch, code, poses=None):
     monkeypatch.setattr(surrogate, "navigation", fake)
 
 
+# Hàm test_surrogate_value_is_the_optimal_one_to_one_pairing: kiểm tra kịch bản surrogate value is the optimal one to one pairing bằng các assertion trong thân hàm.
 def test_surrogate_value_is_the_optimal_one_to_one_pairing(initial):
     sections, state, _ = initial
     d = surrogate.distances(sections, state["decisions"]["poses"])
@@ -140,6 +151,7 @@ def test_surrogate_value_is_the_optimal_one_to_one_pairing(initial):
     assert max(totals) > min(totals)
 
 
+# Hàm test_surrogate_distance_is_the_nearest_pickup_over_all_faces: kiểm tra kịch bản surrogate distance is the nearest pickup over all faces bằng các assertion trong thân hàm.
 def test_surrogate_distance_is_the_nearest_pickup_over_all_faces(initial):
     sections, state, _ = initial
     poses = state["decisions"]["poses"]
@@ -154,6 +166,7 @@ def test_surrogate_distance_is_the_nearest_pickup_over_all_faces(initial):
     }
 
 
+# Hàm test_surrogate_respects_fixed_category_shelves: kiểm tra kịch bản surrogate respects fixed category shelves bằng các assertion trong thân hàm.
 def test_surrogate_respects_fixed_category_shelves(initial):
     sections, state, _ = initial
     d = surrogate.distances(sections, state["decisions"]["poses"])
@@ -168,6 +181,7 @@ def test_surrogate_respects_fixed_category_shelves(initial):
     assert expected != pytest.approx(free)
 
 
+# Hàm test_surrogate_repeats_the_shelf_list_when_categories_outnumber_shelves: kiểm tra kịch bản surrogate repeats the shelf list when categories outnumber shelves bằng các assertion trong thân hàm.
 def test_surrogate_repeats_the_shelf_list_when_categories_outnumber_shelves(initial):
     sections, _, _ = initial
     d = {"S0": 1.0, "S1": 2.0}
@@ -175,6 +189,7 @@ def test_surrogate_repeats_the_shelf_list_when_categories_outnumber_shelves(init
     assert surrogate.value(sections, d, HEAT) == pytest.approx(expected, abs=1e-9)
 
 
+# Hàm test_surrogate_heat_weighting: kiểm tra kịch bản surrogate heat weighting bằng các assertion trong thân hàm.
 def test_surrogate_heat_weighting(initial):
     sections, _, feedback = initial
     categories = {p["sku"]: p["category_id"] for p in sections["products"]["items"]}
@@ -186,6 +201,7 @@ def test_surrogate_heat_weighting(initial):
     assert max(weighted.values()) > 1
 
 
+# Hàm test_surrogate_rank_drops_invalid_topology: kiểm tra kịch bản surrogate rank drops invalid topology bằng các assertion trong thân hàm.
 def test_surrogate_rank_drops_invalid_topology(initial, monkeypatch):
     sections, state, feedback = initial
     config = JointConfig(**JOINT, layers=["T1"], max_actions=1000)
@@ -208,6 +224,7 @@ def test_surrogate_rank_drops_invalid_topology(initial, monkeypatch):
     assert surrogate.rank(candidates, sections, heat) == []
 
 
+# Hàm test_surrogate_rank_breaks_ties_by_the_decision_hash: kiểm tra kịch bản surrogate rank breaks ties by the decision hash bằng các assertion trong thân hàm.
 def test_surrogate_rank_breaks_ties_by_the_decision_hash(initial):
     sections, state, feedback = initial
     poses = state["decisions"]["poses"]
@@ -224,6 +241,7 @@ def test_surrogate_rank_breaks_ties_by_the_decision_hash(initial):
 
 
 @pytest.mark.parametrize("code", ["UNREACHABLE", "DISCONNECTED_AISLES", "PROBLEM_LIMIT"])
+# Hàm test_surrogate_distances_are_none_for_an_invalid_layout: kiểm tra kịch bản surrogate distances are none for an invalid layout bằng các assertion trong thân hàm.
 def test_surrogate_distances_are_none_for_an_invalid_layout(initial, monkeypatch, code):
     sections, state, _ = initial
     reject_layout(monkeypatch, code)
@@ -231,6 +249,7 @@ def test_surrogate_distances_are_none_for_an_invalid_layout(initial, monkeypatch
 
 
 @pytest.mark.parametrize("code", ["TIMEOUT", "CANCELLED"])
+# Hàm test_surrogate_distances_propagate_timeout_and_cancellation: kiểm tra kịch bản surrogate distances propagate timeout and cancellation bằng các assertion trong thân hàm.
 def test_surrogate_distances_propagate_timeout_and_cancellation(initial, monkeypatch, code):
     sections, state, feedback = initial
     reject_layout(monkeypatch, code)
@@ -245,10 +264,12 @@ def test_surrogate_distances_propagate_timeout_and_cancellation(initial, monkeyp
         )
 
 
+# Hàm pool_order: xử lý bước pool order trong phạm vi module hiện tại.
 def pool_order(pool):
     return [canonical_hash(a["decisions"]) for a in pool]
 
 
+# Hàm test_pool_samples_every_shelf_and_is_deterministic: kiểm tra kịch bản pool samples every shelf and is deterministic bằng các assertion trong thân hàm.
 def test_pool_samples_every_shelf_and_is_deterministic(small_initial):
     sections, state, feedback = small_initial
     config = JointConfig(**JOINT, surrogate_pool=96)
@@ -272,6 +293,7 @@ def test_pool_samples_every_shelf_and_is_deterministic(small_initial):
     assert len(set(pool_order(pool))) == len(pool)
 
 
+# Hàm test_pool_size_follows_surrogate_pool: kiểm tra kịch bản pool size follows surrogate pool bằng các assertion trong thân hàm.
 def test_pool_size_follows_surrogate_pool(small_initial):
     sections, state, feedback = small_initial
     for size in (5, 40):
@@ -281,6 +303,7 @@ def test_pool_size_follows_surrogate_pool(small_initial):
     assert len(t1_pool(state, feedback, sections, default, 3)) <= 96
 
 
+# Hàm test_pool_ranked_by_surrogate: kiểm tra kịch bản pool ranked by surrogate bằng các assertion trong thân hàm.
 def test_pool_ranked_by_surrogate(small_initial):
     sections, state, feedback = small_initial
     config = JointConfig(
@@ -292,6 +315,7 @@ def test_pool_ranked_by_surrogate(small_initial):
     assert pool_order(queue) == pool_order(t1_pool(state, feedback, sections, config, 1))
 
 
+# Hàm test_compound_moves_change_several_shelves: kiểm tra kịch bản compound moves change several shelves bằng các assertion trong thân hàm.
 def test_compound_moves_change_several_shelves(small_initial):
     sections, state, feedback = small_initial
     before = state["decisions"]["poses"]
@@ -311,6 +335,7 @@ def test_compound_moves_change_several_shelves(small_initial):
     assert len(t1_pool(state, feedback, sections, plain, 1)) == 4
 
 
+# Hàm test_pool_without_valid_topology_keeps_t2_actions: kiểm tra kịch bản pool without valid topology keeps t2 actions bằng các assertion trong thân hàm.
 def test_pool_without_valid_topology_keeps_t2_actions(small_initial, monkeypatch):
     sections, state, feedback = small_initial
     config = JointConfig(**JOINT, max_actions=1000, surrogate="walk_heat", surrogate_pool=8)
@@ -326,6 +351,7 @@ def test_pool_without_valid_topology_keeps_t2_actions(small_initial, monkeypatch
     assert any(a["layer"] == "T2" for a in queue)
 
 
+# Hàm test_v4_neighborhood_unchanged_without_pool: kiểm tra kịch bản v4 neighborhood unchanged without pool bằng các assertion trong thân hàm.
 def test_v4_neighborhood_unchanged_without_pool(small_initial):
     sections, state, feedback = small_initial
     config = JointConfig(**JOINT, max_actions=1000, t1_steps=[1, 3], geometry_prefilter=True)
@@ -357,6 +383,7 @@ V5 = {
 }
 
 
+# Hàm run: thực hiện luồng chạy với trạng thái và ngân sách được quản lý trong thân hàm.
 def run(base, **joint):
     sections = merge(
         copy.deepcopy(base),
@@ -365,15 +392,18 @@ def run(base, **joint):
     return execute(copy.deepcopy(sections)), sections
 
 
+# Hàm warm_start: xử lý bước warm start trong phạm vi module hiện tại.
 def warm_start(joint):
     return [e for e in joint["trace"] if e.get("action") == "SURROGATE_RESTART"]
 
 
 @pytest.fixture(scope="module")
+# Hàm v5_run: xử lý bước v5 run trong phạm vi module hiện tại.
 def v5_run(tiny):
     return run(tiny, **V5, max_evaluations=6)
 
 
+# Hàm test_restart_phase_spends_declared_evaluations: kiểm tra kịch bản restart phase spends declared evaluations bằng các assertion trong thân hàm.
 def test_restart_phase_spends_declared_evaluations(v5_run):
     result, _ = v5_run
     joint = result["joint"]
@@ -396,6 +426,7 @@ def test_restart_phase_spends_declared_evaluations(v5_run):
     assert first["event"] > phase[-1]["event"] and first["candidate_id"] == start
 
 
+# Hàm test_feedback_v5_is_deterministic: kiểm tra kịch bản feedback v5 is deterministic bằng các assertion trong thân hàm.
 def test_feedback_v5_is_deterministic(v5_run):
     result, sections = v5_run
     joint = result["joint"]
@@ -405,6 +436,7 @@ def test_feedback_v5_is_deterministic(v5_run):
     assert [e["candidate_id"] for e in again["trace"] if "candidate_id" in e] == ids
 
 
+# Hàm test_restart_phase_skips_locked_layouts: kiểm tra kịch bản restart phase skips locked layouts bằng các assertion trong thân hàm.
 def test_restart_phase_skips_locked_layouts(tiny):
     locked = copy.deepcopy(tiny)
     for shelf in locked["shelves"]["items"]:
@@ -417,6 +449,7 @@ def test_restart_phase_skips_locked_layouts(tiny):
     assert joint["best"] is not None and joint["evaluations"] >= 1
 
 
+# Hàm test_v5_search_time_limit: kiểm tra kịch bản v5 search time limit bằng các assertion trong thân hàm.
 def test_v5_search_time_limit(tiny):
     joint = run(tiny, **V5, max_evaluations=10000, search_time_s=0.5)[0]["joint"]
     assert joint["status"] == "SEARCH_TIME_LIMIT"
@@ -424,7 +457,9 @@ def test_v5_search_time_limit(tiny):
 
 
 @pytest.mark.parametrize("phase", [True, False])
+# Hàm test_surrogate_timeout_stops_the_search_with_a_result: kiểm tra kịch bản surrogate timeout stops the search with a result bằng các assertion trong thân hàm.
 def test_surrogate_timeout_stops_the_search_with_a_result(tiny, monkeypatch, phase):
+    # Hàm late: xử lý bước late trong phạm vi module hiện tại.
     def late(*args, **kwargs):
         raise EngineError("TIMEOUT", "injected")
 
@@ -437,9 +472,11 @@ def test_surrogate_timeout_stops_the_search_with_a_result(tiny, monkeypatch, pha
     assert not [e for e in joint["trace"] if e.get("action")]
 
 
+# Hàm test_instance_seed_scope_changes_random_search_stream: kiểm tra kịch bản instance seed scope changes random search stream bằng các assertion trong thân hàm.
 def test_instance_seed_scope_changes_random_search_stream(tiny):
     other = generate(DatasetSpec(id="tiny", scale="tiny", facings=6, seed=102))[0]
 
+    # Hàm walks: xử lý bước walks trong phạm vi module hiện tại.
     def walks(base, **scope):
         result = run(base, mode="random_search", max_evaluations=4, **scope)[0]
         changed = [
@@ -461,6 +498,7 @@ def test_instance_seed_scope_changes_random_search_stream(tiny):
     assert scoped[1][0] == elsewhere[1][0]
 
 
+# Hàm layout_violations: xử lý bước layout violations trong phạm vi module hiện tại.
 def layout_violations(sections, candidate):
     data = to_domain(sections)
     poses = {s["id"]: s for s in candidate["stages"]["T1"]["shelves"]}
@@ -471,12 +509,14 @@ def layout_violations(sections, candidate):
     return violations(data.floorplan, layout)
 
 
+# Hàm ga: xử lý bước ga trong phạm vi module hiện tại.
 def ga(trace, action):
     """Events of a genetic phase that spent budget (skipped proposals cost nothing)."""
     skipped = ("DUPLICATE", "RESTART_UNAVAILABLE")
     return [e for e in trace if e.get("action") == action and e.get("reason") not in skipped]
 
 
+# Hàm test_genetic_respects_budget_and_is_deterministic: kiểm tra kịch bản genetic respects budget and is deterministic bằng các assertion trong thân hàm.
 def test_genetic_respects_budget_and_is_deterministic(tiny):
     result, sections = run(tiny, mode="genetic", max_evaluations=8, population=4)
     joint = result["joint"]
@@ -503,6 +543,7 @@ def test_genetic_respects_budget_and_is_deterministic(tiny):
         assert not layout_violations(sections, candidate)
 
 
+# Hàm test_genetic_population_larger_than_budget: kiểm tra kịch bản genetic population larger than budget bằng các assertion trong thân hàm.
 def test_genetic_population_larger_than_budget(tiny):
     joint = run(tiny, mode="genetic", max_evaluations=4, population=8)[0]["joint"]
     assert joint["evaluations"] == 4 and joint["status"] == "EVALUATION_LIMIT"
@@ -510,6 +551,7 @@ def test_genetic_population_larger_than_budget(tiny):
     assert not ga(joint["trace"], "GA_OFFSPRING")
 
 
+# Hàm test_genetic_emits_no_descent_events: kiểm tra kịch bản genetic emits no descent events bằng các assertion trong thân hàm.
 def test_genetic_emits_no_descent_events(tiny):
     joint = run(tiny, mode="genetic", max_evaluations=8, population=4)[0]["joint"]
     assert not [e for e in joint["trace"] if e["status"] == "IMPROVING"]
@@ -517,9 +559,11 @@ def test_genetic_emits_no_descent_events(tiny):
     assert not [e for e in joint["trace"] if "iteration" in e and e["iteration"] > 0]
 
 
+# Hàm test_genetic_follows_the_instance_seed_scope: kiểm tra kịch bản genetic follows the instance seed scope bằng các assertion trong thân hàm.
 def test_genetic_follows_the_instance_seed_scope(tiny):
     other = generate(DatasetSpec(id="tiny", scale="tiny", facings=6, seed=102))[0]
 
+    # Hàm stream: xử lý bước stream trong phạm vi module hiện tại.
     def stream(base, **scope):
         result = run(base, mode="genetic", max_evaluations=4, population=4, **scope)[0]
         changed = [e["changed"] for e in ga(result["joint"]["trace"], "GA_INIT")]
@@ -532,6 +576,7 @@ def test_genetic_follows_the_instance_seed_scope(tiny):
     )
 
 
+# Hàm drive: xử lý bước drive trong phạm vi module hiện tại.
 def drive(initial, score=None, behave=None, seed=1, max_step=3, start=500, **joint):
     """Run `evolve` on the initial plan with a fake evaluator (no simulation).
 
@@ -544,6 +589,7 @@ def drive(initial, score=None, behave=None, seed=1, max_step=3, start=500, **joi
     config = JointConfig(**JOINT, mode="genetic", **joint)
     calls, seen, archive, trace = [1], {state["id"]}, [state], []
 
+    # Hàm assess: xử lý bước assess trong phạm vi module hiện tại.
     def assess(decision, variant=0, reference=None):
         calls[0] += 1
         if behave:
@@ -559,6 +605,7 @@ def drive(initial, score=None, behave=None, seed=1, max_step=3, start=500, **joi
         archive.append(candidate)
         return candidate
 
+    # Hàm exhausted: xử lý bước exhausted trong phạm vi module hiện tại.
     def exhausted():
         return calls[0] >= config.max_evaluations
 
@@ -569,11 +616,14 @@ def drive(initial, score=None, behave=None, seed=1, max_step=3, start=500, **joi
     return best, termination, trace, calls[0]
 
 
+# Hàm failures: xử lý bước failures trong phạm vi module hiện tại.
 def failures(trace):
     return [e for e in ga(trace, "GA_INIT") + ga(trace, "GA_OFFSPRING") if e["status"] == "FAILED"]
 
 
+# Hàm injected: xử lý bước injected trong phạm vi module hiện tại.
 def injected(code, at):
+    # Hàm behave: xử lý bước behave trong phạm vi module hiện tại.
     def behave(call):
         if call == at:
             raise EngineError(code, "injected")
@@ -581,6 +631,7 @@ def injected(code, at):
     return behave
 
 
+# Hàm test_genetic_population_defaults_to_eight: kiểm tra kịch bản genetic population defaults to eight bằng các assertion trong thân hàm.
 def test_genetic_population_defaults_to_eight(initial):
     _, termination, trace, calls = drive(initial, max_evaluations=5)
     assert (termination, calls) == ("EVALUATION_LIMIT", 5)
@@ -590,10 +641,12 @@ def test_genetic_population_defaults_to_eight(initial):
     assert len(ga(trace, "GA_INIT")) == 7 and len(ga(trace, "GA_OFFSPRING")) == 4
 
 
+# Hàm test_genetic_streams_follow_the_search_seed_and_controls: kiểm tra kịch bản genetic streams follow the search seed and controls bằng các assertion trong thân hàm.
 def test_genetic_streams_follow_the_search_seed_and_controls(initial, monkeypatch):
     calls = []
     real = genetic.restart
 
+    # Hàm spy: xử lý bước spy trong phạm vi module hiện tại.
     def spy(state, sections, seed, variant, **kwargs):
         calls.append((seed, variant, kwargs))
         return real(state, sections, seed, variant, **kwargs)
@@ -612,6 +665,7 @@ def test_genetic_streams_follow_the_search_seed_and_controls(initial, monkeypatc
     assert {c[2]["edits"] for c in calls if "edits" in c[2]} == {2}
 
 
+# Hàm test_genetic_is_deterministic_without_simulation: kiểm tra kịch bản genetic is deterministic without simulation bằng các assertion trong thân hàm.
 def test_genetic_is_deterministic_without_simulation(initial):
     first = drive(initial, max_evaluations=20, population=4)
     again = drive(initial, max_evaluations=20, population=4)
@@ -620,9 +674,11 @@ def test_genetic_is_deterministic_without_simulation(initial):
 
 
 @pytest.mark.parametrize(("start", "members", "children"), [(500, 100, 900), (300, 300, 300)])
+# Hàm test_genetic_children_that_are_not_better_never_replace_members: kiểm tra kịch bản genetic children that are not better never replace members bằng các assertion trong thân hàm.
 def test_genetic_children_that_are_not_better_never_replace_members(
     initial, start, members, children
 ):
+    # Tính giá trị mục tiêu của quyết định theo định nghĩa và các thành phần đã khai báo.
     def score(call, decision):
         return members if call <= 4 else children
 
@@ -637,7 +693,9 @@ def test_genetic_children_that_are_not_better_never_replace_members(
     assert best["score_fraction"] == [min(start, members), 1000]
 
 
+# Hàm test_genetic_better_children_replace_the_worst_member: kiểm tra kịch bản genetic better children replace the worst member bằng các assertion trong thân hàm.
 def test_genetic_better_children_replace_the_worst_member(initial):
+    # Tính giá trị mục tiêu của quyết định theo định nghĩa và các thành phần đã khai báo.
     def score(call, decision):
         return 400 - call if call <= 4 else 300 - call
 
@@ -649,7 +707,9 @@ def test_genetic_better_children_replace_the_worst_member(initial):
     assert best["id"] == offspring[-1]["candidate_id"]
 
 
+# Hàm test_genetic_tournament_favours_the_better_and_the_worst_is_dropped: kiểm tra kịch bản genetic tournament favours the better and the worst is dropped bằng các assertion trong thân hàm.
 def test_genetic_tournament_favours_the_better_and_the_worst_is_dropped(initial):
+    # Tính giá trị mục tiêu của quyết định theo định nghĩa và các thành phần đã khai báo.
     def score(call, decision):
         return {2: 400, 3: 300, 4: 200}.get(call, 150)
 
@@ -664,11 +724,13 @@ def test_genetic_tournament_favours_the_better_and_the_worst_is_dropped(initial)
     assert any(set(e["parent_ids"]) & children for e in offspring)
 
 
+# Hàm test_genetic_falls_back_to_a_parent_when_no_crossover_is_valid: kiểm tra kịch bản genetic falls back to a parent when no crossover is valid bằng các assertion trong thân hàm.
 def test_genetic_falls_back_to_a_parent_when_no_crossover_is_valid(initial, monkeypatch):
     tries, mutated, plans = [], [], [initial[1]["decisions"]["poses"]]
     monkeypatch.setattr(genetic, "geometry_valid", lambda domain, poses: tries.append(1) or False)
     real = genetic.restart
 
+    # Hàm spy: xử lý bước spy trong phạm vi module hiện tại.
     def spy(plan, *args, **kwargs):
         result = real(plan, *args, **kwargs)
         if "edits" in kwargs:
@@ -684,6 +746,7 @@ def test_genetic_falls_back_to_a_parent_when_no_crossover_is_valid(initial, monk
 
 
 @pytest.mark.parametrize("at", [3, 6])
+# Hàm test_genetic_continues_after_a_failed_evaluation: kiểm tra kịch bản genetic continues after a failed evaluation bằng các assertion trong thân hàm.
 def test_genetic_continues_after_a_failed_evaluation(initial, at):
     _, termination, trace, calls = drive(
         initial, behave=injected("UNREACHABLE", at), max_evaluations=10, population=4
@@ -696,6 +759,7 @@ def test_genetic_continues_after_a_failed_evaluation(initial, at):
 
 @pytest.mark.parametrize("code", ["TIMEOUT", "CANCELLED"])
 @pytest.mark.parametrize("at", [3, 6])
+# Hàm test_genetic_stops_on_timeout_and_cancellation: kiểm tra kịch bản genetic stops on timeout and cancellation bằng các assertion trong thân hàm.
 def test_genetic_stops_on_timeout_and_cancellation(initial, code, at):
     best, termination, trace, calls = drive(
         initial, behave=injected(code, at), max_evaluations=10, population=4
@@ -706,12 +770,14 @@ def test_genetic_stops_on_timeout_and_cancellation(initial, code, at):
 
 @pytest.mark.parametrize("code", ["CACHE_CORRUPT", "SOURCE_DRIFT"])
 @pytest.mark.parametrize("at", [3, 6])
+# Hàm test_genetic_reraises_integrity_errors: kiểm tra kịch bản genetic reraises integrity errors bằng các assertion trong thân hàm.
 def test_genetic_reraises_integrity_errors(initial, code, at):
     with pytest.raises(EngineError) as raised:
         drive(initial, behave=injected(code, at), max_evaluations=10, population=4)
     assert raised.value.code == code
 
 
+# Hàm test_genetic_stops_after_consecutive_duplicate_restarts: kiểm tra kịch bản genetic stops after consecutive duplicate restarts bằng các assertion trong thân hàm.
 def test_genetic_stops_after_consecutive_duplicate_restarts(initial, monkeypatch):
     sections, state, _ = initial
     fixed = restarts.restart(state, sections, 1, 1)
@@ -722,11 +788,13 @@ def test_genetic_stops_after_consecutive_duplicate_restarts(initial, monkeypatch
     assert len(duplicates) == DUPLICATE_LIMIT and {e["action"] for e in duplicates} == {"GA_INIT"}
 
 
+# Hàm test_genetic_treats_the_initial_layout_as_evaluated: kiểm tra kịch bản genetic treats the initial layout as evaluated bằng các assertion trong thân hàm.
 def test_genetic_treats_the_initial_layout_as_evaluated(initial, monkeypatch):
     state = initial[1]
     back = ({k: state["decisions"][k] for k in ("poses", "routing_policy")}, ["S0"])
     real = genetic.restart
 
+    # Hàm walk: xử lý bước walk trong phạm vi module hiện tại.
     def walk(*args, **kwargs):
         return back if "edits" in kwargs else real(*args, **kwargs)
 
@@ -736,6 +804,7 @@ def test_genetic_treats_the_initial_layout_as_evaluated(initial, monkeypatch):
     assert not ga(trace, "GA_OFFSPRING")
 
 
+# Hàm test_genetic_stops_when_no_shelf_can_move: kiểm tra kịch bản genetic stops when no shelf can move bằng các assertion trong thân hàm.
 def test_genetic_stops_when_no_shelf_can_move(initial, monkeypatch):
     monkeypatch.setattr(genetic, "restart", lambda *args, **kwargs: (None, []))
     best, termination, trace, calls = drive(initial, max_evaluations=100, population=3)
@@ -744,6 +813,7 @@ def test_genetic_stops_when_no_shelf_can_move(initial, monkeypatch):
     assert len(unavailable) == DUPLICATE_LIMIT
 
 
+# Hàm test_genetic_offspring_phase_exhausts_on_duplicates: kiểm tra kịch bản genetic offspring phase exhausts on duplicates bằng các assertion trong thân hàm.
 def test_genetic_offspring_phase_exhausts_on_duplicates(initial, monkeypatch):
     sections, state, _ = initial
     answers = iter([restarts.restart(state, sections, 1, 1)])
@@ -756,10 +826,12 @@ def test_genetic_offspring_phase_exhausts_on_duplicates(initial, monkeypatch):
     assert {e["action"] for e in duplicates} == {"GA_OFFSPRING"}
 
 
+# Hàm swaps: xử lý bước swaps trong phạm vi module hiện tại.
 def swaps(queue):
     return [tuple(a["changed"]) for a in queue if a["type"] == "T1_SWAP"]
 
 
+# Hàm test_identical_shelf_swaps_are_dropped_only_when_requested: kiểm tra kịch bản identical shelf swaps are dropped only when requested bằng các assertion trong thân hàm.
 def test_identical_shelf_swaps_are_dropped_only_when_requested(initial):
     sections, state, feedback = initial
     config = JointConfig(**JOINT, max_actions=1000)
@@ -780,6 +852,7 @@ def test_identical_shelf_swaps_are_dropped_only_when_requested(initial):
     assert swaps(actions(state, feedback, varied, on)) == [("S0", "S1"), ("S0", "S2"), ("S0", "S3")]
 
 
+# Hàm test_swaps_of_a_fixed_category_shelf_are_kept: kiểm tra kịch bản swaps of a fixed category shelf are kept bằng các assertion trong thân hàm.
 def test_swaps_of_a_fixed_category_shelf_are_kept(initial):
     sections, state, feedback = initial
     fixed = copy.deepcopy(sections)
@@ -788,6 +861,7 @@ def test_swaps_of_a_fixed_category_shelf_are_kept(initial):
     assert swaps(actions(state, feedback, fixed, config)) == [("S0", "S2"), ("S1", "S2"), ("S2", "S3")]
 
 
+# Hàm test_relabel_detects_permutations_of_identical_shelves: kiểm tra kịch bản relabel detects permutations of identical shelves bằng các assertion trong thân hàm.
 def test_relabel_detects_permutations_of_identical_shelves(initial):
     sections, state, _ = initial
     poses = state["decisions"]["poses"]
@@ -804,6 +878,7 @@ def test_relabel_detects_permutations_of_identical_shelves(initial):
     assert relabel(fixed, poses, {**poses, "S0": poses["S1"], "S1": poses["S0"]})
 
 
+# Hàm test_pool_drops_compound_walks_that_only_relabel: kiểm tra kịch bản pool drops compound walks that only relabel bằng các assertion trong thân hàm.
 def test_pool_drops_compound_walks_that_only_relabel(small_initial, monkeypatch):
     sections, state, feedback = small_initial
     poses = state["decisions"]["poses"]
@@ -818,6 +893,7 @@ def test_pool_drops_compound_walks_that_only_relabel(small_initial, monkeypatch)
         neighborhood, "restart", lambda state, sections, seed, variant, **kw: walks[variant]
     )
 
+    # Hàm compound: xử lý bước compound trong phạm vi module hiện tại.
     def compound(config, chosen=sections):
         pool = t1_pool(state, feedback, chosen, config, 1)
         return [a["decisions"]["poses"] for a in pool if a["type"] == "T1_COMPOUND"]
@@ -836,6 +912,7 @@ def test_pool_drops_compound_walks_that_only_relabel(small_initial, monkeypatch)
 ANNEALING_V5 = {"mode": "annealing", "drop_identical_swaps": True, "t3_scope": "objective"}
 
 
+# Hàm test_annealing_neighbourhood_without_relabels_or_neutral_t3_edits: kiểm tra kịch bản annealing neighbourhood without relabels or neutral t3 edits bằng các assertion trong thân hàm.
 def test_annealing_neighbourhood_without_relabels_or_neutral_t3_edits(initial, tiny):
     sections, state, feedback = initial
     # As in coordinator.anneal: the whole neighbourhood, untruncated.
@@ -853,6 +930,7 @@ def test_annealing_neighbourhood_without_relabels_or_neutral_t3_edits(initial, t
     assert not set(proposed) & {"T1_SWAP", "T3_LEVEL", "T3_POSITION", "T3_ORIENTATION"}
 
 
+# Hàm test_warm_start_walks_are_the_random_search_walks: kiểm tra kịch bản warm start walks are the random search walks bằng các assertion trong thân hàm.
 def test_warm_start_walks_are_the_random_search_walks(tiny, v5_run):
     """Common random numbers: the warm start draws random_search's (seed, variant) walks."""
     result, _ = v5_run
@@ -866,6 +944,7 @@ def test_warm_start_walks_are_the_random_search_walks(tiny, v5_run):
     assert phase and sorted(walks) == list(range(1, 9))
     assert all(walks[e["variant"]] == e["changed"] for e in phase)
 
+    # Hàm layouts: xử lý bước layouts trong phạm vi module hiện tại.
     def layouts(candidates):
         return [
             sorted((s["id"], s["x"], s["y"], s["rotation"]) for s in c["stages"]["T1"]["shelves"])
@@ -877,6 +956,7 @@ def test_warm_start_walks_are_the_random_search_walks(tiny, v5_run):
     assert all(layout in layouts(searched["integrated"]["candidates"][1:]) for layout in evaluated)
 
 
+# Hàm test_warm_start_without_surrogate_keeps_generation_order: kiểm tra kịch bản warm start without surrogate keeps generation order bằng các assertion trong thân hàm.
 def test_warm_start_without_surrogate_keeps_generation_order(tiny):
     unranked = {k: v for k, v in V5.items() if k != "surrogate"}
     phase = warm_start(run(tiny, **unranked, max_evaluations=6)[0]["joint"])
@@ -885,10 +965,12 @@ def test_warm_start_without_surrogate_keeps_generation_order(tiny):
 
 
 @pytest.mark.parametrize("pooled", [True, False])
+# Hàm test_spent_budget_skips_only_the_pooled_ranking: kiểm tra kịch bản spent budget skips only the pooled ranking bằng các assertion trong thân hàm.
 def test_spent_budget_skips_only_the_pooled_ranking(tiny, monkeypatch, pooled):
     calls = []
     real = coordinator.actions
 
+    # Hàm spy: xử lý bước spy trong phạm vi module hiện tại.
     def spy(*args, **kwargs):
         calls.append(1)
         return real(*args, **kwargs)
@@ -904,15 +986,18 @@ def test_spent_budget_skips_only_the_pooled_ranking(tiny, monkeypatch, pooled):
     assert (len(calls), len(descent)) == ((0, 0) if pooled else (1, 1))
 
 
+# Hàm test_warm_start_walk_generation_stops_at_the_search_deadline: kiểm tra kịch bản warm start walk generation stops at the search deadline bằng các assertion trong thân hàm.
 def test_warm_start_walk_generation_stops_at_the_search_deadline(tiny, monkeypatch):
     offset, variants = [0.0], []
     real_time, real_restart = coordinator.time, coordinator.restart
 
     class Clock:
         @staticmethod
+        # Hàm monotonic: xử lý bước monotonic trong phạm vi module hiện tại.
         def monotonic():
             return real_time.monotonic() + offset[0]
 
+    # Hàm walk: xử lý bước walk trong phạm vi module hiện tại.
     def walk(state, sections, seed, variant, **kwargs):
         variants.append(variant)
         if variant == 2:
@@ -935,6 +1020,7 @@ V4_ONLY = {k: v for k, v in V5.items() if k not in V5_CONTROLS}
 V4_TRACE_SHA256 = "d2d53935cbd9286ffd9d933adee8e910fec6479f068bd7186a0c163449458d22"
 
 
+# Hàm test_paper_v4_trace_is_unchanged: kiểm tra kịch bản paper v4 trace is unchanged bằng các assertion trong thân hàm.
 def test_paper_v4_trace_is_unchanged(tiny):
     joint = run(tiny, **V4_ONLY, max_evaluations=6)[0]["joint"]
     trace = [{k: v for k, v in e.items() if k != "telemetry"} for e in joint["trace"]]

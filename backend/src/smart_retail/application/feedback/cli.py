@@ -1,3 +1,4 @@
+# Vai trò: Công cụ phát lại chứng nhận từ đầu vào worker và tệp bằng chứng đã xuất để kiểm tra độc lập.
 """Independent certificate replay from an immutable worker input and exported proof."""
 
 import argparse
@@ -12,6 +13,7 @@ from smart_retail.infrastructure.filesystem import normalize_fs_path
 from smart_retail.infrastructure.provenance import runtime_identity
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser(description="Independently verify a finite-model certificate")
     parser.add_argument("--input", type=Path, required=True)

@@ -1,3 +1,4 @@
+# Vai trò: Hợp đồng mục tiêu và điều khiển tối ưu liên tầng, gồm seed, ngân sách và các tùy chọn tìm kiếm có giới hạn.
 """Declared finite scenario objective and bounded closed-loop controls."""
 
 from typing import Literal
@@ -11,6 +12,7 @@ class Objective(BaseModel):
     scales: tuple[float, float, float, float] = (100, 100, 1, 1)
 
     @model_validator(mode="after")
+    # Hàm valid: xử lý bước valid trong phạm vi module hiện tại.
     def valid(self):
         if min(self.weights) < 0 or sum(self.weights) <= 0 or min(self.scales) <= 0:
             raise ValueError("Nonnegative positive-sum weights and fixed positive scales required")
@@ -96,6 +98,7 @@ class JointConfig(BaseModel):
     drop_identical_swaps: bool | None = None
 
     @model_serializer(mode="wrap")
+    # Hàm omit_absent_search_controls: xử lý bước omit absent search controls trong phạm vi module hiện tại.
     def omit_absent_search_controls(self, handler):
         data = handler(self)
         for key in V4_CONTROLS + V5_CONTROLS:
@@ -104,6 +107,7 @@ class JointConfig(BaseModel):
         return data
 
     @model_validator(mode="after")
+    # Hàm scenarios: xử lý bước scenarios trong phạm vi module hiện tại.
     def scenarios(self):
         all_seeds = self.scenario_seeds + self.holdout_seeds
         if len(set(all_seeds)) != len(all_seeds) or any(s < 0 or s > 2147483647 for s in all_seeds):

@@ -1,3 +1,5 @@
+> Cập nhật 10/11/2026: Đã xoá kết quả, báo cáo, checkpoint và nhật ký campaign V3/V4 trong checkout này; không resume/replay từ đầu ra đã xoá. Đã xoá 225 database `sr_campaign_`, giữ nguyên 775 database khác. Cấu hình, mã nguồn và tài liệu nghiên cứu được giữ nguyên. Còn 39 tệp ZIP/metadata cũ (1.727.996.185 byte) trong `var/github-publication` do lệnh xoá trước bị kiểm duyệt chặn. Bản lưu ngoài checkout không thuộc lần xoá này. Biên nhận: `var/experiment-cleanup-20261110/`.
+
 # Thư mục thực nghiệm sau khi xoá kết quả cũ
 
 Cập nhật 26/10/2026. Thư mục thực nghiệm của dự án là

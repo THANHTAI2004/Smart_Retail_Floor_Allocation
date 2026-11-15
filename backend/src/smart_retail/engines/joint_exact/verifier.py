@@ -1,3 +1,4 @@
+# Vai trò: Phát lại chứng nhận bằng chỉ số mixed-radix và kiểm tra miền độc lập với thuật toán tìm kiếm.
 """Independent mixed-radix proof replay; never calls the search/selection solver."""
 
 import time
@@ -8,6 +9,7 @@ from smart_retail.engines.joint_exact.formulation import compile_space
 from smart_retail.engines.joint_exact.solver import digest, leaf
 
 
+# Hàm inside: xử lý bước inside trong phạm vi module hiện tại.
 def inside(decision, space) -> bool:
     """Membership of a decision in per-key and/or bundled finite domains."""
     poses = {k: list(v) for k, v in decision["poses"].items()}
@@ -35,6 +37,7 @@ def inside(decision, space) -> bool:
     return layout_ok and allocation_ok and decision["routing_policy"] in space.routing_policies
 
 
+# Kiểm tra độ bao phủ miền và phát lại chứng cứ bằng luồng độc lập với solver tìm kiếm.
 def verify(certificate, evaluate, *, identity, deadline=float("inf"), cancelled=lambda: False):
     try:
         payload = {k: v for k, v in certificate.items() if k != "artifact_sha256"}

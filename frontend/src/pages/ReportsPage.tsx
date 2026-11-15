@@ -1,6 +1,8 @@
+// Vai trò: Hiển thị và cung cấp liên kết tải báo cáo từ lần chạy và kết quả đã chọn.
 import { ArrowDownToLine } from "lucide-react";
 import type { Run, RunResult } from "../types/models";
 
+// Hiển thị và cung cấp liên kết tải báo cáo từ lần chạy và kết quả đã chọn.
 export function ReportsPage({
   run,
   result,

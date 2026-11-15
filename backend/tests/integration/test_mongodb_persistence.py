@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử tranh chấp cập nhật, claim nguyên tử, fencing và payload lớn trên MongoDB thật.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """Real MongoDB concurrency, fencing, overflow and persistence tests; no fake driver."""
 
 import copy
@@ -12,10 +14,12 @@ from smart_retail.application import projects
 from smart_retail.infrastructure.mongodb.serializers import sha
 
 
+# Hàm test_concurrent_project_updates_exactly_one_revision_wins: kiểm tra kịch bản concurrent project updates exactly one revision wins bằng các assertion trong thân hàm.
 def test_concurrent_project_updates_exactly_one_revision_wins(database, saved_project, sample):
     store = database[1]()
     pid = saved_project["id"]
 
+    # Hàm save: xử lý bước save trong phạm vi module hiện tại.
     def save(i):
         try:
             return projects.save_section(
@@ -33,6 +37,7 @@ def test_concurrent_project_updates_exactly_one_revision_wins(database, saved_pr
     assert error.value.status == 404
 
 
+# Hàm test_concurrent_atomic_claim_unique_and_expired_owner_fenced: kiểm tra kịch bản concurrent atomic claim unique and expired owner fenced bằng các assertion trong thân hàm.
 def test_concurrent_atomic_claim_unique_and_expired_owner_fenced(database, saved_project):
     store = database[1]()
     queued = [projects.enqueue(store, saved_project["id"]) for _ in range(16)]
@@ -62,6 +67,7 @@ def test_concurrent_atomic_claim_unique_and_expired_owner_fenced(database, saved
     assert store.get_run(old.id).status == "RUNNING"
 
 
+# Hàm test_cancel_wins_final_publish_race_and_snapshot_immutable: kiểm tra kịch bản cancel wins final publish race and snapshot immutable bằng các assertion trong thân hàm.
 def test_cancel_wins_final_publish_race_and_snapshot_immutable(database, saved_project):
     store = database[1]()
     queued = projects.enqueue(store, saved_project["id"])
@@ -76,6 +82,7 @@ def test_cancel_wins_final_publish_race_and_snapshot_immutable(database, saved_p
     assert saved.input_sha256 == queued["input_sha256"]
 
 
+# Hàm test_gridfs_large_result_and_arbitrary_precision_numbers_roundtrip: kiểm tra kịch bản gridfs large result and arbitrary precision numbers roundtrip bằng các assertion trong thân hàm.
 def test_gridfs_large_result_and_arbitrary_precision_numbers_roundtrip(database, saved_project):
     store = database[1]()
     queued = projects.enqueue(store, saved_project["id"])
@@ -98,6 +105,7 @@ def test_gridfs_large_result_and_arbitrary_precision_numbers_roundtrip(database,
         store.get_run(record.id)
 
 
+# Hàm test_worker_restart_recovery_and_non_ttl_indexes: kiểm tra kịch bản worker restart recovery and non ttl indexes bằng các assertion trong thân hàm.
 def test_worker_restart_recovery_and_non_ttl_indexes(database, saved_project):
     store = database[1]()
     projects.enqueue(store, saved_project["id"])
@@ -117,6 +125,7 @@ def test_worker_restart_recovery_and_non_ttl_indexes(database, saved_project):
         )
 
 
+# Hàm test_corrupt_result_cannot_be_published: kiểm tra kịch bản corrupt result cannot be published bằng các assertion trong thân hàm.
 def test_corrupt_result_cannot_be_published(database, saved_project):
     store = database[1]()
     projects.enqueue(store, saved_project["id"])

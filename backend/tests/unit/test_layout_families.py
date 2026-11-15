@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử các họ mặt bằng tổng hợp, hình học và tính ổn định của generator mặc định.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """Synthetic generator layout families: grid default, corner entrance, wide, columns."""
 
 import pytest
@@ -18,17 +20,20 @@ DEFAULT_HASHES = {
 }
 
 
+# Hàm make: xử lý bước make trong phạm vi module hiện tại.
 def make(scale: str, family: str | None = None) -> tuple[dict, dict]:
     spec = DatasetSpec(id="x", scale=scale, seed=101, facings=FACINGS[scale], layout_family=family)
     return generate(spec)
 
 
+# Hàm extent: xử lý bước extent trong phạm vi module hiện tại.
 def extent(domain) -> tuple[float, float]:
     xs, ys = zip(*domain.floorplan.boundary, strict=True)
     return max(xs), max(ys)
 
 
 @pytest.mark.parametrize("scale", FACINGS)
+# Hàm test_default_generator_hash_unchanged: kiểm tra kịch bản default generator hash unchanged bằng các assertion trong thân hàm.
 def test_default_generator_hash_unchanged(scale):
     spec = DatasetSpec(id="x", scale=scale, seed=101, facings=FACINGS[scale])
     assert generate(spec)[1]["sha256"] == DEFAULT_HASHES[scale]
@@ -40,6 +45,7 @@ def test_default_generator_hash_unchanged(scale):
 
 @pytest.mark.parametrize("scale", FACINGS)
 @pytest.mark.parametrize("family", FAMILIES)
+# Hàm test_layout_families_are_valid: kiểm tra kịch bản layout families are valid bằng các assertion trong thân hàm.
 def test_layout_families_are_valid(scale, family):
     data, manifest = make(scale, family)
     domain = to_domain(data)
@@ -72,6 +78,7 @@ def test_layout_families_are_valid(scale, family):
 
 
 @pytest.mark.parametrize("family", FAMILIES)
+# Hàm test_layout_family_changes_geometry_only: kiểm tra kịch bản layout family changes geometry only bằng các assertion trong thân hàm.
 def test_layout_family_changes_geometry_only(family):
     data, _ = make("small", family)
     default, _ = make("small", None)
@@ -79,6 +86,7 @@ def test_layout_family_changes_geometry_only(family):
         assert data[section] == default[section]
 
 
+# Hàm test_layout_family_geometry_matches_design_table: kiểm tra kịch bản layout family geometry matches design table bằng các assertion trong thân hàm.
 def test_layout_family_geometry_matches_design_table():
     wide = to_domain(make("tiny", "wide")[0])
     assert extent(wide) == (13, 9)
@@ -88,6 +96,7 @@ def test_layout_family_geometry_matches_design_table():
     assert [(s.x, s.y) for s in columns.shelves] == [(2, 2), (4.5, 2), (2, 5), (4.5, 5)]
 
 
+# Hàm test_layout_family_contract: kiểm tra kịch bản layout family contract bằng các assertion trong thân hàm.
 def test_layout_family_contract():
     spec = DatasetSpec(id="x", layout_family="wide")
     assert spec.model_dump()["layout_family"] == "wide"

@@ -1,3 +1,4 @@
+// Vai trò: Định nghĩa giao diện nhập nhóm kệ, gồm giá trị mẫu và gợi ý trường dữ liệu cho trình biên tập dùng chung.
 import sample from "../projects/sample";
 export const shelfDefinition = {
   title: "Cấu hình kệ",

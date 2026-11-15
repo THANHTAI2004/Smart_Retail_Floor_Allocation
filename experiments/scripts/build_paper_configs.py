@@ -1,3 +1,4 @@
+# Vai trò: Sinh cấu hình campaign cho thiết kế paper, gồm dataset, nhánh so sánh, seed và giới hạn job.
 """Generate the direction-A paper campaign configs (X1-X6) into experiments/configs/paper/.
 
 Design: docs/research/EXPERIMENT_DESIGN_DEEPMG.md. Every campaign is validated by
@@ -22,6 +23,7 @@ CONFIGS = ROOT / "experiments" / "configs"
 OBJECTIVE = {"weights": [1, 0.2, 0.1, 0.1], "scales": [100, 100, 1, 1]}
 
 
+# Hàm load: nạp dữ liệu cần cho bước tiếp theo.
 def load(name):
     return json.loads((CONFIGS / f"{name}.json").read_text(encoding="utf-8"))
 
@@ -33,10 +35,12 @@ CV_METRICS = ["test_objective", "train_objective", "generalization_gap", "test_m
 ACCEPT = "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained."
 
 
+# Hàm dataset: xử lý bước dataset trong phạm vi module hiện tại.
 def dataset(identifier, scale, seed, facings):
     return {"id": identifier, "scale": scale, "seed": seed, "facings": facings}
 
 
+# Hàm experiment: xử lý bước experiment trong phạm vi module hiện tại.
 def experiment(identifier, question, datasets, treatments, metrics):
     return {
         "id": identifier,
@@ -50,6 +54,7 @@ def experiment(identifier, question, datasets, treatments, metrics):
     }
 
 
+# Hàm campaign: xử lý bước campaign trong phạm vi module hiện tại.
 def campaign(name, datasets, experiments, seeds, time_limit, evaluation=None):
     spec = {
         "schema_version": "1.1",
@@ -72,6 +77,7 @@ def campaign(name, datasets, experiments, seeds, time_limit, evaluation=None):
     return spec
 
 
+# Hàm finalize: xử lý bước finalize trong phạm vi module hiện tại.
 def finalize(spec):
     """Split over-limit designs; give every part a job ceiling and a wall budget."""
     parts = partition(spec, LONG_PART_JOBS if spec["job_time_limit_s"] > 60 else 1000)
@@ -85,6 +91,7 @@ def finalize(spec):
     return result
 
 
+# Hàm build: xử lý bước build trong phạm vi module hiện tại.
 def build():
     kfold10 = {"split": "kfold", "n_folds": 10, "budget_fraction": 0.25}
     kfold2 = {"split": "kfold", "n_folds": 2, "budget_fraction": 0.25}
@@ -187,6 +194,7 @@ def build():
     return designs
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     if OUT.exists():
         sys.exit(f"{OUT} exists; choose a new directory instead of replacing configs")

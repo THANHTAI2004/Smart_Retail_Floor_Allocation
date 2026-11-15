@@ -1,3 +1,4 @@
+# Vai trò: Dựng footprint và phát lại ràng buộc hình học của kệ: biên mặt bằng, vật cản, chồng lấn và khoảng trống.
 """Independent physical geometry replay for rectangular shelf footprints."""
 
 from shapely.geometry import Point, Polygon, box
@@ -5,6 +6,7 @@ from shapely.geometry import Point, Polygon, box
 from smart_retail.domain.models import EngineError, Floorplan, Shelf
 
 
+# Hàm footprint: xử lý bước footprint trong phạm vi module hiện tại.
 def footprint(shelf: Shelf) -> Polygon:
     if shelf.x is None or shelf.y is None:
         raise EngineError("MISSING_POSITION", f"Shelf {shelf.id} has no coordinates")
@@ -14,6 +16,7 @@ def footprint(shelf: Shelf) -> Polygon:
     return box(shelf.x, shelf.y, shelf.x + width, shelf.y + depth)
 
 
+# Tính lại ràng buộc từ footprint thật để phát hiện nghiệm nằm ngoài biên, chồng lấn hoặc thiếu lối đi.
 def violations(floor: Floorplan, shelves: tuple[Shelf, ...]) -> list[str]:
     boundary = Polygon(floor.boundary)
     obstacles = [Polygon(p) for p in floor.obstacles] + [Polygon(z.boundary) for z in floor.zones]

@@ -1,3 +1,5 @@
+# Vai trò: Hợp đồng phản hồi HTTP cho dự án, lần chạy và lỗi.
+# Giữ định dạng API tách khỏi cấu trúc lưu trữ nội bộ.
 """Public HTTP output contracts, separate from the ORM and domain models."""
 
 from typing import Literal

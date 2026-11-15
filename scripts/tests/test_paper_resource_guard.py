@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử tiếp nhận theo tài nguyên, hồi phục sau áp lực và phân loại thất bại.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """Admission policy checks: sustained pressure, recovery, and failure classification."""
 
 import unittest
@@ -5,11 +7,13 @@ import unittest
 from scripts.paper_resource_guard import Guard, Sampler, resource_failure
 
 
+# Hàm measurement: xử lý bước measurement trong phạm vi module hiện tại.
 def measurement(ram=60, cpu=40, free=8):
     return {"ram_percent": ram, "cpu_percent": cpu, "available_bytes": free * 1024**3}
 
 
 class ResourceGuardTests(unittest.TestCase):
+    # Hàm test_memory_pressure_requires_sustained_interval: kiểm tra kịch bản memory pressure requires sustained interval bằng các assertion trong thân hàm.
     def test_memory_pressure_requires_sustained_interval(self):
         guard = Guard()
         self.assertIsNone(guard.reason(measurement(ram=91), timestamp=0))
@@ -18,6 +22,7 @@ class ResourceGuardTests(unittest.TestCase):
             guard.reason(measurement(ram=91), timestamp=15), "RAM_PRESSURE_15S"
         )
 
+    # Hàm test_available_memory_also_triggers: kiểm tra kịch bản available memory also triggers bằng các assertion trong thân hàm.
     def test_available_memory_also_triggers(self):
         guard = Guard()
         guard.reason(measurement(free=1), timestamp=10)
@@ -25,12 +30,14 @@ class ResourceGuardTests(unittest.TestCase):
             guard.reason(measurement(free=1), timestamp=25), "RAM_PRESSURE_15S"
         )
 
+    # Hàm test_transient_pressure_is_reset: kiểm tra kịch bản transient pressure is reset bằng các assertion trong thân hàm.
     def test_transient_pressure_is_reset(self):
         guard = Guard()
         guard.reason(measurement(ram=92, cpu=99), timestamp=0)
         guard.reason(measurement(), timestamp=10)
         self.assertIsNone(guard.reason(measurement(ram=92, cpu=99), timestamp=121))
 
+    # Hàm test_cpu_saturation_needs_two_minutes: kiểm tra kịch bản cpu saturation needs two minutes bằng các assertion trong thân hàm.
     def test_cpu_saturation_needs_two_minutes(self):
         guard = Guard()
         guard.reason(measurement(cpu=98), timestamp=0)
@@ -39,18 +46,21 @@ class ResourceGuardTests(unittest.TestCase):
             guard.reason(measurement(cpu=98), timestamp=120), "CPU_SATURATION_120S"
         )
 
+    # Hàm test_new_failure_triggers_immediately: kiểm tra kịch bản new failure triggers immediately bằng các assertion trong thân hàm.
     def test_new_failure_triggers_immediately(self):
         self.assertEqual(
             Guard().reason(measurement(), failure=True),
             "NEW_RESOURCE_FAILURE_OR_WORKER_CRASH",
         )
 
+    # Hàm test_normal_budget_timeout_does_not_imply_cpu_contention: kiểm tra kịch bản normal budget timeout does not imply cpu contention bằng các assertion trong thân hàm.
     def test_normal_budget_timeout_does_not_imply_cpu_contention(self):
         record = {"status": "FAILED", "error": {"code": "TIMEOUT"}}
         self.assertFalse(resource_failure(record, 35))
         self.assertTrue(resource_failure(record, 96))
         self.assertFalse(resource_failure({"status": "SUCCEEDED"}, 99))
 
+    # Hàm test_out_of_memory_and_crash_but_not_disk_or_search_failure: kiểm tra kịch bản out of memory and crash but not disk or search failure bằng các assertion trong thân hàm.
     def test_out_of_memory_and_crash_but_not_disk_or_search_failure(self):
         for error in (
             {"message": "MemoryError"},
@@ -64,6 +74,7 @@ class ResourceGuardTests(unittest.TestCase):
         ):
             self.assertFalse(resource_failure({"status": "FAILED", "error": error}, 30))
 
+    # Hàm test_windows_sampler_returns_real_measurements: kiểm tra kịch bản windows sampler returns real measurements bằng các assertion trong thân hàm.
     def test_windows_sampler_returns_real_measurements(self):
         sampler = Sampler()
         first, second = sampler.sample(), sampler.sample()

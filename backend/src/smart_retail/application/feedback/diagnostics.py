@@ -1,9 +1,12 @@
+# Vai trò: Rút chẩn đoán từ hành trình và hàng chờ mô phỏng để đề xuất thay đổi quyết định.
+# Các số liệu phản ánh giả định mô phỏng tổng hợp.
 """Operational evidence from simulated journeys and shelf queues, never crowd inference."""
 
 from collections import Counter
 from itertools import combinations
 
 
+# Hàm analyze: xử lý bước analyze trong phạm vi module hiện tại.
 def analyze(state, sections):
     shelves: Counter = Counter()
     skus: Counter = Counter()

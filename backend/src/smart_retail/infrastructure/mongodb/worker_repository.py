@@ -1,3 +1,4 @@
+# Vai trò: Lưu heartbeat và thông tin worker để theo dõi tiến trình xử lý hàng đợi.
 import time
 from uuid import uuid4
 
@@ -7,11 +8,13 @@ from smart_retail.infrastructure.mongodb.run_repository import Runs
 
 
 class Workers(Runs):
+    # Hàm heartbeat: xử lý bước heartbeat trong phạm vi module hiện tại.
     def heartbeat(self, worker_id):
         self.database.worker_heartbeats.update_one(
             {"_id": worker_id}, {"$set": {"epoch": time.time(), "status": "ONLINE"}}, upsert=True
         )
 
+    # Hàm worker_online: xử lý bước worker online trong phạm vi module hiện tại.
     def worker_online(self):
         return (
             self.database.worker_heartbeats.find_one(
@@ -20,6 +23,7 @@ class Workers(Runs):
             is not None
         )
 
+    # Hàm claim: xử lý bước claim trong phạm vi module hiện tại.
     def claim(self, worker_id, now):
         document = self.database.optimization_runs.find_one_and_update(
             {"status": "QUEUED"},
@@ -37,6 +41,7 @@ class Workers(Runs):
         )
         return self.decode_run(document)
 
+    # Hàm renew: xử lý bước renew trong phạm vi module hiện tại.
     def renew(self, record, stage=None):
         values = {"lease_until": time.time() + 30}
         if stage is not None:
@@ -46,6 +51,7 @@ class Workers(Runs):
         )
         return updated.modified_count == 1
 
+    # Hàm recover_expired: xử lý bước recover expired trong phạm vi module hiện tại.
     def recover_expired(self, now):
         count = 0
         for status, terminal in [("RUNNING", "TIMED_OUT"), ("CANCEL_REQUESTED", "CANCELLED")]:

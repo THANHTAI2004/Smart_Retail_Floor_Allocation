@@ -1,3 +1,4 @@
+# Vai trò: Điều phối Paper V3 với ba slot; giảm tiếp nhận khi RAM vượt ngưỡng và chờ job hiện tại kết thúc.
 """Paper-v3 campaigns: three slots, drain third above 90% RAM, restore below 80%."""
 
 import argparse
@@ -23,10 +24,12 @@ ROOT = Path(__file__).resolve().parents[1]
 ORDER = ["X1", "X1b", "X4", "X2", "X5", "X6", "X3"]
 
 
+# Hàm now: lấy thời điểm hiện tại theo cách chuẩn hóa trong hàm.
 def now():
     return datetime.now(UTC).isoformat()
 
 
+# Hàm desired_slots: xử lý bước desired slots trong phạm vi module hiện tại.
 def desired_slots(current, ram):
     if ram > 90:
         return 2
@@ -35,6 +38,7 @@ def desired_slots(current, ram):
     return current
 
 
+# Hàm load_spec: nạp spec theo quy tắc trong thân hàm.
 def load_spec(path):
     spec = CampaignSpec.model_validate(read(path))
     if spec.memory_limit_mb is not None:
@@ -42,6 +46,7 @@ def load_spec(path):
     return spec
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--configs", type=Path, required=True)
@@ -83,6 +88,7 @@ def main():
     sampler, slots, active = Sampler(), 3, {}
     last_sample, resources = 0.0, {}
 
+    # Hàm event: xử lý bước event trong phạm vi module hiện tại.
     def event(**entry):
         journal.append({"utc": now(), **entry})
         write(journal_path, journal)

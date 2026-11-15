@@ -1,3 +1,4 @@
+# Vai trò: Campaign smoke với dữ liệu tổng hợp, chạy qua hàng đợi và worker production để thu kết quả thực.
 """Synthetic research smoke campaign through the production durable process queue.
 
 Run from repository root. Existing output directories are never overwritten.
@@ -29,6 +30,7 @@ from smart_retail.workers.runner import work_once
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 
 
+# Hàm write: ghi dữ liệu theo chính sách của module.
 def write(path: Path, value) -> None:
     path.write_text(
         json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
@@ -36,6 +38,7 @@ def write(path: Path, value) -> None:
     )
 
 
+# Hàm cases: xử lý bước cases trong phạm vi module hiện tại.
 def cases(sample: dict):
     """Paired treatments. These are small synthetic probes, not acceptance thresholds."""
     for experiment in range(1, 9):
@@ -131,6 +134,7 @@ def cases(sample: dict):
             yield f"E{experiment:02}", treatment, data
 
 
+# Hàm summarize: xử lý bước summarize trong phạm vi module hiện tại.
 def summarize(rows: list[dict]) -> list[dict]:
     groups: dict[tuple, list[dict]] = {}
     for row in rows:
@@ -168,6 +172,7 @@ def summarize(rows: list[dict]) -> list[dict]:
     return summary
 
 
+# Hàm run_one: xử lý bước run one trong phạm vi module hiện tại.
 def run_one(
     factory, output: Path, data: dict, experiment: str, treatment: str, seed: int
 ) -> dict:
@@ -212,6 +217,7 @@ def run_one(
     return row
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)

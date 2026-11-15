@@ -1,3 +1,5 @@
+# Vai trò: Hợp đồng Pydantic cho dataset, treatment, đánh giá và campaign.
+# Kiểm tra tham chiếu cùng giới hạn thiết kế trước khi tạo kế hoạch job.
 """Strict, versioned executable campaign manifests shared by CLI and HTTP."""
 
 from typing import Literal, Self
@@ -27,6 +29,7 @@ class DatasetSpec(Contract):
     layout_family: Literal["grid", "corner_entrance", "wide", "columns"] | None = None
 
     @model_serializer(mode="wrap")
+    # Hàm omit_absent_calibration: xử lý bước omit absent calibration trong phạm vi module hiện tại.
     def omit_absent_calibration(self, handler):
         data = handler(self)
         for key in ("orders", "order_interval_s", "picker_count", "layout_family"):
@@ -35,6 +38,7 @@ class DatasetSpec(Contract):
         return data
 
     @model_validator(mode="after")
+    # Hàm imported_identity: xử lý bước imported identity trong phạm vi module hiện tại.
     def imported_identity(self) -> Self:
         if (self.input_path is None) != (self.input_file_sha256 is None):
             raise ValueError("Imported dataset requires both input_path and input_file_sha256")
@@ -62,6 +66,7 @@ class EvaluationSpec(Contract):
     order_rate: Literal["population"] | None = None
 
     @model_serializer(mode="wrap")
+    # Hàm omit_absent_order_rate: xử lý bước omit absent order rate trong phạm vi module hiện tại.
     def omit_absent_order_rate(self, handler):
         data = handler(self)
         if data.get("order_rate") is None:
@@ -69,6 +74,7 @@ class EvaluationSpec(Contract):
         return data
 
     @property
+    # Hàm folds: xử lý bước folds trong phạm vi module hiện tại.
     def folds(self) -> int:
         return self.n_folds if self.split == "kfold" else 1
 
@@ -101,6 +107,7 @@ class ExperimentSpec(Contract):
     statistical_method: Literal["descriptive_paired_exploratory"] = "descriptive_paired_exploratory"
 
 
+# Tính số tổ hợp thiết kế trước khi materialize kế hoạch để từ chối campaign vượt trần.
 def planned_jobs(spec: "CampaignSpec") -> int:
     folds = spec.evaluation.folds if spec.evaluation else 1
     return sum(
@@ -128,6 +135,7 @@ class CampaignSpec(Contract):
     evaluation: EvaluationSpec | None = None
 
     @model_serializer(mode="wrap")
+    # Hàm omit_absent_evaluation: xử lý bước omit absent evaluation trong phạm vi module hiện tại.
     def omit_absent_evaluation(self, handler):
         # Version 1.0 manifests keep their pre-existing canonical form and hash.
         data = handler(self)
@@ -136,6 +144,7 @@ class CampaignSpec(Contract):
         return data
 
     @model_validator(mode="after")
+    # Hàm references: xử lý bước references trong phạm vi module hiện tại.
     def references(self) -> Self:
         if self.evaluation is not None and self.schema_version != "1.1":
             raise ValueError("Held-out evaluation requires campaign schema_version 1.1")

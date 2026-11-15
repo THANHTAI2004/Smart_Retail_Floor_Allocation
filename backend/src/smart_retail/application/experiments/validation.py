@@ -1,3 +1,5 @@
+# Vai trò: Kiểm tra độc lập các quyết định đã lưu từ dữ liệu vật lý.
+# Không dùng lại ma trận ràng buộc của solver làm bằng chứng duy nhất.
 """Independent replay of persisted candidate witnesses without solver matrices."""
 
 import math
@@ -12,6 +14,7 @@ from smart_retail.engines.t2_allocation.validation import replay
 from smart_retail.engines.t3_slotting.validation import violations as packing
 
 
+# Tái dựng quyết định vật lý từ witness đã lưu rồi phát lại ràng buộc độc lập với bước tìm nghiệm.
 def verify(sections: dict, result: dict) -> dict:
     data = to_domain(sections)
     checked = routes_checked = 0

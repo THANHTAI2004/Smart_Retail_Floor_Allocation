@@ -1,3 +1,5 @@
+# Vai trò: T4 kết hợp đường đi trên lưới và hàng chờ phục vụ kệ bằng SimPy.
+# KPI được tính theo hành vi và tải tổng hợp đã khai báo.
 """T4 grid routes + SimPy shelf-service contention. All customer behavior is synthetic."""
 
 import math
@@ -22,6 +24,7 @@ from smart_retail.engines.t1_layout.geometry import footprint
 from smart_retail.engines.t4_simulation.routing import order as route_order
 
 
+# Hàm navigation: xử lý bước navigation trong phạm vi module hiện tại.
 def navigation(
     dataset: RetailDataset,
     shelves: tuple[Shelf, ...],
@@ -31,6 +34,7 @@ def navigation(
     return walkability(dataset.floorplan, shelves, deadline, required_faces)
 
 
+# Hàm solve: giải phần bài toán thuộc module này trong các giới hạn được truyền vào.
 def solve(
     dataset: RetailDataset,
     shelves: tuple[Shelf, ...],
@@ -44,17 +48,20 @@ def solve(
         for p in planogram.placements:
             faces[p["shelf_id"]].add(p["face"])
     graph, start, targets = navigation(dataset, shelves, deadline, faces)
+    # Dùng RNG cục bộ theo seed của job để không phụ thuộc trạng thái random toàn cục.
     rng = random.Random(dataset.config.seed)
     sku_shelf = {p.sku: assignment[p.category_id] for p in dataset.products}
     if planogram is not None:
         sku_shelf = {p["sku"]: f"{p['shelf_id']}:{p['face']}" for p in planogram.placements}
     env = simpy.Environment()
+    # Giả định mỗi kệ phục vụ một lượt tại một thời điểm; tranh chấp tài nguyên tạo thời gian chờ.
     resources = {s.id: simpy.Resource(env, capacity=1) for s in shelves}
     pickers = simpy.Resource(env, capacity=dataset.demand.picker_count)
     picker_busy = [0.0]
     max_queue = {s.id: 0 for s in shelves}
     distances: dict[tuple, float] = {}
 
+    # Hàm distance: tính khoảng cách giữa các điểm theo mô hình của hàm.
     def distance(a: tuple, b: tuple) -> float:
         if (a, b) not in distances:
             distances[(a, b)] = nx.shortest_path_length(graph, a, b, weight="weight")
@@ -80,6 +87,7 @@ def solve(
             node = min(eligible, key=lambda n: (math.dist(point, graph.nodes[n]["point"]), n))
             exits.append((node, point, math.dist(point, graph.nodes[node]["point"])))
 
+    # Hàm travel_journey: xử lý bước travel journey trong phạm vi module hiện tại.
     def travel_journey(
         kind: str, identifier: str, arrival: float, items: list[tuple[str, int]], due_s: float
     ):
@@ -110,6 +118,7 @@ def solve(
                 for n in nx.shortest_path(graph, node, target, weight="weight")[1:]
             )
             route_distance += walk
+            # Chuyển quãng đường mét sang thời gian giây bằng tốc độ đi bộ m/s.
             yield env.timeout(walk / dataset.demand.behavior.speed_m_s)
             queued_at = env.now
             resource_id = sid.rsplit(":", 1)[0] if planogram is not None else sid
@@ -165,6 +174,7 @@ def solve(
         if kind == "picker":
             picker_busy[0] += env.now - service_start
 
+    # Hàm journey: xử lý bước journey trong phạm vi module hiện tại.
     def journey(kind, identifier, arrival, items, due_s):
         yield env.timeout(arrival)
         if kind == "picker":

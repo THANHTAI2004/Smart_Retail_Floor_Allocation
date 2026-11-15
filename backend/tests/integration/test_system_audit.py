@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử lưu dữ liệu, lỗi kết nối và phục hồi worker trong database audit cô lập.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """Cross-boundary audit receipts from real isolated MongoDB and injected outages."""
 
 import copy
@@ -18,6 +20,7 @@ from smart_retail.workers.resources import sample as resource_sample
 from smart_retail.workers.runner import read_progress, work_once
 
 
+# Hàm receipt: xử lý bước receipt trong phạm vi module hiện tại.
 def receipt(name, value):
     destination = os.getenv("SMART_RETAIL_AUDIT_OUTPUT")
     if destination:
@@ -26,6 +29,7 @@ def receipt(name, value):
         path.write_text(json.dumps(value, indent=2), encoding="utf-8")
 
 
+# Hàm test_each_input_save_matches_direct_mongo_readback: kiểm tra kịch bản each input save matches direct mongo readback bằng các assertion trong thân hàm.
 def test_each_input_save_matches_direct_mongo_readback(client, database, sample):
     project = client.post("/api/projects", json={"name": "Seven input readback audit"}).json()
     store = database[1]()
@@ -55,6 +59,7 @@ def test_each_input_save_matches_direct_mongo_readback(client, database, sample)
     receipt("seven-input-readback", {"status": "PASS", "database": database[0], "checks": checks})
 
 
+# Hàm test_invalid_input_matrix_is_atomic: kiểm tra kịch bản invalid input matrix is atomic bằng các assertion trong thân hàm.
 def test_invalid_input_matrix_is_atomic(client, database, saved_project, sample):
     store = database[1]()
     pid = saved_project["id"]
@@ -92,6 +97,7 @@ def test_invalid_input_matrix_is_atomic(client, database, saved_project, sample)
     receipt("invalid-input-matrix", {"status": "PASS", "cases": outcomes, "revision_conflict": 409})
 
 
+# Hàm test_project_oversize_refused_before_mutation: kiểm tra kịch bản project oversize refused before mutation bằng các assertion trong thân hàm.
 def test_project_oversize_refused_before_mutation(database, saved_project):
     store = database[1]()
     before = store.get_project(saved_project["id"])
@@ -100,6 +106,7 @@ def test_project_oversize_refused_before_mutation(database, saved_project):
     assert store.get_project(before.id) == before
 
 
+# Hàm test_actual_database_disconnect_is_sanitized_503: kiểm tra kịch bản actual database disconnect is sanitized 503 bằng các assertion trong thân hàm.
 def test_actual_database_disconnect_is_sanitized_503(client, database):
     # Replace only this isolated API store's real driver connection after startup.
     # A real refused TCP connection triggers PyMongo, not a fake database/error.
@@ -130,6 +137,7 @@ def test_actual_database_disconnect_is_sanitized_503(client, database):
     )
 
 
+# Hàm test_bounded_api_latency_and_resource_observation: kiểm tra kịch bản bounded api latency and resource observation bằng các assertion trong thân hàm.
 def test_bounded_api_latency_and_resource_observation(client, saved_project):
     durations = []
     before = resource_sample(os.getpid())
@@ -156,6 +164,7 @@ def test_bounded_api_latency_and_resource_observation(client, saved_project):
     )
 
 
+# Hàm test_real_worker_process_crash_and_expired_lease_recovery: kiểm tra kịch bản real worker process crash and expired lease recovery bằng các assertion trong thân hàm.
 def test_real_worker_process_crash_and_expired_lease_recovery(
     client, saved_project, sample, database, tmp_path
 ):

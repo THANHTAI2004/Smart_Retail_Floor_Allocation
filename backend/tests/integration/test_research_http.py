@@ -1,8 +1,11 @@
+# Vai trò: Kiểm thử campaign qua HTTP với tiến trình con và báo cáo đã kiểm tra.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import time
 
 from smart_retail.application.experiments.storage import read
 
 
+# Hàm test_research_http_runs_real_child_and_exports_audited_report: kiểm tra kịch bản research http runs real child and exports audited report bằng các assertion trong thân hàm.
 def test_research_http_runs_real_child_and_exports_audited_report(client, tmp_path, monkeypatch):
     home = tmp_path / "research"
     monkeypatch.setenv("SMART_RETAIL_RESEARCH_HOME", str(home))

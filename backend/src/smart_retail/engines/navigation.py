@@ -1,3 +1,5 @@
+# Vai trò: Dựng đồ thị vùng đi được và kiểm tra liên thông, khả năng phục vụ.
+# Hình học được kiểm tra độc lập với thuật toán định tuyến.
 """Shared walkability graph and independent service/topology validation."""
 
 import math
@@ -11,6 +13,7 @@ from smart_retail.domain.models import EngineError, Floorplan, Shelf
 from smart_retail.engines.t1_layout.geometry import footprint
 
 
+# Hàm navigation: xử lý bước navigation trong phạm vi module hiện tại.
 def navigation(
     floor: Floorplan,
     shelves: tuple[Shelf, ...],
@@ -109,6 +112,7 @@ def navigation(
     return graph, start, targets
 
 
+# Hàm validate_topology: xác thực topology theo quy tắc trong thân hàm.
 def validate_topology(
     floor: Floorplan, shelves: tuple[Shelf, ...], deadline: float = math.inf
 ) -> None:

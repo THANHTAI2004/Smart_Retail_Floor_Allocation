@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử worker phân biệt giới hạn RSS hữu hạn và cấu hình không giới hạn RAM.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import json
 
 import pytest
@@ -6,6 +8,7 @@ from smart_retail.workers import runner
 
 
 @pytest.mark.parametrize("limit,expected", [(None, "SUCCEEDED"), (2048, "FAILED")])
+# Hàm test_worker_honors_unlimited_and_finite_rss: kiểm tra kịch bản worker honors unlimited and finite rss bằng các assertion trong thân hàm.
 def test_worker_honors_unlimited_and_finite_rss(
     limit, expected, client, saved_project, sample, database, tmp_path, monkeypatch
 ):

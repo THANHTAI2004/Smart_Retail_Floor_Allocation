@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử tính xác định và ràng buộc T1–T4, gồm đối chiếu với phép liệt kê độc lập.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import itertools
 import math
 import time
@@ -17,6 +19,7 @@ from smart_retail.engines.t4_simulation.engine import navigation
 from smart_retail.engines.t4_simulation.engine import solve as simulate
 
 
+# Hàm test_t1_is_deterministic_and_constraint_checked: kiểm tra kịch bản t1 is deterministic and constraint checked bằng các assertion trong thân hàm.
 def test_t1_is_deterministic_and_constraint_checked(sample):
     d = to_domain(sample)
     a = layout(d.floorplan, d.shelves, "optimizable")
@@ -27,6 +30,7 @@ def test_t1_is_deterministic_and_constraint_checked(sample):
 
 
 @pytest.mark.parametrize("positions", [((-1, 1), (4, 1)), ((1, 1), (1, 1)), ((1, 1), (3.2, 1))])
+# Hàm test_t1_rejects_outside_overlap_and_narrow_aisles: kiểm tra kịch bản t1 rejects outside overlap and narrow aisles bằng các assertion trong thân hàm.
 def test_t1_rejects_outside_overlap_and_narrow_aisles(sample, positions):
     d = to_domain(sample)
     shelves = tuple(replace(s, x=p[0], y=p[1]) for s, p in zip(d.shelves, positions))
@@ -34,6 +38,7 @@ def test_t1_rejects_outside_overlap_and_narrow_aisles(sample, positions):
         layout(d.floorplan, shelves, "fixed")
 
 
+# Hàm test_t1_timeout_and_cancel_and_search_limit: kiểm tra kịch bản t1 timeout and cancel and search limit bằng các assertion trong thân hàm.
 def test_t1_timeout_and_cancel_and_search_limit(sample):
     d = to_domain(sample)
     with pytest.raises(EngineError) as timeout:
@@ -47,6 +52,7 @@ def test_t1_timeout_and_cancel_and_search_limit(sample):
     assert limit.value.code == "SEARCH_EXHAUSTED"
 
 
+# Hàm test_t2_matches_independent_enumeration: kiểm tra kịch bản t2 matches independent enumeration bằng các assertion trong thân hàm.
 def test_t2_matches_independent_enumeration(sample):
     d = to_domain(sample)
     shelves = layout(d.floorplan, d.shelves, "optimizable").shelves
@@ -84,6 +90,7 @@ def test_t2_matches_independent_enumeration(sample):
     )
 
 
+# Hàm test_t2_proves_infeasible_and_honors_fixed_and_proximity: kiểm tra kịch bản t2 proves infeasible and honors fixed and proximity bằng các assertion trong thân hàm.
 def test_t2_proves_infeasible_and_honors_fixed_and_proximity(sample):
     d = to_domain(sample)
     shelves = layout(d.floorplan, d.shelves, "optimizable").shelves
@@ -99,6 +106,7 @@ def test_t2_proves_infeasible_and_honors_fixed_and_proximity(sample):
     assert exc.value.code == "INFEASIBLE"
 
 
+# Hàm test_t3_capacity_and_unfittable_product: kiểm tra kịch bản t3 capacity and unfittable product bằng các assertion trong thân hàm.
 def test_t3_capacity_and_unfittable_product(sample):
     d = to_domain(sample)
     plan = slot(d.shelves, d.products, {"DRINK": "S01", "FOOD": "S02"})
@@ -116,6 +124,7 @@ def test_t3_capacity_and_unfittable_product(sample):
     facing=st.integers(1, 4),
 )
 @settings(max_examples=40, deadline=None)
+# Hàm test_t3_physical_capacity_property: kiểm tra kịch bản t3 physical capacity property bằng các assertion trong thân hàm.
 def test_t3_physical_capacity_property(width, depth, facing):
     level = ShelfLevel("L1", 2, 0.6, 0.5, 200)
     shelf = Shelf("S", 2, 0.6, 1.8, (level,))
@@ -128,6 +137,7 @@ def test_t3_physical_capacity_property(width, depth, facing):
     assert p["capacity_units"] == facing * p["depth_units"] * p["layers"]
 
 
+# Hàm test_t4_routes_reproducible_and_pass_no_solids: kiểm tra kịch bản t4 routes reproducible and pass no solids bằng các assertion trong thân hàm.
 def test_t4_routes_reproducible_and_pass_no_solids(sample):
     from shapely.geometry import LineString, Polygon
 

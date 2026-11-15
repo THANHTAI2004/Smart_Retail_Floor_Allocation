@@ -1,7 +1,9 @@
+// Vai trò: Hiển thị kiểm tra dữ liệu, trạng thái dịch vụ và các thông tin hỗ trợ chẩn đoán.
 import { ArrowRight, RefreshCw } from "lucide-react";
 import { api } from "../../services/api";
 import type { WorkspaceModel } from "../../app/useWorkspace";
 
+// Hiển thị kiểm tra dữ liệu, trạng thái dịch vụ và các thông tin hỗ trợ chẩn đoán.
 export function DiagnosticsPage({ model }: { model: WorkspaceModel }) {
   const { page, act, setHealth, health } = model;
   return (<>{page === "diagnostics" && (

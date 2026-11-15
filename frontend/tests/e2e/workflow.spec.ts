@@ -1,3 +1,5 @@
+// Vai trò: Kiểm thử quy trình tạo dự án, nhập liệu và đọc kết quả.
+// Fixture và assertion là phạm vi kiểm tra, không thay thế bằng chứng chạy mới.
 import { test, expect } from "@playwright/test";
 import path from "node:path";
 import fs from "node:fs/promises";

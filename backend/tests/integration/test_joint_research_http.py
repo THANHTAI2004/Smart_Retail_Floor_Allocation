@@ -1,7 +1,10 @@
+# Vai trò: Kiểm thử luồng HTTP–worker–chứng nhận–báo cáo của nghiên cứu joint.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import copy
 import time
 
 
+# Hàm test_joint_http_worker_certificate_report_and_safe_artifact: kiểm tra kịch bản joint http worker certificate report and safe artifact bằng các assertion trong thân hàm.
 def test_joint_http_worker_certificate_report_and_safe_artifact(client, tmp_path, monkeypatch):
     monkeypatch.setenv("SMART_RETAIL_RESEARCH_HOME", str(tmp_path / "research"))
     configs = client.get("/api/research/configurations").json()

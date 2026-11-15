@@ -1,3 +1,5 @@
+# Vai trò: T2 phân bổ ngành hàng lên kệ bằng greedy hoặc MILP HiGHS.
+# Sức chứa chiều rộng và quan hệ giữa ngành được kiểm tra trước khi trả nghiệm.
 """T2 capacitated category allocation: HiGHS MILP and deterministic greedy baseline."""
 
 import math
@@ -11,6 +13,7 @@ from smart_retail.engines.t1_layout.engine import footprint
 from smart_retail.engines.t2_allocation.validation import replay
 
 
+# Hàm solve: giải phần bài toán thuộc module này trong các giới hạn được truyền vào.
 def solve(
     floor: Floorplan,
     shelves: tuple[Shelf, ...],
@@ -37,6 +40,7 @@ def solve(
         ]
     )
     costs *= distance_weight
+    # Sức chứa T2 là tổng chiều rộng các tầng nhân số mặt; T3 còn kiểm tra từng SKU theo kích thước thật.
     capacities = [sum(level.width_m for level in s.levels) * s.faces for s in shelves]
     shelf_ids = [s.id for s in shelves]
     if any(c.fixed_shelf_id and c.fixed_shelf_id not in shelf_ids for c in categories):
@@ -101,6 +105,7 @@ def solve(
         matrix[row, a] = 1
         matrix[row, b] = 1
         upper[row] = 1
+    # Ba bất đẳng thức tuyến tính hóa y = x_a * x_b cho hai biến nhị phân của quan hệ affinity.
     for index, (a, b, _) in enumerate(affinity):
         y = n * m + index
         row = n + m + len(pairs) + index * 3
@@ -108,10 +113,12 @@ def solve(
         matrix[row + 1, y], matrix[row + 1, b], upper[row + 1] = 1, -1, 0
         matrix[row + 2, a], matrix[row + 2, b], matrix[row + 2, y], upper[row + 2] = 1, 1, -1, 1
 
+    # Hàm refresh_affinity: xử lý bước refresh affinity trong phạm vi module hiện tại.
     def refresh_affinity(vector):
         for index, (a, b, _) in enumerate(affinity):
             vector[n * m + index] = vector[a] * vector[b]
 
+    # Greedy là baseline xây dựng; mắc kẹt chỉ cho biết tìm kiếm thất bại, chưa chứng minh vô nghiệm.
     if algorithm == "greedy":
         x = np.zeros(variables)
         for i in sorted(
@@ -119,6 +126,7 @@ def solve(
             key=lambda i: (-categories[i].priority * categories[i].demand, categories[i].id),
         ):
 
+            # Hàm rank: xếp thứ tự ứng viên theo tiêu chí và quy tắc bẻ hòa.
             def rank(k):
                 trial = x.copy()
                 trial[i * m + k] = 1
@@ -167,6 +175,7 @@ def solve(
     assignment = {
         c.id: shelves[int(np.argmax(x[i * m : (i + 1) * m]))].id for i, c in enumerate(categories)
     }
+    # Sau kiểm tra ma trận, phát lại assignment từ đầu vào vật lý và đối chiếu cả giá trị mục tiêu.
     errors, objective = replay(
         floor, shelves, categories, assignment, distance_weight, affinity_weight
     )

@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử phục hồi BSON, GridFS, index và từ chối dữ liệu có checksum sai.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import json
 import zipfile
 
@@ -7,6 +9,7 @@ from smart_retail.infrastructure.mongodb.backup import backup, restore
 from smart_retail.infrastructure.mongodb.client import connect
 
 
+# Hàm test_native_backup_restores_documents_gridfs_and_indexes: kiểm tra kịch bản native backup restores documents gridfs and indexes bằng các assertion trong thân hàm.
 def test_native_backup_restores_documents_gridfs_and_indexes(database, saved_project, tmp_path):
     store = database[1]()
     raw = {"proof": [10**120 + 7, 10**100 + 3], "text": "x" * (5 * 1024**2)}
@@ -28,6 +31,7 @@ def test_native_backup_restores_documents_gridfs_and_indexes(database, saved_pro
         target.dispose()
 
 
+# Hàm test_restore_refuses_existing_target: kiểm tra kịch bản restore refuses existing target bằng các assertion trong thân hàm.
 def test_restore_refuses_existing_target(database, saved_project, tmp_path):
     store = database[1]()
     path = tmp_path / "native.zip"
@@ -37,6 +41,7 @@ def test_restore_refuses_existing_target(database, saved_project, tmp_path):
     assert store.get_project(saved_project["id"]) is not None
 
 
+# Hàm test_restore_validates_all_checksums_before_writing: kiểm tra kịch bản restore validates all checksums before writing bằng các assertion trong thân hàm.
 def test_restore_validates_all_checksums_before_writing(database, saved_project, tmp_path):
     store = database[1]()
     path = tmp_path / "native.zip"

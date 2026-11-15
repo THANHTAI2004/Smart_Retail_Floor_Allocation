@@ -1,3 +1,4 @@
+# Vai trò: Giám sát batch paper, đọc trạng thái và xác minh campaign cùng báo cáo trước khi kết thúc giám sát.
 """Keep the machine awake and finalize the existing unattended paper batch.
 
 Does not edit backend source, experiment configs or historical outcomes. Restarts
@@ -35,10 +36,12 @@ STATE = ROOT / "var/paper-unattended"
 BASELINE = ROOT / "var/continue-20261023-01/preflight.json"
 
 
+# Hàm now: lấy thời điểm hiện tại theo cách chuẩn hóa trong hàm.
 def now():
     return datetime.now(UTC).isoformat()
 
 
+# Hàm designs: xử lý bước designs trong phạm vi module hiện tại.
 def designs():
     return [
         (row["block"], CampaignSpec.model_validate(read(CONFIGS / row["config"])))
@@ -46,6 +49,7 @@ def designs():
     ]
 
 
+# Hàm inventory: xử lý bước inventory trong phạm vi module hiện tại.
 def inventory():
     rows = []
     for block, spec in designs():
@@ -67,6 +71,7 @@ def inventory():
     return rows
 
 
+# Hàm active_supervisors: xử lý bước active supervisors trong phạm vi module hiện tại.
 def active_supervisors():
     active = []
     for path in RESULTS.glob("*/.supervisor.lock"):
@@ -79,6 +84,7 @@ def active_supervisors():
     return active
 
 
+# Hàm file_sha: xử lý bước file sha trong phạm vi module hiện tại.
 def file_sha(path):
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -87,6 +93,7 @@ def file_sha(path):
     return digest.hexdigest()
 
 
+# Hàm verify_report: xử lý bước verify report trong phạm vi module hiện tại.
 def verify_report(root):
     manifest = read(root / "manifest.json")
     for name, expected in manifest["files"].items():
@@ -99,6 +106,7 @@ def verify_report(root):
     return len(manifest["files"])
 
 
+# Hàm verify_campaign: xử lý bước verify campaign trong phạm vi module hiện tại.
 def verify_campaign(root, expected):
     integrity = verify_integrity(root)
     plan = read(root / "plan.json")["jobs"]
@@ -130,6 +138,7 @@ def verify_campaign(root, expected):
     }
 
 
+# Hàm failure_kind: xử lý bước failure kind trong phạm vi module hiện tại.
 def failure_kind(record):
     code = (record.get("error") or {}).get("code", record.get("status"))
     message = (record.get("error") or {}).get("message", "").lower()
@@ -149,6 +158,7 @@ def failure_kind(record):
     return "NEEDS_CODE_DIAGNOSIS"
 
 
+# Hàm collect_failures: xử lý bước collect failures trong phạm vi module hiện tại.
 def collect_failures():
     """Incremental live triage; never rewrite outcomes or scientific source."""
     directory = STATE / "job-errors"
@@ -205,6 +215,7 @@ def collect_failures():
     return dict(counts)
 
 
+# Hàm backup: xử lý bước backup trong phạm vi module hiện tại.
 def backup(destination, paths):
     destination.mkdir(parents=True, exist_ok=False)
     archive_path = destination / "paper-results.zip"
@@ -216,6 +227,7 @@ def backup(destination, paths):
         for base in paths:
             base = base.absolute()
 
+            # Hàm walk_files: xử lý bước walk files trong phạm vi module hiện tại.
             def walk_files(directory):
                 for folder, dirs, names in os.walk(directory, followlinks=False):
                     dirs[:] = sorted(
@@ -269,6 +281,7 @@ def backup(destination, paths):
     return {k: v for k, v in receipt.items() if k != "files"}
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--runner-pid", type=int)

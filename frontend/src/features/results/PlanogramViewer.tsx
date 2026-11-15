@@ -1,5 +1,6 @@
 import type { RunResult } from "../../types/models";
 
+// Hiển thị vị trí SKU trên kệ theo planogram của kết quả lần chạy được chọn.
 export function PlanogramViewer({ result }: { result: RunResult }) {
   return (
     <section className="panel">

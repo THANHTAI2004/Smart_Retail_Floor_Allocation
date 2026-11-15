@@ -1,3 +1,4 @@
+# Vai trò: Chạy các phép kiểm tra số và tài nguyên có giới hạn trên môi trường audit tách biệt.
 """Bounded numerical, dependency and resource probes; only isolated audit databases."""
 
 import argparse
@@ -30,10 +31,12 @@ from smart_retail.workers.runner import work_once
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# Hàm load: nạp dữ liệu cần cho bước tiếp theo.
 def load(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+# Hàm feedback: xử lý bước feedback trong phạm vi module hiện tại.
 def feedback(output):
     sections = load(ROOT / "datasets/joint/two-shelves.json")
     config = JointConfig(
@@ -45,6 +48,7 @@ def feedback(output):
     sections["optimization"]["joint"] = config.model_dump(mode="json")
     cache = {}
 
+    # Hàm assess: xử lý bước assess trong phạm vi module hiện tại.
     def assess(decision):
         return evaluate(
             sections,
@@ -149,6 +153,7 @@ def feedback(output):
     )
 
 
+# Hàm engine_checks: xử lý bước engine checks trong phạm vi module hiện tại.
 def engine_checks(output):
     sections = load(ROOT / "datasets/samples/small_store.json")
     d = to_domain(sections)
@@ -236,6 +241,7 @@ def engine_checks(output):
     write(output / "t1-fixtures.json", {"status": "PASS", "cases": cases}, immutable=True)
 
 
+# Hàm performance: xử lý bước performance trong phạm vi module hiện tại.
 def performance(output, prefix):
     store, factory = connect(database=prefix + uuid4().hex[:12] + "_performance")
     store.ready()
@@ -302,6 +308,7 @@ def performance(output, prefix):
     store.dispose()
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)

@@ -1,3 +1,5 @@
+# Vai trò: Khai báo các miền quyết định hữu hạn cho kiểm tra tối ưu.
+# Phạm vi chứng nhận phụ thuộc chính xác vào miền này.
 """A finite model declares every decision domain; no continuous-space claim."""
 
 from typing import Literal
@@ -39,6 +41,7 @@ class FiniteSpace(BaseModel):
     max_states: int = Field(default=20000, ge=1, le=20000)
 
     @model_serializer(mode="wrap")
+    # Hàm omit_absent_bundles: xử lý bước omit absent bundles trong phạm vi module hiện tại.
     def omit_absent_bundles(self, handler):
         # Spaces without bundles keep their pre-existing canonical form and digest.
         data = handler(self)
@@ -48,6 +51,7 @@ class FiniteSpace(BaseModel):
         return data
 
     @model_validator(mode="after")
+    # Hàm validate_rows: xác thực rows theo quy tắc trong thân hàm.
     def validate_rows(self):
         for sku, rows in self.placements.items():
             for row in rows:

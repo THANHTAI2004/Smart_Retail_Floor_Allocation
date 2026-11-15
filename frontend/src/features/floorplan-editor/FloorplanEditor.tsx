@@ -1,3 +1,4 @@
+// Vai trò: Canvas Konva chỉnh sửa mặt bằng và kệ, chuyển đổi tọa độ hiển thị với tọa độ dữ liệu; hỗ trợ lịch sử thao tác.
 import { useEffect, useRef, useState } from "react";
 import {
   Circle,
@@ -19,6 +20,7 @@ interface Props {
   onShelves: (shelves: Shelf[]) => void;
   readonly?: boolean;
 }
+// Canvas Konva chỉnh sửa mặt bằng và kệ, chuyển đổi tọa độ hiển thị với tọa độ dữ liệu; hỗ trợ lịch sử thao tác.
 export function FloorplanEditor({
   floor,
   shelves,
@@ -38,12 +40,16 @@ export function FloorplanEditor({
   const [gridSnap, setGridSnap] = useState(true);
   const [past, setPast] = useState<{ floor: Floorplan; shelves: Shelf[] }[]>([]);
   const [future, setFuture] = useState<{ floor: Floorplan; shelves: Shelf[] }[]>([]);
+  // Lưu snapshot độc lập cho undo, giới hạn lịch sử và bỏ nhánh redo cũ.
   const remember = () => {
     setPast((items) => [...items.slice(-49), structuredClone({ floor, shelves })]);
     setFuture([]);
   };
+  // Ghi lịch sử trước khi công bố mặt bằng mới cho component cha.
   const onFloor = (next: Floorplan) => { remember(); publishFloor(next); };
+  // Ghi lịch sử trước khi công bố danh sách kệ mới cho component cha.
   const onShelves = (next: Shelf[]) => { remember(); publishShelves(next); };
+  // Chuyển snapshot giữa hai ngăn lịch sử và khôi phục bản vẽ theo undo/redo.
   const restore = (direction: "undo" | "redo") => {
     const source = direction === "undo" ? past : future;
     const previous = source.at(-1);
@@ -70,9 +76,13 @@ export function FloorplanEditor({
   const maxy = Math.max(8, ...floor.boundary.map((p) => p[1])) + 1;
   const scale = Math.min((width - 28) / (maxx - minx), 470 / (maxy - miny));
   const stageHeight = Math.max(360, (maxy - miny) * scale + 28);
+  // Đổi tọa độ x theo mét sang vị trí pixel trên canvas.
   const px = (x: number) => (x - minx) * scale + 14;
+  // Đổi tọa độ y theo mét sang vị trí pixel trên canvas.
   const py = (y: number) => (y - miny) * scale + 14;
+  // Chuyển danh sách điểm domain thành dãy tọa độ phẳng mà Konva nhận.
   const points = (value: Point[]) => value.flatMap(([x, y]) => [px(x), py(y)]);
+  // Đổi pixel về tọa độ domain và bắt lưới theo chế độ đang chọn.
   const coordinate = (x: number, y: number): Point => {
     const step = gridSnap ? floor.grid_m : 0.01;
     return [
@@ -80,10 +90,12 @@ export function FloorplanEditor({
       snap((y - 14) / scale + miny, step),
     ];
   };
+  // Cập nhật đúng kệ theo id và đi qua cơ chế lưu lịch sử chung.
   const updateShelf = (id: string, update: Partial<Shelf>) =>
     onShelves(shelves.map((s) => (s.id === id ? { ...s, ...update } : s)));
   const active = shelves.find((s) => s.id === selected);
   const warnings = shelfWarnings(shelves, floor.boundary);
+  // Chốt đa giác đang vẽ thành biên hoặc vật cản rồi trở lại công cụ chọn.
   function finish() {
     if (drawing.length < 3) return;
     onFloor(

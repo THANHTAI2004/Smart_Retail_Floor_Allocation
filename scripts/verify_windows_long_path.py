@@ -1,3 +1,4 @@
+# Vai trò: So sánh hoạt động ở đường dẫn dài và ngắn, sau đó kiểm tra các lượt HTTP độc lập.
 """Real full-suite long/short contrast followed by three independent HTTP repeats."""
 
 import argparse
@@ -12,6 +13,7 @@ from uuid import uuid4
 from smart_retail.infrastructure.filesystem import logical_fs_path, normalize_fs_path
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)

@@ -1,3 +1,4 @@
+# Vai trò: Dừng MongoDB cục bộ theo thông tin tiến trình đã ghi và các kiểm tra nhận diện trong script.
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $projectRoot

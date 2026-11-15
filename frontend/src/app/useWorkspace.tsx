@@ -1,3 +1,5 @@
+// Vai trò: Ghép các hook dự án, bản vẽ, điều hướng và lần chạy thành model chung cho giao diện.
+// Thao tác lưu dùng revision API mới nhất.
 import { useFloorplanState } from "./useFloorplanState";
 import { useProjectState } from "./useProjectState";
 import { useHashRoute } from "./useHashRoute";
@@ -9,6 +11,7 @@ import sample from "../features/projects/sample";
 import { api } from "../services/api";
 import type { Project, Section, Shelf } from "../types/models";
 export const sections: Section[] = ["floorplan", "shelves", "categories", "products", "demand", "orders", "optimization"];
+// Ghép các hook dự án, bản vẽ, điều hướng và lần chạy thành model chung cho giao diện. Thao tác lưu dùng revision API mới nhất.
 export function useWorkspace() {
   const page = useHashRoute();
   const [mobile, setMobile] = useState(false);
@@ -23,6 +26,7 @@ export function useWorkspace() {
     errors: string[];
     missing: string[];
   } | null>(null);
+  // Chuyển trang qua hash URL và đóng điều hướng di động.
   const go = (id: string) => {
     window.location.hash = id;
     setMobile(false);
@@ -32,6 +36,7 @@ export function useWorkspace() {
   }, [resetDrawing, setSelectedRun]);
   const { projects, setProjects, project, setProject, loading, projectError, loadProject } = useProjectState(onProjectLoad);
   const { health, setHealth, runs, setRuns, pollError } = useRuntimeStatus(project?.id);
+  // Gom trạng thái bận và thông báo lỗi cho thao tác UI; finally luôn mở lại giao diện sau khi xong.
   const act = async (action: () => Promise<void>) => {
     setBusy(true);
     setError("");
@@ -44,17 +49,20 @@ export function useWorkspace() {
       setBusy(false);
     }
   };
+  // Đồng bộ dự án trong state và danh sách, đồng thời bỏ kết quả validation đã cũ.
   const updateProject = (p: Project) => {
     setProject(p);
     setProjects((list) => list.map((x) => (x.id === p.id ? p : x)));
     setValidation(null);
   };
+  // Lưu nhóm đầu vào qua API và cập nhật dự án bằng revision trả về.
   const save = async (section: Section, value: unknown) => {
     if (!project) return;
     const p = await api.save(project, section, value);
     updateProject(p);
     setMessage(`Đã lưu ${section} · revision ${p.revision}`);
   };
+  // Tạo dự án, nạp các nhóm dữ liệu mẫu khi được chọn rồi mở trang mặt bằng.
   const create = async (demo: boolean) => {
     let p = await api.create(
       name.trim() ||
@@ -64,6 +72,7 @@ export function useWorkspace() {
     loadProject(p);
     if (demo)
       for (const section of sections) {
+        // Giữ Project trả về sau từng lần lưu để lần tiếp theo gửi đúng revision mới nhất.
         p = await api.save(p, section, sample[section]);
         updateProject(p);
       }
@@ -76,11 +85,13 @@ export function useWorkspace() {
     );
     go("floorplan");
   };
+  // Lưu mặt bằng rồi lưu kệ bằng revision mới nhất; đánh dấu bản vẽ đã lưu khi hoàn tất.
   const saveDrawing = () =>
     act(async () => {
       if (!project) return;
       let p = await api.save(project, "floorplan", floor);
       updateProject(p);
+      // Lưu kệ bằng revision của lần lưu mặt bằng vừa hoàn tất để tránh xung đột với chính thao tác trước.
       p = await api.save(p, "shelves", { ...project.sections.shelves, layout_mode: mode, items: shelves });
       updateProject(p);
       setDirty(false);
@@ -112,6 +123,7 @@ export function useWorkspace() {
       </select>
     </label>
   );
+  // Thêm kệ mẫu với mã chưa trùng và đánh dấu bản vẽ có thay đổi chưa lưu.
   const addShelf = () => {
     const ids = new Set(shelves.map((s) => s.id));
     let i = shelves.length + 1;

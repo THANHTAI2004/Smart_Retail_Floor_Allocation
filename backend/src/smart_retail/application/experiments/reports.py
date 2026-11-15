@@ -1,3 +1,5 @@
+# Vai trò: Tổng hợp bản ghi campaign thành bảng, thống kê và biểu đồ.
+# Báo cáo phản ánh kết quả đã ghi nhận cùng trạng thái và phạm vi dữ liệu.
 """Standalone research tables and Matplotlib figures from recorded outcomes."""
 
 import csv
@@ -13,6 +15,7 @@ from smart_retail.application.experiments.storage import read, verify_integrity,
 from smart_retail.infrastructure.filesystem import normalize_fs_path
 
 
+# Hàm table: xử lý bước table trong phạm vi module hiện tại.
 def table(path, rows):
     path = normalize_fs_path(path)
     columns = sorted({key for row in rows for key in row}) or ["no_records"]
@@ -28,6 +31,7 @@ def table(path, rows):
             )
 
 
+# Hàm run_means: xử lý bước run means trong phạm vi module hiện tại.
 def run_means(rows, metrics: dict[str, list[str]]):
     """Per-repetition means over folds, the deepmg ``*_mean_*`` analogue."""
     groups = defaultdict(list)
@@ -52,6 +56,7 @@ def run_means(rows, metrics: dict[str, list[str]]):
     return result
 
 
+# Hàm status_matrix: xử lý bước status matrix trong phạm vi module hiện tại.
 def status_matrix(rows):
     """Outcome counts per arm, the analogue of a confusion matrix for solver statuses."""
     counts = Counter(
@@ -71,6 +76,7 @@ def status_matrix(rows):
     ]
 
 
+# Hàm dataset_scales: xử lý bước dataset scales trong phạm vi module hiện tại.
 def dataset_scales(roots: list[Path]) -> dict[str, str]:
     """{dataset id: scale} from generator manifests; imported bundles carry no spec."""
     scales: dict[str, str] = {}
@@ -84,6 +90,7 @@ def dataset_scales(roots: list[Path]) -> dict[str, str]:
     return scales
 
 
+# Đọc cấu hình và bản ghi thực tế trước khi dựng bảng cùng biểu đồ; đích báo cáo cần tách khỏi bằng chứng cũ.
 def report(root: Path | list[Path], output: Path):
     roots = [normalize_fs_path(r) for r in (root if isinstance(root, list) else [root])]
     output = normalize_fs_path(output)

@@ -1,3 +1,4 @@
+# Vai trò: Sinh cấu hình campaign cho thiết kế paper, gồm dataset, nhánh so sánh, seed và giới hạn job.
 """Generate the direction-A paper campaign configs (X1-X6) into experiments/configs/paper-v3/.
 
 Design: docs/research/EXPERIMENT_DESIGN_DEEPMG.md, section "paper-v3". Changes after the
@@ -47,6 +48,7 @@ KFOLD5 = {"split": "kfold", "n_folds": 5, "budget_fraction": 0.25, "order_rate":
 HOLDOUT = {"split": "temporal_holdout", "test_size": 0.2, "budget_fraction": 0.25}
 
 
+# Hàm arm: xử lý bước arm trong phạm vi module hiện tại.
 def arm(identifier, budget, **joint):
     optimization = copy.deepcopy(MILP)
     if identifier == "baseline":
@@ -56,6 +58,7 @@ def arm(identifier, budget, **joint):
     return {"id": identifier, "overrides": {"optimization": optimization}}
 
 
+# Hàm arms: xử lý bước arms trong phạm vi module hiện tại.
 def arms(budget, *, baseline=True):
     """Sequential references plus three search arms sharing one evaluation budget."""
     chosen = [arm("baseline", budget, mode="sequential")] if baseline else []
@@ -69,6 +72,7 @@ def arms(budget, *, baseline=True):
     ]
 
 
+# Hàm experiment: xử lý bước experiment trong phạm vi module hiện tại.
 def experiment(identifier, question, datasets, treatments, metrics):
     return {
         "id": identifier,
@@ -82,6 +86,7 @@ def experiment(identifier, question, datasets, treatments, metrics):
     }
 
 
+# Hàm campaign: xử lý bước campaign trong phạm vi module hiện tại.
 def campaign(name, datasets, experiments, seeds, time_limit, evaluation=None):
     spec = {
         "schema_version": "1.1",
@@ -104,6 +109,7 @@ def campaign(name, datasets, experiments, seeds, time_limit, evaluation=None):
     return spec
 
 
+# Hàm finalize: xử lý bước finalize trong phạm vi module hiện tại.
 def finalize(spec):
     """Split over-limit designs; give every part a job ceiling and a wall budget."""
     parts = partition(spec, PART_JOBS.get(int(spec["job_time_limit_s"]), 1000))
@@ -117,6 +123,7 @@ def finalize(spec):
     return result
 
 
+# Hàm calibrations: xử lý bước calibrations trong phạm vi module hiện tại.
 def calibrations():
     """One calibrated order interval per scale (reference instance, sequential seq_milp plan)."""
     chosen, evidence = {}, {}
@@ -130,9 +137,11 @@ def calibrations():
     return chosen, evidence
 
 
+# Hàm build: xử lý bước build trong phạm vi module hiện tại.
 def build():
     load, evidence = calibrations()
 
+    # Hàm dataset: xử lý bước dataset trong phạm vi module hiện tại.
     def dataset(scale, seed, *, interval_factor=1.0):
         facings, orders, *_ = SCALES[scale]
         suffix = "" if interval_factor == 1.0 else f"_load{round(TARGET_UTILIZATION / interval_factor * 100)}"
@@ -146,9 +155,11 @@ def build():
             "picker_count": load[scale]["picker_count"],
         }
 
+    # Hàm budget: xử lý bước budget trong phạm vi module hiện tại.
     def budget(scale):
         return SCALES[scale][2]
 
+    # Hàm limit: xử lý bước limit trong phạm vi module hiện tại.
     def limit(scale):
         return SCALES[scale][3]
 
@@ -220,6 +231,7 @@ def build():
     small6 = [dataset("small", s) for s in range(201, 206)]
     pair = [a for a in arms(budget("small")) if a["id"] in ("seq_milp", "feedback")]
 
+    # Hàm with_override: xử lý bước with override trong phạm vi module hiện tại.
     def with_override(section, key, value):
         result = copy.deepcopy(pair)
         for treatment in result:
@@ -255,10 +267,12 @@ def build():
     return designs, {"target_utilization": TARGET_UTILIZATION, "scales": evidence}
 
 
+# Hàm load_config: nạp config theo quy tắc trong thân hàm.
 def load_config(name):
     return json.loads((CONFIGS / f"{name}.json").read_text(encoding="utf-8"))
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     if OUT.exists():
         sys.exit(f"{OUT} exists; choose a new directory instead of replacing configs")

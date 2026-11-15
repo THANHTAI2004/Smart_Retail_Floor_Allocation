@@ -168,7 +168,66 @@ duy nhất); cột `holm_scale_wilcoxon_exact_p` là Holm phụ theo từng quy 
 `holm_wilcoxon_exact_p` gộp mọi dòng của bảng, chỉ để đối chiếu. Báo cáo paper-v4 đã tạo trước
 đó (ổ F) dùng định nghĩa cũ (chỉ objective, toàn bảng).
 
-### paper-v5 (sau kết quả paper-v4, đã cài đặt, chưa chạy)
+### paper-v5 (tiếp tục sau rà soát thời gian ngày 11/11/2026)
+
+**Cập nhật 06:43 ngày 12/11/2026:** người dùng yêu cầu dừng sau job hiện tại.
+Khi kiểm tra, toàn bộ đợt đã hoàn tất lúc 03:46:24 cùng ngày: 1.008/1.008 bản
+ghi `SUCCEEDED`, kiểm tra độc lập `PASS`, đánh giá tập giữ lại `COMPLETED`;
+68 checkpoint đều `COMPLETED`. Không còn tiến trình Python, không có job cần
+chờ hoàn tất. Đã giữ `stop.request` để ngăn nhận thêm việc; không chạy đợt mới
+khi chưa có yêu cầu. Báo cáo W1/W2 đã được bộ điều phối tạo xong. Biên nhận:
+`var/paper-v5-unlimited-parallel-20261110/user-stop-20261112.json`.
+
+**Cập nhật 17:46 ngày 11/11/2026:** người dùng yêu cầu bắt đầu lại, thay thế
+yêu cầu dừng lúc 16:38. Đã khởi động `start_remaining.py` trong thư mục trạng
+thái để hoàn tất ghi nhận hai kết quả medium phần 19/20 đã tính xong, rà soát
+đúng checksum các cảnh báo thời gian cũ rồi gọi bộ điều phối ba luồng.
+Giữ nguyên ngân sách và không áp trần RAM/job. Nhật ký `start-20261111-1746.log`
+và `.err.log`; xem `status.json` để phân biệt bước khôi phục, kiểm tra toàn vẹn
+và thực sự chạy job mới. Các mốc dưới đây là lịch sử.
+
+**Cập nhật 11:58 ngày 11/11/2026:** người dùng yêu cầu tiếp tục. Đã khởi động
+bộ điều phối ở bước kiểm tra toàn vẹn trước khi nhận job mới, từ 252/1.008 job
+`SUCCEEDED`. Giữ ba luồng, một worker/campaign, không áp trần RAM/job và giữ
+nguyên ngân sách. Lần dừng 09:44 do cảnh báo thời gian của một job medium đã
+hoàn thành đủ 40 lượt đánh giá; đã rà soát hai kết quả có thời gian vượt
+2.430 s, kiểm tra biên nhận và checksum. Tham số `--timing-review` chỉ cho qua
+cảnh báo của đúng bản ghi có SHA-256 đã rà soát; cảnh báo mới vẫn làm dừng.
+Danh sách: `var/paper-v5-unlimited-parallel-20261110/timing-review-20261111.json`.
+Nhật ký: `resume-review-20261111-115850.log` và `.err.log` trong cùng thư mục.
+Xem `status.json` để biết trạng thái thực tế. Các mốc dừng dưới đây là lịch sử.
+
+**Mốc lịch sử:** đã dừng lúc 06:48:46 ngày 11/11/2026 theo yêu cầu người
+dùng, sau khi cả ba job đang chạy hoàn tất. Tổng 243/1.008 job `SUCCEEDED`;
+không còn worker hoặc bộ điều phối thực nghiệm. Giữ `stop.request`, không tự
+tiếp tục khi chưa có yêu cầu mới. Biên nhận:
+`var/paper-v5-unlimited-parallel-20261110/pause-20261111-064010/completion.json`.
+Các ghi chép tiếp tục/tạm dừng bên dưới là lịch sử.
+
+Người dùng đã yêu cầu tiếp tục thực nghiệm sau lần tạm dừng bên dưới. Đã xác
+nhận mã nguồn, môi trường, cấu hình và checksum trước khi chạy tiếp từ 87 job
+hoàn thành. Ba campaign W2 phần 04/05/06 được tiếp tục lúc 20:47 ngày 10/11/2026,
+giữ 3 luồng cố định và không giới hạn RAM/job. Xem `status.json` để biết tiến độ;
+nhật ký lượt tiếp tục: `resume-20261110-204235.log` và `.err.log` trong thư mục
+trạng thái. Thông tin tạm dừng dưới đây là lịch sử.
+
+Theo yêu cầu mới nhất, đã ngừng nhận job mới và để cả ba job đang chạy hoàn tất.
+Lượt chính tạm dừng lúc 16:28:27 ngày 10/11/2026, đạt 87/1.008 job, tất cả
+`SUCCEEDED`. Giữ `stop.request` trong thư mục trạng thái; không tự chạy tiếp
+khi chưa có yêu cầu mới. Đây là kết quả từng phần, chưa có báo cáo tổng hợp.
+
+Theo yêu cầu cập nhật ngày 10/11/2026, đợt chính dùng **3 campaign song song**,
+mỗi campaign một worker, **không áp trần RAM/job** (`memory_limit_mb: null`),
+không tự giảm số luồng theo RAM. Cấu hình:
+`experiments/configs/paper-v5-unlimited-parallel-20261110`; đầu ra:
+`experiments/results/paper-v5-unlimited-parallel-20261110`. Trạng thái và nhật ký:
+`var/paper-v5-unlimited-parallel-20261110/{status.json,runner.log,runner.err.log}`.
+Runner: `scripts/run_paper_v5_parallel.py`, mỗi lượt xử lý một job rồi tiếp tục
+campaign để hỗ trợ dừng sau job. Các giới hạn thời gian vẫn giữ nguyên.
+Năm job của lượt tuần tự `experiments/results/paper-v5` được giữ riêng làm dữ liệu
+pilot, không gộp vào 1.008 job của lượt chính có cấu hình RAM mới. Các ước tính và mô tả
+"chưa chạy" bên dưới phản ánh thời điểm lập thiết kế; xem `HANDOFF.md` để biết
+kiểm chứng khởi động thực tế. Chưa có kết luận khoa học hoặc báo cáo hoàn tất.
 
 Cấu hình đã sinh ở `experiments/configs/paper-v5/` (68 file + `index.json`, 1.008 job; thiết kế ở
 mục 12 của `EXPERIMENT_DESIGN_DEEPMG.md`, tùy chọn mới ở `HOW_TO_RUN_JOINT_OPTIMIZATION.md`).

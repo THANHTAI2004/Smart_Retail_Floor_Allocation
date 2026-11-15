@@ -1,5 +1,7 @@
+// Vai trò: Biên tập nội dung JSON đầu vào, phân tích dữ liệu trước khi chuyển cho thao tác lưu.
 import { useState } from "react";
 
+// Biên tập nội dung JSON đầu vào, phân tích dữ liệu trước khi chuyển cho thao tác lưu.
 export function InputEditor({
   value,
   onSave,
@@ -35,6 +37,7 @@ export function InputEditor({
       ),
     ),
   ];
+  // Cập nhật bản nháp JSON từ thao tác sửa bảng và xóa thông báo lỗi cũ.
   const update = (value: unknown) => {
     setText(JSON.stringify(value, null, 2));
     setError("");

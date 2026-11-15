@@ -1,6 +1,8 @@
+// Vai trò: Chọn hoặc tạo dự án, bao gồm tùy chọn nạp bộ dữ liệu tổng hợp mẫu.
 import { ArrowRight, FolderOpen } from "lucide-react";
 import type { WorkspaceModel } from "../../app/useWorkspace";
 
+// Chọn hoặc tạo dự án, bao gồm tùy chọn nạp bộ dữ liệu tổng hợp mẫu.
 export function ProjectsPage({ model }: { model: WorkspaceModel }) {
   const { page, project, loading, projects, name, setName, busy, act, create, loadProject, go } = model;
   return (<>{(page === "projects" || (!project && !loading && page !== "research")) && (

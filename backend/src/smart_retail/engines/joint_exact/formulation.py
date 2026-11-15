@@ -1,3 +1,5 @@
+# Vai trò: Biên dịch miền Cartesian được khai báo thành quyết định có thể liệt kê.
+# Giới hạn miền phải được phản ánh trong kết luận tối ưu.
 """Compile explicit Cartesian domains; no undocumented heuristic pruning."""
 
 import math
@@ -6,6 +8,7 @@ from smart_retail.contracts.optimality import FiniteSpace
 from smart_retail.domain.models import EngineError
 
 
+# Đếm và biên dịch đúng miền được khai báo; các giới hạn miền quyết định phạm vi kết luận.
 def compile_space(raw):
     space = FiniteSpace.model_validate(raw)
     domains: list[tuple[str, str, list]] = []
@@ -33,6 +36,7 @@ def compile_space(raw):
     return space, domains, count
 
 
+# Chuyển chỉ số một trạng thái trong tích miền thành bộ quyết định vật lý.
 def assemble(domains, values):
     decision: dict = {"poses": {}, "assignment": {}, "placements": []}
     for (kind, key, _), value in zip(domains, values):

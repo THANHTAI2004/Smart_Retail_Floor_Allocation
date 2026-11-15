@@ -1,3 +1,4 @@
+# Vai trò: Chạy các campaign tuần tự theo thứ tự khối của bộ cấu hình, hỗ trợ tiếp tục và tổng hợp báo cáo.
 """Run the direction-A paper campaigns sequentially, resumably, then pool reports per block.
 
 Order follows docs/research/EXPERIMENT_DESIGN_DEEPMG.md section 8 (X3 last). Each campaign
@@ -24,15 +25,18 @@ JOURNAL = RESULTS / "journal.json"
 ORDER = ["X1", "X4", "X2", "X2b", "X5", "X6", "X3"]
 
 
+# Hàm now: lấy thời điểm hiện tại theo cách chuẩn hóa trong hàm.
 def now():
     return datetime.now(UTC).isoformat()
 
 
+# Hàm record: xử lý bước record trong phạm vi module hiện tại.
 def record(journal, entry):
     journal.append(entry)
     JOURNAL.write_text(json.dumps(journal, indent=2) + "\n", encoding="utf-8")
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     RESULTS.mkdir(parents=True, exist_ok=True)
     journal = json.loads(JOURNAL.read_text(encoding="utf-8")) if JOURNAL.exists() else []

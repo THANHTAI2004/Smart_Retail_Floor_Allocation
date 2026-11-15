@@ -1,3 +1,5 @@
+# Vai trò: Mô hình đóng gói dải hữu hạn cho SKU, facings, chiều sâu tồn và lớp xếp.
+# Kết luận tối ưu gắn với mô hình này.
 """Exact finite strip-packing model with fixed facings and variable stock depth/layers.
 
 One rectangular SKU block per product, full assigned shelf, shared level load.
@@ -16,6 +18,7 @@ from smart_retail.domain.models import EngineError, Planogram, Product, Shelf
 from smart_retail.engines.t3_slotting.validation import violations
 
 
+# Hàm solve: giải phần bài toán thuộc module này trong các giới hạn được truyền vào.
 def solve(
     shelves: tuple[Shelf, ...],
     products: tuple[Product, ...],

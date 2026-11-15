@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử pipeline thực trên các họ mặt bằng và hai chế độ tìm kiếm V5.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """paper-v5 smoke: every layout family simulates end to end and both new search modes finish."""
 
 import copy
@@ -49,6 +51,7 @@ FEEDBACK_V5 = {
 }
 
 
+# Hàm instance: xử lý bước instance trong phạm vi module hiện tại.
 def instance(scale, family, seed=None):
     first, facings, orders, interval, pickers = SCALES[scale]
     seed = first if seed is None else seed
@@ -65,6 +68,7 @@ def instance(scale, family, seed=None):
     return generate(spec)[0]
 
 
+# Hàm simulate: xử lý bước simulate trong phạm vi module hiện tại.
 def simulate(sections):
     config = JointConfig(**JOINT, mode="sequential")
     sections = merge(
@@ -86,15 +90,18 @@ def simulate(sections):
 
 @pytest.mark.parametrize("scale", ["tiny", "small"])
 @pytest.mark.parametrize("family", FAMILIES)
+# Hàm test_sequential_plan_simulates_end_to_end: kiểm tra kịch bản sequential plan simulates end to end bằng các assertion trong thân hàm.
 def test_sequential_plan_simulates_end_to_end(scale, family):
     simulate(instance(scale, family))
 
 
 @pytest.mark.parametrize("family", MEDIUM_SEEDS)
+# Hàm test_sequential_plan_simulates_on_medium: kiểm tra kịch bản sequential plan simulates on medium bằng các assertion trong thân hàm.
 def test_sequential_plan_simulates_on_medium(family):
     simulate(instance("medium", family, MEDIUM_SEEDS[family]))
 
 
+# Hàm run: thực hiện luồng chạy với trạng thái và ngân sách được quản lý trong thân hàm.
 def run(joint):
     sections = merge(
         copy.deepcopy(instance("tiny", "columns")),
@@ -103,6 +110,7 @@ def run(joint):
     return execute(sections)["joint"]
 
 
+# Hàm test_feedback_v5_finishes_on_the_columns_family: kiểm tra kịch bản feedback v5 finishes on the columns family bằng các assertion trong thân hàm.
 def test_feedback_v5_finishes_on_the_columns_family():
     joint = run({**FEEDBACK_V5, "max_evaluations": 4})
     assert joint["best"] is not None and math.isfinite(joint["best"]["score"])
@@ -110,6 +118,7 @@ def test_feedback_v5_finishes_on_the_columns_family():
     assert joint["restart_evaluations"] >= 1
 
 
+# Hàm test_genetic_finishes_on_the_columns_family: kiểm tra kịch bản genetic finishes on the columns family bằng các assertion trong thân hàm.
 def test_genetic_finishes_on_the_columns_family():
     joint = run({"mode": "genetic", "population": 3, "max_evaluations": 4})
     assert joint["mode"] == "genetic"

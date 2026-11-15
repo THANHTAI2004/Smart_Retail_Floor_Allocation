@@ -1,3 +1,5 @@
+# Vai trò: Baseline di truyền dạng steady-state trên vị trí kệ của Paper V5.
+# Quần thể, biến đổi và đánh giá đều chịu seed cùng ngân sách khai báo.
 """Steady-state genetic baseline over shelf poses (paper-v5)."""
 
 import random
@@ -20,6 +22,7 @@ MUTATION_SEED_OFFSET = 104729
 SELECTION_SEED_OFFSET = 7_340_033
 
 
+# Theo dõi nghiệm đã đánh giá để không tiêu ngân sách lặp vô ích; nghiệm con phải qua evaluator trước khi thay thành viên.
 def evolve(
     initial: dict,
     sections: dict,
@@ -50,6 +53,7 @@ def evolve(
     # A child that restores the initial layout is a duplicate although its id is not a pose hash.
     seen.add(canonical_hash({k: initial["decisions"][k] for k in ("poses", "routing_policy")}))
 
+    # Hàm attempt: xử lý bước attempt trong phạm vi module hiện tại.
     def attempt(decision, action, variant, changed, parents=None):
         """Evaluate one decision: (candidate or None, TIMEOUT/CANCELLED or None)."""
         seen.add(canonical_hash(decision))
@@ -78,13 +82,16 @@ def evolve(
         )
         return candidate, None
 
+    # Hàm skip: xử lý bước skip trong phạm vi module hiện tại.
     def skip(action, variant, reason):
         event({"status": "FAILED", "action": action, "variant": variant, "reason": reason})
 
+    # Hàm tournament: xử lý bước tournament trong phạm vi module hiện tại.
     def tournament():
         pair = rng.sample(population, 2) if len(population) > 1 else [population[0]] * 2
         return min(pair, key=exact_score)
 
+    # Hàm crossover: xử lý bước crossover trong phạm vi module hiện tại.
     def crossover(a, b):
         poses_a, poses_b = a["decisions"]["poses"], b["decisions"]["poses"]
         for _ in range(CROSSOVER_TRIES):

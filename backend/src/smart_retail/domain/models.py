@@ -1,3 +1,4 @@
+# Vai trò: Tập hợp API domain công khai; các định nghĩa cụ thể nằm trong module nghiệp vụ tương ứng.
 """Public domain API. Concrete models belong to their business modules."""
 
 from smart_retail.domain.categories.models import Category

@@ -1,3 +1,4 @@
+# Vai trò: Thử sửa tính khả thi trong ngân sách giới hạn khi phương án tuần tự chưa khởi tạo được vòng tối ưu liên tầng.
 """Bounded feasibility repair when the sequential packing cannot initialize a loop."""
 
 import copy
@@ -8,6 +9,7 @@ from smart_retail.application.stage_workflow import _candidate
 from smart_retail.domain.models import EngineError
 
 
+# Hàm initialize: chuẩn bị dữ liệu và trạng thái trước khi thực thi.
 def initialize(
     sections, config, assess, event, deadline, cancelled, progress, cache, observer, evaluations
 ):

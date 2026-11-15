@@ -1,3 +1,5 @@
+# Vai trò: Ước lượng khoảng cách đi bộ để xếp hạng bố trí trước khi mô phỏng đầy đủ.
+# Giá trị surrogate dùng sàng lọc, còn kết quả chính lấy từ evaluator.
 """Walking-distance surrogate that ranks candidate layouts before they are simulated."""
 
 import math
@@ -11,6 +13,7 @@ from smart_retail.domain.models import EngineError, RetailDataset
 from smart_retail.engines.navigation import navigation
 
 
+# Tính trọng số ngành từ số lượng SKU đã lấy trong mô phỏng; khi tắt weighting dùng trọng số đều.
 def heat(feedback: dict, sections: dict, weighted: bool) -> dict[str, float]:
     """Category heat: units picked in the latest simulation + 1; flat 1.0 when not weighted."""
     values = dict.fromkeys((c["id"] for c in sections["categories"]["items"]), 1.0)
@@ -21,6 +24,7 @@ def heat(feedback: dict, sections: dict, weighted: bool) -> dict[str, float]:
     return values
 
 
+# Lấy điểm phục vụ gần nhất trên mọi mặt kệ; bố trí sai topology bị loại khỏi bước xếp hạng.
 def distances(
     sections: dict,
     poses: dict[str, list],
@@ -49,6 +53,7 @@ def distances(
     return {s.id: min(reach[targets[f"{s.id}:{face}"]] for face in range(s.faces)) for s in layout}
 
 
+# Ngành cố định giữ kệ của nó; các ngành còn lại ghép nhu cầu cao với khoảng cách nhỏ theo quy tắc surrogate.
 def value(sections: dict, distance: dict[str, float], heat: dict[str, float]) -> float:
     """Sum of heat x distance with fixed categories on their shelf, the rest paired greedily.
 
@@ -69,6 +74,7 @@ def value(sections: dict, distance: dict[str, float], heat: dict[str, float]) ->
     return total
 
 
+# Bẻ hòa bằng hash quyết định để thứ tự không phụ thuộc thứ tự duyệt đầu vào.
 def rank(
     candidates: list[dict], sections: dict, heat: dict[str, float], deadline: float = math.inf
 ) -> list[dict]:

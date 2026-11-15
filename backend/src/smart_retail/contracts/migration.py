@@ -1,3 +1,4 @@
+# Vai trò: Chuẩn hóa rõ ràng phiên bản gói đầu vào của ứng dụng hiện tại, giữ nguyên dữ liệu nguồn được truyền vào.
 """Explicit, non-destructive migration of the current application's input bundle."""
 
 import copy
@@ -5,6 +6,7 @@ import copy
 from smart_retail.contracts.inputs import SECTIONS
 
 
+# Hàm normalize: xử lý bước normalize trong phạm vi module hiện tại.
 def normalize(sections: dict) -> tuple[dict, list[dict]]:
     result = copy.deepcopy(sections)
     migrations = []

@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử thời gian và giới hạn của T1 ở các kích thước đầu vào đã chọn.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import time
 from dataclasses import replace
 
@@ -9,6 +11,7 @@ from smart_retail.engines.t1_layout.engine import violations
 
 
 @pytest.mark.parametrize("count", [2, 10, 20])
+# Hàm test_t1_bounded_sizes: kiểm tra kịch bản t1 bounded sizes bằng các assertion trong thân hàm.
 def test_t1_bounded_sizes(sample, count, record_property):
     d = to_domain(sample)
     floor = replace(d.floorplan, boundary=((0, 0), (30, 0), (30, 30), (0, 30)), obstacles=())

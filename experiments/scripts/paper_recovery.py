@@ -1,3 +1,4 @@
+# Vai trò: Chuẩn bị campaign bổ sung ngân sách từ job gốc, giữ dữ liệu và kết quả cũ để đối chiếu.
 """Explicit additional-budget campaigns; immutable originals and exact job inputs."""
 
 import hashlib
@@ -15,10 +16,12 @@ STATE = ROOT / "var/paper-parallel/recovery"
 INDEX = STATE / "index.json"
 
 
+# Hàm supplemental_rows: xử lý bước supplemental rows trong phạm vi module hiện tại.
 def supplemental_rows():
     return read(INDEX) if INDEX.exists() else []
 
 
+# Hàm shard_specs: xử lý bước shard specs trong phạm vi module hiện tại.
 def shard_specs(config, targets):
     """Close requested keys over existing folds; record any additional paired jobs."""
     groups = defaultdict(list)
@@ -60,6 +63,7 @@ def shard_specs(config, targets):
     return result
 
 
+# Hàm prepare_recovery: xử lý bước prepare recovery trong phạm vi module hiện tại.
 def prepare_recovery():
     """Discover original failures/budget omissions once; publish verified shard mappings."""
     STATE.mkdir(parents=True, exist_ok=True)
@@ -142,6 +146,7 @@ def prepare_recovery():
     return new
 
 
+# Hàm coverage: xử lý bước coverage trong phạm vi module hiện tại.
 def coverage():
     entries = []
     for row in supplemental_rows():

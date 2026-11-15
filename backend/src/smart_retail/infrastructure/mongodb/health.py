@@ -1,3 +1,5 @@
+# Vai trò: CLI kiểm tra kết nối và index MongoDB, có kiểm tra cutover theo tùy chọn.
+# Báo cáo tránh đưa thông tin xác thực ra ngoài.
 """Connection/index verification CLI. Credentials never appear in reports."""
 
 import argparse
@@ -7,6 +9,7 @@ from pathlib import Path
 from smart_retail.infrastructure.mongodb.client import connect
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path)

@@ -1,3 +1,4 @@
+# Vai trò: Tuần tự hóa payload giữ nguyên giá trị JSON; dùng vùng lưu overflow cho nội dung lớn thay vì cắt dữ liệu.
 """Lossless JSON-backed overflow storage: no truncation or BSON integer coercion."""
 
 import hashlib
@@ -9,20 +10,24 @@ from bson import BSON
 from gridfs import GridFS
 
 
+# Hàm canonical: xử lý bước canonical trong phạm vi module hiện tại.
 def canonical(value):
     return json.dumps(
         value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False
     ).encode()
 
 
+# Hàm sha: xử lý bước sha trong phạm vi module hiện tại.
 def sha(value):
     return hashlib.sha256(canonical(value)).hexdigest()
 
 
 class Payloads:
+    # Hàm __init__: khởi tạo đối tượng và các phụ thuộc ban đầu.
     def __init__(self, database):
         self.files = GridFS(database, collection="research_payloads")
 
+    # Hàm pack: xử lý bước pack trong phạm vi module hiện tại.
     def pack(self, document, field, value):
         document[field] = value
         if value is None:
@@ -50,6 +55,7 @@ class Payloads:
             "encoding": "canonical-json-ascii-v1",
         }
 
+    # Hàm unpack: xử lý bước unpack trong phạm vi module hiện tại.
     def unpack(self, document, field):
         reference = document.get(field + "_ref")
         if not reference:
@@ -60,12 +66,14 @@ class Payloads:
         return json.loads(raw)
 
 
+# Hàm record_document: xử lý bước record document trong phạm vi module hiện tại.
 def record_document(record):
     document = asdict(record)
     document["_id"] = document.pop("id")
     return document
 
 
+# Hàm record_value: xử lý bước record value trong phạm vi module hiện tại.
 def record_value(cls, document):
     if document is None:
         return None

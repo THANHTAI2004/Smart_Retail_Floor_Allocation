@@ -1,3 +1,4 @@
+// Vai trò: Tổng quan mức hoàn thành dữ liệu, sức khỏe dịch vụ và lối đi tới các bước của workspace.
 import { navigation } from "../../app/navigation";
 import { Stat } from "../../components/Stat";
 import { ArrowRight, ChartNoAxesCombined, Check, ChevronRight, Map, Play, SquareStack } from "lucide-react";
@@ -7,6 +8,7 @@ import { sections } from "../../app/useWorkspace";
 import type { WorkspaceModel } from "../../app/useWorkspace";
 import { Badge } from "../../components/Badge";
 
+// Tổng quan mức hoàn thành dữ liệu, sức khỏe dịch vụ và lối đi tới các bước của workspace.
 export function DashboardPage({ model }: { model: WorkspaceModel }) {
   const { project, page, completed, successful, go, runs, setSelectedRun } = model;
   return (<>{project && page === "dashboard" && (

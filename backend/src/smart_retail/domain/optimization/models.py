@@ -1,3 +1,5 @@
+# Vai trò: Mô hình domain cho cấu hình và lần tối ưu.
+# Các kiểu nghiệp vụ không phụ thuộc HTTP hoặc driver lưu trữ; kích thước vật lý dùng đơn vị SI.
 """Business models for optimization. No HTTP or ORM dependencies."""
 
 from dataclasses import dataclass

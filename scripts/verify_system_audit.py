@@ -1,3 +1,4 @@
+# Vai trò: Điều phối tuần tự các kiểm tra hệ thống cô lập với bằng chứng riêng cho từng lệnh.
 """Sequential, isolated system verification with immutable per-command evidence."""
 
 import argparse
@@ -14,6 +15,7 @@ from smart_retail.infrastructure.provenance import runtime_identity
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--state", type=Path, default=Path("var/system-audit-current.json"))
@@ -33,6 +35,7 @@ def main():
     )
     rows = []
 
+    # Hàm run: thực hiện luồng chạy với trạng thái và ngân sách được quản lý trong thân hàm.
     def run(name, command, timeout=1200):
         began = datetime.now(UTC).isoformat()
         result = subprocess.run(

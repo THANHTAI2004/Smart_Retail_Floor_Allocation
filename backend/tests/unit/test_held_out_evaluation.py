@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử chia tập, tránh rò rỉ dữ liệu, chấm holdout và suy luận thống kê ghép cặp.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import copy
 import json
 import math
@@ -28,14 +30,17 @@ KFOLD = EvaluationSpec(split="kfold", n_folds=5)
 
 
 @pytest.fixture(scope="module")
+# Hàm tiny: xử lý bước tiny trong phạm vi module hiện tại.
 def tiny():
     return generate(DatasetSpec(id="tiny", scale="tiny", facings=6))[0]
 
 
+# Hàm ids: xử lý bước ids trong phạm vi module hiện tại.
 def ids(section):
     return {o["id"] for o in section["orders"]}
 
 
+# Hàm test_kfold_partition_is_deterministic_disjoint_exhaustive_and_balanced: kiểm tra kịch bản kfold partition is deterministic disjoint exhaustive and balanced bằng các assertion trong thân hàm.
 def test_kfold_partition_is_deterministic_disjoint_exhaustive_and_balanced(tiny):
     plan = split_orders(tiny, KFOLD, 11)
     assert plan == split_orders(tiny, KFOLD, 11)
@@ -51,6 +56,7 @@ def test_kfold_partition_is_deterministic_disjoint_exhaustive_and_balanced(tiny)
     assert split_orders(tiny, KFOLD, 23)["folds"] != plan["folds"]
 
 
+# Hàm test_temporal_holdout_tests_on_latest_orders: kiểm tra kịch bản temporal holdout tests on latest orders bằng các assertion trong thân hàm.
 def test_temporal_holdout_tests_on_latest_orders(tiny):
     spec = EvaluationSpec(split="temporal_holdout", test_size=0.25)
     plan = split_orders(tiny, spec, 11)
@@ -61,6 +67,7 @@ def test_temporal_holdout_tests_on_latest_orders(tiny):
     assert plan["folds"] == split_orders(tiny, spec, 99)["folds"]
 
 
+# Hàm test_too_many_folds_rejected: kiểm tra kịch bản too many folds rejected bằng các assertion trong thân hàm.
 def test_too_many_folds_rejected(tiny):
     small = copy.deepcopy(tiny)
     small["orders"]["orders"] = small["orders"]["orders"][:3]
@@ -74,6 +81,7 @@ def test_too_many_folds_rejected(tiny):
         split_orders(small, EvaluationSpec(split="temporal_holdout", test_size=0.99), 11)
 
 
+# Hàm test_demand_is_estimated_from_the_subset_only: kiểm tra kịch bản demand is estimated from the subset only bằng các assertion trong thân hàm.
 def test_demand_is_estimated_from_the_subset_only(tiny):
     orders = copy.deepcopy(tiny["orders"])
     orders["orders"] = orders["orders"][:4]
@@ -94,6 +102,7 @@ def test_demand_is_estimated_from_the_subset_only(tiny):
     to_domain(data)
 
 
+# Hàm test_held_out_orders_never_reach_the_domain_or_engines: kiểm tra kịch bản held out orders never reach the domain or engines bằng các assertion trong thân hàm.
 def test_held_out_orders_never_reach_the_domain_or_engines(tiny):
     plan = split_orders(tiny, KFOLD, 11)
     job = apply_split(tiny, plan, 0, KFOLD)
@@ -108,6 +117,7 @@ def test_held_out_orders_never_reach_the_domain_or_engines(tiny):
     assert "Held-out orders overlap training orders" in validate_references(overlapping)
 
 
+# Hàm test_apply_split_rejects_orders_changed_by_overrides: kiểm tra kịch bản apply split rejects orders changed by overrides bằng các assertion trong thân hàm.
 def test_apply_split_rejects_orders_changed_by_overrides(tiny):
     plan = split_orders(tiny, KFOLD, 11)
     changed = copy.deepcopy(tiny)
@@ -116,6 +126,7 @@ def test_apply_split_rejects_orders_changed_by_overrides(tiny):
         apply_split(changed, plan, 0, KFOLD)
 
 
+# Hàm test_execute_optimizes_on_training_orders_and_scores_held_out_orders: kiểm tra kịch bản execute optimizes on training orders and scores held out orders bằng các assertion trong thân hàm.
 def test_execute_optimizes_on_training_orders_and_scores_held_out_orders(tiny):
     plan = split_orders(tiny, KFOLD, 11)
     job = apply_split(tiny, plan, 1, KFOLD)
@@ -136,6 +147,7 @@ def test_execute_optimizes_on_training_orders_and_scores_held_out_orders(tiny):
     assert execute(copy.deepcopy(job))["evaluation"]["objective"] == evaluation["objective"]
 
 
+# Hàm test_joint_mode_scores_selected_decisions_on_held_out_orders: kiểm tra kịch bản joint mode scores selected decisions on held out orders bằng các assertion trong thân hàm.
 def test_joint_mode_scores_selected_decisions_on_held_out_orders(tiny):
     joint = {
         "objective": {"weights": [1, 0.2, 0.1, 0.1], "scales": [100, 100, 1, 1]},
@@ -156,6 +168,7 @@ def test_joint_mode_scores_selected_decisions_on_held_out_orders(tiny):
     assert math.isfinite(evaluation["objective"])
 
 
+# Hàm test_engine_errors_survive_simpy_reraise_and_pickling: kiểm tra kịch bản engine errors survive simpy reraise and pickling bằng các assertion trong thân hàm.
 def test_engine_errors_survive_simpy_reraise_and_pickling():
     import pickle
 
@@ -165,6 +178,7 @@ def test_engine_errors_survive_simpy_reraise_and_pickling():
 
     env = simpy.Environment()
 
+    # Hàm journey: xử lý bước journey trong phạm vi module hiện tại.
     def journey():
         yield env.timeout(1)
         raise EngineError("TIMEOUT", "T4 simulation time limit")
@@ -177,6 +191,7 @@ def test_engine_errors_survive_simpy_reraise_and_pickling():
     assert (copy_.code, str(copy_)) == ("TIMEOUT", "T4 simulation time limit")
 
 
+# Hàm test_held_out_budget_exhaustion_is_recorded_not_failed: kiểm tra kịch bản held out budget exhaustion is recorded not failed bằng các assertion trong thân hàm.
 def test_held_out_budget_exhaustion_is_recorded_not_failed(tiny):
     plan = split_orders(tiny, KFOLD, 11)
     job = apply_split(tiny, plan, 0, KFOLD)
@@ -190,6 +205,7 @@ def test_held_out_budget_exhaustion_is_recorded_not_failed(tiny):
     assert evaluation["status"] == "NOT_EXECUTED_BUDGET"
 
 
+# Hàm test_worker_wall_budget_leaves_finalization_grace: kiểm tra kịch bản worker wall budget leaves finalization grace bằng các assertion trong thân hàm.
 def test_worker_wall_budget_leaves_finalization_grace():
     from smart_retail.workers.runner import wall_budget
 
@@ -203,6 +219,7 @@ def test_worker_wall_budget_leaves_finalization_grace():
         OptimizationInput(time_limit_s=3601)
 
 
+# Hàm test_inputs_without_evaluation_keep_their_canonical_form: kiểm tra kịch bản inputs without evaluation keep their canonical form bằng các assertion trong thân hàm.
 def test_inputs_without_evaluation_keep_their_canonical_form():
     assert "evaluation" not in OptimizationInput().model_dump(mode="json")
     spec = CampaignSpec.model_validate(
@@ -225,6 +242,7 @@ def test_inputs_without_evaluation_keep_their_canonical_form():
     assert planned_jobs(spec) == 3
 
 
+# Hàm campaign: xử lý bước campaign trong phạm vi module hiện tại.
 def campaign(**extra):
     return {
         "schema_version": "1.1",
@@ -246,6 +264,7 @@ def campaign(**extra):
     }
 
 
+# Hàm test_campaign_evaluation_contract_and_job_ceiling: kiểm tra kịch bản campaign evaluation contract and job ceiling bằng các assertion trong thân hàm.
 def test_campaign_evaluation_contract_and_job_ceiling():
     with pytest.raises(ValidationError, match="schema_version 1.1"):
         CampaignSpec.model_validate({**campaign(seeds=[1]), "schema_version": "1.0"})
@@ -255,6 +274,7 @@ def test_campaign_evaluation_contract_and_job_ceiling():
     assert planned_jobs(spec) == 3 * 2 * 2 * 10
 
 
+# Hàm test_partition_keeps_each_dataset_seed_unit_in_one_part: kiểm tra kịch bản partition keeps each dataset seed unit in one part bằng các assertion trong thân hàm.
 def test_partition_keeps_each_dataset_seed_unit_in_one_part():
     parts = partition(campaign(), max_jobs=250)
     assert all(planned_jobs(p) <= 250 and p.max_jobs == planned_jobs(p) for p in parts)
@@ -265,6 +285,7 @@ def test_partition_keeps_each_dataset_seed_unit_in_one_part():
         partition(campaign(), max_jobs=10)
 
 
+# Hàm test_corrected_resampled_test_is_more_conservative_than_naive: kiểm tra kịch bản corrected resampled test is more conservative than naive bằng các assertion trong thân hàm.
 def test_corrected_resampled_test_is_more_conservative_than_naive():
     differences = [0.1, 0.12, 0.08, 0.11, 0.09, 0.13, 0.1, 0.07, 0.12, 0.1]
     corrected = nadeau_bengio_p(differences, test_to_train=1 / 9)
@@ -274,6 +295,7 @@ def test_corrected_resampled_test_is_more_conservative_than_naive():
     assert vargha_delaney_a12([2, 3], [1, 1]) == 1 and vargha_delaney_a12([1], [1]) == 0.5
 
 
+# Hàm test_friedman_nemenyi_ranks_and_critical_difference: kiểm tra kịch bản friedman nemenyi ranks and critical difference bằng các assertion trong thân hàm.
 def test_friedman_nemenyi_ranks_and_critical_difference():
     blocks = [[1.0, 2.0, 3.0]] * 6
     result = friedman_nemenyi(blocks, ["a", "b", "c"], "dataset_means")
@@ -283,6 +305,7 @@ def test_friedman_nemenyi_ranks_and_critical_difference():
     assert "limitation" in friedman_nemenyi([[1.0, 2.0]], ["a", "b"], "units")
 
 
+# Hàm test_arms_with_different_objective_definitions_are_not_tested: kiểm tra kịch bản arms with different objective definitions are not tested bằng các assertion trong thân hàm.
 def test_arms_with_different_objective_definitions_are_not_tested():
     rows = [
         {
@@ -307,6 +330,7 @@ def test_arms_with_different_objective_definitions_are_not_tested():
     assert by_metric["test_mean_distance_m"]["wilcoxon_p"] is not None
 
 
+# Hàm test_folds_are_distinct_pairing_units_with_corrected_inference: kiểm tra kịch bản folds are distinct pairing units with corrected inference bằng các assertion trong thân hàm.
 def test_folds_are_distinct_pairing_units_with_corrected_inference():
     rows = []
     for seed in (1, 2):
@@ -336,6 +360,7 @@ def test_folds_are_distinct_pairing_units_with_corrected_inference():
     assert comparison["wilcoxon_p"] is not None
 
 
+# Hàm test_load_calibration_fields_keep_old_canonical_form_and_drive_generator: kiểm tra kịch bản load calibration fields keep old canonical form and drive generator bằng các assertion trong thân hàm.
 def test_load_calibration_fields_keep_old_canonical_form_and_drive_generator():
     from smart_retail.application.experiments.splits import arrival_rate
 
@@ -352,6 +377,7 @@ def test_load_calibration_fields_keep_old_canonical_form_and_drive_generator():
     assert data["products"] == generate(plain)[0]["products"]
 
 
+# Hàm test_population_order_rate_keeps_fold_load_equal_to_full_load: kiểm tra kịch bản population order rate keeps fold load equal to full load bằng các assertion trong thân hàm.
 def test_population_order_rate_keeps_fold_load_equal_to_full_load():
     from smart_retail.application.experiments.splits import arrival_rate
 
@@ -370,6 +396,7 @@ def test_population_order_rate_keeps_fold_load_equal_to_full_load():
     assert arrival_rate(sampled["optimization"]["evaluation"]["orders"]["orders"]) < population / 3
 
 
+# Hàm test_calibration_reaches_target_picker_utilization: kiểm tra kịch bản calibration reaches target picker utilization bằng các assertion trong thân hàm.
 def test_calibration_reaches_target_picker_utilization():
     from smart_retail.application.experiments.calibration import calibrate
 
@@ -386,6 +413,7 @@ def test_calibration_reaches_target_picker_utilization():
     assert again == spec
 
 
+# Hàm test_instance_level_comparison_uses_seq_milp_reference_and_scales: kiểm tra kịch bản instance level comparison uses seq milp reference and scales bằng các assertion trong thân hàm.
 def test_instance_level_comparison_uses_seq_milp_reference_and_scales():
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -436,6 +464,7 @@ def test_instance_level_comparison_uses_seq_milp_reference_and_scales():
     )
 
 
+# Hàm test_instance_comparison_adds_exact_reference_for_union_gap: kiểm tra kịch bản instance comparison adds exact reference for union gap bằng các assertion trong thân hàm.
 def test_instance_comparison_adds_exact_reference_for_union_gap():
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -490,6 +519,7 @@ EXPECTED_P = {
 }
 
 
+# Hàm gain_rows: xử lý bước gain rows trong phạm vi module hiện tại.
 def gain_rows(gains, experiment="E50"):
     """Rows from {dataset: {arm: gain}}; wall_s is a secondary metric with the same ordering."""
     return [
@@ -507,6 +537,7 @@ def gain_rows(gains, experiment="E50"):
     ]
 
 
+# Hàm keyed: xử lý bước keyed trong phạm vi module hiện tại.
 def keyed(records):
     return {(r["metric"], r["reference"], r["treatment"], r["scale"]): r for r in records}
 
@@ -514,6 +545,7 @@ def keyed(records):
 METRICS = ["joint_objective", "wall_s"]
 
 
+# Hàm test_predeclared_primary_family_is_the_pooled_group_of_primary_metrics: kiểm tra kịch bản predeclared primary family is the pooled group of primary metrics bằng các assertion trong thân hàm.
 def test_predeclared_primary_family_is_the_pooled_group_of_primary_metrics():
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -542,6 +574,7 @@ def test_predeclared_primary_family_is_the_pooled_group_of_primary_metrics():
     assert all(r["holm_wilcoxon_exact_p"] is not None for r in records)
 
 
+# Hàm test_scale_holm_corrects_primary_metrics_within_each_scale: kiểm tra kịch bản scale holm corrects primary metrics within each scale bằng các assertion trong thân hàm.
 def test_scale_holm_corrects_primary_metrics_within_each_scale():
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -562,6 +595,7 @@ def test_scale_holm_corrects_primary_metrics_within_each_scale():
 
 
 @pytest.mark.parametrize("scales", [{dataset: "tiny" for dataset in GAINS}, None])
+# Hàm test_single_scale_experiment_keeps_its_primary_family: kiểm tra kịch bản single scale experiment keeps its primary family bằng các assertion trong thân hàm.
 def test_single_scale_experiment_keeps_its_primary_family(scales):
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -578,6 +612,7 @@ def test_single_scale_experiment_keeps_its_primary_family(scales):
         assert all(r[column] is None for r in records if r["metric"] == "wall_s")
 
 
+# Hàm test_primary_family_pools_the_primary_rows_across_experiments: kiểm tra kịch bản primary family pools the primary rows across experiments bằng các assertion trong thân hàm.
 def test_primary_family_pools_the_primary_rows_across_experiments():
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -604,6 +639,7 @@ def test_primary_family_pools_the_primary_rows_across_experiments():
 
 
 @pytest.mark.parametrize("sequential", ["seq_milp", "baseline"])
+# Hàm test_random_search_is_a_second_instance_reference: kiểm tra kịch bản random search is a second instance reference bằng các assertion trong thân hàm.
 def test_random_search_is_a_second_instance_reference(sequential):
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -626,6 +662,7 @@ def test_random_search_is_a_second_instance_reference(sequential):
     assert [(r["reference"], r["treatment"]) for r in records] == [DIRECT]
 
 
+# Hàm test_random_search_does_not_mirror_the_exact_reference_rows: kiểm tra kịch bản random search does not mirror the exact reference rows bằng các assertion trong thân hàm.
 def test_random_search_does_not_mirror_the_exact_reference_rows():
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -642,6 +679,7 @@ def test_random_search_does_not_mirror_the_exact_reference_rows():
     }
 
 
+# Hàm test_feedback_v5_is_a_reference_of_its_ablation_arms: kiểm tra kịch bản feedback v5 is a reference of its ablation arms bằng các assertion trong thân hàm.
 def test_feedback_v5_is_a_reference_of_its_ablation_arms():
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -679,6 +717,7 @@ def test_feedback_v5_is_a_reference_of_its_ablation_arms():
     assert "feedback_v5" not in {r["reference"] for r in plain}
 
 
+# Hàm test_feedback_v5_reference_keeps_the_random_search_row: kiểm tra kịch bản feedback v5 reference keeps the random search row bằng các assertion trong thân hàm.
 def test_feedback_v5_reference_keeps_the_random_search_row():
     from smart_retail.application.experiments.analysis import instance_comparisons
 
@@ -698,6 +737,7 @@ def test_feedback_v5_reference_keeps_the_random_search_row():
     }
 
 
+# Hàm write_manifests: ghi manifests theo quy tắc trong thân hàm.
 def write_manifests(root, *manifests):
     for manifest in manifests:
         folder = root / "datasets" / manifest["dataset_id"]
@@ -705,6 +745,7 @@ def write_manifests(root, *manifests):
         (folder / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
 
 
+# Hàm test_dataset_scales_from_manifests: kiểm tra kịch bản dataset scales from manifests bằng các assertion trong thân hàm.
 def test_dataset_scales_from_manifests(tmp_path):
     from smart_retail.application.experiments.reports import dataset_scales
 
@@ -719,6 +760,7 @@ def test_dataset_scales_from_manifests(tmp_path):
     assert dataset_scales([first, second]) == {"a": "small", "c": "tiny"}
 
 
+# Hàm test_dataset_scales_reject_one_dataset_with_two_scales: kiểm tra kịch bản dataset scales reject one dataset with two scales bằng các assertion trong thân hàm.
 def test_dataset_scales_reject_one_dataset_with_two_scales(tmp_path):
     from smart_retail.application.experiments.reports import dataset_scales
 
@@ -731,6 +773,7 @@ def test_dataset_scales_reject_one_dataset_with_two_scales(tmp_path):
     assert dataset_scales([first, third]) == {"a": "small"}
 
 
+# Hàm campaign_root: xử lý bước campaign root trong phạm vi module hiện tại.
 def campaign_root(root, job_key, scale):
     files = {
         "identity.json": {"runtime": {}},
@@ -744,11 +787,13 @@ def campaign_root(root, job_key, scale):
     return root
 
 
+# Hàm test_report_passes_dataset_scales_to_the_analysis: kiểm tra kịch bản report passes dataset scales to the analysis bằng các assertion trong thân hàm.
 def test_report_passes_dataset_scales_to_the_analysis(tmp_path, monkeypatch):
     from smart_retail.application.experiments import reports
 
     seen = {}
 
+    # Hàm capture: xử lý bước capture trong phạm vi module hiện tại.
     def capture(rows, selected, scales):
         seen.update(selected=selected, scales=scales)
         raise StopIteration
@@ -761,6 +806,7 @@ def test_report_passes_dataset_scales_to_the_analysis(tmp_path, monkeypatch):
     assert seen == {"selected": {"E50": ["joint_objective"]}, "scales": {"a": "small"}}
 
 
+# Hàm test_report_refuses_conflicting_scales_before_creating_the_output: kiểm tra kịch bản report refuses conflicting scales before creating the output bằng các assertion trong thân hàm.
 def test_report_refuses_conflicting_scales_before_creating_the_output(tmp_path, monkeypatch):
     from smart_retail.application.experiments import reports
 

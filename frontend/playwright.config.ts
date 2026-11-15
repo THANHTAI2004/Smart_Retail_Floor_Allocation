@@ -1,3 +1,4 @@
+// Vai trò: Cấu hình trình duyệt, địa chỉ dịch vụ và thư mục bằng chứng cho kiểm tra đầu cuối.
 import { defineConfig } from "@playwright/test";
 
 const output = process.env.SMART_RETAIL_E2E_OUTPUT || "../var/playwright";

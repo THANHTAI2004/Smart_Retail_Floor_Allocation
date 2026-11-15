@@ -1,3 +1,5 @@
+# Vai trò: Nhận job bằng claim nguyên tử, chạy số trong tiến trình con có thể dừng và công bố bằng lease.
+# Receipt lưu trạng thái, checksum và tài nguyên quan sát được.
 """Durable database queue, atomic claims, killable child processes, hard wall budgets."""
 
 import argparse
@@ -23,11 +25,13 @@ from smart_retail.workers.resources import sample as sample_resources
 logger = logging.getLogger("smart_retail.worker")
 
 
+# Hàm memory_exceeded: xử lý bước memory exceeded trong phạm vi module hiện tại.
 def memory_exceeded(rss_bytes: int | None, limit_mb: int | None) -> bool:
     """A null limit explicitly disables only the per-job RSS cutoff."""
     return limit_mb is not None and rss_bytes is not None and rss_bytes > limit_mb * 1024**2
 
 
+# Đọc tiến độ, xử lý khóa tệp Windows tạm thời nhưng vẫn báo artifact hỏng.
 def read_progress(path: Path) -> str | None:
     """A missed progress sample must not interrupt process supervision on Windows."""
     try:
@@ -36,6 +40,7 @@ def read_progress(path: Path) -> str | None:
         return None
 
 
+# Hàm atomic_json: xử lý bước atomic json trong phạm vi module hiện tại.
 def atomic_json(path: Path, value: dict) -> None:
     path = normalize_fs_path(path)
     temporary = path.with_suffix(".tmp")
@@ -54,6 +59,7 @@ def atomic_json(path: Path, value: dict) -> None:
             time.sleep(0.01)
 
 
+# Tiến trình con chỉ làm việc số và ghi artifact; supervisor ở tiến trình cha quản lý quyền ghi trạng thái cuối.
 def child(snapshot: dict, directory: str, cache_directory: str | None = None) -> None:
     root = normalize_fs_path(directory)
     try:
@@ -65,6 +71,7 @@ def child(snapshot: dict, directory: str, cache_directory: str | None = None) ->
         stages.mkdir()
         events: list[str] = []
 
+        # Hàm observe: xử lý bước observe trong phạm vi module hiện tại.
         def observe(stage, key, inputs, value, hit, elapsed):
             payload = (
                 asdict(value) if is_dataclass(value) and not isinstance(value, type) else value
@@ -114,6 +121,7 @@ def child(snapshot: dict, directory: str, cache_directory: str | None = None) ->
         )
 
 
+# Ngân sách supervisor dành thời gian cho hoàn tất và ghi bằng chứng ngoài phần tính toán chính.
 def wall_budget(limit_s: float) -> float:
     """Supervisor wall limit: solver budget plus child startup and finalization grace.
 
@@ -123,6 +131,7 @@ def wall_budget(limit_s: float) -> float:
     return limit_s + max(15.0, 0.1 * limit_s)
 
 
+# Claim một job, chốt quyền sở hữu rồi giám sát tiến trình con; publish cuối phải còn đúng lease.
 def work_once(
     factory,
     artifact_root: Path,
@@ -202,6 +211,7 @@ def work_once(
     budget = wall_budget(snapshot["optimization"]["time_limit_s"])
     terminal = None
     try:
+        # Supervisor kiểm tra hủy, RAM, lease và wall time trong khi tiến trình con còn chạy.
         while process.is_alive():
             if cancelled():
                 terminal = "CANCELLED"
@@ -290,6 +300,7 @@ def work_once(
                 "INFEASIBLE": "INFEASIBLE",
                 "CANCELLED": "CANCELLED",
             }.get(error["code"], "FAILED")
+        # Fencing từ chối công bố của owner đã mất lease dù tiến trình đó vừa tạo xong kết quả.
         published = db.publish(run, owner=candidate)
         if published is None:
             logger.warning("run=%s stale owner rejected", identifier)
@@ -319,6 +330,7 @@ def work_once(
     return True
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--once", action="store_true")

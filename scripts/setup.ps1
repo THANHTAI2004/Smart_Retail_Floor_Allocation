@@ -1,3 +1,4 @@
+# Vai trò: Chuẩn bị môi trường Python và frontend cùng dependency theo quy trình cài đặt của dự án.
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $projectRoot

@@ -1,3 +1,4 @@
+# Vai trò: Đánh giá mức sẵn sàng nghiên cứu bằng các bằng chứng thực thi đã ghi nhận và nêu rõ giới hạn.
 """Evaluate the published local synthetic readiness gates against actual evidence."""
 
 import argparse
@@ -14,6 +15,7 @@ from smart_retail.infrastructure.provenance import runtime_identity
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / "backend").is_dir() and (p / "frontend").is_dir())
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--evidence", type=Path, required=True)
@@ -33,11 +35,13 @@ def main():
     compared = read(args.comparison)["rows"]
     identity = read(args.campaign / "identity.json")["runtime"]
     gates = []
+    # Hàm gate: xử lý bước gate trong phạm vi module hiện tại.
     def gate(identifier, condition, evidence, limitation=""):
         gates.append({"gate": identifier, "status": "PASS" if condition else "FAIL", "evidence": evidence, "limitation": limitation})
     gate("ER01", checks.get("ruff") and checks.get("mypy") and checks.get("architecture"), "Fresh Ruff/mypy/import audit; modular backend and React shell/pages/hooks")
     schema_ok = all(read(ROOT / f"datasets/schemas/{key}.schema.json") == cls.model_json_schema() for key, cls in SECTIONS.items())
     gate("ER02", schema_ok and any(t.startswith("test_lossless_csv_including_nested_values") for t in tests) and "test_version_migration_is_non_destructive_and_explicit" in tests, "Versioned 1.1 contracts, CSV/JSON, immutable migration and reference/units tests")
+    # Hàm experiments: xử lý bước experiments trong phạm vi module hiện tại.
     def experiments(identifier):
         chosen = [r for r in rows if r["experiment"] == identifier]
         return chosen and all(r["status"] == "SUCCEEDED" and r["validation"]["status"] == "PASS" for r in chosen)

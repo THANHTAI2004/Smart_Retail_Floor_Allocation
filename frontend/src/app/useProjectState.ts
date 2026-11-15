@@ -1,12 +1,15 @@
+// Vai trò: Tải danh sách dự án, giữ dự án đang chọn và thông báo lỗi tải dữ liệu.
 import { useCallback, useEffect, useState } from "react";
 import type { Project } from "../types/models";
 import { api } from "../services/api";
 
+// Tải danh sách dự án, giữ dự án đang chọn và thông báo lỗi tải dữ liệu.
 export function useProjectState(onLoad: (project: Project) => void) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [projectError, setProjectError] = useState("");
+  // Chọn dự án, reset vùng làm việc liên quan và lưu mã dự án để mở lại.
   const loadProject = useCallback((value: Project) => {
     setProject(value);
     onLoad(value);

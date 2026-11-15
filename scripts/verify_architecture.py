@@ -1,3 +1,4 @@
+# Vai trò: Phân tích import Python và TypeScript để kiểm tra chiều phụ thuộc cùng chu trình module.
 """Static local import graph audit for the current Python and TypeScript sources."""
 
 import argparse
@@ -9,9 +10,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# Hàm acyclic: xử lý bước acyclic trong phạm vi module hiện tại.
 def acyclic(graph):
     done, active = set(), set()
 
+    # Hàm visit: xử lý bước visit trong phạm vi module hiện tại.
     def visit(node):
         if node in active:
             raise AssertionError(f"Circular import at {node}")
@@ -27,6 +30,7 @@ def acyclic(graph):
         visit(node)
 
 
+# Hàm audit: xử lý bước audit trong phạm vi module hiện tại.
 def audit():
     source = ROOT / "backend/src"
     modules = {".".join(p.relative_to(source).with_suffix("").parts).removesuffix(".__init__"): p

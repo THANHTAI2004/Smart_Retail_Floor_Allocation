@@ -1,3 +1,5 @@
+# Vai trò: Cải thiện vị trí kệ bằng tìm kiếm lân cận có giới hạn.
+# Mỗi phương án được xét phải đáp ứng kiểm tra hình học.
 """Bounded deterministic best-improvement local search of feasible grid poses."""
 
 import math
@@ -10,6 +12,7 @@ from smart_retail.engines.navigation import validate_topology
 from smart_retail.engines.t1_layout.geometry import footprint, violations
 
 
+# Hàm objective: xử lý bước objective trong phạm vi module hiện tại.
 def objective(floor: Floorplan, shelves: tuple[Shelf, ...]) -> float:
     return sum(
         math.dist(floor.entrance, (footprint(s).centroid.x, footprint(s).centroid.y))
@@ -17,6 +20,7 @@ def objective(floor: Floorplan, shelves: tuple[Shelf, ...]) -> float:
     )
 
 
+# Chỉ nhận bước cải thiện hợp lệ trong ngân sách tìm kiếm; hội tụ ở lân cận chưa phải tối ưu toàn cục.
 def improve(
     floor: Floorplan,
     shelves: tuple[Shelf, ...],

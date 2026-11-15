@@ -1,3 +1,5 @@
+# Vai trò: Tiến trình giám sát campaign do dịch vụ khởi tạo.
+# Tiếp nhận tham số dòng lệnh và gọi luồng thực nghiệm ở tầng application.
 """Background campaign supervisor, invoked without a shell by HTTP."""
 
 import argparse
@@ -9,6 +11,7 @@ from smart_retail.application.experiments.storage import read, write
 from smart_retail.contracts.experiments import CampaignSpec
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     for name in ("config", "output", "reports", "status"):

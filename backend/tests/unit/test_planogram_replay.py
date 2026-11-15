@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử đối chiếu MIP với liệt kê độc lập và phát hiện sửa planogram.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import itertools
 import time
 from dataclasses import replace
@@ -9,6 +11,7 @@ from smart_retail.engines.t3_slotting.engine import solve
 from smart_retail.engines.t3_slotting.validation import violations
 
 
+# Hàm fixture: xử lý bước fixture trong phạm vi module hiện tại.
 def fixture():
     shelf = Shelf("S", 1, 0.6, 1, (ShelfLevel("L", 1, 0.6, 0.5, 6),))
     products = (
@@ -18,6 +21,7 @@ def fixture():
     return (shelf,), products, {"C": "S"}
 
 
+# Hàm test_mip_matches_independent_exhaustive_stock_enumeration: kiểm tra kịch bản mip matches independent exhaustive stock enumeration bằng các assertion trong thân hàm.
 def test_mip_matches_independent_exhaustive_stock_enumeration():
     shelves, products, assignment = fixture()
     plan = solve(shelves, products, assignment, algorithm="milp")
@@ -33,6 +37,7 @@ def test_mip_matches_independent_exhaustive_stock_enumeration():
     assert error.value.code == "SLOTTING_FAILED"
 
 
+# Hàm test_mip_recovers_from_first_fit_level_choice: kiểm tra kịch bản mip recovers from first fit level choice bằng các assertion trong thân hàm.
 def test_mip_recovers_from_first_fit_level_choice():
     shelf = Shelf(
         "S", 1, 0.5, 1, (ShelfLevel("tall", 1, 0.5, 0.7), ShelfLevel("short", 1, 0.5, 0.3))
@@ -65,6 +70,7 @@ def test_mip_recovers_from_first_fit_level_choice():
         {"shelf_id": "missing"},
     ],
 )
+# Hàm test_independent_replay_rejects_tampering: kiểm tra kịch bản independent replay rejects tampering bằng các assertion trong thân hàm.
 def test_independent_replay_rejects_tampering(patch):
     shelves, products, assignment = fixture()
     plan = solve(shelves, products, assignment, algorithm="milp")
@@ -72,6 +78,7 @@ def test_independent_replay_rejects_tampering(patch):
     assert violations(shelves, products, assignment, rows)
 
 
+# Hàm test_replay_detects_overlap_missing_duplicate_and_shared_load: kiểm tra kịch bản replay detects overlap missing duplicate and shared load bằng các assertion trong thân hàm.
 def test_replay_detects_overlap_missing_duplicate_and_shared_load():
     shelves, products, assignment = fixture()
     plan = solve(shelves, products, assignment, algorithm="milp")
@@ -85,6 +92,7 @@ def test_replay_detects_overlap_missing_duplicate_and_shared_load():
     )
 
 
+# Hàm test_infeasible_timeout_cancel_and_limit_are_distinct: kiểm tra kịch bản infeasible timeout cancel and limit are distinct bằng các assertion trong thân hàm.
 def test_infeasible_timeout_cancel_and_limit_are_distinct():
     shelves, products, assignment = fixture()
     for kwargs, code in [

@@ -1,3 +1,4 @@
+# Vai trò: Sinh thiết kế Paper V5 với khối ablation W2 và so sánh chính W1; tách campaign theo giới hạn số job.
 """Generate the paper-v5 campaign configs (W1-W2) into experiments/configs/paper-v5/.
 
 Design: docs/research/EXPERIMENT_DESIGN_DEEPMG.md, section 12. Changes after the
@@ -78,11 +79,13 @@ W1_SCALES = {
 W2_FIRST, W2_PER_FAMILY, W2_SEEDS = 8301, 2, [1, 2, 3]
 
 
+# Hàm v5: xử lý bước v5 trong phạm vi module hiện tại.
 def v5(scale, **changes):
     settings = {**V5, "restart_evaluations": RESTART_EVALUATIONS[scale], **changes}
     return v4(**settings)
 
 
+# Hàm arms: xử lý bước arms trong phạm vi module hiện tại.
 def arms(scale):
     budget = V4_SCALES[scale][2]
     return [
@@ -95,6 +98,7 @@ def arms(scale):
     ]
 
 
+# Hàm ablation_arms: xử lý bước ablation arms trong phạm vi module hiện tại.
 def ablation_arms(scale):
     budget = V4_SCALES[scale][2]
     return [arm("seq_milp", budget, mode="sequential"), arm("feedback_v5", budget, **v5(scale))] + [
@@ -102,6 +106,7 @@ def ablation_arms(scale):
     ]
 
 
+# Hàm finalize: xử lý bước finalize trong phạm vi module hiện tại.
 def finalize(spec):
     """Split over-limit designs; give every part a job ceiling and a wall budget."""
     parts = partition(spec, PART_JOBS.get(int(spec["job_time_limit_s"]), 1000))
@@ -115,9 +120,11 @@ def finalize(spec):
     return result
 
 
+# Hàm build: xử lý bước build trong phạm vi module hiện tại.
 def build():
     load = json.loads(CALIBRATION.read_text(encoding="utf-8"))["scales"]
 
+    # Hàm datasets: xử lý bước datasets trong phạm vi module hiện tại.
     def datasets(scale, first, per_family):
         facings, orders, *_ = V4_SCALES[scale]
         items = []
@@ -153,6 +160,7 @@ def build():
     return designs
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     if OUT.exists():
         sys.exit(f"{OUT} exists; choose a new directory instead of replacing configs")

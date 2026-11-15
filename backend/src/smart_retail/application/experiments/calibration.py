@@ -1,3 +1,4 @@
+# Vai trò: Đo tải mô phỏng và hiệu chỉnh khoảng cách thời gian giữa các đơn để hướng đến mức sử dụng picker đã khai báo.
 """Order-load calibration: choose the order inter-arrival time for a target picker utilization.
 
 The sequential plan of a reference instance is simulated at light load to measure the
@@ -18,6 +19,7 @@ LIGHT_INTERVAL_S = 3600.0
 LIGHT_SPAN_S = 50000.0
 
 
+# Hàm measure: xử lý bước measure trong phạm vi module hiện tại.
 def measure(spec: DatasetSpec, overrides: dict) -> dict:
     data, _ = generate(spec)
     data = merge(data, copy.deepcopy(overrides))
@@ -33,6 +35,7 @@ def measure(spec: DatasetSpec, overrides: dict) -> dict:
     }
 
 
+# Hàm calibrate: xử lý bước calibrate trong phạm vi module hiện tại.
 def calibrate(
     spec: DatasetSpec,
     overrides: dict,

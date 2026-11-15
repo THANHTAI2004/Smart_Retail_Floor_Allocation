@@ -1,3 +1,4 @@
+# Vai trò: Lưu aggregate dự án bằng cập nhật nguyên tử và kiểm tra revision để tránh ghi đè thay đổi đồng thời.
 from bson import BSON
 from pymongo import ReturnDocument
 from pymongo.database import Database
@@ -9,21 +10,25 @@ from smart_retail.infrastructure.repositories.contracts import ProjectRecord
 class Projects:
     database: Database
 
+    # Hàm get_project: đọc project theo quy tắc trong thân hàm.
     def get_project(self, identifier):
         return record_value(ProjectRecord, self.database.projects.find_one({"_id": identifier}))
 
+    # Hàm create_project: tạo mới project theo quy tắc trong thân hàm.
     def create_project(self, record):
         document = record_document(record)
         if len(BSON.encode(document)) > 8 * 1024**2:
             raise ValueError("Project aggregate exceeds 8 MiB BSON budget")
         self.database.projects.insert_one(document)
 
+    # Hàm list_projects: liệt kê projects theo quy tắc trong thân hàm.
     def list_projects(self):
         return [
             record_value(ProjectRecord, d)
             for d in self.database.projects.find().sort("created_at", -1)
         ]
 
+    # Hàm save_project: kiểm tra và lưu project theo quy tắc trong thân hàm.
     def save_project(self, identifier, revision, sections):
         if len(BSON.encode({"sections": sections})) > 8 * 1024**2:
             raise ValueError("Project aggregate exceeds 8 MiB BSON budget")

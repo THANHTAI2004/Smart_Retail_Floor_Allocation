@@ -1,3 +1,5 @@
+# Vai trò: Điểm vào dòng lệnh cho chạy, tiếp tục, xác minh, phân tích và phát lại campaign.
+# Verify kiểm tra tệp đã lưu; replay mới thực hiện tính lại.
 """python -m smart_retail.application.experiments.cli --help"""
 
 import argparse
@@ -15,6 +17,7 @@ from smart_retail.contracts.inputs import to_domain
 from smart_retail.infrastructure.filesystem import normalize_fs_path
 
 
+# So sánh đệ quy kết quả với dung sai tuyệt đối/tương đối, giữ riêng xử lý boolean.
 def equivalent(a, b, atol=1e-8, rtol=1e-9):
     if isinstance(a, bool) or isinstance(b, bool):
         return a == b
@@ -27,12 +30,19 @@ def equivalent(a, b, atol=1e-8, rtol=1e-9):
     return a == b
 
 
+# Đọc các record theo đúng thứ tự glob hiện có; khóa trùng vẫn giữ record đọc sau.
+def _records_by_job(campaign: Path) -> dict[str, dict]:
+    # Chỉ lập chỉ mục dữ liệu đã lưu, không khởi chạy job hoặc thay đổi artifact.
+    return {r["job_key"]: r for r in (read(p) for p in (campaign / "records").glob("*.json"))}
+
+
+# So sánh record và artifact của hai campaign sau integrity; trả bảng ghép theo job_key.
 def compare(left: Path, right: Path):
     left, right = normalize_fs_path(left), normalize_fs_path(right)
     verify_integrity(left)
     verify_integrity(right)
-    a = {r["job_key"]: r for r in (read(p) for p in (left / "records").glob("*.json"))}
-    b = {r["job_key"]: r for r in (read(p) for p in (right / "records").glob("*.json"))}
+    a = _records_by_job(left)
+    b = _records_by_job(right)
     rows = []
     for key in sorted(a.keys() | b.keys()):
         x, y = a.get(key), b.get(key)
@@ -61,6 +71,7 @@ def compare(left: Path, right: Path):
     }
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser(
         description="Synthetic experiment platform; all output paths are explicit"

@@ -1,3 +1,4 @@
+# Vai trò: Tạo cấu hình thực nghiệm E11–E15 từ thiết kế đã khai báo; việc sinh cấu hình không tạo ra kết quả thực nghiệm.
 """Publish executable E11-E15 designs; no outcomes or optimal values are fabricated."""
 
 import hashlib
@@ -9,6 +10,7 @@ from smart_retail.contracts.experiments import CampaignSpec
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     datasets = []
     for name in ["local-trap", "two-shelves"]:
@@ -31,6 +33,7 @@ def main():
         "max_actions": 24,
     }
 
+    # Hàm treatment: xử lý bước treatment trong phạm vi module hiện tại.
     def treatment(name, mode, layers=None, finite=False, holdout=False):
         joint = {**common, "mode": mode}
         if layers is not None:

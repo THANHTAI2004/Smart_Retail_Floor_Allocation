@@ -1,3 +1,5 @@
+# Vai trò: Phục vụ trang tiến độ cục bộ bằng cách đọc checkpoint, bản ghi và tiến trình.
+# Trang hiển thị không trực tiếp chạy solver.
 """Read-only local progress display for the running Smart Retail paper batch."""
 
 import ctypes
@@ -25,6 +27,7 @@ cache = {}
 lock = threading.Lock()
 
 
+# Hàm read: đọc dữ liệu đầu vào từ nơi lưu trữ.
 def read(p, fallback=None):
     try:
         return json.loads(p.read_text(encoding="utf-8-sig"))
@@ -32,6 +35,7 @@ def read(p, fallback=None):
         return fallback
 
 
+# Hàm alive: xử lý bước alive trong phạm vi module hiện tại.
 def alive(pid):
     k = ctypes.windll.kernel32
     k.OpenProcess.restype = ctypes.c_void_p
@@ -47,6 +51,7 @@ def alive(pid):
         k.CloseHandle(h)
 
 
+# Hàm snapshot: tập hợp dữ liệu quan sát tại một thời điểm.
 def snapshot():
     with lock:
         blocks = {
@@ -202,6 +207,7 @@ def snapshot():
 
 
 class Handler(BaseHTTPRequestHandler):
+    # Hàm do_GET: xử lý bước do GET trong phạm vi module hiện tại.
     def do_GET(self):
         try:
             if self.path.split("?")[0] == "/api/progress":
@@ -222,6 +228,7 @@ class Handler(BaseHTTPRequestHandler):
         except (BrokenPipeError, ConnectionResetError):
             pass
 
+    # Hàm log_message: xử lý bước log message trong phạm vi module hiện tại.
     def log_message(self, *args):
         pass
 

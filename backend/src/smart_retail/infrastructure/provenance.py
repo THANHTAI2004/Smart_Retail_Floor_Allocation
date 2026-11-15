@@ -1,3 +1,5 @@
+# Vai trò: Tính nhận diện runtime từ byte nguồn Python, phiên bản solver và package.
+# Thêm comment cũng đổi source_sha256 của lượt chạy mới.
 import hashlib
 import importlib.metadata
 import platform
@@ -6,6 +8,7 @@ from pathlib import Path
 from scipy.optimize._highspy import _core
 
 
+# Hash byte nguồn thay đổi cả khi chỉ sửa comment; campaign cũ có kiểm tra drift sẽ yêu cầu nhận diện nguồn tương thích.
 def runtime_identity() -> dict:
     source = hashlib.sha256()
     root = Path(__file__).resolve().parents[1]

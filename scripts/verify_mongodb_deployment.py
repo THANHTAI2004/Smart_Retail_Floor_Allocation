@@ -1,3 +1,4 @@
+# Vai trò: Kiểm tra triển khai MongoDB cô lập và tạo receipt, tránh ghi giá trị bí mật vào báo cáo.
 """Isolated deployment checks. Secret values never appear in receipts or logs."""
 
 import argparse
@@ -20,12 +21,14 @@ from smart_retail.application.workflow import canonical_hash
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# Hàm free_port: xử lý bước free port trong phạm vi module hiện tại.
 def free_port():
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", 0))
         return sock.getsockname()[1]
 
 
+# Hàm compose: xử lý bước compose trong phạm vi module hiện tại.
 def compose(output, record):
     docker = shutil.which("docker")
     if not docker and sys.platform == "win32":
@@ -52,6 +55,7 @@ def compose(output, record):
                   volumes_retained=True, private_env_in_ignored_var=True)
     commands = record.setdefault("commands", [])
 
+    # Hàm run: thực hiện luồng chạy với trạng thái và ngân sách được quản lý trong thân hàm.
     def run(*args, input_text=None, timeout=600):
         started = datetime.now(UTC).isoformat()
         result = subprocess.run([*base, *args], input=input_text, capture_output=True,
@@ -68,6 +72,7 @@ def compose(output, record):
             raise RuntimeError("Compose check failed; command index " + str(len(commands) - 1))
         return result.stdout
 
+    # Hàm request: xử lý bước request trong phạm vi module hiện tại.
     def request(path, value=None, method=None):
         raw = json.dumps(value).encode() if value is not None else None
         req = Request(f"http://127.0.0.1:{api_port}" + path, data=raw, method=method,
@@ -192,6 +197,7 @@ def compose(output, record):
             subprocess.run([*base, "stop"], capture_output=True, timeout=60)
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("target", choices=["compose"])

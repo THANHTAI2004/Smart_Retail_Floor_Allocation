@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử tổng số job, nhánh thuật toán, ngân sách và cấu hình V5 sinh bởi builder.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import json
 import sys
 from pathlib import Path
@@ -19,23 +21,28 @@ W2_ARMS = ["seq_milp", "feedback_v5", "v5_no_surrogate", "v5_no_compound", "v5_n
 
 
 @pytest.fixture(scope="module")
+# Hàm designs: xử lý bước designs trong phạm vi module hiện tại.
 def designs():
     return {spec["name"]: (block, spec) for block, spec in v5.build()}
 
 
+# Hàm joint: xử lý bước joint trong phạm vi module hiện tại.
 def joint(treatment):
     return treatment["overrides"]["optimization"]["joint"]
 
 
+# Hàm arms_of: xử lý bước arms of trong phạm vi module hiện tại.
 def arms_of(spec):
     (experiment,) = spec["experiments"]
     return {t["id"]: joint(t) for t in experiment["treatments"]}
 
 
+# Hàm jobs: xử lý bước jobs trong phạm vi module hiện tại.
 def jobs(spec):
     return sum(planned_jobs(part) for part in v5.finalize(spec))
 
 
+# Hàm test_campaign_names_blocks_and_totals: kiểm tra kịch bản campaign names blocks and totals bằng các assertion trong thân hàm.
 def test_campaign_names_blocks_and_totals(designs):
     # Insertion order is the index order: W1 medium first (least known job times), then small, tiny.
     assert [(name, block) for name, (block, _) in designs.items()] == [
@@ -55,6 +62,7 @@ def test_campaign_names_blocks_and_totals(designs):
     assert sum(totals.values()) == 1008
 
 
+# Hàm test_finalized_parts_are_valid_and_named_uniquely: kiểm tra kịch bản finalized parts are valid and named uniquely bằng các assertion trong thân hàm.
 def test_finalized_parts_are_valid_and_named_uniquely(designs):
     names = []
     for _, spec in designs.values():
@@ -68,6 +76,7 @@ def test_finalized_parts_are_valid_and_named_uniquely(designs):
     assert len(names) == len(set(names))
 
 
+# Hàm test_every_treatment_validates_as_joint_config: kiểm tra kịch bản every treatment validates as joint config bằng các assertion trong thân hàm.
 def test_every_treatment_validates_as_joint_config(designs):
     for _, spec in designs.values():
         CampaignSpec.model_validate(spec)
@@ -76,6 +85,7 @@ def test_every_treatment_validates_as_joint_config(designs):
                 JointConfig.model_validate(joint(treatment))
 
 
+# Hàm test_datasets_cover_four_families_on_fresh_seeds: kiểm tra kịch bản datasets cover four families on fresh seeds bằng các assertion trong thân hàm.
 def test_datasets_cover_four_families_on_fresh_seeds(designs):
     expected = {
         "paper-v5-w1-tiny": ("tiny", 3, 8001),
@@ -101,6 +111,7 @@ def test_datasets_cover_four_families_on_fresh_seeds(designs):
     assert min(seeds) >= 8001 and len(seeds) == len(set(seeds))
 
 
+# Hàm test_experiments_reference_their_datasets: kiểm tra kịch bản experiments reference their datasets bằng các assertion trong thân hàm.
 def test_experiments_reference_their_datasets(designs):
     for name, (_, spec) in designs.items():
         (experiment,) = spec["experiments"]
@@ -109,6 +120,7 @@ def test_experiments_reference_their_datasets(designs):
         assert experiment["question"]
 
 
+# Hàm test_search_seeds_protocol_and_job_caps: kiểm tra kịch bản search seeds protocol and job caps bằng các assertion trong thân hàm.
 def test_search_seeds_protocol_and_job_caps(designs):
     seeds = {name: spec["seeds"] for name, (_, spec) in designs.items()}
     assert seeds == {
@@ -125,6 +137,7 @@ def test_search_seeds_protocol_and_job_caps(designs):
         assert spec["evaluation"] == HOLDOUT
 
 
+# Hàm test_arms_per_experiment_and_budgets: kiểm tra kịch bản arms per experiment and budgets bằng các assertion trong thân hàm.
 def test_arms_per_experiment_and_budgets(designs):
     for name, (_, spec) in designs.items():
         expected = W2_ARMS if name.endswith("ablation") else W1_ARMS
@@ -134,6 +147,7 @@ def test_arms_per_experiment_and_budgets(designs):
         assert {a["max_evaluations"] for a in arms.values()} == {V4_SCALES[scale][2]}
 
 
+# Hàm test_w1_arm_settings: kiểm tra kịch bản w1 arm settings bằng các assertion trong thân hàm.
 def test_w1_arm_settings(designs):
     for scale, restart in (("tiny", 10), ("small", 8), ("medium", 10)):
         arms = arms_of(designs[f"paper-v5-w1-{scale}"][1])
@@ -164,6 +178,7 @@ def test_w1_arm_settings(designs):
             assert arms[stochastic]["search_seed_scope"] == "instance"
 
 
+# Hàm test_no_seq_milp_arm_carries_v5_fields: kiểm tra kịch bản no seq milp arm carries v5 fields bằng các assertion trong thân hàm.
 def test_no_seq_milp_arm_carries_v5_fields(designs):
     for _, spec in designs.values():
         reference = arms_of(spec)["seq_milp"]
@@ -171,6 +186,7 @@ def test_no_seq_milp_arm_carries_v5_fields(designs):
         assert not [key for key in V5_FIELDS if key in reference]
 
 
+# Hàm test_w2_ablation_arms_remove_exactly_one_component: kiểm tra kịch bản w2 ablation arms remove exactly one component bằng các assertion trong thân hàm.
 def test_w2_ablation_arms_remove_exactly_one_component(designs):
     arms = arms_of(designs["paper-v5-w2-ablation"][1])
     full = arms["feedback_v5"]
@@ -196,6 +212,7 @@ def test_w2_ablation_arms_remove_exactly_one_component(designs):
 
 
 @pytest.mark.skipif(not v5.OUT.exists(), reason="paper-v5 configs not generated")
+# Hàm test_generated_configs_match_the_builder: kiểm tra kịch bản generated configs match the builder bằng các assertion trong thân hàm.
 def test_generated_configs_match_the_builder():
     parts = [(block, part) for block, spec in v5.build() for part in v5.finalize(spec)]
     index = json.loads((v5.OUT / "index.json").read_text(encoding="utf-8"))

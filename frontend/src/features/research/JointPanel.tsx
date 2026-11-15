@@ -1,3 +1,4 @@
+// Vai trò: Hiển thị tiến độ, nghiệm và thông tin chứng nhận của tối ưu liên tầng từ kết quả đã lưu.
 import { useEffect, useState } from "react";
 
 type Decision = { poses: Record<string, [number, number, number]>; assignment: Record<string, string>; placements: Record<string, string | number>[] };
@@ -11,6 +12,7 @@ interface JointResult {
   floorplan: { boundary: number[][] };
 }
 
+// Hàm Layout: tiếp nhận tham số khai báo và thực hiện các bước trong thân hàm.
 function Layout({ decision, shelves, boundary, title }: { decision: Decision; shelves: JointResult["shelves"]; boundary: number[][]; title: string }) {
   const xs = boundary.map((p) => p[0]), ys = boundary.map((p) => p[1]);
   const minX = Math.min(...xs), minY = Math.min(...ys), width = Math.max(...xs) - minX, height = Math.max(...ys) - minY;
@@ -22,6 +24,7 @@ function Layout({ decision, shelves, boundary, title }: { decision: Decision; sh
   </svg></figure>;
 }
 
+// Hiển thị tiến độ, nghiệm và thông tin chứng nhận của tối ưu liên tầng từ kết quả đã lưu.
 export function JointPanel({ campaign, jobs }: { campaign: string; jobs: { job_key: string; treatment: string; joint_objective?: number | null; proof_status?: string }[] }) {
   const jointJobs = jobs.filter((j) => j.joint_objective != null || j.proof_status != null);
   const [job, setJob] = useState("");

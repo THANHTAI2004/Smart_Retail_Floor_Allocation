@@ -1,9 +1,12 @@
+# Vai trò: Kiểm thử CRUD dự án, revision, snapshot, hàng đợi worker và phản hồi HTTP.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 import copy
 
 from smart_retail.infrastructure.database import connect
 from smart_retail.workers.runner import work_once
 
 
+# Hàm test_crud_revision_and_partial_updates: kiểm tra kịch bản crud revision and partial updates bằng các assertion trong thân hàm.
 def test_crud_revision_and_partial_updates(client, saved_project, sample):
     pid = saved_project["id"]
     assert client.post(f"/api/projects/{pid}/validate").json()["valid"]
@@ -18,6 +21,7 @@ def test_crud_revision_and_partial_updates(client, saved_project, sample):
     assert client.get(f"/api/projects/{pid}").json()["revision"] == 8
 
 
+# Hàm test_bad_input_leaves_database_unchanged: kiểm tra kịch bản bad input leaves database unchanged bằng các assertion trong thân hàm.
 def test_bad_input_leaves_database_unchanged(client, saved_project, sample):
     pid = saved_project["id"]
     sample["products"]["items"][0]["category_id"] = "missing"
@@ -32,6 +36,7 @@ def test_bad_input_leaves_database_unchanged(client, saved_project, sample):
     assert response.status_code == 422
 
 
+# Hàm test_orders_references_are_checked_atomically_in_project_aggregate: kiểm tra kịch bản orders references are checked atomically in project aggregate bằng các assertion trong thân hàm.
 def test_orders_references_are_checked_atomically_in_project_aggregate(
     client, database, saved_project
 ):
@@ -50,6 +55,7 @@ def test_orders_references_are_checked_atomically_in_project_aggregate(
     assert client.get(f"/api/projects/{saved_project['id']}").json() == saved_project
 
 
+# Hàm test_queue_snapshot_worker_replay_and_report: kiểm tra kịch bản queue snapshot worker replay and report bằng các assertion trong thân hàm.
 def test_queue_snapshot_worker_replay_and_report(client, saved_project, database, tmp_path):
     run = client.post(f"/api/projects/{saved_project['id']}/runs").json()
     assert run["status"] == "QUEUED"
@@ -71,6 +77,7 @@ def test_queue_snapshot_worker_replay_and_report(client, saved_project, database
     assert replayed["result_sha256"] == finished["result_sha256"]
 
 
+# Hàm test_cancel_queued_is_terminal: kiểm tra kịch bản cancel queued is terminal bằng các assertion trong thân hàm.
 def test_cancel_queued_is_terminal(client, saved_project, database, tmp_path):
     run = client.post(f"/api/projects/{saved_project['id']}/runs").json()
     cancel = client.post(f"/api/runs/{run['id']}/cancel").json()
@@ -78,6 +85,7 @@ def test_cancel_queued_is_terminal(client, saved_project, database, tmp_path):
     assert not work_once(database[1], tmp_path / "artifacts")
 
 
+# Hàm test_worker_time_budget: kiểm tra kịch bản worker time budget bằng các assertion trong thân hàm.
 def test_worker_time_budget(client, saved_project, sample, database, tmp_path):
     pid = saved_project["id"]
     payload = {**sample["optimization"], "time_limit_s": 0.000001}
@@ -92,6 +100,7 @@ def test_worker_time_budget(client, saved_project, sample, database, tmp_path):
     assert client.get(f"/api/runs/{run['id']}").json()["status"] == "TIMED_OUT"
 
 
+# Hàm test_mongo_reconnect_preserves_project_and_indexes: kiểm tra kịch bản mongo reconnect preserves project and indexes bằng các assertion trong thân hàm.
 def test_mongo_reconnect_preserves_project_and_indexes(database, saved_project):
     name, _ = database
     owner, _ = connect(database=name)
@@ -105,6 +114,7 @@ def test_mongo_reconnect_preserves_project_and_indexes(database, saved_project):
     reopened.dispose()
 
 
+# Hàm test_missing_project_and_blank_name: kiểm tra kịch bản missing project and blank name bằng các assertion trong thân hàm.
 def test_missing_project_and_blank_name(client):
     assert client.get("/api/projects/missing").status_code == 404
     assert client.post("/api/projects", json={"name": "  "}).status_code == 422

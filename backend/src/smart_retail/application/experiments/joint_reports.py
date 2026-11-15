@@ -1,3 +1,4 @@
+# Vai trò: Trích đường hội tụ và bằng chứng chứng nhận từ kết quả joint đã lưu, phục vụ kiểm tra lại quá trình tìm kiếm.
 """Additional proof and convergence artifacts extracted only from recorded worker results."""
 
 from pathlib import Path
@@ -5,6 +6,7 @@ from pathlib import Path
 from smart_retail.application.experiments.storage import read, write
 
 
+# Hàm export: xuất dữ liệu kết quả sang artifact.
 def export(roots: list[Path], output: Path, per_root: dict[Path, list], table):
     traces = []
     comparisons = []

@@ -1,3 +1,4 @@
+# Vai trò: Chạy lại đúng đầu vào các job thất bại trong đích mới theo nguồn hiện tại để giữ bằng chứng lịch sử.
 """Replay only historical failed job keys under the current source, without overwriting evidence."""
 
 import argparse
@@ -13,12 +14,14 @@ from smart_retail.contracts.experiments import CampaignSpec
 from smart_retail.infrastructure.provenance import runtime_identity
 
 
+# Hàm physical_input: xử lý bước physical input trong phạm vi module hiện tại.
 def physical_input(snapshot):
     value = copy.deepcopy(snapshot)
     value.pop("_runtime", None)
     return value
 
 
+# Hàm main: điểm vào, đọc tùy chọn và điều phối các bước của công cụ.
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)

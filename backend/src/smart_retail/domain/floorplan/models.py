@@ -1,3 +1,5 @@
+# Vai trò: Mô hình domain cho mặt bằng và nghiệm bố trí.
+# Các kiểu nghiệp vụ không phụ thuộc HTTP hoặc driver lưu trữ; kích thước vật lý dùng đơn vị SI.
 """Business models for floorplan. No HTTP or ORM dependencies."""
 
 from dataclasses import dataclass

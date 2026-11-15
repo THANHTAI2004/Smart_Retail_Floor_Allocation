@@ -1,3 +1,4 @@
+# Vai trò: Chọn luồng sequential, multistart hoặc joint; quản lý ngân sách chung và chọn ứng viên hợp lệ tốt nhất trong số đã đánh giá.
 """Application orchestration and mode dispatch."""
 
 import math
@@ -11,6 +12,7 @@ from smart_retail.contracts.inputs import to_domain
 from smart_retail.domain.models import EngineError
 
 
+# Hàm execute: chọn và thực hiện luồng tối ưu của ứng dụng.
 def execute(
     sections: dict,
     cancelled: Callable[[], bool] = lambda: False,
@@ -25,6 +27,7 @@ def execute(
     A failed layout/allocation is evidence about that candidate only.
     """
     dataset = to_domain(sections)
+    # Tách luồng đánh giá ngoài mẫu trước khi chọn chế độ tối ưu để tập test không lọt vào bước tìm nghiệm.
     if sections["optimization"].get("evaluation") is not None:
         return with_held_out(
             sections,
@@ -42,6 +45,7 @@ def execute(
     records: list[dict] = []
     solutions: list[tuple[float, int, dict]] = []
     cache: dict = stage_cache if stage_cache is not None else {}
+    # Các ứng viên chia sẻ một deadline; không cấp lại toàn bộ time_limit_s cho mỗi ứng viên.
     for index in range(dataset.config.candidate_count):
         if cancelled():
             raise EngineError("CANCELLED", "Run was cancelled")
@@ -126,6 +130,7 @@ def execute(
         raise EngineError(
             "SEARCH_EXHAUSTED", "No complete candidate found; joint infeasibility is not proven"
         )
+    # Chọn điểm nhỏ nhất; dùng chỉ số ứng viên để bẻ hòa xác định khi điểm bằng nhau.
     _, selected, result = min(solutions, key=lambda item: (item[0], item[1]))
     feasible = [r for r in records if r["status"] == "FEASIBLE"]
     pareto = [

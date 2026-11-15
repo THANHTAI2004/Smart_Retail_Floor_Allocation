@@ -1,0 +1,311 @@
+{
+  "cache_policy": "isolated",
+  "data_origin": "SYNTHETIC",
+  "datasets": [
+    {
+      "category_assignment": "free",
+      "facings": 6,
+      "height_scale": 1.0,
+      "id": "tiny_f6_wide_s8007",
+      "input_file_sha256": null,
+      "input_path": null,
+      "layout_family": "wide",
+      "levels": 2,
+      "order_interval_s": 12.58,
+      "orders": 150,
+      "picker_count": 2,
+      "scale": "tiny",
+      "scenario": "feasible",
+      "seed": 8007,
+      "variable_facings": false
+    }
+  ],
+  "evaluation": {
+    "budget_fraction": 0.25,
+    "n_folds": 10,
+    "split": "temporal_holdout",
+    "stratify": "dominant_category",
+    "test_size": 0.2
+  },
+  "experiments": [
+    {
+      "acceptance": "Zero independent violations on training and held-out replays; all failures, budget-limited and unexecuted outcomes retained.",
+      "datasets": [
+        "tiny_f6_wide_s8007"
+      ],
+      "hypothesis": "Treatment effects are estimated, not assumed; zero and adverse effects are valid outcomes.",
+      "id": "E61",
+      "metrics": [
+        "test_objective",
+        "train_objective",
+        "generalization_gap",
+        "test_mean_distance_m",
+        "test_mean_wait_s",
+        "joint_evaluations",
+        "joint_evaluations_to_best",
+        "wall_s"
+      ],
+      "question": "Does feedback_v5 beat sequential pipelines and equal-budget random search, annealing and a genetic algorithm across floor-plan families and search seeds?",
+      "statistical_method": "descriptive_paired_exploratory",
+      "treatments": [
+        {
+          "id": "seq_milp",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "max_evaluations": 40,
+                "mode": "sequential",
+                "objective": {
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ],
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ]
+                },
+                "scenario_seed_policy": "job_seed_offsets",
+                "scenario_seeds": [
+                  0,
+                  101
+                ]
+              },
+              "slotting_algorithm": "milp"
+            }
+          }
+        },
+        {
+          "id": "random_search",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "max_evaluations": 40,
+                "mode": "random_search",
+                "objective": {
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ],
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ]
+                },
+                "scenario_seed_policy": "job_seed_offsets",
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "search_seed_scope": "instance"
+              },
+              "slotting_algorithm": "milp"
+            }
+          }
+        },
+        {
+          "id": "annealing",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "drop_identical_swaps": true,
+                "max_evaluations": 40,
+                "mode": "annealing",
+                "objective": {
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ],
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ]
+                },
+                "scenario_seed_policy": "job_seed_offsets",
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "search_seed_scope": "instance",
+                "t3_scope": "objective"
+              },
+              "slotting_algorithm": "milp"
+            }
+          }
+        },
+        {
+          "id": "genetic",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "max_evaluations": 40,
+                "mode": "genetic",
+                "mutation_edits": 2,
+                "objective": {
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ],
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ]
+                },
+                "population": 8,
+                "scenario_seed_policy": "job_seed_offsets",
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "search_seed_scope": "instance"
+              },
+              "slotting_algorithm": "milp"
+            }
+          }
+        },
+        {
+          "id": "feedback_v4",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "geometry_prefilter": true,
+                "kick_edits": 3,
+                "kicks": 10,
+                "layer_allocation": "adaptive",
+                "max_actions": 24,
+                "max_evaluations": 40,
+                "max_iterations": 100,
+                "mode": "feedback",
+                "objective": {
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ],
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ]
+                },
+                "patience": 2,
+                "policy": "first_improvement",
+                "scenario_seed_policy": "job_seed_offsets",
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "search_seed_scope": "instance",
+                "t1_steps": [
+                  1,
+                  2,
+                  3
+                ],
+                "t3_scope": "objective"
+              },
+              "slotting_algorithm": "milp"
+            }
+          }
+        },
+        {
+          "id": "feedback_v5",
+          "overrides": {
+            "optimization": {
+              "algorithm": "milp",
+              "candidate_count": 1,
+              "joint": {
+                "compound_moves": 32,
+                "drop_identical_swaps": true,
+                "geometry_prefilter": true,
+                "kick_edits": 3,
+                "kicks": 10,
+                "layer_allocation": "adaptive",
+                "max_actions": 24,
+                "max_evaluations": 40,
+                "max_iterations": 100,
+                "mode": "feedback",
+                "objective": {
+                  "scales": [
+                    100,
+                    100,
+                    1,
+                    1
+                  ],
+                  "weights": [
+                    1,
+                    0.2,
+                    0.1,
+                    0.1
+                  ]
+                },
+                "patience": 2,
+                "policy": "first_improvement",
+                "restart_evaluations": 10,
+                "restart_samples": 128,
+                "scenario_seed_policy": "job_seed_offsets",
+                "scenario_seeds": [
+                  0,
+                  101
+                ],
+                "search_seed_scope": "instance",
+                "surrogate": "walk_heat",
+                "surrogate_pool": 96,
+                "t1_steps": [
+                  1,
+                  2,
+                  3
+                ],
+                "t3_scope": "objective"
+              },
+              "slotting_algorithm": "milp"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "job_time_limit_s": 300.0,
+  "max_jobs": 30,
+  "max_retries": 1,
+  "max_wall_s": 9150.0,
+  "memory_limit_mb": null,
+  "name": "paper-v5-w1-tiny-part07",
+  "repetitions": 1,
+  "schema_version": "1.1",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "workers": 1
+}

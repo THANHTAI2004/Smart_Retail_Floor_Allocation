@@ -1,3 +1,4 @@
+# Vai trò: Lấy mẫu RAM hệ điều hành và quyết định tiếp nhận campaign theo ngưỡng có hysteresis để tránh đổi số slot liên tục.
 """OS measurements and conservative, latched admission control for paper campaigns."""
 
 import ctypes
@@ -20,9 +21,11 @@ class MemoryStatus(ctypes.Structure):
 
 
 class Sampler:
+    # Hàm __init__: khởi tạo đối tượng và các phụ thuộc ban đầu.
     def __init__(self):
         self.previous = None
 
+    # Hàm sample: lấy mẫu dữ liệu hoặc tài nguyên cho phạm vi kiểm tra hiện tại.
     def sample(self):
         memory = MemoryStatus()
         memory.length = ctypes.sizeof(memory)
@@ -47,6 +50,7 @@ class Sampler:
         }
 
 
+# Hàm resource_failure: xử lý bước resource failure trong phạm vi module hiện tại.
 def resource_failure(record, cpu_percent):
     if record.get("status") == "SUCCEEDED":
         return False
@@ -71,10 +75,12 @@ def resource_failure(record, cpu_percent):
 
 
 class Guard:
+    # Hàm __init__: khởi tạo đối tượng và các phụ thuộc ban đầu.
     def __init__(self):
         self.memory_since = None
         self.cpu_since = None
 
+    # Hàm reason: xử lý bước reason trong phạm vi module hiện tại.
     def reason(self, sample, failure=False, timestamp=None):
         timestamp = time.monotonic() if timestamp is None else timestamp
         memory_high = (

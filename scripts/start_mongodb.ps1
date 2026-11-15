@@ -1,3 +1,4 @@
+# Vai trò: Chuẩn bị và khởi động MongoDB cục bộ theo cấu hình riêng, có tùy chọn cài bản portable.
 param([switch]$InstallPortable)
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot

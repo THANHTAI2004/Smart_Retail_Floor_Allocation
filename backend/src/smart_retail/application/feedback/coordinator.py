@@ -1,3 +1,5 @@
+# Vai trò: Điều phối tìm kiếm liên tầng với ngân sách, cache và trạng thái kết thúc rõ ràng.
+# Tìm kiếm heuristic không tìm thấy nghiệm chưa chứng minh bài toán vô nghiệm.
 """Bounded strict-descent closed loop and certified finite-model orchestration."""
 
 import copy
@@ -32,6 +34,7 @@ from smart_retail.engines.joint_exact.verifier import verify as verify_certifica
 DEFAULT_KICK_EDITS = 3
 
 
+# Niêm phong bài toán, mục tiêu và miền hữu hạn để chứng nhận không bị dùng cho một bài toán khác.
 def identity(sections, config):
     clean = copy.deepcopy(sections)
     clean["optimization"]["joint"] = None
@@ -47,6 +50,7 @@ def identity(sections, config):
     }
 
 
+# Miền phải bao phủ đúng ID kệ, ngành và SKU trước khi có thể suy luận về tính đầy đủ.
 def validate_space(config, sections):
     space, domains, count = compile_space(config.finite_space)
     shelves = {s["id"] for s in sections["shelves"]["items"]}
@@ -70,10 +74,12 @@ def validate_space(config, sections):
     return space
 
 
+# Hàm member: xử lý bước member trong phạm vi module hiện tại.
 def member(decision, space):
     return inside(decision, space)
 
 
+# Chuyển offset seed sang seed kịch bản hiệu lực theo chính sách cấu hình của job.
 def resolved_config(sections):
     data = to_domain(sections)
     assert data.config.joint is not None
@@ -92,6 +98,7 @@ def resolved_config(sections):
     return config
 
 
+# Tầng application sở hữu vòng lặp liên tầng, ngân sách đánh giá và việc giữ nghiệm tốt nhất.
 def optimize(
     sections,
     cancelled=lambda: False,
@@ -125,6 +132,7 @@ def optimize(
     seed = search_seed(sections, data.config.seed, config.search_seed_scope)
     restart_attempts = 0
 
+    # Hàm event: xử lý bước event trong phạm vi module hiện tại.
     def event(value):
         entry = {
             **copy.deepcopy(value),
@@ -141,9 +149,11 @@ def optimize(
             time.monotonic() - began,
         )
 
+    # Hàm exhausted: xử lý bước exhausted trong phạm vi module hiện tại.
     def exhausted():
         return spent >= config.max_evaluations
 
+    # Hàm assess: xử lý bước assess trong phạm vi module hiện tại.
     def assess(decision, variant=0, reference=None):
         """Evaluate a decision; with screening and a reference plan, first on a seed prefix.
 
@@ -216,6 +226,7 @@ def optimize(
         )
         return snapshot.read()
 
+    # Hàm anneal: xử lý bước anneal trong phạm vi module hiện tại.
     def anneal(incumbent):
         """Simulated annealing over the feedback neighborhood with uniform, unguided moves.
 
@@ -293,6 +304,7 @@ def optimize(
             temperature *= cooling
         return incumbent, "EVALUATION_LIMIT"
 
+    # Hàm kick: xử lý bước kick trong phạm vi module hiện tại.
     def kick(incumbent, variant):
         """One iterated-local-search perturbation of the best plan.
 
@@ -344,6 +356,7 @@ def optimize(
         )
         return candidate, False, "PERTURBATION"
 
+    # Hàm warm_start: xử lý bước warm start trong phạm vi module hiện tại.
     def warm_start(incumbent):
         """paper-v5 warm start: simulate the first restart_evaluations of restart_samples walks.
 

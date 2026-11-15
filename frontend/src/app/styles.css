@@ -1,3 +1,6 @@
+/*
+ * Vai trò: Kiểu hiển thị chung cho workspace, bảng nhập liệu, trạng thái và bố cục theo kích thước màn hình.
+ */
 :root {
   font-family: "Segoe UI", system-ui, sans-serif;
   color: #293e35;

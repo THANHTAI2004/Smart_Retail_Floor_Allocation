@@ -1,3 +1,4 @@
+# Vai trò: Chia thiết kế campaign quá lớn thành các phần nằm trong giới hạn tài nguyên, giữ nhóm so sánh ghép cặp cần thiết.
 """Split an over-limit campaign design into paired-comparison-preserving parts.
 
 The atomic unit is one dataset with a chunk of seeds: every treatment and fold of
@@ -9,6 +10,7 @@ from smart_retail.contracts.experiments import CampaignSpec, planned_jobs
 HARD_LIMIT = 1000
 
 
+# Hàm jobs_per_seed: xử lý bước jobs per seed trong phạm vi module hiện tại.
 def jobs_per_seed(spec: CampaignSpec, dataset_id: str) -> int:
     folds = spec.evaluation.folds if spec.evaluation else 1
     return sum(
@@ -18,6 +20,7 @@ def jobs_per_seed(spec: CampaignSpec, dataset_id: str) -> int:
     )
 
 
+# Hàm partition: xử lý bước partition trong phạm vi module hiện tại.
 def partition(spec: dict, max_jobs: int = HARD_LIMIT) -> list[CampaignSpec]:
     if not 1 <= max_jobs <= HARD_LIMIT:
         raise ValueError(f"max_jobs must be within 1..{HARD_LIMIT}")

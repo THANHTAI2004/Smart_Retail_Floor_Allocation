@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử oracle joint, chứng nhận bị sửa, rollback và ranh giới phụ thuộc.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """Real engine oracles, adversarial proofs, rollback and dependency boundaries."""
 
 import copy
@@ -21,6 +23,7 @@ from smart_retail.engines.joint_exact.verifier import verify
 ROOT = Path(__file__).resolve().parents[3]
 
 
+# Hàm problem: xử lý bước problem trong phạm vi module hiện tại.
 def problem(name="local-trap", **settings):
     sections = json.loads((ROOT / f"datasets/joint/{name}.json").read_text())
     space = json.loads((ROOT / f"datasets/joint/{name}-space.json").read_text())
@@ -29,6 +32,7 @@ def problem(name="local-trap", **settings):
     return sections, config
 
 
+# Hàm evaluator: xử lý bước evaluator trong phạm vi module hiện tại.
 def evaluator(sections, config, cache=None):
     return lambda d: evaluate(
         sections,
@@ -43,11 +47,13 @@ def evaluator(sections, config, cache=None):
 
 
 @pytest.fixture(scope="module")
+# Hàm trap_exact: xử lý bước trap exact trong phạm vi module hiện tại.
 def trap_exact():
     sections, config = problem(mode="exact")
     return sections, config, execute(sections)
 
 
+# Hàm test_local_trap_is_distinct_from_global_certificate: kiểm tra kịch bản local trap is distinct from global certificate bằng các assertion trong thân hàm.
 def test_local_trap_is_distinct_from_global_certificate(trap_exact):
     sections, _, exact = trap_exact
     feedback = copy.deepcopy(sections)
@@ -70,6 +76,7 @@ def test_local_trap_is_distinct_from_global_certificate(trap_exact):
 @pytest.mark.parametrize(
     "attack", ["seal", "objective", "bounds", "relative", "solution", "leaves", "space", "input"]
 )
+# Hàm test_certificate_tampering_even_with_resealed_payload_is_rejected: kiểm tra kịch bản certificate tampering even with resealed payload is rejected bằng các assertion trong thân hàm.
 def test_certificate_tampering_even_with_resealed_payload_is_rejected(trap_exact, attack):
     sections, config, result = trap_exact
     cert = copy.deepcopy(result["joint"]["certificate"])
@@ -96,6 +103,7 @@ def test_certificate_tampering_even_with_resealed_payload_is_rejected(trap_exact
     assert checked["status"] == "PROOF_VERIFICATION_FAILED"
 
 
+# Hàm test_partial_search_has_valid_zero_lower_bound_and_no_optimality: kiểm tra kịch bản partial search has valid zero lower bound and no optimality bằng các assertion trong thân hàm.
 def test_partial_search_has_valid_zero_lower_bound_and_no_optimality(trap_exact):
     sections, config, result = trap_exact
     best, cert, _ = solve(
@@ -121,6 +129,7 @@ def test_partial_search_has_valid_zero_lower_bound_and_no_optimality(trap_exact)
     assert timed["status"] == "TIMEOUT" and timed["evaluated_states"] == 0
 
 
+# Hàm test_one_state_ties_and_proven_infeasibility: kiểm tra kịch bản one state ties and proven infeasibility bằng các assertion trong thân hàm.
 def test_one_state_ties_and_proven_infeasibility(trap_exact):
     sections, config, result = trap_exact
     space = copy.deepcopy(config.finite_space)
@@ -144,6 +153,7 @@ def test_one_state_ties_and_proven_infeasibility(trap_exact):
     assert infeasible["joint"]["best"] is None
 
 
+# Hàm test_feedback_real_layer_actions_and_dependency_cache: kiểm tra kịch bản feedback real layer actions and dependency cache bằng các assertion trong thân hàm.
 def test_feedback_real_layer_actions_and_dependency_cache():
     sections, config = problem("two-shelves", mode="feedback", max_actions=100)
     cache = {}
@@ -189,6 +199,7 @@ def test_feedback_real_layer_actions_and_dependency_cache():
     assert all("S2" not in a["changed"] for a in proposals if a["layer"] == "T1")
 
 
+# Hàm test_invalid_proposal_cannot_mutate_incumbent_or_change_weights: kiểm tra kịch bản invalid proposal cannot mutate incumbent or change weights bằng các assertion trong thân hàm.
 def test_invalid_proposal_cannot_mutate_incumbent_or_change_weights():
     sections, config = problem(mode="feedback")
     call = evaluator(sections, config)
@@ -206,6 +217,7 @@ def test_invalid_proposal_cannot_mutate_incumbent_or_change_weights():
         JointConfig(scenario_seeds=[11], holdout_seeds=[11])
 
 
+# Hàm test_joint_limits_hybrid_holdout_and_strict_descent: kiểm tra kịch bản joint limits hybrid holdout and strict descent bằng các assertion trong thân hàm.
 def test_joint_limits_hybrid_holdout_and_strict_descent():
     sections, config = problem(
         "two-shelves", mode="feedback", max_iterations=3, max_evaluations=20, holdout_seeds=[97]
@@ -225,6 +237,7 @@ def test_joint_limits_hybrid_holdout_and_strict_descent():
         execute(sections, cancelled=lambda: True)
 
 
+# Hàm test_independent_manual_four_state_exhaustive_reference: kiểm tra kịch bản independent manual four state exhaustive reference bằng các assertion trong thân hàm.
 def test_independent_manual_four_state_exhaustive_reference(trap_exact):
     sections, config, result = trap_exact
     # Explicit four-state reference, not solver iteration or its completeness data.
@@ -246,6 +259,7 @@ def test_independent_manual_four_state_exhaustive_reference(trap_exact):
     assert exact_score(result["joint"]["best"]) == min(values)
 
 
+# Hàm test_joint_contract_domain_is_serialized_immutably: kiểm tra kịch bản joint contract domain is serialized immutably bằng các assertion trong thân hàm.
 def test_joint_contract_domain_is_serialized_immutably():
     sections, _ = problem(mode="feedback")
     domain = to_domain(sections)
@@ -255,6 +269,7 @@ def test_joint_contract_domain_is_serialized_immutably():
     assert domain.config.joint == before
 
 
+# Hàm test_snapshot_frozen_payload_is_independent_of_mutable_readers: kiểm tra kịch bản snapshot frozen payload is independent of mutable readers bằng các assertion trong thân hàm.
 def test_snapshot_frozen_payload_is_independent_of_mutable_readers():
     from dataclasses import FrozenInstanceError
 
@@ -270,6 +285,7 @@ def test_snapshot_frozen_payload_is_independent_of_mutable_readers():
         state.sha256 = "changed"
 
 
+# Hàm test_t3_initial_failure_can_trigger_actual_t2_feasibility_repair: kiểm tra kịch bản t3 initial failure can trigger actual t2 feasibility repair bằng các assertion trong thân hàm.
 def test_t3_initial_failure_can_trigger_actual_t2_feasibility_repair():
     sections, config = problem("two-shelves", mode="feedback", max_iterations=0, max_evaluations=20)
     for product in sections["products"]["items"]:
@@ -284,12 +300,14 @@ def test_t3_initial_failure_can_trigger_actual_t2_feasibility_repair():
     assert len(set(result["stages"]["T2"]["assignment"].values())) == 2
 
 
+# Hàm test_cancel_between_iterations_retains_verified_best_snapshot: kiểm tra kịch bản cancel between iterations retains verified best snapshot bằng các assertion trong thân hàm.
 def test_cancel_between_iterations_retains_verified_best_snapshot():
     sections, config = problem(
         "two-shelves", mode="feedback", max_iterations=10, max_evaluations=100
     )
     stop = [False]
 
+    # Hàm observe: xử lý bước observe trong phạm vi module hiện tại.
     def observe(stage, key, inputs, value, hit, elapsed):
         if stage == "JOINT_EVENT" and value.get("status") == "IMPROVING" and "feedback" in value:
             stop[0] = True
@@ -300,6 +318,7 @@ def test_cancel_between_iterations_retains_verified_best_snapshot():
     assert not result["integrated"]["global_optimality_proven"]
 
 
+# Hàm test_corrupted_domain_rows_are_invalid_model_not_infeasibility: kiểm tra kịch bản corrupted domain rows are invalid model not infeasibility bằng các assertion trong thân hàm.
 def test_corrupted_domain_rows_are_invalid_model_not_infeasibility():
     from smart_retail.contracts.optimality import FiniteSpace
 
@@ -315,6 +334,7 @@ def test_corrupted_domain_rows_are_invalid_model_not_infeasibility():
         execute(sections)
 
 
+# Hàm test_multistart_restarts_differ_on_generated_fixed_layout: kiểm tra kịch bản multistart restarts differ on generated fixed layout bằng các assertion trong thân hàm.
 def test_multistart_restarts_differ_on_generated_fixed_layout():
     from smart_retail.application.experiments.generators import generate, merge
     from smart_retail.contracts.experiments import DatasetSpec
@@ -350,6 +370,7 @@ def test_multistart_restarts_differ_on_generated_fixed_layout():
 
 
 @pytest.mark.parametrize("mode", ["random_search", "annealing", "feedback"])
+# Hàm test_equal_evaluation_budget_modes_spend_budget_and_report_anytime_curve: kiểm tra kịch bản equal evaluation budget modes spend budget and report anytime curve bằng các assertion trong thân hàm.
 def test_equal_evaluation_budget_modes_spend_budget_and_report_anytime_curve(mode):
     from smart_retail.application.experiments.generators import generate, merge
     from smart_retail.contracts.experiments import DatasetSpec
@@ -385,6 +406,7 @@ def test_equal_evaluation_budget_modes_spend_budget_and_report_anytime_curve(mod
     assert again["best"]["decisions"] == joint_result["best"]["decisions"]
 
 
+# Hàm test_union_space_contains_heuristic_solutions_and_certifies_recombination: kiểm tra kịch bản union space contains heuristic solutions and certifies recombination bằng các assertion trong thân hàm.
 def test_union_space_contains_heuristic_solutions_and_certifies_recombination():
     from smart_retail.application.experiments.finite_spaces import union_space
     from smart_retail.application.experiments.generators import generate, merge
@@ -403,6 +425,7 @@ def test_union_space_contains_heuristic_solutions_and_certifies_recombination():
         "policy": "first_improvement",
     }
 
+    # Hàm run: thực hiện luồng chạy với trạng thái và ngân sách được quản lý trong thân hàm.
     def run(**joint):
         sections = merge(
             copy.deepcopy(tiny),

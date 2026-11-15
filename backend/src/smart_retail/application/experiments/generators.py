@@ -1,3 +1,5 @@
+# Vai trò: Sinh bộ dữ liệu tổng hợp có seed và manifest nguồn gốc.
+# Hàm merge tạo cấu hình hiệu lực cho từng treatment.
 """Deterministic synthetic instance generator with explicit provenance."""
 
 import hashlib
@@ -24,6 +26,7 @@ SIZES = {
 }
 
 
+# Seed xác định dữ liệu tổng hợp; manifest đi kèm ghi quy mô, giả định và nhận diện nguồn.
 def generate(spec: DatasetSpec) -> tuple[dict, dict]:
     if spec.input_path:
         supplied = Path(spec.input_path)
@@ -219,6 +222,7 @@ def generate(spec: DatasetSpec) -> tuple[dict, dict]:
     return data, manifest
 
 
+# Ghép override vào bản dữ liệu riêng để một treatment không làm thay đổi dữ liệu của treatment khác.
 def merge(base: dict, override: dict) -> dict:
     result = dict(base)
     for key, value in override.items():

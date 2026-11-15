@@ -1,3 +1,4 @@
+// Vai trò: Chọn định nghĩa nhóm dữ liệu và cung cấp trình biên tập, bảng nhập/xuất cho đầu vào của dự án.
 import { InputEditor } from "../components/InputEditor";
 import { categoryDefinition } from "../features/categories/definition";
 import { productDefinition } from "../features/products/definition";
@@ -23,6 +24,7 @@ const definitions: Record<DataSection, Definition> = {
   orders: orderDefinition,
   optimization: optimizationDefinition,
 };
+// Chọn định nghĩa nhóm dữ liệu và cung cấp trình biên tập, bảng nhập/xuất cho đầu vào của dự án.
 export function DataInputPage({
   project,
   section,

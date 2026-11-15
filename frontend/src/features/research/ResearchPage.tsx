@@ -1,7 +1,9 @@
+// Vai trò: Giao diện chọn dữ liệu, cấu hình và quản lý campaign; trạng thái thực thi được lấy từ API nghiên cứu.
 import { useEffect, useState } from "react";
 import { researchApi, type Campaign, type Dataset, type ResearchSpec } from "./api";
 import { JointPanel } from "./JointPanel";
 
+// Giao diện chọn dữ liệu, cấu hình và quản lý campaign; trạng thái thực thi được lấy từ API nghiên cứu.
 export function ResearchPage() {
   const [datasets, setDatasets] = useState<Dataset[]>([]);
   const [configs, setConfigs] = useState<{ id: string; configuration: ResearchSpec }[]>([]);
@@ -28,6 +30,7 @@ export function ResearchPage() {
   }, []);
   useEffect(() => {
     let alive = true;
+    // Tải lại trạng thái và dữ liệu quan sát; phản hồi chỉ cập nhật state khi effect còn hiệu lực.
     const refresh = async () => {
       try {
         const list = await researchApi.campaigns();
@@ -44,10 +47,12 @@ export function ResearchPage() {
     return () => { alive = false; clearInterval(timer); };
   }, [selected]);
   const config = configs.find((c) => c.id === configId)?.configuration;
+  // Thực hiện thao tác bất đồng bộ với trạng thái bận, thông báo lỗi và bước hoàn tất dùng chung.
   const act = async (action: () => Promise<void>) => {
     setBusy(true); setError("");
     try { await action(); } catch (e) { setError(String(e)); } finally { setBusy(false); }
   };
+  // Gửi cấu hình campaign cho API và nhận mã theo dõi.
   const start = () => act(async () => {
     if (!config) return;
     const spec = structuredClone(config);

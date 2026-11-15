@@ -1,3 +1,4 @@
+// Vai trò: Danh mục trang, biểu tượng và mô tả dùng chung cho điều hướng của workspace.
 import { Activity, Box, ChartNoAxesCombined, ClipboardList, FileChartColumn, FolderOpen, Grid2X2, Layers, LayoutDashboard, Map, Play, ShoppingBasket, SlidersHorizontal, SquareStack, Users } from "lucide-react";
 
 export const navigation = [

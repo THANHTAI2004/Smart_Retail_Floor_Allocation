@@ -1,3 +1,4 @@
+# Vai trò: Sinh điểm khởi động lại có seed cho vị trí kệ, phục vụ multistart và các phương pháp tìm kiếm dùng chung quy tắc seed.
 """Seeded feasible shelf-pose restarts for the multistart baseline."""
 
 import hashlib
@@ -14,6 +15,7 @@ DEFAULT_RESTART_STEP = 3
 DUPLICATE_LIMIT = 50
 
 
+# Chính sách seed phân biệt dòng ngẫu nhiên theo job hoặc theo instance để so sánh đúng thiết kế.
 def search_seed(sections, seed, scope):
     """Seed of the stochastic search; scope "instance" mixes in the instance content.
 
@@ -28,6 +30,7 @@ def search_seed(sections, seed, scope):
     return int(hashlib.sha256(f"{canonical_hash(content)}:{seed}".encode()).hexdigest()[:12], 16)
 
 
+# Đề xuất vị trí kệ mới trong giới hạn bước đi và thời gian, giữ các quyết định bị khóa.
 def restart(state, sections, seed, variant, *, max_attempts=200, max_step=3, edits=None):
     """Random walk of geometry-valid T1 edits from the given plan.
 

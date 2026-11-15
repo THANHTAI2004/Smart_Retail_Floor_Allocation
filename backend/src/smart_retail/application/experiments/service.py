@@ -1,3 +1,5 @@
+# Vai trò: Dịch vụ cho dashboard nghiên cứu: tra danh mục, khởi chạy, dừng và đọc kết quả.
+# Phần số chạy trong tiến trình worker riêng.
 """Local research dashboard services; numerical work stays in worker processes."""
 
 import os
@@ -17,18 +19,21 @@ from smart_retail.infrastructure.filesystem import normalize_fs_path
 from smart_retail.workers.resources import is_alive
 
 
+# Hàm home: xử lý bước home trong phạm vi module hiện tại.
 def home() -> Path:
     path = normalize_fs_path(os.getenv("SMART_RETAIL_RESEARCH_HOME", str(ROOT / "var/research"))).resolve()
     path.mkdir(parents=True, exist_ok=True)
     return path
 
 
+# Hàm location: xử lý bước location trong phạm vi module hiện tại.
 def location(identifier: str) -> Path:
     if not re.fullmatch(r"[a-f0-9-]{36}", identifier):
         raise ServiceError(404, "Unknown campaign")
     return home() / identifier
 
 
+# Hàm catalog: xử lý bước catalog trong phạm vi module hiện tại.
 def catalog():
     return [
         {
@@ -42,6 +47,7 @@ def catalog():
     ]
 
 
+# Hàm configurations: xử lý bước configurations trong phạm vi module hiện tại.
 def configurations():
     return [
         {"id": p.stem, "configuration": read(p)}
@@ -49,6 +55,7 @@ def configurations():
     ]
 
 
+# Hàm launch: xử lý bước launch trong phạm vi module hiện tại.
 def launch(spec: CampaignSpec, *, identifier: str | None = None, resume: bool = False):
     for item in listing():
         supervisor = item.get("supervisor", {})
@@ -101,6 +108,7 @@ def launch(spec: CampaignSpec, *, identifier: str | None = None, resume: bool = 
     return {"id": identifier, "status": "QUEUED", "supervisor_pid": process.pid}
 
 
+# Hàm detail: xử lý bước detail trong phạm vi module hiện tại.
 def detail(identifier: str):
     root = location(identifier)
     request = home() / ".requests" / f"{identifier}.json"
@@ -123,6 +131,7 @@ def detail(identifier: str):
     }
 
 
+# Hàm listing: xử lý bước listing trong phạm vi module hiện tại.
 def listing():
     return [
         {k: v for k, v in detail(p.stem).items() if k != "records"}
@@ -133,12 +142,14 @@ def listing():
     ]
 
 
+# Hàm cancel: gửi hoặc ghi nhận yêu cầu hủy theo trạng thái hiện tại.
 def cancel(identifier: str):
     detail(identifier)
     (home() / ".requests" / f"{identifier}.cancel").touch(exist_ok=True)
     return {"id": identifier, "status": "CANCEL_REQUESTED"}
 
 
+# Hàm joint_result: xử lý bước joint result trong phạm vi module hiện tại.
 def joint_result(identifier: str, job_key: str):
     detail(identifier)
     if not re.fullmatch(r"[a-f0-9]{64}", job_key):
@@ -170,6 +181,7 @@ def joint_result(identifier: str, job_key: str):
     }
 
 
+# Hàm report_file: xử lý bước report file trong phạm vi module hiện tại.
 def report_file(identifier: str, relative: str) -> Path:
     data = detail(identifier)
     report = data["supervisor"].get("report")

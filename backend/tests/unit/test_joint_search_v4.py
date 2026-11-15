@@ -1,3 +1,5 @@
+# Vai trò: Kiểm thử lân cận V4, screening, ngân sách và khởi động lại tìm kiếm.
+# Các assertion mô tả hành vi mong đợi; kết quả chỉ được xác nhận sau khi chạy test.
 """paper-v4 search controls: neighborhood shape, prefilter, T3 scope, allocation and ILS."""
 
 import copy
@@ -26,11 +28,13 @@ JOINT = {
 
 
 @pytest.fixture(scope="module")
+# Hàm tiny: xử lý bước tiny trong phạm vi module hiện tại.
 def tiny():
     return generate(DatasetSpec(id="tiny", scale="tiny", facings=6))[0]
 
 
 @pytest.fixture(scope="module")
+# Hàm initial: xử lý bước initial trong phạm vi module hiện tại.
 def initial(tiny):
     """Sequential plan of the generated tiny instance and its T4 feedback."""
     config = JointConfig(**JOINT, mode="feedback")
@@ -48,6 +52,7 @@ def initial(tiny):
     return sections, state, analyze(state, sections)
 
 
+# Hàm test_absent_controls_keep_the_paper_v3_canonical_form: kiểm tra kịch bản absent controls keep the paper v3 canonical form bằng các assertion trong thân hàm.
 def test_absent_controls_keep_the_paper_v3_canonical_form():
     dumped = JointConfig(**JOINT, mode="feedback").model_dump(mode="json")
     assert not set(V4_CONTROLS) & set(dumped)
@@ -58,6 +63,7 @@ def test_absent_controls_keep_the_paper_v3_canonical_form():
             JointConfig(t1_steps=bad)
 
 
+# Hàm test_interleave_defaults_to_round_robin_and_weights_are_deterministic: kiểm tra kịch bản interleave defaults to round robin and weights are deterministic bằng các assertion trong thân hàm.
 def test_interleave_defaults_to_round_robin_and_weights_are_deterministic():
     queues = {"T1": ["a1", "a2", "a3", "a4"], "T2": ["b1", "b2"], "T3": ["c1"]}
     fair = [x for group in zip_longest(*queues.values()) for x in group if x]
@@ -70,6 +76,7 @@ def test_interleave_defaults_to_round_robin_and_weights_are_deterministic():
     assert interleave(queues, dict.fromkeys(queues, 0.5)) == fair
 
 
+# Hàm test_unit_steps_reproduce_the_paper_v3_neighborhood: kiểm tra kịch bản unit steps reproduce the paper v3 neighborhood bằng các assertion trong thân hàm.
 def test_unit_steps_reproduce_the_paper_v3_neighborhood(initial):
     sections, state, feedback = initial
     base = JointConfig(**JOINT, max_actions=1000)
@@ -77,6 +84,7 @@ def test_unit_steps_reproduce_the_paper_v3_neighborhood(initial):
     assert actions(state, feedback, sections, base) == actions(state, feedback, sections, explicit)
 
 
+# Hàm test_multi_step_moves_and_geometry_prefilter: kiểm tra kịch bản multi step moves and geometry prefilter bằng các assertion trong thân hàm.
 def test_multi_step_moves_and_geometry_prefilter(initial):
     sections, state, feedback = initial
     grid = sections["floorplan"]["grid_m"]
@@ -113,6 +121,7 @@ def test_multi_step_moves_and_geometry_prefilter(initial):
     assert positions == sorted(positions)
 
 
+# Hàm test_objective_t3_scope_keeps_only_score_relevant_edits: kiểm tra kịch bản objective t3 scope keeps only score relevant edits bằng các assertion trong thân hàm.
 def test_objective_t3_scope_keeps_only_score_relevant_edits(initial):
     sections, state, feedback = initial
     config = JointConfig(**JOINT, layers=["T3"], max_actions=1000)
@@ -129,6 +138,7 @@ def test_objective_t3_scope_keeps_only_score_relevant_edits(initial):
             assert a["face"] != b["face"]
 
 
+# Hàm test_restart_step_and_edit_count_are_bounded: kiểm tra kịch bản restart step and edit count are bounded bằng các assertion trong thân hàm.
 def test_restart_step_and_edit_count_are_bounded(initial):
     sections, state, _ = initial
     grid = sections["floorplan"]["grid_m"]
@@ -144,6 +154,7 @@ def test_restart_step_and_edit_count_are_bounded(initial):
             assert shift <= grid + 1e-9
 
 
+# Hàm run: thực hiện luồng chạy với trạng thái và ngân sách được quản lý trong thân hàm.
 def run(tiny, **joint):
     sections = merge(
         copy.deepcopy(tiny),
@@ -152,6 +163,7 @@ def run(tiny, **joint):
     return execute(copy.deepcopy(sections)), sections
 
 
+# Hàm test_iterated_local_search_kicks_after_local_convergence: kiểm tra kịch bản iterated local search kicks after local convergence bằng các assertion trong thân hàm.
 def test_iterated_local_search_kicks_after_local_convergence(tiny):
     result, sections = run(
         tiny,
@@ -182,6 +194,7 @@ def test_iterated_local_search_kicks_after_local_convergence(tiny):
     ]
 
 
+# Hàm test_adaptive_layer_allocation_reports_smoothed_weights: kiểm tra kịch bản adaptive layer allocation reports smoothed weights bằng các assertion trong thân hàm.
 def test_adaptive_layer_allocation_reports_smoothed_weights(tiny):
     result, _ = run(
         tiny,
@@ -200,6 +213,7 @@ def test_adaptive_layer_allocation_reports_smoothed_weights(tiny):
     assert result["joint"]["evaluations"] == 8
 
 
+# Hàm test_screening_and_search_time_contracts: kiểm tra kịch bản screening and search time contracts bằng các assertion trong thân hàm.
 def test_screening_and_search_time_contracts():
     with pytest.raises(ValueError):
         JointConfig(scenario_seeds=[1, 2], screen_seeds=2)
@@ -211,6 +225,7 @@ def test_screening_and_search_time_contracts():
     assert ok.model_dump(mode="json")["screen_seeds"] == 1
 
 
+# Hàm test_two_fidelity_screening_counts_seed_simulations: kiểm tra kịch bản two fidelity screening counts seed simulations bằng các assertion trong thân hàm.
 def test_two_fidelity_screening_counts_seed_simulations(tiny):
     result, sections = run(
         tiny,
@@ -239,6 +254,7 @@ def test_two_fidelity_screening_counts_seed_simulations(tiny):
     assert again["best"]["decisions"] == joint["best"]["decisions"]
 
 
+# Hàm test_search_time_limit_stops_search_but_keeps_a_result: kiểm tra kịch bản search time limit stops search but keeps a result bằng các assertion trong thân hàm.
 def test_search_time_limit_stops_search_but_keeps_a_result(tiny):
     result, _ = run(
         tiny,
@@ -252,6 +268,7 @@ def test_search_time_limit_stops_search_but_keeps_a_result(tiny):
     assert joint["best"] is not None and joint["evaluations"] >= 1
 
 
+# Hàm test_promotion_reuses_the_screened_seed_simulation: kiểm tra kịch bản promotion reuses the screened seed simulation bằng các assertion trong thân hàm.
 def test_promotion_reuses_the_screened_seed_simulation(initial):
     sections, state, _ = initial
     config = JointConfig(**JOINT)
@@ -259,6 +276,7 @@ def test_promotion_reuses_the_screened_seed_simulation(initial):
     config = config.model_copy(update={"scenario_seeds": seeds})
     cache: dict = {}
 
+    # Hàm call: xử lý bước call trong phạm vi module hiện tại.
     def call(chosen, context=None):
         return evaluate(
             sections,

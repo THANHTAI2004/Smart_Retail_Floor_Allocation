@@ -1,3 +1,5 @@
+# Vai trò: Duyệt miền hữu hạn và ghi bằng chứng các trạng thái đã xét.
+# Tìm kiếm chưa hoàn tất chỉ cung cấp cận và nghiệm hiện có.
 """Exhaustive finite search with the nonnegative-objective lower bound zero."""
 
 import hashlib
@@ -10,12 +12,14 @@ from smart_retail.domain.models import EngineError
 from smart_retail.engines.joint_exact.formulation import assemble, compile_space
 
 
+# Hàm digest: xử lý bước digest trong phạm vi module hiện tại.
 def digest(value):
     return hashlib.sha256(
         json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
     ).hexdigest()
 
 
+# Hàm leaf: xử lý bước leaf trong phạm vi module hiện tại.
 def leaf(decision, state=None, error=None):
     return {
         "decision_sha256": digest(decision),
@@ -34,6 +38,7 @@ def leaf(decision, state=None, error=None):
     }
 
 
+# Phân biệt duyệt đủ miền với dừng sớm theo ngân sách; chỉ duyệt đủ mới hỗ trợ chứng nhận đầy đủ.
 def solve(
     raw,
     evaluate,

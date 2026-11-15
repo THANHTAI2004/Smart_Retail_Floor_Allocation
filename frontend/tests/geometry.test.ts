@@ -1,3 +1,5 @@
+// Vai trò: Kiểm thử các phép hình học canvas và tọa độ kệ.
+// Fixture và assertion là phạm vi kiểm tra, không thay thế bằng chứng chạy mới.
 import { describe, expect, it } from "vitest";
 import sample from "../../datasets/samples/small_store.json";
 import type { Shelf } from "../src/types/models";

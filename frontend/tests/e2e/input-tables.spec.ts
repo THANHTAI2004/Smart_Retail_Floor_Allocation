@@ -1,3 +1,5 @@
+// Vai trò: Kiểm thử nhập và xuất CSV giữ đầy đủ metadata.
+// Fixture và assertion là phạm vi kiểm tra, không thay thế bằng chứng chạy mới.
 import { expect, test } from "@playwright/test";
 import fs from "node:fs/promises";
 

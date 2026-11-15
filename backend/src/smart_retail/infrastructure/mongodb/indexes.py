@@ -1,6 +1,9 @@
+# Vai trò: Tạo index lặp lại an toàn cho truy vấn và chuyển trạng thái.
+# Index không dùng TTL để tự xóa bằng chứng chạy.
 """Idempotent non-TTL indexes; MongoDB's _id index supplies unique identities."""
 
 
+# Hàm ensure_indexes: xử lý bước ensure indexes trong phạm vi module hiện tại.
 def ensure_indexes(database):
     database.projects.create_index([("created_at", -1)], name="projects_created")
     database.optimization_runs.create_index(

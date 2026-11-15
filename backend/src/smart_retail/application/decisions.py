@@ -1,3 +1,4 @@
+# Vai trò: Phát lại các quyết định bố trí, phân bổ và xếp hàng đã chọn qua bộ kiểm tra chính thức trước khi dùng trong pipeline.
 """Replay explicit upstream decisions through the official engine validators."""
 
 from dataclasses import replace
@@ -9,6 +10,7 @@ from smart_retail.engines.t3_slotting.validation import violations
 from smart_retail.engines.t4_simulation.engine import solve as simulate
 
 
+# Hàm decided_layout: xử lý bước decided layout trong phạm vi module hiện tại.
 def decided_layout(dataset, decisions, deadline):
     poses = decisions["poses"]
     if set(poses) != {s.id for s in dataset.shelves}:
@@ -22,6 +24,7 @@ def decided_layout(dataset, decisions, deadline):
     return layout(dataset.floorplan, tuple(shelves), "fixed", deadline=deadline)
 
 
+# Hàm decided_assignment: xử lý bước decided assignment trong phạm vi module hiện tại.
 def decided_assignment(dataset, t1, decisions):
     assignment = dict(decisions["assignment"])
     errors, objective = replay(
@@ -43,6 +46,7 @@ def decided_assignment(dataset, t1, decisions):
     }
 
 
+# Hàm decided_planogram: xử lý bước decided planogram trong phạm vi module hiện tại.
 def decided_planogram(dataset, t1, t2, decisions):
     rows = tuple(dict(p) for p in decisions["placements"])
     errors = violations(t1.shelves, dataset.products, t2["assignment"], rows)
@@ -57,6 +61,7 @@ def decided_planogram(dataset, t1, t2, decisions):
     )
 
 
+# Hàm decided_simulation: xử lý bước decided simulation trong phạm vi module hiện tại.
 def decided_simulation(dataset, t1, t2, t3, decisions, deadline):
     policy = decisions.get("routing_policy", dataset.demand.routing_policy)
     if policy not in ("nearest", "return", "exact"):

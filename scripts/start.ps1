@@ -1,3 +1,4 @@
+# Vai trò: Kiểm tra cổng và MongoDB, khởi động API, worker và frontend; ghi PID để quản lý vòng đời dịch vụ.
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $projectRoot

@@ -1,3 +1,5 @@
+// Vai trò: Kiểm thử đối chiếu giao diện, HTTP và lưu trữ trong môi trường audit.
+// Fixture và assertion là phạm vi kiểm tra, không thay thế bằng chứng chạy mới.
 import { expect, test } from "@playwright/test";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -20,6 +22,7 @@ test("audit all pages and seven UI saves against direct MongoDB readback", async
   const projectId = await page.evaluate(() => localStorage.getItem("smart-retail-project"));
   expect(projectId).toBeTruthy();
   const evidence: object[] = [];
+  // Đọc trực tiếp dự án từ database test để đối chiếu với dữ liệu lưu qua UI.
   const readback = async () => {
     const result = await run(path.resolve("../.venv/Scripts/python.exe"), ["-c",
       "import json,os,sys; from smart_retail.infrastructure.mongodb.client import connect; s,_=connect(database=os.environ['MONGODB_DATABASE']); p=s.get_project(sys.argv[1]); print(json.dumps({'revision':p.revision,'sections':p.sections})); s.dispose()", projectId!], { cwd: path.resolve("..") });
